@@ -1,5 +1,9 @@
 module Vulkan
 
-# package code goes here
+const vk = Vulkan
+export vk
+
+# OpenCL low level api
+include("api.jl")
 
 end # module
