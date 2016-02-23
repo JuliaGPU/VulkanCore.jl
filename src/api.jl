@@ -14,7 +14,7 @@ typealias Display Void # Opaque struct
 # xcb.h
 typealias xcb_connection_t Void # opaque struct
 typealias xcb_window_t UInt32
-typealias xcb_viusalid_t UInt32
+typealias xcb_visualid_t UInt32
 # Wayland
 typealias wl_display Void # TODO: make opaque for now
 typealias wl_surface Void # TODO: make opaque for now
