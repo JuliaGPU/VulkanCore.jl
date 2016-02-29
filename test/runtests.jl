@@ -3,7 +3,7 @@ using Base.Test
 
 const api = vk.api
 
-err = Ref{api.VkResult}(0)
+err = api.VkResult(0)
 
 toversion(version::Cuint) = VersionNumber(version >> 22,  (version >> 12) & 0x3ff, version & 0xfff)
 
@@ -32,7 +32,7 @@ end
 
 appname = b"vulkaninfo"
 
-app_info = pointer(api.VkApplicationInfo[api.VkApplicationInfo(
+app_info = Ref(api.VkApplicationInfo(
     api.VK_STRUCTURE_TYPE_APPLICATION_INFO,
     C_NULL,
     pointer(appname),
@@ -40,23 +40,21 @@ app_info = pointer(api.VkApplicationInfo[api.VkApplicationInfo(
     pointer(appname),
     1,
     api.VK_API_VERSION,
-)])
+))
 
-inst_info = Ref{api.VkInstanceCreateInfo}(api.VkInstanceCreateInfo(
+inst_info = Ref(api.VkInstanceCreateInfo(
         api.VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         C_NULL,
         UInt32(0),
-<<<<<<< HEAD
-        pointer(app_info),
-=======
-        app_info,
->>>>>>> 6a5aff6... get some vulkan infos as a first test
+        Base.unsafe_convert(Ptr{api.VkApplicationInfo}, app_info),
         0,
         C_NULL,
         0,
         C_NULL,
 ))
+
 instance = Ref{api.VkInstance}(C_NULL)
+
 err = api.vkCreateInstance(inst_info, C_NULL, instance)
 println(err)
 println(instance)
@@ -131,11 +129,65 @@ function Base.show(io::IO, df::api.VkPhysicalDeviceFeatures)
 	end
 end
 println(devicefeatures[])
-# vkGetPhysicalDeviceFeatures(gpu->obj, &gpu->features);
 
 # app_dev_init(&gpu->dev, gpu);
-<<<<<<< HEAD
 # app_dev_init_formats(&gpu->dev);
-=======
-# app_dev_init_formats(&gpu->dev);
->>>>>>> 6a5aff6... get some vulkan infos as a first test
+
+include("windowing.jl")
+
+
+connection, scr = XCB.connect(C_NULL)
+println(connection)
+setup = XCB.get_setup(connection)
+println(setup)
+iter = Ref(XCB.setup_roots_iterator(setup))
+println(iter)
+
+for i=scr:-1:0
+    XCB.screen_next(iter)
+end
+screen = unsafe_load(iter[].data, 1)
+
+window = XCB.generate_id(connection)
+value_mask = UInt32(XCB.CW_BACK_PIXEL) | UInt32(XCB.CW_EVENT_MASK)
+value_list = zeros(UInt32, 32)
+value_list[1] = screen.black_pixel
+value_list[2] = (
+	UInt32(XCB.EVENT_MASK_KEY_RELEASE) |
+	UInt32(XCB.EVENT_MASK_EXPOSURE) |
+    UInt32(XCB.EVENT_MASK_STRUCTURE_NOTIFY)
+)
+println(screen)
+
+surface = Ref{api.VkSurfaceKHR}(C_NULL)
+XCB.create_window(
+	connection, XCB.COPY_FROM_PARENT, window,
+	screen.root, 0, 0, 512, 512, 0,
+	XCB.WINDOW_CLASS_INPUT_OUTPUT, screen.root_visual,
+	value_mask, value_list
+)
+
+@windows_only begin
+	createInfo = Ref(api.VkWin32SurfaceCreateInfoKHR(
+		VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR,
+    	C_NULL,
+    	0,
+    	connection,
+    	window
+	))
+
+    err = vkCreateWin32SurfaceKHR(instance[], createInfo, C_NULL, surface);
+end
+
+@unix_only begin
+	createInfo = Ref(api.VkXcbSurfaceCreateInfoKHR(
+		api.VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR,
+		C_NULL,
+		0,
+		connection,
+		window
+	))
+
+	err = api.vkCreateXcbSurfaceKHR(instance[], createInfo, C_NULL, surface)
+	println(err)
+end
