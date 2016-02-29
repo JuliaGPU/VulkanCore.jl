@@ -7,6 +7,7 @@ err = Ref{api.VkResult}(0)
 
 toversion(version::Cuint) = VersionNumber(version >> 22,  (version >> 12) & 0x3ff, version & 0xfff)
 
+
 count = Ref{Cuint}(0)
 # Scan layers
 err = api.vkEnumerateInstanceLayerProperties(count, C_NULL)
@@ -31,8 +32,7 @@ end
 
 appname = b"vulkaninfo"
 
-
-app_info = api.VkApplicationInfo[api.VkApplicationInfo(
+app_info = pointer(api.VkApplicationInfo[api.VkApplicationInfo(
     api.VK_STRUCTURE_TYPE_APPLICATION_INFO,
     C_NULL,
     pointer(appname),
@@ -40,13 +40,17 @@ app_info = api.VkApplicationInfo[api.VkApplicationInfo(
     pointer(appname),
     1,
     api.VK_API_VERSION,
-)]
+)])
 
 inst_info = Ref{api.VkInstanceCreateInfo}(api.VkInstanceCreateInfo(
         api.VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         C_NULL,
         UInt32(0),
+<<<<<<< HEAD
         pointer(app_info),
+=======
+        app_info,
+>>>>>>> 6a5aff6... get some vulkan infos as a first test
         0,
         C_NULL,
         0,
@@ -130,4 +134,8 @@ println(devicefeatures[])
 # vkGetPhysicalDeviceFeatures(gpu->obj, &gpu->features);
 
 # app_dev_init(&gpu->dev, gpu);
+<<<<<<< HEAD
 # app_dev_init_formats(&gpu->dev);
+=======
+# app_dev_init_formats(&gpu->dev);
+>>>>>>> 6a5aff6... get some vulkan infos as a first test
