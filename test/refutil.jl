@@ -1,9 +1,16 @@
 # the c code is much easier to port if we can do setindex on Ref{CompositeType}
 
+
+function struct_convert(t, x)
+	convert(t, x)
+end
+function struct_convert(t, x::Union{Array, Ref})
+	Base.unsafe_convert(t, x)
+end
 """
 Returns the index corresponding to a field name
 """
-function fieldname2index{T}(ref::Ref{T}, field::Symbol)
+function fieldname2index{T}(::Type{T}, field::Symbol)
 	names = fieldnames(T)
 	for i=1:nfields(T)
 		if names[i] == field
@@ -13,16 +20,22 @@ function fieldname2index{T}(ref::Ref{T}, field::Symbol)
 	error("field $field not found in $(T)!")
 end
 
-"""
-Slow and silly setindex for fields.
-"""
-function Base.setindex!{T, X}(ref::Ref{T}, value::X, field::Symbol)
-	i = fieldname2index(ref, field)
-	ref[i] = value
+
+
+function fieldptr{T}(ref::Array{T}, array_index::Integer, field::Symbol)
+	i = fieldname2index(T, field)
+	fieldptr(ref, array_index, i)
+end
+function fieldptr{T}(ref::Array{T}, array_index::Integer, field::Integer)
+	ptr = Ptr{Int8}(pointer(ref, array_index))
+	offset = fieldoffsets(T)[field]
+	ptr += offset
+	FT = fieldtype(T, field)
+	Ptr{FT}(ptr)
 end
 
 function fieldptr{T}(ref::Ref{T}, field::Symbol)
-	i = fieldname2index(ref, field)
+	i = fieldname2index(T, field)
 	fieldptr(ref, i)
 end
 """
@@ -35,13 +48,29 @@ function fieldptr{T}(ref::Ref{T}, field::Integer)
 	FT = fieldtype(T, field)
 	Ptr{FT}(ptr)
 end
-
+"""
+Slow and silly setindex for fields.
+"""
+function Base.setindex!{T, X}(ref::Ref{T}, value::X, field::Symbol)
+	i = fieldname2index(T, field)
+	ref[i] = value
+end
 function Base.setindex!{T, X}(ref::Ref{T}, value::X, field::Integer)
 	ptr = fieldptr(ref, field)
 	FT = eltype(ptr)
-	unsafe_store!(ptr, FT(value))
+	unsafe_store!(ptr, struct_convert(FT, value))
 	value
 end
+"""
+The same for arrays
+"""
+function Base.setindex!{T, X}(ref::Array{T}, value::X, array_index::Integer, field::Symbol)
+	ptr = fieldptr(ref, array_index, field)
+	unsafe_store!(ptr, struct_convert(eltype(ptr), value))
+	value
+end
+
+
 
 
 function memcpy(destination, source, to_copy)

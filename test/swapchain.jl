@@ -2,13 +2,26 @@ using Vulkan
 const api = vk.api
 
 
-type VKSwapChain
+type SwapChain
+	ref::Ref{api.VkSwapchainKHR}
+	surface
 	buffers
 	images
 	color_format
 	color_space
-	swapchain
+	depth_format
+	queue_node_index
+	function SwapChain()
+		new(Ref{api.VkSwapchainKHR}(api.VK_NULL_HANDLE))
+	end
+	function SwapChain(buffers, images, color_format, color_space, swapchain)
+		new(buffers, images, color_format, color_space, swapchain)
+	end
+
 end
+
+image_count(swapchain::SwapChain) = length(swapchain.images)
+
 
 function get_instance_proc_addr(inst::api.VkInstance, entrypoint::ASCIIString)
 	if inst == C_NULL
@@ -16,7 +29,7 @@ function get_instance_proc_addr(inst::api.VkInstance, entrypoint::ASCIIString)
 	end
     entrypoint_ptr = api.vkGetInstanceProcAddr(inst, entrypoint)
     if (entrypoint_ptr == C_NULL)                                   
-        error("get_instance_proc_addr with $entrypoint returned NULL")                                                        
+        error("get_instance_proc_addr with $entrypoint returned C_NULL")                                                        
 	end
 	entrypoint_ptr
 end
@@ -27,7 +40,7 @@ function get_device_proc_addr(device::api.VkDevice, entrypoint::ASCIIString)
 	end
     entrypoint_ptr = api.vkGetDeviceProcAddr(device, entrypoint)
     if (entrypoint_ptr == C_NULL)                                   
-        error("get_device_proc_addr with $entrypoint returned NULL")                                                        
+        error("get_device_proc_addr with $entrypoint returned C_NULL")                                                        
 	end
 	entrypoint_ptr
 end
@@ -163,9 +176,9 @@ function get_surface_formats(physical_device, surface)
 	check(err)
 	surface_formats
 end
-function VKSwapChain(instance, device, physical_device, window)
-
+function SwapChain(instance, device, physical_device, window, swapchain=SwapChain())
 	surface = create_surface(instance, window)
+	swapchain.surface = surface
 	queue_props = get_queue_properties(physical_device)
 	queue_count = length(queue_props)
 	# Iterate over each queue to learn whether it supports presenting:
@@ -210,29 +223,31 @@ function VKSwapChain(instance, device, physical_device, window)
 		error("Separate graphics and presenting queues are not supported yet!")
 	end
 
+	swapchain.queue_node_index = presentQueueNodeIndex
 
 	surface_formats = get_surface_formats(physical_device, surface)
 	# If the surface format list only includes one entry with VK_FORMAT_UNDEFINED,
 	# there is no preferered format, so we assume VK_FORMAT_B8G8R8A8_UNORM
 	if ((length(surface_formats) == 1) && (surface_formats[1].format == api.VK_FORMAT_UNDEFINED))
-		color_format = api.VK_FORMAT_B8G8R8A8_UNORM
+		swapchain.color_format = api.VK_FORMAT_B8G8R8A8_UNORM
 	else
 		# Always select the first available color format
 		# If you need a specific format (e.g. SRGB) you'd need to
 		# iterate over the list of available surface format and
 		# check for it's presence
-		color_format = surface_formats[1].format
+		swapchain.color_format = surface_formats[1].format
 	end	
-	colorSpace = surface_formats[1].colorSpace
+	swapchain.color_space = surface_formats[1].colorSpace
 	#TODO actually create swap chain type with black jack and buffers
+	swapchain
 end
 
 
 function get_present_modes(physical_device, surface)
 	presentModeCount = Ref{UInt32}()
-	err = fpGetPhysicalDeviceSurfacePresentModesKHR(physical_device, surface, presentModeCount, NULL)
+	err = fpGetPhysicalDeviceSurfacePresentModesKHR(physical_device, surface, presentModeCount, C_NULL)
 	check(err)
-	if presentModeCount < 1
+	if presentModeCount[] < 1
 		error("No present modes found")
 	end
 	present_modes = Array(api.VkPresentModeKHR, presentModeCount[])
@@ -250,11 +265,11 @@ end
 
 function get_images(device, swapchain)
 	imageCount = Ref{UInt32}()
-	err = fpGetSwapchainImagesKHR(device, swapchain, imageCount, C_NULL)
+	err = fpGetSwapchainImagesKHR(device, swapchain.ref[], imageCount, C_NULL)
 	check(err)
 	# Get the swap chain images
 	images = Array(api.VkImage, imageCount[])
-	err = fpGetSwapchainImagesKHR(device, swapchain, imageCount, images)
+	err = fpGetSwapchainImagesKHR(device, swapchain.ref[], imageCount, images)
 	check(err)
 	images
 end
@@ -267,12 +282,12 @@ end
 """
 Create the swap chain and get images with given width and height
 """
-function create(cmdBuffer, width, height, old_swapchain=Ref{VkSwapchainKHR}(api.VK_NULL_HANDLE))
+function setupSwapChain(command_buffer, width, height, swapchain)
 	# Get physical device surface properties and formats
 
 	# Get available present modes
-	present_modes = get_present_modes(physical_device, surface)
-	surface_capabilities = get_surface_capabilities(physical_device, surface)
+	present_modes = get_present_modes(physical_device, swapchain.surface)
+	surface_capabilities = get_surface_capabilities(physical_device, swapchain.surface)
 
 	swapchain_extent = Ref{api.VkExtent2D}()
 	# width and height are either both -1, or both not -1.
@@ -288,11 +303,11 @@ function create(cmdBuffer, width, height, old_swapchain=Ref{VkSwapchainKHR}(api.
 	# Prefer mailbox mode if present, it's the lowest latency non-tearing present  mode
 	swapchainPresentMode = api.VK_PRESENT_MODE_FIFO_KHR
 	for present_mode in present_modes
-		if (present_modes[i] == api.VK_PRESENT_MODE_MAILBOX_KHR)
+		if (present_mode == api.VK_PRESENT_MODE_MAILBOX_KHR)
 			swapchainPresentMode = api.VK_PRESENT_MODE_MAILBOX_KHR
 			break
 		end
-		if ((swapchainPresentMode != Vapi.K_PRESENT_MODE_MAILBOX_KHR) && (present_modes[i] == api.VK_PRESENT_MODE_IMMEDIATE_KHR)) 
+		if ((swapchainPresentMode != Vapi.K_PRESENT_MODE_MAILBOX_KHR) && (present_mode == api.VK_PRESENT_MODE_IMMEDIATE_KHR)) 
 			swapchainPresentMode = api.VK_PRESENT_MODE_IMMEDIATE_KHR
 		end
 	end
@@ -303,7 +318,7 @@ function create(cmdBuffer, width, height, old_swapchain=Ref{VkSwapchainKHR}(api.
 		desiredNumberOfSwapchainImages = surface_capabilities.maxImageCount
 	end
 
-	if (surface_capabilities.supportedTransforms & api.VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR)
+	if surface_capabilities.supportedTransforms & UInt32(api.VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR) == UInt32(true)
 		preTransform = api.VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR
 	else 
 		preTransform = surface_capabilities.currentTransform
@@ -312,11 +327,11 @@ function create(cmdBuffer, width, height, old_swapchain=Ref{VkSwapchainKHR}(api.
 	swapchainCI = Ref{api.VkSwapchainCreateInfoKHR}()
 	swapchainCI[:sType] = api.VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR
 	swapchainCI[:pNext] = C_NULL
-	swapchainCI[:surface] = surface
+	swapchainCI[:surface] = swapchain.surface
 	swapchainCI[:minImageCount] = desiredNumberOfSwapchainImages
-	swapchainCI[:imageFormat] = colorFormat
-	swapchainCI[:imageColorSpace] = colorSpace
-	swapchainCI[:imageExtent] = (swapchain_extent.width, swapchain_extent.height)
+	swapchainCI[:imageFormat] = swapchain.color_format
+	swapchainCI[:imageColorSpace] = swapchain.color_space
+	swapchainCI[:imageExtent] = api.VkExtent2D(swapchain_extent.width, swapchain_extent.height)
 	swapchainCI[:imageUsage] = api.VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
 	swapchainCI[:preTransform] = preTransform
 	swapchainCI[:imageArrayLayers] = 1
@@ -324,17 +339,18 @@ function create(cmdBuffer, width, height, old_swapchain=Ref{VkSwapchainKHR}(api.
 	swapchainCI[:queueFamilyIndexCount] = 0
 	swapchainCI[:pQueueFamilyIndices] = C_NULL
 	swapchainCI[:presentMode] = swapchainPresentMode
-	swapchainCI[:oldSwapchain] = old_swapchain
+	swapchainCI[:oldSwapchain] = swapchain.ref[]
 	swapchainCI[:clipped] = true
 	swapchainCI[:compositeAlpha] = api.VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
-	swapchain = Ref{VkSwapChain}(C_NULL)
-	err = fpCreateSwapchainKHR(device, swapchainCI, C_NULL, swapchain)
+	old_swapchain = swapchain.ref[]
+	err = fpCreateSwapchainKHR(device, swapchainCI, C_NULL, swapchain.ref)
 	check(err)
 
 	# If an existing sawp chain is re-created, destroy the old swap chain
 	# This also cleans up all the presentable images
-	if (old_swapchain != api.VK_NULL_HANDLE) 
-		fpDestroySwapchainKHR(device, old_swapchain, nullptr)
+	if (old_swapchain != api.VK_NULL_HANDLE)
+		ref = Ref(old_swapchain)
+		fpDestroySwapchainKHR(device, ref, C_NULL)
 	end
 
 	images = get_images(device, swapchain)
@@ -344,7 +360,7 @@ function create(cmdBuffer, width, height, old_swapchain=Ref{VkSwapchainKHR}(api.
 		color_attachment_view = Ref{api.VkImageViewCreateInfo}()
 		color_attachment_view[:sType] = api.VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO
 		color_attachment_view[:pNext] = C_NULL
-		color_attachment_view[:format] = colorFormat
+		color_attachment_view[:format] = swapchain.color_format
 		color_attachment_view[:components] = api.VkComponentMapping(
 			api.VK_COMPONENT_SWIZZLE_R,
 			api.VK_COMPONENT_SWIZZLE_G,
@@ -353,17 +369,17 @@ function create(cmdBuffer, width, height, old_swapchain=Ref{VkSwapchainKHR}(api.
 		)
 
 		color_attachment_view[:subresourceRange] = api.VkImageSubresourceRange(
-			VK_IMAGE_ASPECT_COLOR_BIT,
+			api.VK_IMAGE_ASPECT_COLOR_BIT,
 			0,1,0,1
 		)
 		color_attachment_view[:viewType] = api.VK_IMAGE_VIEW_TYPE_2D
 		color_attachment_view[:flags] = 0
 
-		buffers[i].image = images[i]
+		buffers[i, :image] = images[i]
 
 		# Transform images from initial (undefined) to present layout
-		setImageLayout(
-			cmdBuffer, 
+		set_image_layout(
+			command_buffer, 
 			buffers[i].image, 
 			api.VK_IMAGE_ASPECT_COLOR_BIT, 
 			api.VK_IMAGE_LAYOUT_UNDEFINED, 
@@ -374,7 +390,7 @@ function create(cmdBuffer, width, height, old_swapchain=Ref{VkSwapchainKHR}(api.
 		view = Ref{api.VkImageView}(C_NULL)
 		err = api.vkCreateImageView(device, color_attachment_view, C_NULL, view)
 		check(err)
-		buffers[i].view = view[]
+		buffers[i, :view] = view[]
 	end
 end
 

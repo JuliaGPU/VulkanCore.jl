@@ -21,7 +21,7 @@ function get_memory_type(typebits, properties, deviceMemoryProperties)
 	return false, 0
 end
 
-function VulkanBuffer{T}(array::Vector{T}, device, deviceMemoryProperties)
+function VulkanBuffer{T}(array::Vector{T}, device, deviceMemoryProperties, usage)
 
 	# Generate vertex buffer
 	#	Setup
@@ -29,7 +29,7 @@ function VulkanBuffer{T}(array::Vector{T}, device, deviceMemoryProperties)
 	buffer_info[:sType] = api.VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO
 	buffer_info[:pNext] = C_NULL
 	buffer_info[:size] = sizeof(array)
-	buffer_info[:usage] = api.VK_BUFFER_USAGE_VERTEX_BUFFER_BIT
+	buffer_info[:usage] = usage
 	buffer_info[:flags] = 0
 
 	#	Copy vertex data to VRAM
