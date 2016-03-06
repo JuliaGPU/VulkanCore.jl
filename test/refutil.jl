@@ -4,6 +4,15 @@
 function struct_convert(t, x)
 	convert(t, x)
 end
+
+function struct_convert(t::Type{Ptr{Ptr{Cchar}}}, x::Vector{ASCIIString})
+	ref = Ref{Ptr{Cchar}}(x)
+    Base.unsafe_convert(t, ref)
+end
+function struct_convert(t::Type{Ptr{Cchar}}, x::AbstractString)
+	asciistr = ascii(x)
+    Base.unsafe_convert(Ptr{Cchar}, asciistr)
+end
 function struct_convert(t, x::Union{Array, Ref})
 	Base.unsafe_convert(t, x)
 end

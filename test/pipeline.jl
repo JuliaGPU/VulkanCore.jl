@@ -1,23 +1,48 @@
-function create_pipeline_cache()
-	pipelineCacheCreateInfo = Ref{api.VkPipelineCacheCreateInfo}()
-	pipelineCacheCreateInfo[:sType] = api.api.VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO
-	pipeline_cache = Ref{api.VkPipelineCache}(api.api.VK_NULL_HANDLE)
-	err = api.vkCreatePipelineCache(device, pipelineCacheCreateInfo, C_NULL, pipeline_cache)
-	check(err)
-	pipeline_cache[]
+
+
+
+function loadShaderGLSL(fileName, device::api.VkDevice, stage::api.VkShaderStageFlagBits)
+	shaderCode = open(fileName) do io
+        readbytes(io)
+    end
+    println(typeof(shaderCode), " ", length(shaderCode))
+	shader_size = length(shaderCode)
+	if (shader_size < 1)
+        error("$filename is empty and doesn't contain a shader!")
+    end
+    # Magic SPV number for shader code header
+    pcode = UInt32[0x07230203, 0, stage]
+    # now append the shader code to the header
+    append!(pcode, reinterpret(UInt32, shaderCode))
+    # create the shader
+    shadermodule = CreateShaderModule(device, C_NULL;
+        sType = api.VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
+        codeSize = sizeof(pcode),
+        pCode = pcode
+    )
+
+    shaderStage = Ref{api.VkPipelineShaderStageCreateInfo}()
+    shaderStage[:sType] = api.VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+    shaderStage[:stage] = stage;
+    shaderStage[:_module] = shadermodule
+    shaderStage[:pName] = "main"
+
+	return shaderStage[]
 end
-function preparePipelines(device, pipelineCache, pipelines)
+
+
+function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, vertices)
 	# Create our rendering pipeline used in this example
 	# Vulkan uses the concept of rendering pipelines to encapsulate
 	# fixed states
 	# This replaces OpenGL's huge (and cumbersome) state machine
 	# A pipeline is then stored and hashed on the GPU making
-	# pipeline changes much faster than having to set dozens of 
+	# pipeline changes much faster than having to set dozens of
 	# states
 	# In a real world application you'd have dozens of pipelines
 	# for every shader set used in a scene
 	# Note that there are a few states that are not stored with
-	# the pipeline. These are called dynamic states and the 
+	# the pipeline. These are called dynamic states and the
 	# pipeline only stores that they are used with this pipeline,
 	# but not their states
 
@@ -75,7 +100,7 @@ function preparePipelines(device, pipelineCache, pipelines)
 	# a viewport's dimensions or a scissor box
 	dynamicState = Ref{api.VkPipelineDynamicStateCreateInfo}()
 	# The dynamic state properties themselves are stored in the command buffer
-	dynamicStateEnables = VkDynamicState[]
+	dynamicStateEnables = api.VkDynamicState[]
 	push!(dynamicStateEnables, api.VK_DYNAMIC_STATE_VIEWPORT)
 	push!(dynamicStateEnables, api.VK_DYNAMIC_STATE_SCISSOR)
 	dynamicState[:sType] = api.VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO
@@ -86,7 +111,7 @@ function preparePipelines(device, pipelineCache, pipelines)
 	# Describes depth and stenctil test and compare ops
 	depthStencilState = Ref{api.VkPipelineDepthStencilStateCreateInfo}()
 	# Basic depth compare setup with depth writes and depth test enabled
-	# No stencil used 
+	# No stencil used
 	depthStencilState[:sType] = api.VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO
 	depthStencilState[:depthTestEnable] = api.VK_TRUE
 	depthStencilState[:depthWriteEnable] = api.VK_TRUE
@@ -111,15 +136,23 @@ function preparePipelines(device, pipelineCache, pipelines)
 
 	# Load shaders
 	shaderStages = Array(api.VkPipelineShaderStageCreateInfo, 2)
-
-	shaderStages[1] = loadShaderGLSL("./../data/shaders/_test/test.vert", api.VK_SHADER_STAGE_VERTEX_BIT)
-	shaderStages[2] = loadShaderGLSL("./../data/shaders/_test/test.frag", api.VK_SHADER_STAGE_FRAGMENT_BIT)
+    shaderpath = dirname(@__FILE__)
+	shaderStages[1] = loadShaderGLSL(
+        joinpath(shaderpath, "triangle.vert"),
+        device,
+        api.VK_SHADER_STAGE_VERTEX_BIT
+    )
+	shaderStages[2] = loadShaderGLSL(
+        joinpath(shaderpath, "triangle.frag"),
+        device,
+        api.VK_SHADER_STAGE_FRAGMENT_BIT
+    )
 
 	# Assign states
 	# Two shader stages
 	pipelineCreateInfo[:stageCount] = 2
 	# Assign pipeline state create information
-	pipelineCreateInfo[:pVertexInputState] = vertices.vi
+	pipelineCreateInfo[:pVertexInputState] = vertices
 	pipelineCreateInfo[:pInputAssemblyState] = inputAssemblyState
 	pipelineCreateInfo[:pRasterizationState] = rasterizationState
 	pipelineCreateInfo[:pColorBlendState] = colorBlendState
@@ -131,6 +164,8 @@ function preparePipelines(device, pipelineCache, pipelines)
 	pipelineCreateInfo[:pDynamicState] = dynamicState
 
 	# Create rendering pipeline
-	err = vkCreateGraphicsPipelines(device, pipelineCache, 1, pipelineCreateInfo, C_NULL, pipelines.solid)
+    pipeline_ref = Ref{api.VkPipeline}(api.VK_NULL_HANDLE)
+	err = api.vkCreateGraphicsPipelines(device, pipelineCache, 1, pipelineCreateInfo, C_NULL, pipeline_ref)
 	check(err)
+    pipeline_ref[]
 end

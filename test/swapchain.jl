@@ -22,14 +22,35 @@ end
 
 image_count(swapchain::SwapChain) = length(swapchain.images)
 
+function get_supported_depth_format(physicalDevice)
+	# Since all depth formats may be optional, we need to find a suitable depth format to use
+	# Start with the highest precision packed format
+	depthFormats = (
+		api.VK_FORMAT_D32_SFLOAT_S8_UINT,
+		api.VK_FORMAT_D32_SFLOAT,
+		api.VK_FORMAT_D24_UNORM_S8_UINT,
+		api.VK_FORMAT_D16_UNORM_S8_UINT,
+		api.VK_FORMAT_D16_UNORM
+	)
+	for format in depthFormats # form enum gues from 1-184
+		formatProps = Ref{api.VkFormatProperties}()
+		api.vkGetPhysicalDeviceFormatProperties(physicalDevice, format, formatProps)
+        println(formatProps[].optimalTilingFeatures)
+		#Format must support depth stencil attachment for optimal tiling
+		if (UInt32(formatProps[].optimalTilingFeatures) & UInt32(api.VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT)) != UInt32(0)
+			return true, format
+		end
+	end
 
+	return false, api.VK_FORMAT_UNDEFINED
+end
 function get_instance_proc_addr(inst::api.VkInstance, entrypoint::ASCIIString)
 	if inst == C_NULL
 		error("instance == C_NULL")
 	end
     entrypoint_ptr = api.vkGetInstanceProcAddr(inst, entrypoint)
-    if (entrypoint_ptr == C_NULL)                                   
-        error("get_instance_proc_addr with $entrypoint returned C_NULL")                                                        
+    if (entrypoint_ptr == C_NULL)
+        error("get_instance_proc_addr with $entrypoint returned C_NULL")
 	end
 	entrypoint_ptr
 end
@@ -39,8 +60,8 @@ function get_device_proc_addr(device::api.VkDevice, entrypoint::ASCIIString)
 		error("device == C_NULL")
 	end
     entrypoint_ptr = api.vkGetDeviceProcAddr(device, entrypoint)
-    if (entrypoint_ptr == C_NULL)                                   
-        error("get_device_proc_addr with $entrypoint returned C_NULL")                                                        
+    if (entrypoint_ptr == C_NULL)
+        error("get_device_proc_addr with $entrypoint returned C_NULL")
 	end
 	entrypoint_ptr
 end
@@ -60,7 +81,7 @@ global fpAcquireNextImageKHR
 global fpQueuePresentKHR
 
 function fpGetPhysicalDeviceSurfaceSupportKHR(physical_device, queue_family_index, surface, supported)
-	err = ccall(surface_function_pointers[1]::Ptr{Void}, 
+	err = ccall(surface_function_pointers[1]::Ptr{Void},
 		api.VkResult,
 		(api.VkPhysicalDevice, UInt8, api.VkSurfaceKHR, Ptr{api.VkBool32}),
 		physical_device, queue_family_index, surface, supported
@@ -69,8 +90,8 @@ function fpGetPhysicalDeviceSurfaceSupportKHR(physical_device, queue_family_inde
 end
 
 function fpGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, surface_capabilities)
-	err = ccall(surface_function_pointers[2]::Ptr{Void}, 
-		api.VkResult, 
+	err = ccall(surface_function_pointers[2]::Ptr{Void},
+		api.VkResult,
 		(api.VkPhysicalDevice, api.VkSurfaceKHR, Ptr{api.VkSurfaceCapabilitiesKHR}),
 		device, surface, surface_capabilities
 	)
@@ -78,8 +99,8 @@ function fpGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, surface_capa
 end
 
 function fpGetPhysicalDeviceSurfaceFormatsKHR(device, surface, surface_format_count, surface_formats)
-	err = ccall(surface_function_pointers[3]::Ptr{Void}, 
-		api.VkResult, 
+	err = ccall(surface_function_pointers[3]::Ptr{Void},
+		api.VkResult,
 		(api.VkPhysicalDevice, api.VkSurfaceKHR, Ptr{UInt32}, Ptr{api.VkSurfaceFormatKHR}),
 		device, surface, surface_format_count, surface_formats
 	)
@@ -87,8 +108,8 @@ function fpGetPhysicalDeviceSurfaceFormatsKHR(device, surface, surface_format_co
 end
 
 function fpGetPhysicalDeviceSurfacePresentModesKHR(device, queue_family_index, surface, supported)
-	err = ccall(surface_function_pointers[4]::Ptr{Void}, 
-		api.VkResult, 
+	err = ccall(surface_function_pointers[4]::Ptr{Void},
+		api.VkResult,
 		(api.VkPhysicalDevice, api.VkSurfaceKHR, Ptr{UInt32}, Ptr{api.VkPresentModeKHR}),
 		device, queue_family_index, surface, supported
 	)
@@ -190,23 +211,23 @@ function SwapChain(instance, device, physical_device, window, swapchain=SwapChai
 	graphicsQueueNodeIndex = typemax(UInt32)
 	presentQueueNodeIndex = typemax(UInt32)
 	for i=1:queue_count
-		if ((queue_props[i].queueFlags & UInt32(api.VK_QUEUE_GRAPHICS_BIT)) != 0) 
-			if (graphicsQueueNodeIndex == typemax(UInt32)) 
+		if ((queue_props[i].queueFlags & UInt32(api.VK_QUEUE_GRAPHICS_BIT)) != 0)
+			if (graphicsQueueNodeIndex == typemax(UInt32))
 				graphicsQueueNodeIndex = i
 			end
 
-			if (supports_present[i] == api.VK_TRUE) 
+			if (supports_present[i] == api.VK_TRUE)
 				graphicsQueueNodeIndex = i
 				presentQueueNodeIndex = i
 				break
 			end
 		end
 	end
-	if (presentQueueNodeIndex == typemax(UInt32)) 
+	if (presentQueueNodeIndex == typemax(UInt32))
 		# If there's no queue that supports both present and graphics
 		# try to find a separate present queue
 		for i=1:queue_count
-			if (supports_present[i] == api.VK_TRUE) 
+			if (supports_present[i] == api.VK_TRUE)
 				presentQueueNodeIndex = i
 				break
 			end
@@ -214,12 +235,12 @@ function SwapChain(instance, device, physical_device, window, swapchain=SwapChai
 	end
 
 	# Exit if either a graphics or a presenting queue hasn't been found
-	if (graphicsQueueNodeIndex == typemax(UInt32) || presentQueueNodeIndex == typemax(UInt32)) 
+	if (graphicsQueueNodeIndex == typemax(UInt32) || presentQueueNodeIndex == typemax(UInt32))
 		error("Could not find a graphics and/or presenting queue!")
 	end
 
 	# todo : Add support for separate graphics and presenting queue
-	if (graphicsQueueNodeIndex != presentQueueNodeIndex) 
+	if (graphicsQueueNodeIndex != presentQueueNodeIndex)
 		error("Separate graphics and presenting queues are not supported yet!")
 	end
 
@@ -236,9 +257,15 @@ function SwapChain(instance, device, physical_device, window, swapchain=SwapChai
 		# iterate over the list of available surface format and
 		# check for it's presence
 		swapchain.color_format = surface_formats[1].format
-	end	
+	end
 	swapchain.color_space = surface_formats[1].colorSpace
-	#TODO actually create swap chain type with black jack and buffers
+
+    # # Find a suitable depth format
+    found, validDepthFormat = get_supported_depth_format(physical_device)
+    if !found
+        error("No depth format found")
+    end
+    swapchain.depth_format = validDepthFormat
 	swapchain
 end
 
@@ -307,7 +334,7 @@ function setupSwapChain(command_buffer, width, height, swapchain)
 			swapchainPresentMode = api.VK_PRESENT_MODE_MAILBOX_KHR
 			break
 		end
-		if ((swapchainPresentMode != Vapi.K_PRESENT_MODE_MAILBOX_KHR) && (present_mode == api.VK_PRESENT_MODE_IMMEDIATE_KHR)) 
+		if ((swapchainPresentMode != api.VK_PRESENT_MODE_MAILBOX_KHR) && (present_mode == api.VK_PRESENT_MODE_IMMEDIATE_KHR))
 			swapchainPresentMode = api.VK_PRESENT_MODE_IMMEDIATE_KHR
 		end
 	end
@@ -320,7 +347,7 @@ function setupSwapChain(command_buffer, width, height, swapchain)
 
 	if surface_capabilities.supportedTransforms & UInt32(api.VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR) == UInt32(true)
 		preTransform = api.VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR
-	else 
+	else
 		preTransform = surface_capabilities.currentTransform
 	end
 
@@ -354,8 +381,10 @@ function setupSwapChain(command_buffer, width, height, swapchain)
 	end
 
 	images = get_images(device, swapchain)
+    swapchain.images = images
 	# Get the swap chain buffers containing the image and imageview
 	buffers = Array(SwapChainBuffer, length(images))
+    swapchain.buffers = buffers
 	for i=1:length(images)
 		color_attachment_view = Ref{api.VkImageViewCreateInfo}()
 		color_attachment_view[:sType] = api.VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO
@@ -379,10 +408,10 @@ function setupSwapChain(command_buffer, width, height, swapchain)
 
 		# Transform images from initial (undefined) to present layout
 		set_image_layout(
-			command_buffer, 
-			buffers[i].image, 
-			api.VK_IMAGE_ASPECT_COLOR_BIT, 
-			api.VK_IMAGE_LAYOUT_UNDEFINED, 
+			command_buffer,
+			buffers[i].image,
+			api.VK_IMAGE_ASPECT_COLOR_BIT,
+			api.VK_IMAGE_LAYOUT_UNDEFINED,
 			api.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
 		)
 
@@ -395,7 +424,7 @@ function setupSwapChain(command_buffer, width, height, swapchain)
 end
 
 
-function imageMemoryBarrier()
+function VkImageMemoryBarrier()
 	imageMemoryBarrier = Ref{api.VkImageMemoryBarrier}()
 	imageMemoryBarrier[:sType] = api.VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER
 	imageMemoryBarrier[:pNext] = C_NULL
@@ -411,9 +440,9 @@ Create an image memory barrier for changing the layout of
 an image and put it into an active command buffer
 See chapter 11.4 Image Layout for details
 """
-function set_image_layout(cmdbuffer, oldImageLayout, newImageLayout)
+function set_image_layout(cmdbuffer, image, aspectMask, oldImageLayout, newImageLayout)
 	# Create an image barrier object
-	imageMemoryBarrier = imageMemoryBarrier()
+	imageMemoryBarrier = VkImageMemoryBarrier()
 	imageMemoryBarrier[:oldLayout] = oldImageLayout
 	imageMemoryBarrier[:newLayout] = newImageLayout
 	imageMemoryBarrier[:image] = image
@@ -431,7 +460,7 @@ function set_image_layout(cmdbuffer, oldImageLayout, newImageLayout)
 	end
 	# Old layout is color attachment
 	# Make sure any writes to the color buffer have been finished
-	if (oldImageLayout == api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL) 
+	if (oldImageLayout == api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL)
 		imageMemoryBarrier[:srcAccessMask] = UInt32(api.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
 	end
 
@@ -471,7 +500,7 @@ function set_image_layout(cmdbuffer, oldImageLayout, newImageLayout)
 
 	# New layout is depth attachment
 	# Make sure any writes to depth/stencil buffer have been finished
-	if (newImageLayout == api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL) 
+	if (newImageLayout == api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
 		imageMemoryBarrier[:dstAccessMask] = imageMemoryBarrier[].dstAccessMask | UInt32(api.VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT)
 	end
 
@@ -489,13 +518,71 @@ function set_image_layout(cmdbuffer, oldImageLayout, newImageLayout)
 
 	# Put barrier inside setup command buffer
 	api.vkCmdPipelineBarrier(
-		cmdbuffer, 
-		srcStageFlags, 
-		destStageFlags, 
-		0, 
+		cmdbuffer,
+		srcStageFlags,
+		destStageFlags,
+		0,
 		0, C_NULL,
 		0, C_NULL,
 		1, imageMemoryBarrier
 	)
 
+end
+
+immutable DepthStencil
+    image::api.VkImage
+    mem::api.VkDeviceMemory
+    view::api.VkImageView
+end
+
+
+function setupDepthStencil(device, command_buffer, depthFormat, devicememory_properties)
+    image = CreateImage(device, C_NULL;
+    	sType = api.VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO,
+    	imageType = api.VK_IMAGE_TYPE_2D,
+    	format = depthFormat,
+    	extent = api.VkExtent3D(width, height, 1),
+    	mipLevels = 1,
+    	arrayLayers = 1,
+    	samples = api.VK_SAMPLE_COUNT_1_BIT,
+    	tiling = api.VK_IMAGE_TILING_OPTIMAL,
+    	usage = UInt32(api.VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT) | UInt32(api.VK_IMAGE_USAGE_TRANSFER_SRC_BIT),
+    	flags = 0,
+    )
+	mem_alloc = Ref{api.VkMemoryAllocateInfo}()
+	mem_alloc[:sType] = api.VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO
+	mem_alloc[:pNext] = C_NULL
+	mem_alloc[:allocationSize] = 0
+	mem_alloc[:memoryTypeIndex] = 0
+
+
+	memReqs = Ref{api.VkMemoryRequirements}()
+	api.vkGetImageMemoryRequirements(device, image, memReqs);
+	mem_alloc[:allocationSize] = memReqs[].size
+
+	typ = get_memory_type(memReqs[].memoryTypeBits, api.VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, devicememory_properties)
+    mem_alloc[:memoryTypeIndex] = typ
+    mem = Ref{api.VkDeviceMemory}()
+	err = api.vkAllocateMemory(device, mem_alloc, C_NULL, mem);
+	check(err)
+
+	err = api.vkBindImageMemory(device, image, mem[], 0)
+	check(err)
+	set_image_layout(
+        command_buffer, image,
+        api.VK_IMAGE_ASPECT_DEPTH_BIT, api.VK_IMAGE_LAYOUT_UNDEFINED,
+        api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+    )
+    subresource_range = api.VkImageSubresourceRange(
+        UInt32(api.VK_IMAGE_ASPECT_DEPTH_BIT) | UInt32(api.VK_IMAGE_ASPECT_STENCIL_BIT),
+        0, 1, 0, 1
+    )
+    view = CreateImageView(device, C_NULL;
+        sType = api.VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
+        viewType = api.VK_IMAGE_VIEW_TYPE_2D,
+        format = depthFormat,
+        subresourceRange = subresource_range,
+        image = image
+    )
+    DepthStencil(image, mem[], view)
 end

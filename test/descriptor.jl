@@ -34,7 +34,6 @@ function setupDescriptorSetLayout(device)
 	# for binding uniform buffers, image samplers, etc.
 	# So every shader binding should map to one descriptor set layout
 	# binding
-	descriptorSetLayout = Ref{api.VkDescriptorSetLayout}(C_NULL)
 	# Binding 0 : Uniform buffer (Vertex shader)
 	layoutBinding = Ref{api.VkDescriptorSetLayoutBinding}()
 	layoutBinding[:descriptorType] = api.VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER
@@ -42,28 +41,21 @@ function setupDescriptorSetLayout(device)
 	layoutBinding[:stageFlags] = api.VK_SHADER_STAGE_VERTEX_BIT
 	layoutBinding[:pImmutableSamplers] = C_NULL
 
-	descriptorLayout = Ref{api.VkDescriptorSetLayoutCreateInfo}()
-	descriptorLayout[:sType] = api.VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO
-	descriptorLayout[:pNext] = C_NULL
-	descriptorLayout[:bindingCount] = 1
-	descriptorLayout[:pBindings] = layoutBinding
-
-	err = api.vkCreateDescriptorSetLayout(device, descriptorLayout, C_NULL, descriptorSetLayout)
-	check(err)
-
+	descriptorSetLayout = CreateDescriptorSetLayout(device, C_NULL;
+        sType = api.VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
+        bindingCount = 1,
+        pBindings = layoutBinding
+    )
 	# Create the pipeline layout that is used to generate the rendering pipelines that
 	# are based on this descriptor set layout
 	# In a more complex scenario you would have different pipeline layouts for different
 	# descriptor set layouts that could be reused
-	pPipelineLayoutCreateInfo = Ref{api.VkPipelineLayoutCreateInfo}()
-	pPipelineLayoutCreateInfo[:sType] = api.VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
-	pPipelineLayoutCreateInfo[:pNext] = C_NULL
-	pPipelineLayoutCreateInfo[:setLayoutCount] = 1
-	pPipelineLayoutCreateInfo[:pSetLayouts] = descriptorSetLayout[]
-	pipelineLayout = Ref{api.VkPipelineLayout}(C_NULL)
-	err = api.vkCreatePipelineLayout(device, pPipelineLayoutCreateInfo, C_NULL, pipelineLayout)
-	check(err)
-	descriptorSetLayout[], pipelineLayout[]
+	pipelineLayout = CreatePipelineLayout(device, C_NULL;
+        sType = api.VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,
+        setLayoutCount = 1,
+        pSetLayouts = descriptorSetLayout
+    )
+	descriptorSetLayout, pipelineLayout
 end
 
 function setupDescriptorSet(device, descriptorPool, descriptorSetLayout)

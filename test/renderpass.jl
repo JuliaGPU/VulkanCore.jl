@@ -49,7 +49,7 @@ function setup_renderpass(swapchain)
 	renderPassInfo[:dependencyCount] = 0
 	renderPassInfo[:pDependencies] = C_NULL
 	renderpass = Ref{api.VkRenderPass}()
-	err = vkCreateRenderPass(device, renderPassInfo, C_NULL, renderpass)
+	err = api.vkCreateRenderPass(device, renderPassInfo, C_NULL, renderpass)
 	check(err)
 	renderpass[]
 end
@@ -72,6 +72,7 @@ function setup_framebuffer(swapchain, depth_stencil, renderpass, width, height)
 
 	# Create frame buffers for every swap chain image
 	framebuffers = Array(api.VkFramebuffer, image_count(swapchain))
+    println(length(framebuffers))
 	for i=1:length(framebuffers)
 		attachments[1] = swapchain.buffers[i].view
 		err = api.vkCreateFramebuffer(device, frameBufferCreateInfo, C_NULL, pointer(framebuffers, i))

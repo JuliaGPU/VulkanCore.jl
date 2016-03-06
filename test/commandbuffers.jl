@@ -48,11 +48,11 @@ type DrawCommandBuffer
 	postpresent
 end
 function create_command_buffers(device, swapchain)
-	# Create one command buffer per frame buffer 
+	# Create one command buffer per frame buffer
 	# in the swap chain
-	# Command buffers store a reference to the 
+	# Command buffers store a reference to the
 	# frame buffer inside their render pass info
-	# so for static usage withouth having to rebuild 
+	# so for static usage withouth having to rebuild
 	# them each frame, we use one per frame buffer
 
 	draw_command_buffers = Array(api.VkCommandBuffer, image_count(swapchain))
@@ -68,11 +68,11 @@ function create_command_buffers(device, swapchain)
 	# Command buffers for submitting present barriers
 	cmdBufAllocateInfo[:commandBufferCount] = 1
 	# Pre present
-	prePresentCmdBuffer = Ref{VkCommandBuffer}(api.VK_NULL_HANDLE)
+	prePresentCmdBuffer = Ref{api.VkCommandBuffer}(api.VK_NULL_HANDLE)
 	vkRes = api.vkAllocateCommandBuffers(device, cmdBufAllocateInfo, prePresentCmdBuffer)
 	check(err)
 	# Post present
-	postPresentCmdBuffer = Ref{VkCommandBuffer}(api.VK_NULL_HANDLE)
+	postPresentCmdBuffer = Ref{api.VkCommandBuffer}(api.VK_NULL_HANDLE)
 	vkRes = api.vkAllocateCommandBuffers(device, cmdBufAllocateInfo, postPresentCmdBuffer)
 	check(err)
 	DrawCommandBuffer(draw_command_buffers, prePresentCmdBuffer[], postPresentCmdBuffer[])
@@ -84,8 +84,8 @@ end
  into command buffers that are then resubmitted to the queue
 """
 function buildCommandBuffers(
-		draw_command_buffers, frameBuffers, swapchain, 
-		renderPass, width, height, pipelineLayout, 
+		draw_command_buffers, frameBuffers, swapchain,
+		renderPass, width, height, pipelineLayout,
 		descriptorSet, pipelines, vertices, indices
 	)
 
@@ -164,7 +164,7 @@ function buildCommandBuffers(
 
 		# Add a present memory barrier to the end of the command buffer
 		# This will transform the frame buffer color attachment to a
-		# new layout for presenting it to the windowing system integration 
+		# new layout for presenting it to the windowing system integration
 		prePresentBarrier = Ref{api.VkImageMemoryBarrier}()
 		prePresentBarrier[:sType] = api.VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER
 		prePresentBarrier[:pNext] = C_NULL
@@ -174,13 +174,13 @@ function buildCommandBuffers(
 		prePresentBarrier[:newLayout] = api.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
 		prePresentBarrier[:srcQueueFamilyIndex] = api.VK_QUEUE_FAMILY_IGNORED
 		prePresentBarrier[:dstQueueFamilyIndex] = api.VK_QUEUE_FAMILY_IGNORED
-		prePresentBarrier[:subresourceRange] = api.VkImageSubresourceRange(api.VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1)	
+		prePresentBarrier[:subresourceRange] = api.VkImageSubresourceRange(api.VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1)
 		prePresentBarrier[:image] = swapchain.buffers[i].image
 
 		api.vkCmdPipelineBarrier(
-			draw_command_buffers[i], 
-			api.VK_PIPELINE_STAGE_ALL_COMMANDS_BIT, 
-			api.VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, 
+			draw_command_buffers[i],
+			api.VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
+			api.VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
 			api.VK_FLAGS_NONE,
 			0, C_NULL,
 			0, C_NULL,
@@ -192,28 +192,38 @@ function buildCommandBuffers(
 	end
 end
 
-
-function flushSetupCommandBuffer(setup_command_buffer, command_pool, queue)
+# immutable VkSubmitInfo
+#   sType :: VkStructureType
+#   pNext :: Ptr{Void}
+#   waitSemaphoreCount :: UInt32
+#   pWaitSemaphores :: Ptr{VkSemaphore}
+#   pWaitDstStageMask :: Ptr{VkPipelineStageFlags}
+#   commandBufferCount :: UInt32
+#   pCommandBuffers :: Ptr{VkCommandBuffer}
+#   signalSemaphoreCount :: UInt32
+#   pSignalSemaphores :: Ptr{VkSemaphore}
+# end
+function flushSetupCommandBuffer(device, setup_command_buffer, command_pool, queue)
 	if (setup_command_buffer == api.VK_NULL_HANDLE)
 		return nothing
 	end
 	err = api.vkEndCommandBuffer(setup_command_buffer)
 	check(err)
-
+    cmdbuff = [setup_command_buffer]
 	submitInfo = Ref{api.VkSubmitInfo}()
-	submitInfo[:sType] = api.VK_STRUCTURE_TYPE_SUBMIT_INFO
+    submitInfo[:sType] = api.VK_STRUCTURE_TYPE_SUBMIT_INFO
+    submitInfo[:pNext] = C_NULL
+    submitInfo[:waitSemaphoreCount] = 0
+    submitInfo[:pWaitDstStageMask] = 0
 	submitInfo[:commandBufferCount] = 1
-	submitInfo[:pCommandBuffers] = setup_command_buffer
+	submitInfo[:pCommandBuffers] = cmdbuff
+    submitInfo[:signalSemaphoreCount] = 0
 
 	err = api.vkQueueSubmit(queue, 1, submitInfo, api.VK_NULL_HANDLE)
 	check(err)
 	err = api.vkQueueWaitIdle(queue)
 	check(err)
 
-	api.vkFreeCommandBuffers(device, command_pool, 1, setup_command_buffer)
-	setup_command_buffer = api.VK_NULL_HANDLE # todo : check if still necessary
+	api.vkFreeCommandBuffers(device, command_pool, 1, cmdbuff)
 	nothing
 end
-
-
-

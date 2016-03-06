@@ -57,7 +57,7 @@ err = api.vkCreateInstance(inst_info, C_NULL, instance)
 println(err)
 println(instance)
 
-gpu_count = Ref{Cuint}(0) 
+gpu_count = Ref{Cuint}(0)
 err = api.vkEnumeratePhysicalDevices(instance[], gpu_count, C_NULL)
 println(err)
 devices = Array(api.VkPhysicalDevice, gpu_count[])
