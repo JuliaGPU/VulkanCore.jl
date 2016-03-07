@@ -1,82 +1,89 @@
 function setup_renderpass(swapchain)
-	attachments = Array(api.VkAttachmentDescription, 2)
+	attachments = [
+        create(api.VkAttachmentDescription,
+            format = swapchain.color_format,
+            samples = api.VK_SAMPLE_COUNT_1_BIT,
+            loadOp = api.VK_ATTACHMENT_LOAD_OP_CLEAR,
+            storeOp = api.VK_ATTACHMENT_STORE_OP_STORE,
+            stencilLoadOp = api.VK_ATTACHMENT_LOAD_OP_DONT_CARE,
+            stencilStoreOp = api.VK_ATTACHMENT_STORE_OP_DONT_CARE,
+            initialLayout = api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+            finalLayout = api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+        ),
+        create(api.VkAttachmentDescription,
+            format = swapchain.depth_format,
+            samples = api.VK_SAMPLE_COUNT_1_BIT,
+            loadOp = api.VK_ATTACHMENT_LOAD_OP_CLEAR,
+            storeOp = api.VK_ATTACHMENT_STORE_OP_STORE,
+            stencilLoadOp = api.VK_ATTACHMENT_LOAD_OP_DONT_CARE,
+            stencilStoreOp = api.VK_ATTACHMENT_STORE_OP_DONT_CARE,
+            initialLayout = api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
+            finalLayout = api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+        )
+    ]
 
-	attachments[1, :format] = swapchain.color_format
-	attachments[1, :samples] = api.VK_SAMPLE_COUNT_1_BIT
-	attachments[1, :loadOp] = api.VK_ATTACHMENT_LOAD_OP_CLEAR
-	attachments[1, :storeOp] = api.VK_ATTACHMENT_STORE_OP_STORE
-	attachments[1, :stencilLoadOp] = api.VK_ATTACHMENT_LOAD_OP_DONT_CARE
-	attachments[1, :stencilStoreOp] = api.VK_ATTACHMENT_STORE_OP_DONT_CARE
-	attachments[1, :initialLayout] = api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
-	attachments[1, :finalLayout] = api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+    colorReference = [create(api.VkAttachmentReference,
+        attachment = 0,
+        layout = api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+    )]
 
-	attachments[2, :format] = swapchain.depth_format
-	attachments[2, :samples] = api.VK_SAMPLE_COUNT_1_BIT
-	attachments[2, :loadOp] = api.VK_ATTACHMENT_LOAD_OP_CLEAR
-	attachments[2, :storeOp] = api.VK_ATTACHMENT_STORE_OP_STORE
-	attachments[2, :stencilLoadOp] = api.VK_ATTACHMENT_LOAD_OP_DONT_CARE
-	attachments[2, :stencilStoreOp] = api.VK_ATTACHMENT_STORE_OP_DONT_CARE
-	attachments[2, :initialLayout] = api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
-	attachments[2, :finalLayout] = api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+    depthReference = create_ref(api.VkAttachmentReference,
+        attachment = 1,
+        layout = api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+    )
 
-	colorReference = Ref{api.VkAttachmentReference}()
-	colorReference[:attachment] = 0
-	colorReference[:layout] = api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+    subpass = [create(api.VkSubpassDescription,
+        pipelineBindPoint = api.VK_PIPELINE_BIND_POINT_GRAPHICS,
+        flags = 0,
+        inputAttachmentCount = 0,
+        pInputAttachments = C_NULL,
+        colorAttachmentCount = 1,
+        pColorAttachments = colorReference,
+        pResolveAttachments = C_NULL,
+        pDepthStencilAttachment = depthReference,
+        preserveAttachmentCount = 0,
+        pPreserveAttachments = C_NULL,
+    )]
 
-	depthReference = Ref{api.VkAttachmentReference}()
-	depthReference[:attachment] = 1
-	depthReference[:layout] = api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
-
-	subpass = Ref{api.VkSubpassDescription}()
-	subpass[:pipelineBindPoint] = api.VK_PIPELINE_BIND_POINT_GRAPHICS
-	subpass[:flags] = 0
-	subpass[:inputAttachmentCount] = 0
-	subpass[:pInputAttachments] = C_NULL
-	subpass[:colorAttachmentCount] = 1
-	subpass[:pColorAttachments] = colorReference
-	subpass[:pResolveAttachments] = C_NULL
-	subpass[:pDepthStencilAttachment] = depthReference
-	subpass[:preserveAttachmentCount] = 0
-	subpass[:pPreserveAttachments] = C_NULL
-
-	renderPassInfo = Ref{api.VkRenderPassCreateInfo}()
-	renderPassInfo[:sType] = api.VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO
-	renderPassInfo[:pNext] = C_NULL
-	renderPassInfo[:attachmentCount] = 2
-	renderPassInfo[:pAttachments] = attachments
-	renderPassInfo[:subpassCount] = 1
-	renderPassInfo[:pSubpasses] = subpass
-	renderPassInfo[:dependencyCount] = 0
-	renderPassInfo[:pDependencies] = C_NULL
-	renderpass = Ref{api.VkRenderPass}()
-	err = api.vkCreateRenderPass(device, renderPassInfo, C_NULL, renderpass)
-	check(err)
-	renderpass[]
+    renderPassInfo = create_ref(api.VkRenderPassCreateInfo,
+        sType = api.VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
+        attachmentCount = 2,
+        pAttachments = attachments,
+        subpassCount = 1,
+        pSubpasses = subpass,
+        dependencyCount = 0,
+        pDependencies = C_NULL
+    )
+    renderpass_ref = Ref{api.VkRenderPass}(api.VK_NULL_HANDLE)
+    err = api.vkCreateRenderPass(device, renderPassInfo, C_NULL, renderpass_ref)
+    check(err)
+    renderpass_ref[]
 end
 
 function setup_framebuffer(swapchain, depth_stencil, renderpass, width, height)
-	attachments = Array(api.VkImageView, 2)
+    attachments = Array(api.VkImageView, 2)
 
-	# Depth/Stencil attachment is the same for all frame buffers
-	attachments[2] = depth_stencil.view
+    # Depth/Stencil attachment is the same for all frame buffers
+    attachments[2] = depth_stencil.view
 
-	frameBufferCreateInfo = Ref{api.VkFramebufferCreateInfo}()
-	frameBufferCreateInfo[:sType] = api.VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO
-	frameBufferCreateInfo[:pNext] = C_NULL
-	frameBufferCreateInfo[:renderPass] = renderpass
-	frameBufferCreateInfo[:attachmentCount] = 2
-	frameBufferCreateInfo[:pAttachments] = attachments
-	frameBufferCreateInfo[:width] = width
-	frameBufferCreateInfo[:height] = height
-	frameBufferCreateInfo[:layers] = 1
+    frameBufferCreateInfo = create_ref(api.VkFramebufferCreateInfo,
+        sType = api.VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
+        pNext = C_NULL,
+        renderPass = renderpass,
+        attachmentCount = 2,
+        pAttachments = attachments,
+        width = width,
+        height = height,
+        layers = 1
+    )
 
-	# Create frame buffers for every swap chain image
-	framebuffers = Array(api.VkFramebuffer, image_count(swapchain))
-    println(length(framebuffers))
-	for i=1:length(framebuffers)
-		attachments[1] = swapchain.buffers[i].view
-		err = api.vkCreateFramebuffer(device, frameBufferCreateInfo, C_NULL, pointer(framebuffers, i))
-		check(err)
-	end
-	framebuffers
+    # Create frame buffers for every swap chain image
+    framebuffers = Array(api.VkFramebuffer, image_count(swapchain))
+    for i=1:length(framebuffers)
+        attachments[1] = swapchain.buffers[i].view
+        fb_ref = Ref(framebuffers, i)
+        err = api.vkCreateFramebuffer(device, frameBufferCreateInfo, C_NULL, fb_ref)
+        check(err)
+    end
+    framebuffers
 end

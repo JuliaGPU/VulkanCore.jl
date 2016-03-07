@@ -89,15 +89,14 @@ end
 end
 
 function create_surface(instance::api.VkInstance, window::Window)
-	createInfo = Ref(api.VkXcbSurfaceCreateInfoKHR(
-		api.VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR,
-		C_NULL,
-		0,
-		window.connection,
-		window.window
-	))
-	surface = Ref{api.VkSurfaceKHR}(C_NULL)
-	err = api.vkCreateXcbSurfaceKHR(instance, createInfo, C_NULL, surface)
-	check(err)
-	surface[]
+
+    createInfo = create_ref(api.VkXcbSurfaceCreateInfoKHR,
+        sType = api.VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR,
+        connection = window.connection,
+        window = window.window
+    )
+    surface = Ref{api.VkSurfaceKHR}(api.VK_NULL_HANDLE)
+    err = api.vkCreateXcbSurfaceKHR(instance, createInfo, C_NULL, surface)
+    check(err)
+    surface[]
 end

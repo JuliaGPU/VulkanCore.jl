@@ -27,7 +27,6 @@ end
 
 width, height = 512, 512
 
-
 instance = create_instance("test")
 device, physical_device, queue, devicememory_properties = get_graphic_device(instance, false)
 semaphore = prepareSemaphore(device)
@@ -178,6 +177,7 @@ function draw(swapChain, semaphores, queue, commandbuffer)
     err = api.vkQueueWaitIdle(queue);
     check(err)
 end
+
 
 for i=1:1000
     println("everyday I'm renderin'")

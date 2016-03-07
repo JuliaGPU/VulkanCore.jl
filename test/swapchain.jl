@@ -343,7 +343,6 @@ function setupSwapChain(device, command_buffer, width, height, swapchain)
 	present_modes = get_present_modes(physical_device, swapchain.surface)
 	surface_capabilities = get_surface_capabilities(physical_device, swapchain.surface)
 
-	swapchain_extent = Ref{api.VkExtent2D}()
 	# width and height are either both -1, or both not -1.
 	if (surface_capabilities.currentExtent.width == -1)
 		# If the surface size is undefined, the size is set to
@@ -377,7 +376,6 @@ function setupSwapChain(device, command_buffer, width, height, swapchain)
 	else
 		preTransform = surface_capabilities.currentTransform
 	end
-    println("desired image count ", desiredNumberOfSwapchainImages)
 	swapchainCI = create_ref(api.VkSwapchainCreateInfoKHR,
 	    sType = api.VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
 	    surface = swapchain.surface,
@@ -405,23 +403,6 @@ function setupSwapChain(device, command_buffer, width, height, swapchain)
 	buffers = Array(SwapChainBuffer, length(images))
     swapchain.buffers = buffers
 	for i=1:length(images)
-		color_attachment_view = Ref{api.VkImageViewCreateInfo}()
-		color_attachment_view[:sType] = api.VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO
-		color_attachment_view[:pNext] = C_NULL
-		color_attachment_view[:format] = swapchain.color_format
-		color_attachment_view[:components] = api.VkComponentMapping(
-			api.VK_COMPONENT_SWIZZLE_R,
-			api.VK_COMPONENT_SWIZZLE_G,
-			api.VK_COMPONENT_SWIZZLE_B,
-			api.VK_COMPONENT_SWIZZLE_A
-		)
-
-		color_attachment_view[:subresourceRange] = api.VkImageSubresourceRange(
-			api.VK_IMAGE_ASPECT_COLOR_BIT,
-			0,1,0,1
-		)
-		color_attachment_view[:viewType] = api.VK_IMAGE_VIEW_TYPE_2D
-		color_attachment_view[:flags] = 0
 
 		buffers[i, :image] = images[i]
 
@@ -433,24 +414,39 @@ function setupSwapChain(device, command_buffer, width, height, swapchain)
 			api.VK_IMAGE_LAYOUT_UNDEFINED,
 			api.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
 		)
-
-		color_attachment_view[:image] = buffers[i].image
-		view = Ref{api.VkImageView}(C_NULL)
-		err = api.vkCreateImageView(device, color_attachment_view, C_NULL, view)
+        color_attachment_view = create_ref(api.VkImageViewCreateInfo,
+            sType = api.VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
+            pNext = C_NULL,
+            format = swapchain.color_format,
+            components = api.VkComponentMapping(
+                api.VK_COMPONENT_SWIZZLE_R,
+                api.VK_COMPONENT_SWIZZLE_G,
+                api.VK_COMPONENT_SWIZZLE_B,
+                api.VK_COMPONENT_SWIZZLE_A
+            ),
+            subresourceRange = api.VkImageSubresourceRange(
+                api.VK_IMAGE_ASPECT_COLOR_BIT,
+                0,1,0,1
+            ),
+            viewType = api.VK_IMAGE_VIEW_TYPE_2D,
+            flags = 0,
+            image = buffers[i].image
+        )
+		view_ref = Ref{api.VkImageView}(C_NULL)
+		err = api.vkCreateImageView(device, color_attachment_view, C_NULL, view_ref)
 		check(err)
-		buffers[i, :view] = view[]
+		buffers[i, :view] = view_ref[]
 	end
 end
 
 
 function VkImageMemoryBarrier()
-	imageMemoryBarrier = Ref{api.VkImageMemoryBarrier}()
-	imageMemoryBarrier[:sType] = api.VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER
-	imageMemoryBarrier[:pNext] = C_NULL
-	# Some default values
-	imageMemoryBarrier[:srcQueueFamilyIndex] = api.VK_QUEUE_FAMILY_IGNORED
-	imageMemoryBarrier[:dstQueueFamilyIndex] = api.VK_QUEUE_FAMILY_IGNORED
-	return imageMemoryBarrier
+    return create_ref(api.VkImageMemoryBarrier,
+        sType = api.VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER,
+        # Some default values
+        srcQueueFamilyIndex = api.VK_QUEUE_FAMILY_IGNORED,
+        dstQueueFamilyIndex = api.VK_QUEUE_FAMILY_IGNORED
+    )
 end
 
 
@@ -566,21 +562,20 @@ function setupDepthStencil(device, command_buffer, depthFormat, devicememory_pro
     	samples = api.VK_SAMPLE_COUNT_1_BIT,
     	tiling = api.VK_IMAGE_TILING_OPTIMAL,
     	usage = UInt32(api.VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT) | UInt32(api.VK_IMAGE_USAGE_TRANSFER_SRC_BIT),
-    	flags = 0,
+    	flags = 0
     )
-	mem_alloc = Ref{api.VkMemoryAllocateInfo}()
-	mem_alloc[:sType] = api.VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO
-	mem_alloc[:pNext] = C_NULL
-	mem_alloc[:allocationSize] = 0
-	mem_alloc[:memoryTypeIndex] = 0
+
 
 
 	memReqs = Ref{api.VkMemoryRequirements}()
 	api.vkGetImageMemoryRequirements(device, image, memReqs);
-	mem_alloc[:allocationSize] = memReqs[].size
 
 	typ = get_memory_type(memReqs[].memoryTypeBits, api.VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, devicememory_properties)
-    mem_alloc[:memoryTypeIndex] = typ
+    mem_alloc = create_ref(api.VkMemoryAllocateInfo,
+        sType = api.VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
+        allocationSize = memReqs[].size,
+        memoryTypeIndex = typ
+    )
     mem = Ref{api.VkDeviceMemory}()
 	err = api.vkAllocateMemory(device, mem_alloc, C_NULL, mem);
 	check(err)

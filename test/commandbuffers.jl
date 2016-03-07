@@ -9,22 +9,25 @@ function createCommandPool(device, swapchain)
 	check(err)
 	command_pool_ref[]
 end
-function createSetupCommandBuffer(device, command_pool)
-	setup_command_buffer = Ref{api.VkCommandBuffer}(api.VK_NULL_HANDLE)
 
-	 cmdBufAllocateInfo = commandBufferAllocateInfo(
-		command_pool,
-		api.VK_COMMAND_BUFFER_LEVEL_PRIMARY,
-		1
-	)
+function createSetupCommandBuffer(device, command_pool)
+	setup_command_buffer = Array(api.VkCommandBuffer, 1)
+
+    cmdBufAllocateInfo = create_ref(api.VkCommandBufferAllocateInfo,
+        sType = api.VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
+        commandPool = command_pool,
+        level = api.VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+        commandBufferCount = 1
+    )
 
 	err = api.vkAllocateCommandBuffers(device, cmdBufAllocateInfo, setup_command_buffer)
 	check(err)
 
 	# todo : Command buffer is also started here, better put somewhere else
 	# todo : Check if necessaray at all...
-	cmdBufInfo = Ref{api.VkCommandBufferBeginInfo}()
-	cmdBufInfo[:sType] = api.VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO
+	cmdBufInfo = create_ref(api.VkCommandBufferBeginInfo,
+	   sType = api.VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO
+    )
 	# todo : check null handles, flags?
 
 	err = api.vkBeginCommandBuffer(setup_command_buffer[], cmdBufInfo)
@@ -33,14 +36,6 @@ function createSetupCommandBuffer(device, command_pool)
 end
 
 
-function commandBufferAllocateInfo(commandPool, level, bufferCount)
-	commandBufferAllocateInfo = Ref{api.VkCommandBufferAllocateInfo}()
-	commandBufferAllocateInfo[:sType] = api.VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO
-	commandBufferAllocateInfo[:commandPool] = commandPool
-	commandBufferAllocateInfo[:level] = level
-	commandBufferAllocateInfo[:commandBufferCount] = bufferCount
-	return commandBufferAllocateInfo
-end
 
 
 type DrawCommandBuffer
@@ -57,23 +52,24 @@ function create_command_buffers(device, swapchain)
 	# them each frame, we use one per frame buffer
 
 	draw_command_buffers = Array(api.VkCommandBuffer, image_count(swapchain))
+    cmdBufAllocateInfo = create_ref(api.VkCommandBufferAllocateInfo,
+        sType = api.VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
+        commandPool = command_pool,
+        level = api.VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+        commandBufferCount = length(draw_command_buffers)
+    )
 
-	cmdBufAllocateInfo = commandBufferAllocateInfo(
-		command_pool,
-		api.VK_COMMAND_BUFFER_LEVEL_PRIMARY,
-		length(draw_command_buffers)
-	)
 	err = api.vkAllocateCommandBuffers(device, cmdBufAllocateInfo, draw_command_buffers)
 	check(err)
 
 	# Command buffers for submitting present barriers
 	cmdBufAllocateInfo[:commandBufferCount] = 1
 	# Pre present
-	prePresentCmdBuffer = Ref{api.VkCommandBuffer}(api.VK_NULL_HANDLE)
+	prePresentCmdBuffer = Array(api.VkCommandBuffer, 1)
 	vkRes = api.vkAllocateCommandBuffers(device, cmdBufAllocateInfo, prePresentCmdBuffer)
 	check(err)
 	# Post present
-	postPresentCmdBuffer = Ref{api.VkCommandBuffer}(api.VK_NULL_HANDLE)
+	postPresentCmdBuffer = Array(api.VkCommandBuffer, 1)
 	vkRes = api.vkAllocateCommandBuffers(device, cmdBufAllocateInfo, postPresentCmdBuffer)
 	check(err)
 	DrawCommandBuffer(draw_command_buffers, prePresentCmdBuffer[], postPresentCmdBuffer[])
@@ -98,7 +94,7 @@ function buildCommandBuffers(
     ))
 
     clearValues = api.VkClearValue[
-        api.VkClearValue(api.VkClearColorValue((0.025f0, 0.025f0, 1.0f0, 1.0f0))),
+        api.VkClearValue(api.VkClearColorValue((0.025f0, 0.5f0, 1.0f0, 1.0f0))),
         api.VkClearValue(api.VkClearColorValue((1f0, reinterpret(Float32, UInt32(0)), 0f0, 0f0)))
     ]
 
@@ -156,7 +152,7 @@ function buildCommandBuffers(
         api.vkCmdBindIndexBuffer(cmd_buffers[i], indices.buffer, 0, api.VK_INDEX_TYPE_UINT32)
 
         # Draw indexed triangle
-        api.vkCmdDrawIndexed(cmd_buffers[i], 3, 1, 0, 0, 1)
+        api.vkCmdDrawIndexed(cmd_buffers[i], length(indices), 1, 0, 0, 1)
 
         api.vkCmdEndRenderPass(cmd_buffers[i])
 
@@ -189,17 +185,7 @@ function buildCommandBuffers(
     end
 end
 
-# immutable VkSubmitInfo
-#   sType :: VkStructureType
-#   pNext :: Ptr{Void}
-#   waitSemaphoreCount :: UInt32
-#   pWaitSemaphores :: Ptr{VkSemaphore}
-#   pWaitDstStageMask :: Ptr{VkPipelineStageFlags}
-#   commandBufferCount :: UInt32
-#   pCommandBuffers :: Ptr{VkCommandBuffer}
-#   signalSemaphoreCount :: UInt32
-#   pSignalSemaphores :: Ptr{VkSemaphore}
-# end
+
 function flushSetupCommandBuffer(device, setup_command_buffer, command_pool, queue)
 	if (setup_command_buffer == api.VK_NULL_HANDLE)
 		return nothing

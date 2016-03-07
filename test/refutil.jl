@@ -1,4 +1,11 @@
 # the c code is much easier to port if we can do setindex on Ref{CompositeType}
+
+
+"""
+Creates a type `T` from keyword arguments referring to the fields.
+Converts arrays and refs to pointers correctly and initialises missing keyword
+arguments with 0/C_NULL.
+"""
 function create{T}(::Type{T}; kw_args...)
     kw_dict = Dict{Symbol, Any}(kw_args)
     fnames = fieldnames(T)
@@ -17,6 +24,11 @@ function create{T}(::Type{T}; kw_args...)
     end
     T(args...)
 end
+"""
+Creates a ref from type `T` from keyword arguments referring to the fields.
+Converts arrays and refs to pointers correctly and initialises missing keyword
+arguments with 0/C_NULL.
+"""
 function create_ref{T}(::Type{T}; kw_args...)
     Ref(create(T; kw_args...))
 end

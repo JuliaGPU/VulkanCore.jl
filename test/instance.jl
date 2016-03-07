@@ -1,13 +1,13 @@
 const validation_layer = [
-	"VK_LAYER_LUNARG_threading",
-	"VK_LAYER_LUNARG_mem_tracker",
-	"VK_LAYER_LUNARG_object_tracker",
-	"VK_LAYER_LUNARG_draw_state",
-	"VK_LAYER_LUNARG_param_checker",
-	"VK_LAYER_LUNARG_swapchain",
-	"VK_LAYER_LUNARG_device_limits",
-	"VK_LAYER_LUNARG_image",
-	#"VK_LAYER_GOOGLE_unique_objects",
+    "VK_LAYER_LUNARG_threading",
+    "VK_LAYER_LUNARG_mem_tracker",
+    "VK_LAYER_LUNARG_object_tracker",
+    "VK_LAYER_LUNARG_draw_state",
+    "VK_LAYER_LUNARG_param_checker",
+    "VK_LAYER_LUNARG_swapchain",
+    "VK_LAYER_LUNARG_device_limits",
+    "VK_LAYER_LUNARG_image",
+    #"VK_LAYER_GOOGLE_unique_objects",
 ]
 
 
@@ -82,7 +82,7 @@ function create_instance(appname::AbstractString, validation=true)
         sType = api.VK_STRUCTURE_TYPE_APPLICATION_INFO,
         pApplicationName = appname,
         pEngineName = appname,
-        apiVersion = api.VK_MAKE_VERSION(1, 0, 4)
+        apiVersion = api.VK_MAKE_VERSION(1, 0, 3)
     )
     instance = CreateInstance(C_NULL;
         sType = api.VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
