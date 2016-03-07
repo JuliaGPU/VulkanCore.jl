@@ -7,6 +7,7 @@ type VulkanBuffer{T}
 	buffer::api.VkBuffer
 	length::Int
 end
+Base.length(v::VulkanBuffer) = v.length
 function get_memory_type(typebits, properties, deviceMemoryProperties)
 	for i_int=0:31
 		i = UInt32(i_int)
@@ -57,37 +58,44 @@ end
 
 
 function setup_binding_description()
-    bindingDescriptions = Array(api.VkVertexInputBindingDescription, 1)
-    attributeDescriptions = Array(api.VkVertexInputAttributeDescription, 2)
     VERTEX_BUFFER_BIND_ID = 0
-    bindingDescriptions[1, :binding] = VERTEX_BUFFER_BIND_ID
-    bindingDescriptions[1, :stride] = sizeof(Vertex{3, Float32})
-    bindingDescriptions[1, :inputRate] = api.VK_VERTEX_INPUT_RATE_VERTEX
+    bindingDescriptions = [
+        create(api.VkVertexInputBindingDescription,
+            binding = VERTEX_BUFFER_BIND_ID,
+            stride = sizeof(Vertex{3, Float32}),
+            inputRate = api.VK_VERTEX_INPUT_RATE_VERTEX
+        )
+    ]
 
     # Attribute descriptions
     # Describes memory layout and shader attribute locations
     # Location 0 : Position
-    attributeDescriptions[1, :binding] = VERTEX_BUFFER_BIND_ID
-    attributeDescriptions[1, :location] = 0
-    attributeDescriptions[1, :format] = api.VK_FORMAT_R32G32B32_SFLOAT
-    attributeDescriptions[1, :offset] = 0
-    attributeDescriptions[1, :binding] = 0
+    attributeDescriptions = [
+        create(api.VkVertexInputAttributeDescription,
+            binding = VERTEX_BUFFER_BIND_ID,
+            location = 0,
+            format = api.VK_FORMAT_R32G32B32_SFLOAT,
+            offset = 0,
+            binding = 0
+        ),
+        create(api.VkVertexInputAttributeDescription,
+            binding = VERTEX_BUFFER_BIND_ID,
+            location = 1,
+            format = api.VK_FORMAT_R32G32B32_SFLOAT,
+            offset = sizeof(Float32) * 3,
+            binding = 0,
+        )
+    ]
     # Location 1 : Color
-    attributeDescriptions[2, :binding] = VERTEX_BUFFER_BIND_ID
-    attributeDescriptions[2, :location] = 1
-    attributeDescriptions[2, :format] = api.VK_FORMAT_R32G32B32_SFLOAT
-    attributeDescriptions[2, :offset] = sizeof(Float32) * 3
-    attributeDescriptions[2, :binding] = 0
-
     # Assign to vertex buffer
-    vi = Ref(PipelineVertexInputStateCreateInfo(
+    vi = create_ref(api.VkPipelineVertexInputStateCreateInfo,
         sType = api.VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
         pNext = C_NULL,
         vertexBindingDescriptionCount = length(bindingDescriptions),
         pVertexBindingDescriptions = bindingDescriptions,
         vertexAttributeDescriptionCount = length(attributeDescriptions),
         pVertexAttributeDescriptions = attributeDescriptions,
-    ))
+    )
 end
 
 immutable UniformBuffer
@@ -102,15 +110,16 @@ type Camera
 	view::Mat4f0
 end
 
+function allocate_memory(device, allocation_info)
+    mem_ref = Ref{api.VkDeviceMemory}()
+    err = api.vkAllocateMemory(device, allocation_info, C_NULL, mem_ref)
+    check(err)
+    mem_ref[]
+end
 function prepareUniformBuffers(device, deviceMemoryProperties)
     # Prepare and initialize uniform buffer containing shader uniforms
-
     # Vertex shader uniform buffer block
-    allocInfo = Ref{api.VkMemoryAllocateInfo}()
-    allocInfo[:sType] = api.VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO
-    allocInfo[:pNext] = C_NULL
-    allocInfo[:allocationSize] = 0
-    allocInfo[:memoryTypeIndex] = 0
+
     # Create a new buffer
     buffer = CreateBuffer(device, C_NULL;
         sType = api.VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
@@ -118,31 +127,30 @@ function prepareUniformBuffers(device, deviceMemoryProperties)
         usage = api.VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
     )
     # Get memory requirements including size, alignment and memory type
-     memReqs = Ref{api.VkMemoryRequirements}()
+    memreqs_ref = Ref{api.VkMemoryRequirements}()
 
-    api.vkGetBufferMemoryRequirements(device, buffer, memReqs)
-    allocInfo[:allocationSize] = memReqs[].size;
-    # Gets the appropriate memory type for this type of buffer allocation
-    # Only memory types that are visible to the host
-    allocInfo[:memoryTypeIndex] = get_memory_type(
-        memReqs[].memoryTypeBits,
-        api.VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
-        deviceMemoryProperties
+    api.vkGetBufferMemoryRequirements(device, buffer, memreqs_ref)
+    memreqs = memreqs_ref[]
+    allocation_info = create_ref(api.VkMemoryAllocateInfo,
+        sType = api.VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
+        allocationSize = memreqs.size,
+        memoryTypeIndex = get_memory_type(
+            memreqs.memoryTypeBits,
+            api.VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+            deviceMemoryProperties
+        )
     )
     # Allocate memory for the uniform buffer
-    mem_ref = Ref{api.VkDeviceMemory}()
-    err = api.vkAllocateMemory(device, allocInfo, C_NULL, mem_ref)
-    mem = mem_ref[]
-    check(err)
+    mem = allocate_memory(device, allocation_info)
     # Bind memory to buffer
     err = api.vkBindBufferMemory(device, buffer, mem, 0);
     check(err)
-    buffer_info = Ref{api.VkDescriptorBufferInfo}()
     # Store information in the uniform's descriptor
-    descriptor = Ref{api.VkDescriptorBufferInfo}()
-    descriptor[:buffer] = buffer;
-    descriptor[:offset] = 0;
-    descriptor[:range ] = sizeof(Camera)
+    descriptor = create_ref(api.VkDescriptorBufferInfo,
+        buffer = buffer,
+        offset = 0,
+        range  = sizeof(Camera)
+    )
     ubo = UniformBuffer(buffer, mem, descriptor)
     camera = Camera(
         eye(Mat4f0),

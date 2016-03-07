@@ -57,7 +57,10 @@ end
 
 
 
-
+immutable PhysicalDevice
+    ref::api.VkPhysicalDevice
+    memory_properties::api.VkPhysicalDeviceMemoryProperties
+end
 function get_graphic_device(instance, enable_validation)
 	# Enumerate devices
 	physical_devices = collect_devices(instance)
@@ -72,12 +75,12 @@ function get_graphic_device(instance, enable_validation)
 	# Vulkan device
 		# Vulkan device
 	queuePriorities = [0.0f0]
-	queue_create_info = Ref(DeviceQueueCreateInfo(
+	queue_create_info = create_ref(api.VkDeviceQueueCreateInfo,
         sType = api.VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
     	queueFamilyIndex = graphic_queue_index,
     	queueCount = 1,
     	pQueuePriorities = queuePriorities
-    ))
+    )
 	device = create_device(physical_device, queue_create_info, enable_validation)
 
 	# Get the graphics queue

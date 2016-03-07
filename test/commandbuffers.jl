@@ -96,15 +96,11 @@ function buildCommandBuffers(
 		C_NULL
 	))
 
-
 	clearValues = api.VkClearValue[
-		api.VkClearValue(api.VkClearColorValue(0.025f0, 0.025f0, 0.025f0, 1.0f0)),
-		api.VkClearValue(api.VkClearColorValue(1f0, reinterpret(Float32, UInt32(0)), 0f0, 0f0))
+		api.VkClearValue(api.VkClearColorValue((0.025f0, 0.025f0, 1.0f0, 1.0f0))),
+		api.VkClearValue(api.VkClearColorValue((1f0, reinterpret(Float32, UInt32(0)), 0f0, 0f0)))
 	]
 
-
-	framebuffer = Ref{api.VkFramebuffer}(C_NULL)
-	renderpass = Ref{api.VkRenderPass}(C_NULL)
 
 
 	renderPassBeginInfo = Ref{api.VkRenderPassBeginInfo}()
@@ -118,15 +114,15 @@ function buildCommandBuffers(
 	renderPassBeginInfo[:clearValueCount] = 2
 	renderPassBeginInfo[:pClearValues] = clearValues
 
-
-	for i=1:length(draw_command_buffers)
+    cmd_buffers = draw_command_buffers.buffers
+	for i=1:length(cmd_buffers)
 		# Set target frame buffer
 		renderPassBeginInfo[:framebuffer] = frameBuffers[i]
 
-		err = api.vkBeginCommandBuffer(draw_command_buffers[i], cmdBufInfo)
+		err = api.vkBeginCommandBuffer(cmd_buffers[i], cmdBufInfo)
 		check(err)
 
-		api.vkCmdBeginRenderPass(draw_command_buffers[i], renderPassBeginInfo, api.VK_SUBPASS_CONTENTS_INLINE)
+		api.vkCmdBeginRenderPass(cmd_buffers[i], renderPassBeginInfo, api.VK_SUBPASS_CONTENTS_INLINE)
 
 		# Update dynamic viewport state
 		viewport = Ref{api.VkViewport}()
@@ -135,32 +131,33 @@ function buildCommandBuffers(
 		viewport[:minDepth] = 0.0f0
 		viewport[:maxDepth] = 1.0f0
 
-		api.vkCmdSetViewport(draw_command_buffers[i], 0, 1, viewport)
+		api.vkCmdSetViewport(cmd_buffers[i], 0, 1, viewport)
 
 		# Update dynamic scissor state
 		scissor = Ref{api.VkRect2D}()
 		scissor[:extent] = api.VkExtent2D(width, height)
 		scissor[:offset] = api.VkOffset2D(0,0)
 
-		api.vkCmdSetScissor(draw_command_buffers[i], 0, 1, scissor)
+		api.vkCmdSetScissor(cmd_buffers[i], 0, 1, scissor)
 
 		# Bind descriptor sets describing shader binding points
-		api.vkCmdBindDescriptorSets(draw_command_buffers[i], api.VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, descriptorSet, 0, C_NULL)
+		api.vkCmdBindDescriptorSets(cmd_buffers[i], api.VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, descriptorSet, 0, C_NULL)
 
 		# Bind the rendering pipeline (including the shaders)
-		api.vkCmdBindPipeline(draw_command_buffers[i], api.VK_PIPELINE_BIND_POINT_GRAPHICS, pipelines.solid)
+		api.vkCmdBindPipeline(cmd_buffers[i], api.VK_PIPELINE_BIND_POINT_GRAPHICS, pipelines)
 
 		# Bind triangle vertices
-		offsets = Ref{api.VkDeviceSize}()
-		api.vkCmdBindVertexBuffers(draw_command_buffers[i], VERTEX_BUFFER_BIND_ID, 1, vertices.buf, offsets)
+		offsets = [api.VkDeviceSize(0)]
+        VERTEX_BUFFER_BIND_ID = 0
+		api.vkCmdBindVertexBuffers(cmd_buffers[i], VERTEX_BUFFER_BIND_ID, 1, vertices.buffer, offsets)
 
 		# Bind triangle indices
-		api.vkCmdBindIndexBuffer(draw_command_buffers[i], indices.buf, 0, api.VK_INDEX_TYPE_UINT32)
+		api.vkCmdBindIndexBuffer(cmd_buffers[i], indices.buffer, 0, api.VK_INDEX_TYPE_UINT32)
 
 		# Draw indexed triangle
-		api.vkCmdDrawIndexed(draw_command_buffers[i], indices.count, 1, 0, 0, 1)
+		api.vkCmdDrawIndexed(cmd_buffers[i], 3, 1, 0, 0, 1)
 
-		api.vkCmdEndRenderPass(draw_command_buffers[i])
+		api.vkCmdEndRenderPass(cmd_buffers[i])
 
 		# Add a present memory barrier to the end of the command buffer
 		# This will transform the frame buffer color attachment to a
@@ -178,16 +175,16 @@ function buildCommandBuffers(
 		prePresentBarrier[:image] = swapchain.buffers[i].image
 
 		api.vkCmdPipelineBarrier(
-			draw_command_buffers[i],
+			cmd_buffers[i],
 			api.VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
 			api.VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-			api.VK_FLAGS_NONE,
+		    0, #VK_FLAGS_NONE
 			0, C_NULL,
 			0, C_NULL,
 			1, prePresentBarrier
 		)
 
-		err = api.vkEndCommandBuffer(draw_command_buffers[i])
+		err = api.vkEndCommandBuffer(cmd_buffers[i])
 		check(err)
 	end
 end
@@ -226,4 +223,21 @@ function flushSetupCommandBuffer(device, setup_command_buffer, command_pool, que
 
 	api.vkFreeCommandBuffers(device, command_pool, 1, cmdbuff)
 	nothing
+end
+
+
+"""Create synchronzation semaphores"""
+function prepareSemaphore(device)
+    # This semaphore ensures that the image is complete
+    # before starting to submit again
+    presentComplete = CreateSemaphore(device, C_NULL;
+        sType = api.VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO
+    )
+    renderComplete = CreateSemaphore(device, C_NULL;
+        sType = api.VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO
+    )
+
+    # This semaphore ensures that all commands submitted
+    # have been finished before submitting the image to the queue
+    Semaphore(presentComplete, renderComplete)
 end

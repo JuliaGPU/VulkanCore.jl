@@ -1,4 +1,25 @@
 # the c code is much easier to port if we can do setindex on Ref{CompositeType}
+function create{T}(::Type{T}; kw_args...)
+    kw_dict = Dict{Symbol, Any}(kw_args)
+    fnames = fieldnames(T)
+    args = ntuple(nfields(T)) do i
+        FT = fieldtype(T, i)
+        name = fnames[i]
+        if haskey(kw_dict, name)
+            value = kw_dict[name]
+            delete!(kw_dict, name)
+            return struct_convert(FT, value)
+        end
+        return default(FT)
+    end
+    if !isempty(kw_dict)
+        error("Keyword arguments: $kw_dict are not supported for type $T")
+    end
+    T(args...)
+end
+function create_ref{T}(::Type{T}; kw_args...)
+    Ref(create(T; kw_args...))
+end
 
 
 function struct_convert(t, x)

@@ -19,6 +19,35 @@ type SwapChain
 	end
 
 end
+function acquireNextImage(presentCompleteSemaphore::api.VkSemaphore, currentBuffer, swapchain, device)
+	return fpAcquireNextImageKHR(device, swapchain.ref[], typemax(UInt64), presentCompleteSemaphore, Ptr{api.VkFence}(C_NULL), currentBuffer)
+end
+function queuePresent(queue, currentBuffer_ref, swapchain)
+    swapchain_ref = [swapchain.ref[]]
+	presentInfo = create_ref(api.VkPresentInfoKHR,
+    	sType = api.VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
+    	waitSemaphoreCount = 0,
+        swapchainCount = 1,
+    	pSwapchains = swapchain_ref,
+    	pImageIndices = currentBuffer_ref
+    )
+	err = fpQueuePresentKHR(queue, presentInfo)
+    check(err)
+end
+function queuePresent(queue, currentBuffer_ref, waitsemaphore, swapchain)
+    waitsemaphore_ref = [waitsemaphore]
+    swapchain_ref = [swapchain.ref[]]
+	presentInfo = create_ref(api.VkPresentInfoKHR,
+    	sType = api.VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
+    	swapchainCount = 1,
+    	pSwapchains = swapchain_ref,
+        pImageIndices = currentBuffer_ref,
+        waitSemaphoreCount = (waitsemaphore != api.VK_NULL_HANDLE) ? 1 : 0,
+    	pWaitSemaphores = waitsemaphore_ref
+    )
+	err = fpQueuePresentKHR(queue, presentInfo)
+    check(err)
+end
 
 image_count(swapchain::SwapChain) = length(swapchain.images)
 
@@ -35,7 +64,6 @@ function get_supported_depth_format(physicalDevice)
 	for format in depthFormats # form enum gues from 1-184
 		formatProps = Ref{api.VkFormatProperties}()
 		api.vkGetPhysicalDeviceFormatProperties(physicalDevice, format, formatProps)
-        println(formatProps[].optimalTilingFeatures)
 		#Format must support depth stencil attachment for optimal tiling
 		if (UInt32(formatProps[].optimalTilingFeatures) & UInt32(api.VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT)) != UInt32(0)
 			return true, format
@@ -176,9 +204,8 @@ function get_supports_present(physical_device, surface, queue_props)
 	queue_count = length(queue_props)
 	supports_present = Array(api.VkBool32, queue_count)
 	for i=1:queue_count
-		supported = Ref{api.VkBool32}()
+		supported = Ref(supports_present, i)
 		fpGetPhysicalDeviceSurfaceSupportKHR(physical_device, i-1, surface, supported)
-		supports_present[i] = supported[]
 	end
 	supports_present
 end
@@ -309,7 +336,7 @@ end
 """
 Create the swap chain and get images with given width and height
 """
-function setupSwapChain(command_buffer, width, height, swapchain)
+function setupSwapChain(device, command_buffer, width, height, swapchain)
 	# Get physical device surface properties and formats
 
 	# Get available present modes
@@ -350,35 +377,27 @@ function setupSwapChain(command_buffer, width, height, swapchain)
 	else
 		preTransform = surface_capabilities.currentTransform
 	end
+    println("desired image count ", desiredNumberOfSwapchainImages)
+	swapchainCI = create_ref(api.VkSwapchainCreateInfoKHR,
+	    sType = api.VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
+	    surface = swapchain.surface,
+	    minImageCount = desiredNumberOfSwapchainImages,
+	    imageFormat = swapchain.color_format,
+	    imageColorSpace = swapchain.color_space,
+	    imageExtent = api.VkExtent2D(swapchain_extent.width, swapchain_extent.height),
+	    imageUsage = api.VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
+	    preTransform = preTransform,
+	    imageArrayLayers = 1,
+	    imageSharingMode = api.VK_SHARING_MODE_EXCLUSIVE,
+	    queueFamilyIndexCount = 0,
+	    pQueueFamilyIndices = C_NULL,
+	    presentMode = swapchainPresentMode,
+	    clipped = true,
+	    compositeAlpha = api.VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
+    )
 
-	swapchainCI = Ref{api.VkSwapchainCreateInfoKHR}()
-	swapchainCI[:sType] = api.VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR
-	swapchainCI[:pNext] = C_NULL
-	swapchainCI[:surface] = swapchain.surface
-	swapchainCI[:minImageCount] = desiredNumberOfSwapchainImages
-	swapchainCI[:imageFormat] = swapchain.color_format
-	swapchainCI[:imageColorSpace] = swapchain.color_space
-	swapchainCI[:imageExtent] = api.VkExtent2D(swapchain_extent.width, swapchain_extent.height)
-	swapchainCI[:imageUsage] = api.VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
-	swapchainCI[:preTransform] = preTransform
-	swapchainCI[:imageArrayLayers] = 1
-	swapchainCI[:imageSharingMode] = api.VK_SHARING_MODE_EXCLUSIVE
-	swapchainCI[:queueFamilyIndexCount] = 0
-	swapchainCI[:pQueueFamilyIndices] = C_NULL
-	swapchainCI[:presentMode] = swapchainPresentMode
-	swapchainCI[:oldSwapchain] = swapchain.ref[]
-	swapchainCI[:clipped] = true
-	swapchainCI[:compositeAlpha] = api.VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
-	old_swapchain = swapchain.ref[]
 	err = fpCreateSwapchainKHR(device, swapchainCI, C_NULL, swapchain.ref)
 	check(err)
-
-	# If an existing sawp chain is re-created, destroy the old swap chain
-	# This also cleans up all the presentable images
-	if (old_swapchain != api.VK_NULL_HANDLE)
-		ref = Ref(old_swapchain)
-		fpDestroySwapchainKHR(device, ref, C_NULL)
-	end
 
 	images = get_images(device, swapchain)
     swapchain.images = images
