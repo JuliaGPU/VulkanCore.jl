@@ -37,18 +37,19 @@ function setupDescriptorSetLayout(device)
 	# binding
 	# Binding 0 : Uniform buffer (Vertex shader)
 
-	layoutBinding = Ref{api.VkDescriptorSetLayoutBinding}()
-	layoutBinding[:descriptorType] = api.VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER
-	layoutBinding[:descriptorCount] = 1
-	layoutBinding[:stageFlags] = api.VK_SHADER_STAGE_VERTEX_BIT
-    layoutBinding[:pImmutableSamplers] = C_NULL
-	layoutBinding[:binding] = 0
+	layoutBinding = create_ref(api.VkDescriptorSetLayoutBinding,
+    	descriptorType = api.VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
+    	descriptorCount = 1,
+    	stageFlags = api.VK_SHADER_STAGE_VERTEX_BIT,
+        pImmutableSamplers = C_NULL,
+    	binding = 0,
+    )
 
-	descriptorSetLayout = CreateDescriptorSetLayout(device, C_NULL;
+	descriptorSetLayout = [CreateDescriptorSetLayout(device, C_NULL;
         sType = api.VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
         bindingCount = 1,
         pBindings = layoutBinding
-    )
+    )]
 	# Create the pipeline layout that is used to generate the rendering pipelines that
 	# are based on this descriptor set layout
 	# In a more complex scenario you would have different pipeline layouts for different
@@ -58,34 +59,36 @@ function setupDescriptorSetLayout(device)
         setLayoutCount = 1,
         pSetLayouts = descriptorSetLayout
     )
-	descriptorSetLayout, pipelineLayout
+	descriptorSetLayout[], pipelineLayout
 end
 
 function setupDescriptorSet(device, descriptorPool, descriptorSetLayout, ubo)
 	# Update descriptor sets determining the shader binding points
 	# For every binding point used in a shader there needs to be one
 	# descriptor set matching that binding point
-	writeDescriptorSet = Ref{api.VkWriteDescriptorSet}()
 
     setlayout_ref = [descriptorSetLayout]
-	allocInfo = Ref{api.VkDescriptorSetAllocateInfo}()
-	allocInfo[:sType] = api.VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO
-    allocInfo[:pNext] = C_NULL
-	allocInfo[:descriptorPool] = descriptorPool
-	allocInfo[:descriptorSetCount] = 1
-	allocInfo[:pSetLayouts] = setlayout_ref
-	descriptorSet = Ref{api.VkDescriptorSet}(C_NULL)
-	err = api.vkAllocateDescriptorSets(device, allocInfo, descriptorSet)
+	allocInfo = create_ref(api.VkDescriptorSetAllocateInfo,
+    	sType = api.VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO,
+        pNext = C_NULL,
+    	descriptorPool = descriptorPool,
+    	descriptorSetCount = 1,
+    	pSetLayouts = setlayout_ref,
+    )
+	descriptorSet_ref = Ref{api.VkDescriptorSet}(C_NULL)
+	err = api.vkAllocateDescriptorSets(device, allocInfo, descriptorSet_ref)
 	check(err)
-
-	# Binding 0 : Uniform buffer
-	writeDescriptorSet[:sType] = api.VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET
-	writeDescriptorSet[:dstSet] = descriptorSet[]
-	writeDescriptorSet[:descriptorCount] = 1
-	writeDescriptorSet[:descriptorType] = api.VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER
-	writeDescriptorSet[:pBufferInfo] = ubo.descriptor
-	# Binds this uniform buffer to binding point 0
-	writeDescriptorSet[:dstBinding] = 0
+    descriptorSet = descriptorSet_ref[]
+    writeDescriptorSet = create_ref(api.VkWriteDescriptorSet,
+    	# Binding 0 : Uniform buffer
+    	sType = api.VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,
+    	dstSet = descriptorSet,
+    	descriptorCount = 1,
+    	descriptorType = api.VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
+    	pBufferInfo = ubo.descriptor,
+    	# Binds this uniform buffer to binding point 0
+    	dstBinding = 0,
+    )
 
 	api.vkUpdateDescriptorSets(device, 1, writeDescriptorSet, 0, C_NULL)
 

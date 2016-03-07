@@ -168,7 +168,7 @@ function updateUniformBuffers(camera, uniform_buffer)
         deg2rad(60.0f0), 1f0, 0.1f0, 256.0f0
     )
 
-    camera.view = translationmatrix(Vec3f0(0.0f0, 0.0f0, 3f0))
+    camera.view = translationmatrix(Vec3f0(0.0f0, 0.0f0, -2.5f0))
 
     # Map uniform buffer and update it
     data_ref = Ref{Ptr{Void}}(Ptr{UInt8}(C_NULL))

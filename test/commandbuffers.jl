@@ -1,12 +1,13 @@
 function createCommandPool(device, swapchain)
-	command_pool_info = Ref{api.VkCommandPoolCreateInfo}()
-	command_pool_info[:sType] = api.VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO
-	command_pool_info[:queueFamilyIndex] = swapchain.queue_node_index
-	command_pool_info[:flags] = api.VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT
-	command_pool = Ref{api.VkCommandPool}(C_NULL)
-	err = api.vkCreateCommandPool(device, command_pool_info, C_NULL, command_pool)
+	command_pool_info = create_ref(api.VkCommandPoolCreateInfo,
+    	sType = api.VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+    	queueFamilyIndex = swapchain.queue_node_index,
+    	flags = api.VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
+    )
+    command_pool_ref = Ref{api.VkCommandPool}(C_NULL)
+	err = api.vkCreateCommandPool(device, command_pool_info, C_NULL, command_pool_ref)
 	check(err)
-	command_pool[]
+	command_pool_ref[]
 end
 function createSetupCommandBuffer(device, command_pool)
 	setup_command_buffer = Ref{api.VkCommandBuffer}(api.VK_NULL_HANDLE)
@@ -84,109 +85,108 @@ end
  into command buffers that are then resubmitted to the queue
 """
 function buildCommandBuffers(
-		draw_command_buffers, frameBuffers, swapchain,
-		renderPass, width, height, pipelineLayout,
-		descriptorSet, pipelines, vertices, indices
-	)
+        draw_command_buffers, frameBuffers, swapchain,
+        renderPass, width, height, pipelineLayout,
+        descriptorSet, pipelines, vertices, indices
+    )
 
-	cmdBufInfo = Ref(api.VkCommandBufferBeginInfo(
-		api.VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
-		C_NULL,
-		0,
-		C_NULL
-	))
+    cmdBufInfo = Ref(api.VkCommandBufferBeginInfo(
+    api.VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
+        C_NULL,
+        0,
+        C_NULL
+    ))
 
-	clearValues = api.VkClearValue[
-		api.VkClearValue(api.VkClearColorValue((0.025f0, 0.025f0, 1.0f0, 1.0f0))),
-		api.VkClearValue(api.VkClearColorValue((1f0, reinterpret(Float32, UInt32(0)), 0f0, 0f0)))
-	]
+    clearValues = api.VkClearValue[
+        api.VkClearValue(api.VkClearColorValue((0.025f0, 0.025f0, 1.0f0, 1.0f0))),
+        api.VkClearValue(api.VkClearColorValue((1f0, reinterpret(Float32, UInt32(0)), 0f0, 0f0)))
+    ]
 
-
-
-	renderPassBeginInfo = Ref{api.VkRenderPassBeginInfo}()
-	renderPassBeginInfo[:sType] = api.VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO
-	renderPassBeginInfo[:pNext] = C_NULL
-	renderPassBeginInfo[:renderPass] = renderPass
-	renderPassBeginInfo[:renderArea] = api.VkRect2D(
-		api.VkOffset2D(0, 0),
-		api.VkExtent2D(width, height)
-	)
-	renderPassBeginInfo[:clearValueCount] = 2
-	renderPassBeginInfo[:pClearValues] = clearValues
+    renderPassBeginInfo = create_ref(api.VkRenderPassBeginInfo,
+        sType = api.VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
+        renderPass = renderPass,
+        renderArea = api.VkRect2D(
+            api.VkOffset2D(0, 0),
+            api.VkExtent2D(width, height)
+        ),
+        clearValueCount = 2,
+        pClearValues = clearValues
+    )
 
     cmd_buffers = draw_command_buffers.buffers
-	for i=1:length(cmd_buffers)
-		# Set target frame buffer
-		renderPassBeginInfo[:framebuffer] = frameBuffers[i]
+    for i=1:length(cmd_buffers)
+        # Set target frame buffer
+        renderPassBeginInfo[:framebuffer] = frameBuffers[i]
 
-		err = api.vkBeginCommandBuffer(cmd_buffers[i], cmdBufInfo)
-		check(err)
+        err = api.vkBeginCommandBuffer(cmd_buffers[i], cmdBufInfo)
+        check(err)
 
-		api.vkCmdBeginRenderPass(cmd_buffers[i], renderPassBeginInfo, api.VK_SUBPASS_CONTENTS_INLINE)
+        api.vkCmdBeginRenderPass(cmd_buffers[i], renderPassBeginInfo, api.VK_SUBPASS_CONTENTS_INLINE)
 
-		# Update dynamic viewport state
-		viewport = Ref{api.VkViewport}()
-		viewport[:height] = height
-		viewport[:width] = width
-		viewport[:minDepth] = 0.0f0
-		viewport[:maxDepth] = 1.0f0
+        # Update dynamic viewport state
+        viewport = create_ref(api.VkViewport,
+            height = height,
+            width = width,
+            minDepth = 0.0f0,
+            maxDepth = 1.0f0
+        )
 
-		api.vkCmdSetViewport(cmd_buffers[i], 0, 1, viewport)
+        api.vkCmdSetViewport(cmd_buffers[i], 0, 1, viewport)
 
-		# Update dynamic scissor state
-		scissor = Ref{api.VkRect2D}()
-		scissor[:extent] = api.VkExtent2D(width, height)
-		scissor[:offset] = api.VkOffset2D(0,0)
+        # Update dynamic scissor state
+        scissor = create_ref(api.VkRect2D,
+            extent = api.VkExtent2D(width, height),
+            offset = api.VkOffset2D(0,0)
+        )
 
-		api.vkCmdSetScissor(cmd_buffers[i], 0, 1, scissor)
+        api.vkCmdSetScissor(cmd_buffers[i], 0, 1, scissor)
+        descriptorset_ref = [descriptorSet]
+        # Bind descriptor sets describing shader binding points
+        api.vkCmdBindDescriptorSets(cmd_buffers[i], api.VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, descriptorset_ref, 0, C_NULL)
 
-		# Bind descriptor sets describing shader binding points
-		api.vkCmdBindDescriptorSets(cmd_buffers[i], api.VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, descriptorSet, 0, C_NULL)
+        # Bind the rendering pipeline (including the shaders)
+        api.vkCmdBindPipeline(cmd_buffers[i], api.VK_PIPELINE_BIND_POINT_GRAPHICS, pipelines)
 
-		# Bind the rendering pipeline (including the shaders)
-		api.vkCmdBindPipeline(cmd_buffers[i], api.VK_PIPELINE_BIND_POINT_GRAPHICS, pipelines)
-
-		# Bind triangle vertices
-		offsets = [api.VkDeviceSize(0)]
+        # Bind triangle vertices
+        offsets = [api.VkDeviceSize(0)]
         VERTEX_BUFFER_BIND_ID = 0
-		api.vkCmdBindVertexBuffers(cmd_buffers[i], VERTEX_BUFFER_BIND_ID, 1, vertices.buffer, offsets)
+        api.vkCmdBindVertexBuffers(cmd_buffers[i], VERTEX_BUFFER_BIND_ID, 1, vertices.buffer, offsets)
 
-		# Bind triangle indices
-		api.vkCmdBindIndexBuffer(cmd_buffers[i], indices.buffer, 0, api.VK_INDEX_TYPE_UINT32)
+        # Bind triangle indices
+        api.vkCmdBindIndexBuffer(cmd_buffers[i], indices.buffer, 0, api.VK_INDEX_TYPE_UINT32)
 
-		# Draw indexed triangle
-		api.vkCmdDrawIndexed(cmd_buffers[i], 3, 1, 0, 0, 1)
+        # Draw indexed triangle
+        api.vkCmdDrawIndexed(cmd_buffers[i], 3, 1, 0, 0, 1)
 
-		api.vkCmdEndRenderPass(cmd_buffers[i])
+        api.vkCmdEndRenderPass(cmd_buffers[i])
 
-		# Add a present memory barrier to the end of the command buffer
-		# This will transform the frame buffer color attachment to a
-		# new layout for presenting it to the windowing system integration
-		prePresentBarrier = Ref{api.VkImageMemoryBarrier}()
-		prePresentBarrier[:sType] = api.VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER
-		prePresentBarrier[:pNext] = C_NULL
-		prePresentBarrier[:srcAccessMask] = api.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
-		prePresentBarrier[:dstAccessMask] = 0
-		prePresentBarrier[:oldLayout] = api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
-		prePresentBarrier[:newLayout] = api.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
-		prePresentBarrier[:srcQueueFamilyIndex] = api.VK_QUEUE_FAMILY_IGNORED
-		prePresentBarrier[:dstQueueFamilyIndex] = api.VK_QUEUE_FAMILY_IGNORED
-		prePresentBarrier[:subresourceRange] = api.VkImageSubresourceRange(api.VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1)
-		prePresentBarrier[:image] = swapchain.buffers[i].image
+        # Add a present memory barrier to the end of the command buffer
+        # This will transform the frame buffer color attachment to a
+        # new layout for presenting it to the windowing system integration
+        prePresentBarrier = create_ref(api.VkImageMemoryBarrier,
+            sType = api.VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER,
+            srcAccessMask = api.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+            dstAccessMask = 0,
+            oldLayout = api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+            newLayout = api.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
+            srcQueueFamilyIndex = api.VK_QUEUE_FAMILY_IGNORED,
+            dstQueueFamilyIndex = api.VK_QUEUE_FAMILY_IGNORED,
+            subresourceRange = api.VkImageSubresourceRange(api.VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1),
+            image = swapchain.buffers[i].image
+        )
 
-		api.vkCmdPipelineBarrier(
-			cmd_buffers[i],
-			api.VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
-			api.VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-		    0, #VK_FLAGS_NONE
-			0, C_NULL,
-			0, C_NULL,
-			1, prePresentBarrier
-		)
-
-		err = api.vkEndCommandBuffer(cmd_buffers[i])
-		check(err)
-	end
+        api.vkCmdPipelineBarrier(
+            cmd_buffers[i],
+            api.VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
+            api.VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+            0, #VK_FLAGS_NONE
+            0, C_NULL,
+            0, C_NULL,
+            1, prePresentBarrier
+        )
+        err = api.vkEndCommandBuffer(cmd_buffers[i])
+        check(err)
+    end
 end
 
 # immutable VkSubmitInfo
@@ -207,14 +207,15 @@ function flushSetupCommandBuffer(device, setup_command_buffer, command_pool, que
 	err = api.vkEndCommandBuffer(setup_command_buffer)
 	check(err)
     cmdbuff = [setup_command_buffer]
-	submitInfo = Ref{api.VkSubmitInfo}()
-    submitInfo[:sType] = api.VK_STRUCTURE_TYPE_SUBMIT_INFO
-    submitInfo[:pNext] = C_NULL
-    submitInfo[:waitSemaphoreCount] = 0
-    submitInfo[:pWaitDstStageMask] = 0
-	submitInfo[:commandBufferCount] = 1
-	submitInfo[:pCommandBuffers] = cmdbuff
-    submitInfo[:signalSemaphoreCount] = 0
+	submitInfo = create_ref(api.VkSubmitInfo,
+        sType = api.VK_STRUCTURE_TYPE_SUBMIT_INFO,
+        pNext = C_NULL,
+        waitSemaphoreCount = 0,
+        pWaitDstStageMask = 0,
+    	commandBufferCount = 1,
+    	pCommandBuffers = cmdbuff,
+        signalSemaphoreCount = 0
+    )
 
 	err = api.vkQueueSubmit(queue, 1, submitInfo, api.VK_NULL_HANDLE)
 	check(err)

@@ -1,6 +1,5 @@
 using Vulkan
 using GeometryTypes, GLAbstraction
-gc_enable(false)
 const api = vk.api
 include("refutil.jl")
 include("helper.jl")
@@ -180,6 +179,8 @@ function draw(swapChain, semaphores, queue, commandbuffer)
     check(err)
 end
 
-while true
-render(device, swapchain, semaphore, queue, draw_commandbuffers)
+for i=1:1000
+    println("everyday I'm renderin'")
+    render(device, swapchain, semaphore, queue, draw_commandbuffers)
+    sleep(0.01)
 end
