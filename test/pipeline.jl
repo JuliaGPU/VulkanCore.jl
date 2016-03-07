@@ -1,17 +1,17 @@
 
-
+const shader_cache = []
 
 function loadShaderGLSL(fileName, device::api.VkDevice, stage::api.VkShaderStageFlagBits)
 	shaderCode = open(fileName) do io
         readbytes(io)
     end
-    println(typeof(shaderCode), " ", length(shaderCode))
-	shader_size = length(shaderCode)
-	if (shader_size < 1)
+	if (length(shaderCode) < 1)
         error("$filename is empty and doesn't contain a shader!")
     end
+    push!(shaderCode, 0) #append 0 terminator
     # Magic SPV number for shader code header
     pcode = UInt32[0x07230203, 0, stage]
+
     # now append the shader code to the header
     append!(pcode, reinterpret(UInt32, shaderCode))
     # create the shader
@@ -26,6 +26,9 @@ function loadShaderGLSL(fileName, device::api.VkDevice, stage::api.VkShaderStage
     shaderStage[:stage] = stage;
     shaderStage[:_module] = shadermodule
     shaderStage[:pName] = "main"
+    shaderStage[:pSpecializationInfo] = C_NULL
+    push!(shader_cache, shadermodule)
+    push!(shader_cache, pcode)
 
 	return shaderStage[]
 end
@@ -46,18 +49,12 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
 	# pipeline only stores that they are used with this pipeline,
 	# but not their states
 
-	pipelineCreateInfo = Ref{api.VkGraphicsPipelineCreateInfo}()
-
-	pipelineCreateInfo[:sType] = api.VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO
-	# The layout used for this pipeline
-	pipelineCreateInfo[:layout] = pipelineLayout
-	# Renderpass this pipeline is attached to
-	pipelineCreateInfo[:renderPass] = renderPass
 
 	# Vertex input state
 	# Describes the topoloy used with this pipeline
 	inputAssemblyState = Ref{api.VkPipelineInputAssemblyStateCreateInfo}()
-	inputAssemblyState[:sType] = api.VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO
+    inputAssemblyState[:sType] = api.VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO
+	inputAssemblyState[:pNext] = C_NULL
 	# This pipeline renders vertex data as triangle lists
 	inputAssemblyState[:topology] = api.VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
 
@@ -76,7 +73,8 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
 	# Color blend state
 	# Describes blend modes and color masks
 	colorBlendState = Ref{api.VkPipelineColorBlendStateCreateInfo}()
-	colorBlendState[:sType] = api.VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO
+    colorBlendState[:sType] = api.VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO
+	colorBlendState[:pNext] = C_NULL
 	# One blend attachment state
 	# Blending is not used in this example
 	blendAttachmentState = Array(api.VkPipelineColorBlendAttachmentState, 1)
@@ -147,21 +145,56 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
         device,
         api.VK_SHADER_STAGE_FRAGMENT_BIT
     )
+    # immutable VkGraphicsPipelineCreateInfo
+    #   sType :: VkStructureType
+    #   pNext :: Ptr{Void}
+    #   flags :: VkPipelineCreateFlags
+    #   stageCount :: UInt32
+    #   pStages :: Ptr{VkPipelineShaderStageCreateInfo}
+    #   pVertexInputState :: Ptr{VkPipelineVertexInputStateCreateInfo}
+    #   pInputAssemblyState :: Ptr{VkPipelineInputAssemblyStateCreateInfo}
+    #   pTessellationState :: Ptr{VkPipelineTessellationStateCreateInfo}
+    #   pViewportState :: Ptr{VkPipelineViewportStateCreateInfo}
+    #   pRasterizationState :: Ptr{VkPipelineRasterizationStateCreateInfo}
+    #   pMultisampleState :: Ptr{VkPipelineMultisampleStateCreateInfo}
+    #   pDepthStencilState :: Ptr{VkPipelineDepthStencilStateCreateInfo}
+    #   pColorBlendState :: Ptr{VkPipelineColorBlendStateCreateInfo}
+    #   pDynamicState :: Ptr{VkPipelineDynamicStateCreateInfo}
+    #   layout :: VkPipelineLayout
+    #   renderPass :: VkRenderPass
+    #   subpass :: UInt32
+    #   basePipelineHandle :: VkPipeline
+    #   basePipelineIndex :: Int32
+    # end
+    println(vertices)
+    pipelineCreateInfo = Array(api.VkGraphicsPipelineCreateInfo, 1)
 
+    pipelineCreateInfo[1, :sType] = api.VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO
+    pipelineCreateInfo[1, :pNext] = C_NULL
+    pipelineCreateInfo[1, :flags] = 0
+    # The layout used for this pipeline
+    pipelineCreateInfo[1, :layout] = pipelineLayout
+    # Renderpass this pipeline is attached to
+    pipelineCreateInfo[1, :renderPass] = renderPass
 	# Assign states
 	# Two shader stages
-	pipelineCreateInfo[:stageCount] = 2
+	pipelineCreateInfo[1, :stageCount] = 2
+    pipelineCreateInfo[1, :pStages] = shaderStages
+
 	# Assign pipeline state create information
-	pipelineCreateInfo[:pVertexInputState] = vertices
-	pipelineCreateInfo[:pInputAssemblyState] = inputAssemblyState
-	pipelineCreateInfo[:pRasterizationState] = rasterizationState
-	pipelineCreateInfo[:pColorBlendState] = colorBlendState
-	pipelineCreateInfo[:pMultisampleState] = multisampleState
-	pipelineCreateInfo[:pViewportState] = viewportState
-	pipelineCreateInfo[:pDepthStencilState] = depthStencilState
-	pipelineCreateInfo[:pStages] = shaderStages
-	pipelineCreateInfo[:renderPass] = renderPass
-	pipelineCreateInfo[:pDynamicState] = dynamicState
+	pipelineCreateInfo[1, :pVertexInputState] = vertices
+	pipelineCreateInfo[1, :pInputAssemblyState] = inputAssemblyState
+	pipelineCreateInfo[1, :pRasterizationState] = rasterizationState
+	pipelineCreateInfo[1, :pColorBlendState] = colorBlendState
+	pipelineCreateInfo[1, :pMultisampleState] = multisampleState
+	pipelineCreateInfo[1, :pViewportState] = viewportState
+	pipelineCreateInfo[1, :pDepthStencilState] = depthStencilState
+    pipelineCreateInfo[1, :pDynamicState] = dynamicState
+
+    pipelineCreateInfo[1, :subpass] = 0
+    pipelineCreateInfo[1, :basePipelineIndex] = 0
+	pipelineCreateInfo[1, :basePipelineHandle] = C_NULL
+
 
 	# Create rendering pipeline
     pipeline_ref = Ref{api.VkPipeline}(api.VK_NULL_HANDLE)

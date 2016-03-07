@@ -150,6 +150,7 @@ function prepareUniformBuffers(device, deviceMemoryProperties)
         eye(Mat4f0)
     )
     updateUniformBuffers(camera, ubo)
+    ubo
 end
 
 

@@ -58,12 +58,16 @@ indexes = GLTriangle[(0, 1, 2)]
 vertexbuffer = VulkanBuffer(vertices, device, devicememory_properties, api.VK_BUFFER_USAGE_VERTEX_BUFFER_BIT)
 indexbuffer = VulkanBuffer(indexes, device, devicememory_properties, api.VK_BUFFER_USAGE_VERTEX_BUFFER_BIT)
 vertices_vi = setup_binding_description()
-prepareUniformBuffers(device, devicememory_properties)
+ubo = prepareUniformBuffers(device, devicememory_properties)
 
 descriptorset_layout, pipeline_layout = setupDescriptorSetLayout(device)
-preparePipelines(device, pipeline_cache, renderpass, pipeline_layout, vertices_vi)
+pipeline = preparePipelines(device, pipeline_cache, renderpass, pipeline_layout, vertices_vi)
 descriptor_pool = setupDescriptorPool(device)
-setupDescriptorSet(descriptorset_layout, pipeline_layout)
+descriptorSet = setupDescriptorSet(device, descriptor_pool, descriptorset_layout, ubo)
 
 
-# buildCommandBuffers();
+buildCommandBuffers(
+		draw_command_buffers, framebuffers, swapchain,
+		renderpass, width, height, pipeline_layout,
+		descriptorSet, pipeline, vertices, indices
+	)
