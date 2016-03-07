@@ -27,5 +27,6 @@ typealias ANativeWindow Void # TODO: make opaque for now
 typealias HINSTANCE Ptr{Void}
 typealias HWND Ptr{Void}
 
-include("api/vulkan_1.0.jl")
+include("../deps/gen/vk_common.jl")
+include("../deps/gen/vk.jl")
 end
