@@ -45,13 +45,15 @@ function get_graphic_queue(physical_device)
 end
 
 function create_device(physical_device, requested_queues, enable_validation)
-    args = [api.VK_KHR_SWAPCHAIN_EXTENSION_NAME]
+    enabled_extensions = [api.VK_KHR_SWAPCHAIN_EXTENSION_NAME]
     device = CreateDevice(physical_device, C_NULL;
         sType = api.VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
         queueCreateInfoCount = 1,
         pQueueCreateInfos = requested_queues,
-        enabledExtensionCount = 1,
-        ppEnabledExtensionNames = args,
+        enabledExtensionCount = length(enabled_extensions),
+        ppEnabledExtensionNames = enabled_extensions,
+        enabledLayerCount = length(validation_layer),
+        ppEnabledLayerNames = validation_layer
     )
 end
 
@@ -67,8 +69,7 @@ function get_graphic_device(instance, enable_validation)
     # select the first one for now!
     physical_device = physical_devices[1]
     # Gather physical device memory properties
-    deviceMemoryProperties = Ref{api.VkPhysicalDeviceMemoryProperties}()
-    api.vkGetPhysicalDeviceMemoryProperties(physical_device, deviceMemoryProperties)
+
 
     graphic_queue_index = get_graphic_queue(physical_device)
     println(graphic_queue_index)
@@ -83,11 +84,15 @@ function get_graphic_device(instance, enable_validation)
     )
     device = create_device(physical_device, queue_create_info, enable_validation)
 
+    deviceMemoryProperties = Ref{api.VkPhysicalDeviceMemoryProperties}()
+    api.vkGetPhysicalDeviceMemoryProperties(physical_device, deviceMemoryProperties)
     # Get the graphics queue
-    queue = Ref{api.VkQueue}()
-    api.vkGetDeviceQueue(device, graphic_queue_index, 0, queue)
+    queue_ref = Ref{api.VkQueue}()
+    api.vkGetDeviceQueue(device, graphic_queue_index, 0, queue_ref)
+
 
     # Set up device and instance specific functions
     connect!(instance, physical_device, device)
-    device, physical_device, queue[], deviceMemoryProperties[]
+
+    device, physical_device, queue_ref[], deviceMemoryProperties[]
 end

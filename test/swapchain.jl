@@ -23,12 +23,11 @@ function acquireNextImage(presentCompleteSemaphore::api.VkSemaphore, currentBuff
 	return fpAcquireNextImageKHR(device, swapchain.ref[], typemax(UInt64), presentCompleteSemaphore, Ptr{api.VkFence}(C_NULL), currentBuffer)
 end
 function queuePresent(queue, currentBuffer_ref, swapchain)
-    swapchain_ref = [swapchain.ref[]]
 	presentInfo = create_ref(api.VkPresentInfoKHR,
     	sType = api.VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
     	waitSemaphoreCount = 0,
         swapchainCount = 1,
-    	pSwapchains = swapchain_ref,
+    	pSwapchains = swapchain.ref,
     	pImageIndices = currentBuffer_ref
     )
 	err = fpQueuePresentKHR(queue, presentInfo)
@@ -36,11 +35,10 @@ function queuePresent(queue, currentBuffer_ref, swapchain)
 end
 function queuePresent(queue, currentBuffer_ref, waitsemaphore, swapchain)
     waitsemaphore_ref = [waitsemaphore]
-    swapchain_ref = [swapchain.ref[]]
 	presentInfo = create_ref(api.VkPresentInfoKHR,
     	sType = api.VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
     	swapchainCount = 1,
-    	pSwapchains = swapchain_ref,
+    	pSwapchains = swapchain.ref,
         pImageIndices = currentBuffer_ref,
         waitSemaphoreCount = (waitsemaphore != api.VK_NULL_HANDLE) ? 1 : 0,
     	pWaitSemaphores = waitsemaphore_ref
@@ -237,13 +235,13 @@ function SwapChain(instance, device, physical_device, window, swapchain=SwapChai
 	# families, try to find one that supports both
 	graphicsQueueNodeIndex = typemax(UInt32)
 	presentQueueNodeIndex = typemax(UInt32)
-	for i=1:queue_count
-		if ((queue_props[i].queueFlags & UInt32(api.VK_QUEUE_GRAPHICS_BIT)) != 0)
+	for i=0:(queue_count-1)
+		if ((queue_props[i+1].queueFlags & UInt32(api.VK_QUEUE_GRAPHICS_BIT)) != 0)
 			if (graphicsQueueNodeIndex == typemax(UInt32))
 				graphicsQueueNodeIndex = i
 			end
 
-			if (supports_present[i] == api.VK_TRUE)
+			if (supports_present[i+1] == api.VK_TRUE)
 				graphicsQueueNodeIndex = i
 				presentQueueNodeIndex = i
 				break
@@ -255,7 +253,7 @@ function SwapChain(instance, device, physical_device, window, swapchain=SwapChai
 		# try to find a separate present queue
 		for i=1:queue_count
 			if (supports_present[i] == api.VK_TRUE)
-				presentQueueNodeIndex = i
+				presentQueueNodeIndex = i-1
 				break
 			end
 		end
@@ -403,9 +401,7 @@ function setupSwapChain(device, command_buffer, width, height, swapchain)
 	buffers = Array(SwapChainBuffer, length(images))
     swapchain.buffers = buffers
 	for i=1:length(images)
-
 		buffers[i, :image] = images[i]
-
 		# Transform images from initial (undefined) to present layout
 		set_image_layout(
 			command_buffer,
@@ -416,7 +412,6 @@ function setupSwapChain(device, command_buffer, width, height, swapchain)
 		)
         color_attachment_view = create_ref(api.VkImageViewCreateInfo,
             sType = api.VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
-            pNext = C_NULL,
             format = swapchain.color_format,
             components = api.VkComponentMapping(
                 api.VK_COMPONENT_SWIZZLE_R,
@@ -456,13 +451,16 @@ an image and put it into an active command buffer
 See chapter 11.4 Image Layout for details
 """
 function set_image_layout(cmdbuffer, image, aspectMask, oldImageLayout, newImageLayout)
-	# Create an image barrier object
+    println(oldImageLayout)
+    println(newImageLayout)
+    # Create an image barrier object
 	imageMemoryBarrier = VkImageMemoryBarrier()
 	imageMemoryBarrier[:oldLayout] = oldImageLayout
 	imageMemoryBarrier[:newLayout] = newImageLayout
 	imageMemoryBarrier[:image] = image
-	imageMemoryBarrier[:subresourceRange] = api.VkImageSubresourceRange(
-		aspectMask, 0, 1, 0, 1
+	imageMemoryBarrier[:subresourceRange] = create(api.VkImageSubresourceRange,
+		aspectMask = aspectMask,
+        baseMipLevel = 0, levelCount=1, layerCount = 1
 	)
 
 	# Source layouts (old)
@@ -470,24 +468,24 @@ function set_image_layout(cmdbuffer, image, aspectMask, oldImageLayout, newImage
 	# Undefined layout
 	# Only allowed as initial layout!
 	# Make sure any writes to the image have been finished
-	if (oldImageLayout == api.VK_IMAGE_LAYOUT_UNDEFINED)
+	if (UInt32(oldImageLayout) == UInt32(api.VK_IMAGE_LAYOUT_UNDEFINED))
 		imageMemoryBarrier[:srcAccessMask] = UInt32(api.VK_ACCESS_HOST_WRITE_BIT) | UInt32(api.VK_ACCESS_TRANSFER_WRITE_BIT)
 	end
 	# Old layout is color attachment
 	# Make sure any writes to the color buffer have been finished
-	if (oldImageLayout == api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL)
+	if (UInt32(oldImageLayout) == UInt32(api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL))
 		imageMemoryBarrier[:srcAccessMask] = UInt32(api.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
 	end
 
 	# Old layout is transfer source
 	# Make sure any reads from the image have been finished
-	if (oldImageLayout == api.VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL)
+	if (UInt32(oldImageLayout) == UInt32(api.VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL))
 		imageMemoryBarrier[:srcAccessMask] = UInt32(api.VK_ACCESS_TRANSFER_READ_BIT)
 	end
 
 	# Old layout is shader read (sampler, input attachment)
 	# Make sure any shader reads from the image have been finished
-	if (oldImageLayout == api.VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL)
+	if (UInt32(oldImageLayout) == UInt32(api.VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL))
 		imageMemoryBarrier[:srcAccessMask] = UInt32(api.VK_ACCESS_SHADER_READ_BIT)
 	end
 
@@ -495,33 +493,33 @@ function set_image_layout(cmdbuffer, image, aspectMask, oldImageLayout, newImage
 
 	# New layout is transfer destination (copy, blit)
 	# Make sure any copyies to the image have been finished
-	if (newImageLayout == api.VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL)
+	if (UInt32(newImageLayout) == UInt32(api.VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL))
 		imageMemoryBarrier[:dstAccessMask] = UInt32(api.VK_ACCESS_TRANSFER_WRITE_BIT)
 	end
 
 	# New layout is transfer source (copy, blit)
 	# Make sure any reads from and writes to the image have been finished
-	if (newImageLayout == api.VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL)
+	if (UInt32(newImageLayout) == UInt32(api.VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL))
 		imageMemoryBarrier[:srcAccessMask] = imageMemoryBarrier[].srcAccessMask | UInt32(api.VK_ACCESS_TRANSFER_READ_BIT)
-		imageMemoryBarrier[:dstAccessMask] = VK_ACCESS_TRANSFER_READ_BIT
+		imageMemoryBarrier[:dstAccessMask] = UInt32(api.VK_ACCESS_TRANSFER_READ_BIT)
 	end
 
 	# New layout is color attachment
 	# Make sure any writes to the color buffer hav been finished
-	if (newImageLayout == api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL)
+	if (UInt32(newImageLayout) == UInt32(api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL))
 		imageMemoryBarrier[:dstAccessMask] = api.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
 		imageMemoryBarrier[:srcAccessMask] = api.VK_ACCESS_TRANSFER_READ_BIT
 	end
 
 	# New layout is depth attachment
 	# Make sure any writes to depth/stencil buffer have been finished
-	if (newImageLayout == api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
+	if (UInt32(newImageLayout) == UInt32(api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL))
 		imageMemoryBarrier[:dstAccessMask] = imageMemoryBarrier[].dstAccessMask | UInt32(api.VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT)
 	end
 
 	# New layout is shader read (sampler, input attachment)
 	# Make sure any writes to the image have been finished
-	if (newImageLayout == api.VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL)
+	if (UInt32(newImageLayout) == UInt32(api.VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL))
 		imageMemoryBarrier[:srcAccessMask] = api.VK_ACCESS_HOST_WRITE_BIT | UInt32(api.VK_ACCESS_TRANSFER_WRITE_BIT)
 		imageMemoryBarrier[:dstAccessMask] = api.VK_ACCESS_SHADER_READ_BIT
 	end

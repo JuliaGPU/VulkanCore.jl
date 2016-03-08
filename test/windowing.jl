@@ -5,13 +5,21 @@ type Window
 	window
 	connection
 end
-
-function create_window(title, w, h)
-	scr = Ref{Cint}()
+function create_screen()
+    scr = Ref{Cint}()
 	connection = XCB.xcb_connect(Ptr{Cchar}(C_NULL), scr)
 	setup = XCB.xcb_get_setup(connection)
 	iter = XCB.xcb_setup_roots_iterator(setup)
+    for i=scr[]:-1:1
+        iter_ref = Ref(iter)
+        xcb_screen_next(iter_ref)
+        iter = iter_ref[]
+    end
 	screen = unsafe_load(iter.data)
+    screen, connection
+end
+function create_window(title, w, h, screen, connection)
+
 	window = XCB.xcb_generate_id(connection)
 	mask = XCB.XCB_CW_BACK_PIXEL | XCB.XCB_CW_EVENT_MASK
 	value_list = zeros(UInt32, 32)
@@ -50,14 +58,14 @@ function create_window(title, w, h)
 		length(title), title
 	)
 
-	mask = XCB.XCB_GC_FOREGROUND | XCB.XCB_GC_GRAPHICS_EXPOSURES
-	value_list[1] = screen.black_pixel
-	value_list[2] = 0
-	g = XCB.xcb_generate_id(connection)
-	XCB.xcb_create_gc(connection, g, window, mask, value_list)
+	# mask = XCB.XCB_GC_FOREGROUND | XCB.XCB_GC_GRAPHICS_EXPOSURES
+	# value_list[1] = screen.black_pixel
+	# value_list[2] = 0
+	# g = XCB.xcb_generate_id(connection)
+	# XCB.xcb_create_gc(connection, g, window, mask, value_list)
 
 	XCB.xcb_map_window(connection, window)
-	XCB.xcb_flush(connection)
+	#XCB.xcb_flush(connection)
 	Window(nothing, window, connection)
 end
 

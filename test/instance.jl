@@ -7,7 +7,7 @@ const validation_layer = [
     "VK_LAYER_LUNARG_swapchain",
     "VK_LAYER_LUNARG_device_limits",
     "VK_LAYER_LUNARG_image",
-    #"VK_LAYER_GOOGLE_unique_objects",
+    "VK_LAYER_GOOGLE_unique_objects",
 ]
 
 
@@ -21,15 +21,18 @@ function debugg_callback(
         pMsg::Ptr{UInt8},
         pUserData::Ptr{Void}
     )
+    bt = catch_backtrace()
     message = bytestring(pMsg)
     layerprefix = bytestring(pLayerPrefix)
-    if (flags & api.VK_DEBUG_REPORT_ERROR_BIT_EXT)
-        println(
+    if (flags & UInt32(api.VK_DEBUG_REPORT_ERROR_BIT_EXT)) != UInt32(false)
+        Base.show_backtrace(STDERR, bt)
+        error(
             "[", layerprefix, "]
             Code ", msgCode, " : ", message
         )
     else
-        if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT)
+        if (flags &  UInt32(api.VK_DEBUG_REPORT_WARNING_BIT_EXT)) != UInt32(false)
+            Base.show_backtrace(STDOUT, bt)
             warn("[", layerprefix, "] Code ", msgCode, " : ", message)
         end
     end
@@ -92,6 +95,5 @@ function create_instance(appname::AbstractString, validation=true)
         enabledLayerCount = length(validation_layer),
         ppEnabledLayerNames = validation_layer
     )
-    setupDebugging(instance, UInt32(api.VK_DEBUG_REPORT_ERROR_BIT_EXT) | UInt32(api.VK_DEBUG_REPORT_WARNING_BIT_EXT))
     instance
 end

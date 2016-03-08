@@ -141,3 +141,13 @@ function check(err::api.VkResult)
 	end
 	err
 end
+
+
+print_type{T}(x::Ref{T}) = print_type(x[])
+function print_type{T}(x::T)
+    println(T.name.name)
+    names =
+    for name in fieldnames(T)
+        println(name, " ", x.(name))
+    end
+end

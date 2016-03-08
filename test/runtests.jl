@@ -1,6 +1,7 @@
 using Vulkan
 using GeometryTypes, GLAbstraction
 const api = vk.api
+gc_enable(false)
 include("refutil.jl")
 include("helper.jl")
 include("windowing.jl")
@@ -26,21 +27,19 @@ immutable Semaphore
 end
 
 width, height = 512, 512
-
+# VulkanBase::VulkanBase
+screen, connection = create_screen()
 instance = create_instance("test")
 device, physical_device, queue, devicememory_properties = get_graphic_device(instance, false)
-semaphore = prepareSemaphore(device)
-window = create_window(b"hallo", width, height)
-
+# Triangle::main
+window = create_window(b"hallo", width, height, screen, connection)
 swapchain = SwapChain(instance, device, physical_device, window)
+#VulkanBase::prepare
+setupDebugging(instance, UInt32(api.VK_DEBUG_REPORT_ERROR_BIT_EXT) | UInt32(api.VK_DEBUG_REPORT_WARNING_BIT_EXT))
 command_pool = createCommandPool(device, swapchain)
-
 setup_command_buffer = createSetupCommandBuffer(device, command_pool)
-
 setupSwapChain(device, setup_command_buffer, width, height, swapchain)
-
 draw_commandbuffers = create_command_buffers(device, swapchain)
-
 depth_stencil = setupDepthStencil(device, setup_command_buffer, swapchain.depth_format, devicememory_properties)
 renderpass = setup_renderpass(swapchain)
 pipeline_cache = CreatePipelineCache(device, C_NULL;
@@ -49,6 +48,9 @@ pipeline_cache = CreatePipelineCache(device, C_NULL;
 framebuffers = setup_framebuffer(swapchain, depth_stencil, renderpass, width, height)
 flushSetupCommandBuffer(device, setup_command_buffer, command_pool, queue)
 setup_command_buffer = createSetupCommandBuffer(device, command_pool)
+
+# Triangle::prepare()
+semaphore = prepareSemaphore(device)
 
 
 # Setup vertices
@@ -61,15 +63,14 @@ vertices = [
 indexes = UInt32[0, 1, 2]
 vertexbuffer = VulkanBuffer(vertices, device, devicememory_properties, api.VK_BUFFER_USAGE_VERTEX_BUFFER_BIT)
 indexbuffer = VulkanBuffer(indexes, device, devicememory_properties, api.VK_BUFFER_USAGE_INDEX_BUFFER_BIT)
-
 vertices_vi = setup_binding_description()
+
 ubo = prepareUniformBuffers(device, devicememory_properties)
 
 descriptorset_layout, pipeline_layout = setupDescriptorSetLayout(device)
-pipeline = preparePipelines(device, pipeline_cache, renderpass, pipeline_layout, vertices_vi)
 descriptor_pool = setupDescriptorPool(device)
 descriptorSet = setupDescriptorSet(device, descriptor_pool, descriptorset_layout, ubo)
-
+pipeline = preparePipelines(device, pipeline_cache, renderpass, pipeline_layout, vertices_vi)
 
 buildCommandBuffers(
 	draw_commandbuffers, framebuffers, swapchain,
@@ -86,15 +87,15 @@ end
 function draw(swapChain, semaphores, queue, commandbuffer)
     current_buffer_ref = Ref{UInt32}()
     err = acquireNextImage(semaphores.presentComplete, current_buffer_ref, swapchain, device)
-    current_buffer = current_buffer_ref[]
     check(err)
+    current_buffer = current_buffer_ref[]
     # The submit infor strcuture contains a list of
     # command buffers and semaphores to be submitted to a queue
     # If you want to submit multiple command buffers, pass an array
     semaphore_pres_ref = [semaphores.presentComplete]
     semaphore_render_ref = [semaphores.renderComplete]
     pipelinestage_ref = Ref(UInt32(api.VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT))
-    command_buff_ref = Ref(commandbuffer.buffers, current_buffer+1)
+    command_buff_ref = [commandbuffer.buffers[current_buffer+1]]
     submitInfo = create_ref(api.VkSubmitInfo,
         sType = api.VK_STRUCTURE_TYPE_SUBMIT_INFO,
         pWaitDstStageMask = pipelinestage_ref,
@@ -164,23 +165,27 @@ function draw(swapChain, semaphores, queue, commandbuffer)
     check(err)
     # Submit to the queue
     commandbuf_ref = [commandbuffer.postpresent]
-    submitInfo = create_ref(api.VkSubmitInfo,
+    submitInfo = [create(api.VkSubmitInfo,
         sType = api.VK_STRUCTURE_TYPE_SUBMIT_INFO,
         commandBufferCount = 1,
         pCommandBuffers = commandbuf_ref,
-        waitSemaphoreCount = 0,
-        commandBufferCount = 0,
-        signalSemaphoreCount = 0
-    )
+    )]
     err = api.vkQueueSubmit(queue, 1, submitInfo, api.VK_NULL_HANDLE);
     check(err)
     err = api.vkQueueWaitIdle(queue);
     check(err)
 end
 
-
-for i=1:1000
-    println("everyday I'm renderin'")
+quit = false
+for i=1:2000
+    XCB.xcb_flush(window.connection)
+    event_ptr = XCB.xcb_poll_for_event(window.connection)
+    if event_ptr != C_NULL
+        event = unsafe_load(event_ptr)
+        if event.response_type & 0x7f == XCB.XCB_DESTROY_NOTIFY
+             quit = true
+        end
+    end
     render(device, swapchain, semaphore, queue, draw_commandbuffers)
     sleep(0.01)
 end

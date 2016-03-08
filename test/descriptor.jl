@@ -37,13 +37,13 @@ function setupDescriptorSetLayout(device)
 	# binding
 	# Binding 0 : Uniform buffer (Vertex shader)
 
-	layoutBinding = create_ref(api.VkDescriptorSetLayoutBinding,
+	layoutBinding = [create(api.VkDescriptorSetLayoutBinding,
     	descriptorType = api.VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
     	descriptorCount = 1,
     	stageFlags = api.VK_SHADER_STAGE_VERTEX_BIT,
         pImmutableSamplers = C_NULL,
     	binding = 0,
-    )
+    )]
 
 	descriptorSetLayout = [CreateDescriptorSetLayout(device, C_NULL;
         sType = api.VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
@@ -79,13 +79,14 @@ function setupDescriptorSet(device, descriptorPool, descriptorSetLayout, ubo)
 	err = api.vkAllocateDescriptorSets(device, allocInfo, descriptorSet_ref)
 	check(err)
     descriptorSet = descriptorSet_ref[]
+
     writeDescriptorSet = create_ref(api.VkWriteDescriptorSet,
     	# Binding 0 : Uniform buffer
     	sType = api.VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,
     	dstSet = descriptorSet,
     	descriptorCount = 1,
     	descriptorType = api.VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
-    	pBufferInfo = ubo.descriptor,
+    	pBufferInfo = [ubo.descriptor[]],
     	# Binds this uniform buffer to binding point 0
     	dstBinding = 0,
     )

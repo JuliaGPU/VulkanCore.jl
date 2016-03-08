@@ -26,8 +26,6 @@ end
 
 function VulkanBuffer{T}(array::Vector{T}, device, deviceMemoryProperties, usage)
 
-
-
     buff = CreateBuffer(device, C_NULL;
         sType = api.VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
         size = sizeof(array),
@@ -54,6 +52,7 @@ function VulkanBuffer{T}(array::Vector{T}, device, deviceMemoryProperties, usage
 	err = api.vkBindBufferMemory(device, buff, mem, 0)
 	check(err)
 	VulkanBuffer{T}(mem, buff, length(array))
+
 end
 
 
@@ -76,14 +75,12 @@ function setup_binding_description()
             location = 0,
             format = api.VK_FORMAT_R32G32B32_SFLOAT,
             offset = 0,
-            binding = 0
         ),
         create(api.VkVertexInputAttributeDescription,
             binding = VERTEX_BUFFER_BIND_ID,
             location = 1,
             format = api.VK_FORMAT_R32G32B32_SFLOAT,
             offset = sizeof(Float32) * 3,
-            binding = 0,
         )
     ]
     # Location 1 : Color

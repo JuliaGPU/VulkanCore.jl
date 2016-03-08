@@ -1,6 +1,5 @@
 
 const shader_cache = []
-
 function loadShaderGLSL(fileName, device::api.VkDevice, stage::api.VkShaderStageFlagBits)
 	shaderCode = open(fileName) do io
         readbytes(io)
@@ -26,7 +25,34 @@ function loadShaderGLSL(fileName, device::api.VkDevice, stage::api.VkShaderStage
         stage = stage,
         _module = shadermodule,
         pName = "main",
-        pSpecializationInfo = C_NULL
+    )
+    push!(shader_cache, shadermodule)
+    push!(shader_cache, pcode)
+
+	return shaderStage
+end
+function loadShader(fileName, device::api.VkDevice, stage::api.VkShaderStageFlagBits)
+	shaderCode = open(fileName) do io
+        readbytes(io)
+    end
+	if (length(shaderCode) < 1)
+        error("$filename is empty and doesn't contain a shader!")
+    end
+    pcode = reinterpret(UInt32, shaderCode)
+    # create the shader
+    shadermodule = CreateShaderModule(device, C_NULL;
+        sType = api.VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
+        codeSize = sizeof(pcode),
+        pCode = pcode
+    )
+    if shadermodule == C_NULL
+        error("Shader module not created successfully")
+    end
+    shaderStage = create(api.VkPipelineShaderStageCreateInfo,
+        sType = api.VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO,
+        stage = stage,
+        _module = shadermodule,
+        pName = "main",
     )
     push!(shader_cache, shadermodule)
     push!(shader_cache, pcode)
@@ -55,7 +81,6 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
     # Describes the topoloy used with this pipeline
     inputAssemblyState = create_ref(api.VkPipelineInputAssemblyStateCreateInfo,
         sType = api.VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO,
-        pNext = C_NULL,
         # This pipeline renders vertex data as triangle lists
         topology = api.VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
     )
@@ -146,23 +171,20 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
 
     shaderpath = dirname(@__FILE__)
     shaderStages = [
-        loadShaderGLSL(
-            joinpath(shaderpath, "triangle.vert"),
+        loadShader(
+            joinpath(shaderpath, "triangle.vert.spv"),
             device,
             api.VK_SHADER_STAGE_VERTEX_BIT
         )
-        loadShaderGLSL(
-            joinpath(shaderpath, "triangle.frag"),
+        loadShader(
+            joinpath(shaderpath, "triangle.frag.spv"),
             device,
             api.VK_SHADER_STAGE_FRAGMENT_BIT
         )
     ]
-
     pipelineCreateInfo = [
         create(api.VkGraphicsPipelineCreateInfo,
             sType = api.VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO,
-            pNext = C_NULL,
-            flags = 0,
             # The layout used for this pipeline
             layout = pipelineLayout,
             # Renderpass this pipeline is attached to
@@ -171,8 +193,8 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
             # Two shader stages
             stageCount = 2,
             pStages = shaderStages,
-            # Assign pipeline state create information
             pVertexInputState = vertices,
+            # Assign pipeline state create information
             pInputAssemblyState = inputAssemblyState,
             pRasterizationState = rasterizationState,
             pColorBlendState = colorBlendState,
@@ -180,15 +202,14 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
             pViewportState = viewportState,
             pDepthStencilState = depthStencilState,
             pDynamicState = dynamicState,
-            subpass = 0,
-            basePipelineIndex = 0,
-            basePipelineHandle = C_NULL,
         )
     ]
 
     # Create rendering pipeline
     pipeline_ref = Ref{api.VkPipeline}(api.VK_NULL_HANDLE)
     err = api.vkCreateGraphicsPipelines(device, pipelineCache, 1, pipelineCreateInfo, C_NULL, pipeline_ref)
+    println("broo:(")
+
     check(err)
     pipeline_ref[]
 end

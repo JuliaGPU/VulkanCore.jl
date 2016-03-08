@@ -94,7 +94,7 @@ function buildCommandBuffers(
     ))
 
     clearValues = api.VkClearValue[
-        api.VkClearValue(api.VkClearColorValue((0.025f0, 0.5f0, 1.0f0, 1.0f0))),
+        api.VkClearValue(api.VkClearColorValue((0.025f0, 0.025f0, 0.025f0, 1.0f0))),
         api.VkClearValue(api.VkClearColorValue((1f0, reinterpret(Float32, UInt32(0)), 0f0, 0f0)))
     ]
 
@@ -120,22 +120,22 @@ function buildCommandBuffers(
         api.vkCmdBeginRenderPass(cmd_buffers[i], renderPassBeginInfo, api.VK_SUBPASS_CONTENTS_INLINE)
 
         # Update dynamic viewport state
-        viewport = create_ref(api.VkViewport,
+        viewports = [create(api.VkViewport,
             height = height,
             width = width,
             minDepth = 0.0f0,
             maxDepth = 1.0f0
-        )
+        )]
 
-        api.vkCmdSetViewport(cmd_buffers[i], 0, 1, viewport)
+        api.vkCmdSetViewport(cmd_buffers[i], 0, 1, viewports)
 
         # Update dynamic scissor state
-        scissor = create_ref(api.VkRect2D,
+        scissors = [create(api.VkRect2D,
             extent = api.VkExtent2D(width, height),
             offset = api.VkOffset2D(0,0)
-        )
+        )]
 
-        api.vkCmdSetScissor(cmd_buffers[i], 0, 1, scissor)
+        api.vkCmdSetScissor(cmd_buffers[i], 0, 1, scissors)
         descriptorset_ref = [descriptorSet]
         # Bind descriptor sets describing shader binding points
         api.vkCmdBindDescriptorSets(cmd_buffers[i], api.VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, descriptorset_ref, 0, C_NULL)
@@ -146,7 +146,8 @@ function buildCommandBuffers(
         # Bind triangle vertices
         offsets = [api.VkDeviceSize(0)]
         VERTEX_BUFFER_BIND_ID = 0
-        api.vkCmdBindVertexBuffers(cmd_buffers[i], VERTEX_BUFFER_BIND_ID, 1, vertices.buffer, offsets)
+        buffers = [vertices.buffer]
+        api.vkCmdBindVertexBuffers(cmd_buffers[i], VERTEX_BUFFER_BIND_ID, 1, buffers, offsets)
 
         # Bind triangle indices
         api.vkCmdBindIndexBuffer(cmd_buffers[i], indices.buffer, 0, api.VK_INDEX_TYPE_UINT32)
