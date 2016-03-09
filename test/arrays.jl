@@ -2,6 +2,7 @@
 type VulkanBuffer{T}
 	mem::api.VkDeviceMemory
 	buffer::api.VkBuffer
+    allocation_info::api.VkMemoryAllocateInfo
 	length::Int
 end
 Base.length(v::VulkanBuffer) = v.length
@@ -17,42 +18,61 @@ function get_memory_type(typebits, properties, deviceMemoryProperties)
 	end
 	error("Can't get no memory type!")
 end
-function allocate_memory(device, allocation_info)
+function allocate_memory(device, allocation_info_ref)
     mem_ref = Ref{api.VkDeviceMemory}()
-    err = api.vkAllocateMemory(device, allocation_info, C_NULL, mem_ref)
+    err = api.vkAllocateMemory(device, allocation_info_ref, C_NULL, mem_ref)
     check(err)
     mem_ref[]
 end
 
-function VulkanBuffer{T}(array::Vector{T}, device, deviceMemoryProperties, usage)
-
-    buff = CreateBuffer(device, C_NULL;
+function CreateBuffer(device, array::Vector, usage, allocators=C_NULL)
+    CreateBuffer(device, allocators;
         sType = api.VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
         size = sizeof(array),
         usage = usage,
     )
+end
+function get_memory_requirements(device, buffer)
     mem_requirements_ref = Ref{api.VkMemoryRequirements}()
-	api.vkGetBufferMemoryRequirements(device, buff, mem_requirements_ref)
-    mem_requirements = mem_requirements_ref[]
+	api.vkGetBufferMemoryRequirements(device, buffer, mem_requirements_ref)
+    mem_requirements_ref[]
+end
+function map_buffer(device, buffer::VulkanBuffer)
+    data_ref = Ref{Ptr{Void}}(C_NULL)
+    alloc_size =  buffer.allocation_info.allocationSize
+	err = api.vkMapMemory(device, buffer.mem, 0, alloc_size, 0, data_ref)
+    check(err)
+    data_ref[]
+end
+function unmap_buffer(device, buffer::VulkanBuffer)
+    api.vkUnmapMemory(device, buffer.mem)
+end
+function VulkanBuffer{T}(array::Vector{T}, device, deviceMemoryProperties, usage)
 
-	memtypeindex = get_memory_type(mem_requirements.memoryTypeBits, api.VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, deviceMemoryProperties)
-    memAlloc = create_ref(api.VkMemoryAllocateInfo,
+    buffer = CreateBuffer(device, array, usage)
+
+    mem_requirements = get_memory_requirements(device, buffer)
+    memtypeindex = get_memory_type(mem_requirements.memoryTypeBits, api.VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, deviceMemoryProperties)
+    mem_alloc = create_ref(api.VkMemoryAllocateInfo,
         sType = api.VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
         pNext = C_NULL,
         memoryTypeIndex = memtypeindex,
         allocationSize = mem_requirements.size
     )
-	mem = allocate_memory(device, memAlloc)
-	data_ref = Ref{Ptr{Void}}(C_NULL)
-	err = api.vkMapMemory(device, mem, 0, memAlloc[].allocationSize, 0, data_ref)
-    check(err)
-    data = data_ref[]
-	memcpy(data, array)
-	api.vkUnmapMemory(device, mem)
-	err = api.vkBindBufferMemory(device, buff, mem, 0)
-	check(err)
-	VulkanBuffer{T}(mem, buff, length(array))
+    mem = allocate_memory(device, mem_alloc)
+    len = length(array)
+    if T <: FixedArray
+        len *= length(T)
+    end
+    vkbuff = VulkanBuffer{T}(mem, buffer, mem_alloc[], len)
 
+    data_ptr = map_buffer(device, vkbuff)
+    memcpy(data_ptr, array)
+    unmap_buffer(device, vkbuff)
+
+    err = api.vkBindBufferMemory(device, buffer, mem, 0)
+    check(err)
+    vkbuff
 end
 
 
@@ -81,6 +101,12 @@ function setup_binding_description()
             location = 1,
             format = api.VK_FORMAT_R32G32B32_SFLOAT,
             offset = sizeof(Float32) * 3,
+        ),
+        create(api.VkVertexInputAttributeDescription,
+            binding = VERTEX_BUFFER_BIND_ID,
+            location = 2,
+            format = api.VK_FORMAT_R32G32B32_SFLOAT,
+            offset = sizeof(Float32) * 6,
         )
     ]
     # Location 1 : Color
@@ -101,10 +127,12 @@ immutable UniformBuffer
     descriptor::Ref{api.VkDescriptorBufferInfo}
 end
 
-type Camera
+immutable Camera
 	projection::Mat4f0
 	model::Mat4f0
+    normal::Mat4f0
 	view::Mat4f0
+    ligthtpos::Vec3f0
 end
 
 
@@ -144,11 +172,15 @@ function prepareUniformBuffers(device, deviceMemoryProperties)
         range  = sizeof(Camera)
     )
     ubo = UniformBuffer(buffer, mem, descriptor)
-    camera = [
+    view = lookat(Vec3f0(2.5), Vec3f0(0), Vec3f0(0,1,0))
+    camera = [Camera(
+        perspectiveprojection(41f0, 1f0, 1f0, 256f0),
         eye(Mat4f0),
         eye(Mat4f0),
-        eye(Mat4f0)
-    ]
+        #inv(transpose(view)),
+        view,
+        Vec3f0(0.0f0, 0.0f0, 2.5f0)
+    )]
     updateUniformBuffers(camera, ubo)
     ubo
 end
@@ -160,6 +192,7 @@ function updateUniformBuffers(camera, uniform_buffer)
     err = api.vkMapMemory(device, uniform_buffer.memory, 0, sizeof(camera), 0, data_ref)
     data = data_ref[]
     check(err)
+    #ptr = Base.unsafe_convert(Ptr{Camera}, camera)
     memcpy(data, camera)
     api.vkUnmapMemory(device, uniform_buffer.memory)
 end

@@ -82,9 +82,10 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
     inputAssemblyState = create_ref(api.VkPipelineInputAssemblyStateCreateInfo,
         sType = api.VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO,
         # This pipeline renders vertex data as triangle lists
-        topology = api.VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
+        topology = api.VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
+        flags = 0,
+        primitiveRestartEnable = api.VK_FALSE
     )
-
     # Rasterization state
     rasterizationState = create_ref(api.VkPipelineRasterizationStateCreateInfo,
         sType = api.VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO,
@@ -93,9 +94,7 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
         # No culling
         cullMode = api.VK_CULL_MODE_NONE,
         frontFace = api.VK_FRONT_FACE_COUNTER_CLOCKWISE,
-        depthClampEnable = api.VK_FALSE,
-        rasterizerDiscardEnable = api.VK_FALSE,
-        depthBiasEnable = api.VK_FALSE
+        depthClampEnable = api.VK_TRUE,
     )
 
     blendAttachmentState = [
@@ -172,12 +171,12 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
     shaderpath = dirname(@__FILE__)
     shaderStages = [
         loadShader(
-            joinpath(shaderpath, "triangle.vert.spv"),
+            joinpath(shaderpath, "gears.vert.spv"),
             device,
             api.VK_SHADER_STAGE_VERTEX_BIT
         )
         loadShader(
-            joinpath(shaderpath, "triangle.frag.spv"),
+            joinpath(shaderpath, "gears.frag.spv"),
             device,
             api.VK_SHADER_STAGE_FRAGMENT_BIT
         )
@@ -208,7 +207,6 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
     # Create rendering pipeline
     pipeline_ref = Ref{api.VkPipeline}(api.VK_NULL_HANDLE)
     err = api.vkCreateGraphicsPipelines(device, pipelineCache, 1, pipelineCreateInfo, C_NULL, pipeline_ref)
-    println("broo:(")
 
     check(err)
     pipeline_ref[]

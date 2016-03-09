@@ -39,17 +39,17 @@ function struct_convert(t, x)
 end
 const refs = []
 function struct_convert(t::Type{Ptr{Ptr{Cchar}}}, x::Vector{ASCIIString})
-    #push!(refs, x)
+    push!(refs, x)
 	ref = Ref{Ptr{Cchar}}(x)
     Base.unsafe_convert(t, ref)
 end
 function struct_convert(t::Type{Ptr{Cchar}}, x::AbstractString)
-    #push!(refs, x)
+    push!(refs, x)
 	asciistr = ascii(x)
     Base.unsafe_convert(Ptr{Cchar}, asciistr)
 end
 function struct_convert(t, x::Union{Array, Ref})
-    #push!(refs, x)
+    push!(refs, x)
 	Base.unsafe_convert(t, x)
 end
 """

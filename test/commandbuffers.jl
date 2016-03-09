@@ -85,7 +85,6 @@ function buildCommandBuffers(
         renderPass, width, height, pipelineLayout,
         descriptorSet, pipelines, vertices, indices
     )
-
     cmdBufInfo = Ref(api.VkCommandBufferBeginInfo(
     api.VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
         C_NULL,
