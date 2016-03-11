@@ -1,4 +1,5 @@
 function setup_renderpass(swapchain)
+    println(swapchain.depth_format)
 	attachments = [
         create(api.VkAttachmentDescription,
             format = swapchain.color_format,
@@ -27,12 +28,12 @@ function setup_renderpass(swapchain)
         layout = api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
     )]
 
-    depthReference = create_ref(api.VkAttachmentReference,
+    depthReference = [create(api.VkAttachmentReference,
         attachment = 1,
         layout = api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
-    )
+    )]
 
-    subpass = [create(api.VkSubpassDescription,
+    subpass = create_ref(api.VkSubpassDescription,
         pipelineBindPoint = api.VK_PIPELINE_BIND_POINT_GRAPHICS,
         flags = 0,
         inputAttachmentCount = 0,
@@ -43,7 +44,7 @@ function setup_renderpass(swapchain)
         pDepthStencilAttachment = depthReference,
         preserveAttachmentCount = 0,
         pPreserveAttachments = C_NULL,
-    )]
+    )
 
     renderPassInfo = create_ref(api.VkRenderPassCreateInfo,
         sType = api.VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
@@ -51,8 +52,6 @@ function setup_renderpass(swapchain)
         pAttachments = attachments,
         subpassCount = 1,
         pSubpasses = subpass,
-        dependencyCount = 0,
-        pDependencies = C_NULL
     )
     renderpass_ref = Ref{api.VkRenderPass}(api.VK_NULL_HANDLE)
     err = api.vkCreateRenderPass(device, renderPassInfo, C_NULL, renderpass_ref)

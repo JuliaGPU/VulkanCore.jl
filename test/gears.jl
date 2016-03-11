@@ -1,6 +1,6 @@
 using Vulkan
-using GeometryTypes, GLAbstraction, FixedSizeArrays
-gc_enable(false)
+using GeometryTypes, GLAbstraction, FixedSizeArrays, Benchmarks, GLFW
+
 const api = vk.api
 include("refutil.jl")
 include("helper.jl")
@@ -15,12 +15,18 @@ include("descriptor.jl")
 include("renderpass.jl")
 include("commandbuffers.jl")
 
-#ENV["VK_INSTANCE_LAYERS"]="VK_LAYER_LUNARG_device_limits:VK_LAYER_LUNARG_draw_state:VK_LAYER_LUNARG_image:VK_LAYER_LUNARG_mem_tracker:VK_LAYER_LUNARG_object_tracker:VK_LAYER_LUNARG_param_checker:VK_LAYER_LUNARG_swapchain:VK_LAYER_LUNARG_threading:VK_LAYER_GOOGLE_unique_objects"
 
 immutable Vertex{N,T}
 	pos::Point{N,T}
     normal::Normal{N,T}
 	col::Vec{N,T}
+end
+type Camera
+	projection::Mat4f0
+	model::Mat4f0
+    normal::Mat4f0
+	view::Mat4f0
+    ligthtpos::Vec3f0
 end
 immutable Semaphore
     presentComplete::api.VkSemaphore
@@ -29,11 +35,10 @@ end
 
 width, height = 512, 512
 # VulkanBase::VulkanBase
-screen, connection = create_screen()
 instance = create_instance("test")
 device, physical_device, queue, devicememory_properties = get_graphic_device(instance, false)
 # Triangle::main
-window = create_window(b"hallo", width, height, screen, connection)
+window = create_window("test", width, height)
 swapchain = SwapChain(instance, device, physical_device, window)
 #VulkanBase::prepare
 setupDebugging(instance, UInt32(api.VK_DEBUG_REPORT_ERROR_BIT_EXT) | UInt32(api.VK_DEBUG_REPORT_WARNING_BIT_EXT))
@@ -53,27 +58,31 @@ setup_command_buffer = createSetupCommandBuffer(device, command_pool)
 # Triangle::prepare()
 semaphore = prepareSemaphore(device)
 
-#Setup vertices
-# verts = [
-# 	Vertex(Point3f0(0.5f0,  0.5f0, 0.0f0), Vec3f0(1.0f0, 0.0f0, 0.0f0)),
-# 	Vertex(Point3f0(-0.5f0,  0.5f0, 0.0f0), Vec3f0(0.0f0, 1.0f0, 0.0f0)),
-#     Vertex(Point3f0(0.0f0, -0.5f0, 0.0f0), Vec3f0(0.0f0, 0.0f0, 1.0f0)),
-# 	Vertex(Point3f0(-0.5f0, -0.5f0, 0.0f0), Vec3f0(0.0f0, 1.0f0, 1.0f0)),
-# ]
-# # Setup indices
-# indexes = UInt32[0, 1, 2, 2,3,1]
 using GLVisualize
 mesh = loadasset("cat.obj")
 
 verts = Vertex{3, Float32}[Vertex(p, n, Vec3f0(0.99)) for (p,n) in zip(vertices(mesh), normals(mesh))]
 indexes = faces(mesh)
-# println(indexes)
 
-vertexbuffer = VulkanBuffer(verts, device, devicememory_properties, api.VK_BUFFER_USAGE_VERTEX_BUFFER_BIT)
-indexbuffer = VulkanBuffer(indexes, device, devicememory_properties, api.VK_BUFFER_USAGE_INDEX_BUFFER_BIT)
+vertexbuffer = VulkanBuffer(verts, device, api.VK_BUFFER_USAGE_VERTEX_BUFFER_BIT)
+indexbuffer = VulkanBuffer(indexes, device, api.VK_BUFFER_USAGE_INDEX_BUFFER_BIT)
 vertices_vi = setup_binding_description()
+println(flattened_length(indexbuffer))
+println(length(indexes))
 
-ubo = prepareUniformBuffers(device, devicememory_properties)
+# Prepare and initialize uniform buffer containing shader uniforms
+# Vertex shader uniform buffer block
+view = lookat(Vec3f0(2.5), Vec3f0(0), Vec3f0(0,1,0))
+camera = Camera(
+    perspectiveprojection(41f0, 1f0, 1f0, 256f0),
+    eye(Mat4f0),
+    eye(Mat4f0),
+    #inv(transpose(view)),
+    view,
+    Vec3f0(0.0f0, 0.0f0, 2.5f0)
+)
+# Create a new buffer
+ubo = VulkanBuffer(camera, device, api.VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT)
 
 descriptorset_layout, pipeline_layout = setupDescriptorSetLayout(device)
 descriptor_pool = setupDescriptorPool(device)
@@ -222,16 +231,14 @@ function draw(swapChain, semaphores, queue, commandbuffer)
     check(err)
 end
 
-quit = false
-for i=1:1000
-    XCB.xcb_flush(window.connection)
-    event_ptr = XCB.xcb_poll_for_event(window.connection)
-    if event_ptr != C_NULL
-        event = unsafe_load(event_ptr)
-        if event.response_type & 0x7f == XCB.XCB_DESTROY_NOTIFY
-             quit = true
-        end
-    end
+function pollevents()
+    GLFW.PollEvents()
+end
+function Base.isopen(window::GLFW.Window)
+    !GLFW.WindowShouldClose(window)
+end
+
+while isopen(window)
     render(device, swapchain, semaphore, queue, draw_commandbuffers)
-    sleep(0.01)
+    pollevents()
 end

@@ -31,7 +31,7 @@ function loadShaderGLSL(fileName, device::api.VkDevice, stage::api.VkShaderStage
 
 	return shaderStage
 end
-function loadShader(fileName, device::api.VkDevice, stage::api.VkShaderStageFlagBits)
+function loadShader(fileName, device::Device, stage::api.VkShaderStageFlagBits)
 	shaderCode = open(fileName) do io
         readbytes(io)
     end
@@ -93,7 +93,7 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
         polygonMode = api.VK_POLYGON_MODE_FILL,
         # No culling
         cullMode = api.VK_CULL_MODE_NONE,
-        frontFace = api.VK_FRONT_FACE_COUNTER_CLOCKWISE,
+        frontFace = api.VK_FRONT_FACE_CLOCKWISE,
         depthClampEnable = api.VK_TRUE,
     )
 
@@ -107,7 +107,6 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
     # Describes blend modes and color masks
     colorBlendState = create_ref(api.VkPipelineColorBlendStateCreateInfo,
         sType = api.VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
-        pNext = C_NULL,
         attachmentCount = 1,
         pAttachments = blendAttachmentState
     )
@@ -139,8 +138,6 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
     )
 
     back = create(api.VkStencilOpState,
-        failOp = api.VK_STENCIL_OP_KEEP,
-        passOp = api.VK_STENCIL_OP_KEEP,
         compareOp = api.VK_COMPARE_OP_ALWAYS
     )
     # Depth and stencil state
@@ -152,10 +149,7 @@ function preparePipelines(device, pipelineCache, renderPass, pipelineLayout, ver
         depthTestEnable = api.VK_TRUE,
         depthWriteEnable = api.VK_TRUE,
         depthCompareOp = api.VK_COMPARE_OP_LESS_OR_EQUAL,
-        depthBoundsTestEnable = api.VK_FALSE,
         back = back,
-        stencilTestEnable = api.VK_FALSE,
-        front = back
     )
 
     # Multi sampling state

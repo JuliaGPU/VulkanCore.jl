@@ -86,7 +86,7 @@ function setupDescriptorSet(device, descriptorPool, descriptorSetLayout, ubo)
     	dstSet = descriptorSet,
     	descriptorCount = 1,
     	descriptorType = api.VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
-    	pBufferInfo = [ubo.descriptor[]],
+    	pBufferInfo = [get_descriptor(ubo)],
     	# Binds this uniform buffer to binding point 0
     	dstBinding = 0,
     )

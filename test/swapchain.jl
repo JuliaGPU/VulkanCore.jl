@@ -1,6 +1,3 @@
-using Vulkan
-const api = vk.api
-
 
 type SwapChain
 	ref::Ref{api.VkSwapchainKHR}
@@ -81,7 +78,7 @@ function get_instance_proc_addr(inst::api.VkInstance, entrypoint::ASCIIString)
 	entrypoint_ptr
 end
 
-function get_device_proc_addr(device::api.VkDevice, entrypoint::ASCIIString)
+function get_device_proc_addr(device::Device, entrypoint::ASCIIString)
 	if device == C_NULL
 		error("device == C_NULL")
 	end
@@ -166,9 +163,8 @@ end
 
 """
 Connect? well this function sets up the functions to Surface and Swapchain functions to point to use right device pointers.
-
 """
-function connect!(instance::api.VkInstance, physical_device::api.VkPhysicalDevice, device::api.VkDevice)
+function connect!(instance::api.VkInstance, physical_device::PhysicalDevice, device::Device)
 
 	surface_function_pointers[1] = get_instance_proc_addr(instance, "vkGetPhysicalDeviceSurfaceSupportKHR")
 	surface_function_pointers[2] = get_instance_proc_addr(instance, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR")
@@ -183,8 +179,6 @@ function connect!(instance::api.VkInstance, physical_device::api.VkPhysicalDevic
 end
 
 end
-
-
 
 
 function get_queue_properties(physical_device)
@@ -563,22 +557,22 @@ function setupDepthStencil(device, command_buffer, depthFormat, devicememory_pro
     	flags = 0
     )
 
+	memory_requirements_ref = Ref{api.VkMemoryRequirements}()
+	api.vkGetImageMemoryRequirements(device, image, memory_requirements_ref);
+    memory_requirements = memory_requirements_ref[]
 
-
-	memReqs = Ref{api.VkMemoryRequirements}()
-	api.vkGetImageMemoryRequirements(device, image, memReqs);
-
-	typ = get_memory_type(memReqs[].memoryTypeBits, api.VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, devicememory_properties)
+	typ = get_memory_type(device, memory_requirements.memoryTypeBits, api.VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
     mem_alloc = create_ref(api.VkMemoryAllocateInfo,
         sType = api.VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
-        allocationSize = memReqs[].size,
+        allocationSize = memory_requirements.size,
         memoryTypeIndex = typ
     )
-    mem = Ref{api.VkDeviceMemory}()
-	err = api.vkAllocateMemory(device, mem_alloc, C_NULL, mem);
+    mem_ref = Ref{api.VkDeviceMemory}()
+	err = api.vkAllocateMemory(device, mem_alloc, C_NULL, mem_ref);
 	check(err)
+    mem = mem_ref[]
 
-	err = api.vkBindImageMemory(device, image, mem[], 0)
+	err = api.vkBindImageMemory(device, image, mem, 0)
 	check(err)
 	set_image_layout(
         command_buffer, image,
@@ -596,5 +590,5 @@ function setupDepthStencil(device, command_buffer, depthFormat, devicememory_pro
         subresourceRange = subresource_range,
         image = image
     )
-    DepthStencil(image, mem[], view)
+    DepthStencil(image, mem, view)
 end

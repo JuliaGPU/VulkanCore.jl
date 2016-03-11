@@ -58,7 +58,12 @@ function setupDebugging(instance::api.VkInstance, flags)
     dbgCreateInfo = create_ref(api.VkDebugReportCallbackCreateInfoEXT,
         sType = api.VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT,
         pfnCallback = debug_callback_fun_ptr,
-        flags = flags,
+        flags = (
+            UInt32(api.VK_DEBUG_REPORT_INFORMATION_BIT_EXT) |
+            UInt32(api.VK_DEBUG_REPORT_ERROR_BIT_EXT) |
+            UInt32(api.VK_DEBUG_REPORT_WARNING_BIT_EXT) |
+            UInt32(api.VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT)
+        )
     )
 
     debugReportCallback = Ref{api.VkDebugReportCallbackEXT}()
@@ -81,12 +86,16 @@ function create_instance(appname::AbstractString, validation=true)
     # todo : linux/android
         push!(enabledExtensions, api.VK_KHR_XCB_SURFACE_EXTENSION_NAME)
     end
-    appInfo = create_ref(api.VkApplicationInfo,
-        sType = api.VK_STRUCTURE_TYPE_APPLICATION_INFO,
-        pApplicationName = appname,
-        pEngineName = appname,
-        apiVersion = api.VK_MAKE_VERSION(1, 0, 3)
-    )
+
+    appInfo = Ref(api.VkApplicationInfo(
+        api.VK_STRUCTURE_TYPE_APPLICATION_INFO,
+        default(Ptr{Void}),
+        struct_convert(Ptr{Cchar}, appname),
+        default(UInt32),
+        struct_convert(Ptr{Cchar}, appname),
+        default(UInt32),
+        api.VK_MAKE_VERSION(1, 0, 3)
+    ))
     instance = CreateInstance(C_NULL;
         sType = api.VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         pApplicationInfo = appInfo,

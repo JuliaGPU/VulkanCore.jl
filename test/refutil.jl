@@ -1,13 +1,18 @@
 # the c code is much easier to port if we can do setindex on Ref{CompositeType}
 
+"""
+Can we get a pointer to `T` savely?
+True = yes, false = no!
+"""
+is_referencable{T<:DenseArray}(x::T) = true
+is_referencable{T}(x::T) = !isimmutable(T)
 
 """
 Creates a type `T` from keyword arguments referring to the fields.
 Converts arrays and refs to pointers correctly and initialises missing keyword
 arguments with 0/C_NULL.
 """
-function create{T}(::Type{T}; kw_args...)
-    kw_dict = Dict{Symbol, Any}(kw_args)
+function create(T::DataType, kw_dict)
     fnames = fieldnames(T)
     args = ntuple(nfields(T)) do i
         FT = fieldtype(T, i)
@@ -24,6 +29,10 @@ function create{T}(::Type{T}; kw_args...)
     end
     T(args...)
 end
+function create(T::DataType; kw_args...)
+    kw_dict = Dict{Symbol, Any}(kw_args)
+    create(T, kw_dict)
+end
 """
 Creates a ref from type `T` from keyword arguments referring to the fields.
 Converts arrays and refs to pointers correctly and initialises missing keyword
@@ -33,6 +42,20 @@ function create_ref{T}(::Type{T}; kw_args...)
     Ref(create(T; kw_args...))
 end
 
+function create_ref{T}(::Type{T}, args...)
+    fnames = fieldnames(T)
+    args = ntuple(nfields(T)) do i
+        FT = fieldtype(T, i)
+        name = fnames[i]
+        for (k,v) in args
+            if k == name
+                return struct_convert(FT, v)
+            end
+        end
+        return default(FT)
+    end
+    Ref(T(args...))
+end
 
 function struct_convert(t, x)
 	convert(t, x)
@@ -116,9 +139,7 @@ function Base.setindex!{T, X}(ref::Array{T}, value::X, array_index::Integer, fie
 end
 
 
-
-
-function memcpy(destination, source, to_copy)
+function memcpy(destination::Union{Ptr, Array}, source::Union{Ptr, Array}, to_copy::Int)
 	ccall(:memcpy, Void, (Ptr{Void}, Ptr{Void}, Csize_t), destination, source, to_copy)
 end
 function memcpy(destination::Array, source::Array)
@@ -131,7 +152,21 @@ end
 function unsafe_pointer{T}(ref::Ref{T}, ptr_type=T)
 	Base.unsafe_convert(Ptr{ptr_type}, ref)
 end
-
+function memcpy(destination, source::Array)
+    println("olol? ", typeof(source))
+	memcpy(destination, source, sizeof(source))
+end
+function memcpy{T}(destination, source::T)
+    println("olol? ", T)
+    isimmutable(T) && error("Type is immutable, meaning it can't be referenced")
+    ptr = pointer_from_objref(source)
+	memcpy(destination, ptr, sizeof(T))
+end
+function memcpy{T}(destination, source::Ref{T})
+    println("olol? ", T)
+    ptr = Base.unsafe_convert(Ptr{T}, source)
+	memcpy(destination, ptr, sizeof(T))
+end
 """
 Checks the VkResult for errors
 """

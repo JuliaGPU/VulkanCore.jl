@@ -75,6 +75,19 @@ function create_command_buffers(device, swapchain)
 	DrawCommandBuffer(draw_command_buffers, prePresentCmdBuffer[], postPresentCmdBuffer[])
 end
 
+
+function RenderPassBeginInfo(renderPass, framebuffer,renderArea, clearcolor, depthclear)
+    api.VkRenderPassBeginInfo(
+        api.VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
+        C_NULL,
+        renderPass,# :: VkRenderPass
+        framebuffer,# :: VkFramebuffer
+        renderArea,# :: VkRect2D
+        clearValueCount,# :: UInt32
+        pClearValues # :: Ptr{VkClearValue}
+    )
+end
+
 """
  Build separate command buffers for every framebuffer image
  Unlike in OpenGL all rendering commands are recorded once
@@ -92,11 +105,8 @@ function buildCommandBuffers(
         C_NULL
     ))
 
-    clearValues = api.VkClearValue[
-        api.VkClearValue(api.VkClearColorValue((0.025f0, 0.025f0, 0.025f0, 1.0f0))),
-        api.VkClearValue(api.VkClearColorValue((1f0, reinterpret(Float32, UInt32(0)), 0f0, 0f0)))
-    ]
-
+    global clearValues = Float32[0.025f0, 0.025f0, 0.025f0, 1.0f0, 1f0, 0f0]
+    clear_value_ref = Ptr{api.VkClearValue}(Base.unsafe_convert(Ptr{Float32}, clearValues))
     renderPassBeginInfo = create_ref(api.VkRenderPassBeginInfo,
         sType = api.VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
         renderPass = renderPass,
@@ -105,7 +115,7 @@ function buildCommandBuffers(
             api.VkExtent2D(width, height)
         ),
         clearValueCount = 2,
-        pClearValues = clearValues
+        pClearValues = clear_value_ref
     )
 
     cmd_buffers = draw_command_buffers.buffers
@@ -152,7 +162,7 @@ function buildCommandBuffers(
         api.vkCmdBindIndexBuffer(cmd_buffers[i], indices.buffer, 0, api.VK_INDEX_TYPE_UINT32)
 
         # Draw indexed triangle
-        api.vkCmdDrawIndexed(cmd_buffers[i], length(indices), 1, 0, 0, 1)
+        api.vkCmdDrawIndexed(cmd_buffers[i], flattened_length(indices), 1, 0, 0, 1)
 
         api.vkCmdEndRenderPass(cmd_buffers[i])
 

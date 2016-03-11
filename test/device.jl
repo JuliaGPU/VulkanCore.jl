@@ -1,4 +1,24 @@
 
+"""
+there are lots of pointer types to wrap. We introduce an abstract type for this
+to share some functionality
+"""
+abstract VulkanPointerWrapper
+
+Base.cconvert(::Type{Ptr{Void}}, x::VulkanPointerWrapper) = x
+Base.unsafe_convert(::Type{Ptr{Void}}, x::VulkanPointerWrapper) = x.ref
+
+type PhysicalDevice <: VulkanPointerWrapper
+    ref::api.VkPhysicalDevice
+    memory_properties::api.VkPhysicalDeviceMemoryProperties
+end
+
+type Device <: VulkanPointerWrapper
+    ref::api.VkDevice
+    physical_device::PhysicalDevice
+end
+
+
 
 function collect_devices(instance)
     # Physical device
@@ -55,24 +75,25 @@ function create_device(physical_device, requested_queues, enable_validation)
         enabledLayerCount = length(validation_layer),
         ppEnabledLayerNames = validation_layer
     )
+    Device(device, physical_device)
 end
 
 
 
-immutable PhysicalDevice
-    ref::api.VkPhysicalDevice
-    memory_properties::api.VkPhysicalDeviceMemoryProperties
-end
 function get_graphic_device(instance, enable_validation)
     # Enumerate devices
     physical_devices = collect_devices(instance)
     # select the first one for now!
-    physical_device = physical_devices[1]
+
+
+    physical_device_raw = physical_devices[1]
+    deviceMemoryProperties = Ref{api.VkPhysicalDeviceMemoryProperties}()
+    api.vkGetPhysicalDeviceMemoryProperties(physical_device_raw, deviceMemoryProperties)
     # Gather physical device memory properties
 
+    physical_device = PhysicalDevice(physical_device_raw, deviceMemoryProperties[])
 
     graphic_queue_index = get_graphic_queue(physical_device)
-    println(graphic_queue_index)
     # Vulkan device
     	# Vulkan device
     queuePriorities = [0.0f0]
@@ -84,8 +105,7 @@ function get_graphic_device(instance, enable_validation)
     )
     device = create_device(physical_device, queue_create_info, enable_validation)
 
-    deviceMemoryProperties = Ref{api.VkPhysicalDeviceMemoryProperties}()
-    api.vkGetPhysicalDeviceMemoryProperties(physical_device, deviceMemoryProperties)
+
     # Get the graphics queue
     queue_ref = Ref{api.VkQueue}()
     api.vkGetDeviceQueue(device, graphic_queue_index, 0, queue_ref)
