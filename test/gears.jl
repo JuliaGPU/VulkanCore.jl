@@ -1,5 +1,5 @@
 using Vulkan
-using GeometryTypes, GLAbstraction, FixedSizeArrays, Benchmarks, GLFW
+using GeometryTypes, GLAbstraction, FixedSizeArrays, GLFW
 
 const api = vk.api
 include("types.jl")
@@ -127,7 +127,7 @@ function submitPostPresentBarrier(queue, postPresentCmdBuffer, image)
 
     err = api.vkEndCommandBuffer(postPresentCmdBuffer)
     check(err)
-    cmd_ref = [postPresentCmdBuffer]
+    cmd_ref = [postPresentCmdBuffer.ref]
     submit_info = create(api.VkSubmitInfo, (
         :commandBufferCount, 1,
         :pCommandBuffers, cmd_ref
@@ -164,7 +164,7 @@ function submitPrePresentBarrier(queue, prePresentCmdBuffer, image)
 
     err = api.vkEndCommandBuffer(prePresentCmdBuffer);
     check(err)
-    cmd_arr = [prePresentCmdBuffer]
+    cmd_arr = [prePresentCmdBuffer.ref]
     submit_info = create(api.VkSubmitInfo, (
         :commandBufferCount, 1,
         :pCommandBuffers, cmd_arr

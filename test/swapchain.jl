@@ -558,7 +558,7 @@ function setupDepthStencil(device, command_buffer, depthFormat, devicememory_pro
     check(err)
     set_image_layout(
         command_buffer, image,
-        api.VK_IMAGE_ASPECT_DEPTH_BIT, api.VK_IMAGE_LAYOUT_UNDEFINED,
+        api.UInt32(api.VK_IMAGE_ASPECT_DEPTH_BIT) | UInt32(api.VK_IMAGE_ASPECT_STENCIL_BIT), api.VK_IMAGE_LAYOUT_UNDEFINED,
         api.VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
     )
     subresource_range = api.VkImageSubresourceRange(

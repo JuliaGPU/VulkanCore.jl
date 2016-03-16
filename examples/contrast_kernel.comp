@@ -1,0 +1,25 @@
+#version 450
+
+#extension GL_ARB_separate_shader_objects : enable
+#extension GL_ARB_shading_language_420pack : enable
+
+layout (local_size_x = 16, local_size_y = 16) in;
+layout (binding = 0, rgba8) uniform image2D inputImage;
+layout (binding = 1, rgba8) uniform image2D resultImage;
+
+layout (binding = 0) uniform ARGS
+{
+    float contrast;
+    float brightness;
+} args;
+
+void main()
+{
+
+    ivec2 gid = ivec2(gl_GlobalInvocationID.xy);
+    vec4 in_v = imageLoad(inputImage, gid);
+    vec4 out_v;
+    out_v.xyz = (in_v.xyz - 0.5) * args.contrast + args.brightness + 0.5;
+    out_v.w   = in_v.w;
+    imageStore(resultImage, gid, out_v);
+}

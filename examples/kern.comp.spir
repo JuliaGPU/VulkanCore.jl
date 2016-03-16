@@ -1,0 +1,104 @@
+; SPIR-V
+; Version: 1.0
+; Generator: Khronos Glslang Reference Front End; 1
+; Bound: 64
+; Schema: 0
+               OpCapability Shader
+          %1 = OpExtInstImport "GLSL.std.450"
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %4 "main" %13
+               OpExecutionMode %4 LocalSize 16 16 1
+               OpSource GLSL 450
+               OpSourceExtension "GL_ARB_separate_shader_objects"
+               OpSourceExtension "GL_ARB_shading_language_420pack"
+               OpName %4 "main"
+               OpName %9 "gid"
+               OpName %13 "gl_GlobalInvocationID"
+               OpName %21 "in_v"
+               OpName %24 "inputImage"
+               OpName %28 "out_v"
+               OpName %35 "ARGS"
+               OpMemberName %35 0 "contrast"
+               OpMemberName %35 1 "brightness"
+               OpName %37 "args"
+               OpName %57 "resultImage"
+               OpDecorate %13 BuiltIn GlobalInvocationId
+               OpDecorate %24 DescriptorSet 0
+               OpDecorate %24 Binding 0
+               OpMemberDecorate %35 0 Offset 0
+               OpMemberDecorate %35 1 Offset 4
+               OpDecorate %35 Block
+               OpDecorate %37 DescriptorSet 0
+               OpDecorate %37 Binding 0
+               OpDecorate %57 DescriptorSet 0
+               OpDecorate %57 Binding 1
+               OpDecorate %63 BuiltIn WorkgroupSize
+          %2 = OpTypeVoid
+          %3 = OpTypeFunction %2
+          %6 = OpTypeInt 32 1
+          %7 = OpTypeVector %6 2
+          %8 = OpTypePointer Function %7
+         %10 = OpTypeInt 32 0
+         %11 = OpTypeVector %10 3
+         %12 = OpTypePointer Input %11
+         %13 = OpVariable %12 Input
+         %14 = OpTypeVector %10 2
+         %18 = OpTypeFloat 32
+         %19 = OpTypeVector %18 4
+         %20 = OpTypePointer Function %19
+         %22 = OpTypeImage %18 2D 0 0 0 2 Rgba8
+         %23 = OpTypePointer UniformConstant %22
+         %24 = OpVariable %23 UniformConstant
+         %29 = OpTypeVector %18 3
+         %32 = OpConstant %18 0.5
+         %35 = OpTypeStruct %18 %18
+         %36 = OpTypePointer Uniform %35
+         %37 = OpVariable %36 Uniform
+         %38 = OpConstant %6 0
+         %39 = OpTypePointer Uniform %18
+         %43 = OpConstant %6 1
+         %52 = OpConstant %10 3
+         %53 = OpTypePointer Function %18
+         %57 = OpVariable %23 UniformConstant
+         %61 = OpConstant %10 16
+         %62 = OpConstant %10 1
+         %63 = OpConstantComposite %11 %61 %61 %62
+          %4 = OpFunction %2 None %3
+          %5 = OpLabel
+          %9 = OpVariable %8 Function
+         %21 = OpVariable %20 Function
+         %28 = OpVariable %20 Function
+         %15 = OpLoad %11 %13
+         %16 = OpVectorShuffle %14 %15 %15 0 1
+         %17 = OpBitcast %7 %16
+               OpStore %9 %17
+         %25 = OpLoad %22 %24
+         %26 = OpLoad %7 %9
+         %27 = OpImageRead %19 %25 %26
+               OpStore %21 %27
+         %30 = OpLoad %19 %21
+         %31 = OpVectorShuffle %29 %30 %30 0 1 2
+         %33 = OpCompositeConstruct %29 %32 %32 %32
+         %34 = OpFSub %29 %31 %33
+         %40 = OpAccessChain %39 %37 %38
+         %41 = OpLoad %18 %40
+         %42 = OpVectorTimesScalar %29 %34 %41
+         %44 = OpAccessChain %39 %37 %43
+         %45 = OpLoad %18 %44
+         %46 = OpCompositeConstruct %29 %45 %45 %45
+         %47 = OpFAdd %29 %42 %46
+         %48 = OpCompositeConstruct %29 %32 %32 %32
+         %49 = OpFAdd %29 %47 %48
+         %50 = OpLoad %19 %28
+         %51 = OpVectorShuffle %19 %50 %49 4 5 6 3
+               OpStore %28 %51
+         %54 = OpAccessChain %53 %21 %52
+         %55 = OpLoad %18 %54
+         %56 = OpAccessChain %53 %28 %52
+               OpStore %56 %55
+         %58 = OpLoad %22 %57
+         %59 = OpLoad %7 %9
+         %60 = OpLoad %19 %28
+               OpImageWrite %58 %59 %60
+               OpReturn
+               OpFunctionEnd
