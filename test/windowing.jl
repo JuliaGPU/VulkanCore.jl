@@ -5,7 +5,7 @@ function create_window(name, w, h)
     window
 end
 
-function create_surface(instance::api.VkInstance, window)
+function create_surface(instance::Instance, window)
     err, surface = GLFW.CreateWindowSurface(instance, window)
     check(api.VkResult(err))
     surface

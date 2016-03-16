@@ -1,78 +1,99 @@
-function createCommandPool(device, swapchain)
-	command_pool_info = create_ref(api.VkCommandPoolCreateInfo,
-    	sType = api.VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
-    	queueFamilyIndex = swapchain.queue_node_index,
-    	flags = api.VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
+
+function CommandBuffer(device, commandpool;
+        level=api.VK_COMMAND_BUFFER_LEVEL_PRIMARY
     )
-    command_pool_ref = Ref{api.VkCommandPool}(C_NULL)
-	err = api.vkCreateCommandPool(device, command_pool_info, C_NULL, command_pool_ref)
-	check(err)
-	command_pool_ref[]
+
+    commandbuffer_arr = Array(api.VkCommandBuffer, 1)
+    allocation_info = create(api.VkCommandBufferAllocateInfo, (
+        :commandPool, commandpool,
+        :level, api.VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+        :commandBufferCount, 1
+    ))
+
+    err = api.vkAllocateCommandBuffers(device, allocation_info, commandbuffer_arr)
+    check(err)
+    CommandBuffer(commandbuffer_arr[], RESETTED, commandpool)
+end
+"""
+Begin Recording, execute `f(cb)` and end recording aftewards.
+"""
+function record!(f::Function, cb::CommandBuffer)
+    record!(cb)
+    f(cb)
+    end_recording!(cb)
+end
+"""
+Sets commandbuffer into recording state
+"""
+function record!(
+        cb::CommandBuffer,
+        begin_info=create(api.VkCommandBufferBeginInfo, ())
+    )
+    cb.state != RESETTED && error("CommandBuffer state must be RESETTED to start recording. State found: $(cb.state)")
+    err = api.vkBeginCommandBuffer(cb, begin_info)
+    check(err)
+    cb.state = RECORDING
+    nothing
+end
+"""
+Sets commandbuffer into ended recording state.
+It's now ready to be submitted
+"""
+function end_recording!(cb::CommandBuffer)
+    cb.state != RECORDING && error("CommandBuffer state must be RECORDING to end recording. State found: $(cb.state)")
+    api.vkBeginCommandBuffer(cb)
+    cb.state = READY_FOR_SUBMIT
+    nothing
+end
+
+"""
+Resets the commandbuffer and readys it for calling `record!`.
+"""
+function reset!(cb::CommandBuffer, flag::api.VkFlags)
+    api.vkResetCommandBuffer(cb, flag)
+    cb.state = RESETTED
+    nothing
+end
+
+function createCommandPool(device, swapchain)
+    CreateCommandPool(device, C_NULL, (
+        :queueFamilyIndex, swapchain.queue_node_index,
+        :flags, api.VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT
+    ))
 end
 
 function createSetupCommandBuffer(device, command_pool)
-	setup_command_buffer = Array(api.VkCommandBuffer, 1)
-
-    cmdBufAllocateInfo = create_ref(api.VkCommandBufferAllocateInfo,
-        sType = api.VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
-        commandPool = command_pool,
-        level = api.VK_COMMAND_BUFFER_LEVEL_PRIMARY,
-        commandBufferCount = 1
-    )
-
-	err = api.vkAllocateCommandBuffers(device, cmdBufAllocateInfo, setup_command_buffer)
-	check(err)
-
-	# todo : Command buffer is also started here, better put somewhere else
-	# todo : Check if necessaray at all...
-	cmdBufInfo = create_ref(api.VkCommandBufferBeginInfo,
-	   sType = api.VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO
-    )
-	# todo : check null handles, flags?
-
-	err = api.vkBeginCommandBuffer(setup_command_buffer[], cmdBufInfo)
-	check(err)
-	setup_command_buffer[]
+    setup_cb = CommandBuffer(device, command_pool)
+    # todo : Command buffer is also started here, better put somewhere else
+    # todo : Check if necessaray at all...
+    record!(setup_cb)
+    setup_cb
 end
-
 
 
 
 type DrawCommandBuffer
-	buffers
-	prepresent
-	postpresent
+    buffers
+    prepresent
+    postpresent
 end
-function create_command_buffers(device, swapchain)
-	# Create one command buffer per frame buffer
-	# in the swap chain
-	# Command buffers store a reference to the
-	# frame buffer inside their render pass info
-	# so for static usage withouth having to rebuild
-	# them each frame, we use one per frame buffer
 
-	draw_command_buffers = Array(api.VkCommandBuffer, image_count(swapchain))
-    cmdBufAllocateInfo = create_ref(api.VkCommandBufferAllocateInfo,
-        sType = api.VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
-        commandPool = command_pool,
-        level = api.VK_COMMAND_BUFFER_LEVEL_PRIMARY,
-        commandBufferCount = length(draw_command_buffers)
-    )
 
-	err = api.vkAllocateCommandBuffers(device, cmdBufAllocateInfo, draw_command_buffers)
-	check(err)
+function create_command_buffers(device, swapchain, command_pool)
+    # Create one command buffer per frame buffer
+    # in the swap chain
+    # Command buffers store a reference to the
+    # frame buffer inside their render pass info
+    # so for static usage withouth having to rebuild
+    # them each frame, we use one per frame buffer
+    draw_command_buffers = [CommandBuffer(device, command_pool) for i=1:image_count(swapchain)]
 
-	# Command buffers for submitting present barriers
-	cmdBufAllocateInfo[:commandBufferCount] = 1
-	# Pre present
-	prePresentCmdBuffer = Array(api.VkCommandBuffer, 1)
-	vkRes = api.vkAllocateCommandBuffers(device, cmdBufAllocateInfo, prePresentCmdBuffer)
-	check(err)
-	# Post present
-	postPresentCmdBuffer = Array(api.VkCommandBuffer, 1)
-	vkRes = api.vkAllocateCommandBuffers(device, cmdBufAllocateInfo, postPresentCmdBuffer)
-	check(err)
-	DrawCommandBuffer(draw_command_buffers, prePresentCmdBuffer[], postPresentCmdBuffer[])
+    # Command buffers for submitting present barriers
+    # Pre present
+    prePresentCmdBuffer = CommandBuffer(device, command_pool)
+    # Post present
+    postPresentCmdBuffer = CommandBuffer(device, command_pool)
+    DrawCommandBuffer(draw_command_buffers, prePresentCmdBuffer, postPresentCmdBuffer)
 end
 
 
@@ -107,16 +128,15 @@ function buildCommandBuffers(
 
     global clearValues = Float32[0.025f0, 0.025f0, 0.025f0, 1.0f0, 1f0, 0f0]
     clear_value_ref = Ptr{api.VkClearValue}(Base.unsafe_convert(Ptr{Float32}, clearValues))
-    renderPassBeginInfo = create_ref(api.VkRenderPassBeginInfo,
-        sType = api.VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
-        renderPass = renderPass,
-        renderArea = api.VkRect2D(
+    renderPassBeginInfo = create(api.VkRenderPassBeginInfo, (
+        :renderPass, renderPass,
+        :renderArea, api.VkRect2D(
             api.VkOffset2D(0, 0),
             api.VkExtent2D(width, height)
         ),
-        clearValueCount = 2,
-        pClearValues = clear_value_ref
-    )
+        :clearValueCount, 2,
+        :pClearValues, clear_value_ref
+    ))
 
     cmd_buffers = draw_command_buffers.buffers
     for i=1:length(cmd_buffers)
@@ -129,20 +149,20 @@ function buildCommandBuffers(
         api.vkCmdBeginRenderPass(cmd_buffers[i], renderPassBeginInfo, api.VK_SUBPASS_CONTENTS_INLINE)
 
         # Update dynamic viewport state
-        viewports = [create(api.VkViewport,
-            height = height,
-            width = width,
-            minDepth = 0.0f0,
-            maxDepth = 1.0f0
-        )]
+        viewports = create(Vector{api.VkViewport}, (
+            :height, height,
+            :width, width,
+            :minDepth, 0.0f0,
+            :maxDepth, 1.0f0
+        ))
 
         api.vkCmdSetViewport(cmd_buffers[i], 0, 1, viewports)
 
         # Update dynamic scissor state
-        scissors = [create(api.VkRect2D,
-            extent = api.VkExtent2D(width, height),
-            offset = api.VkOffset2D(0,0)
-        )]
+        scissors = create(Vector{api.VkRect2D}, (
+            :extent, api.VkExtent2D(width, height),
+            :offset, api.VkOffset2D(0,0)
+        ))
 
         api.vkCmdSetScissor(cmd_buffers[i], 0, 1, scissors)
         descriptorset_ref = [descriptorSet]
@@ -169,17 +189,17 @@ function buildCommandBuffers(
         # Add a present memory barrier to the end of the command buffer
         # This will transform the frame buffer color attachment to a
         # new layout for presenting it to the windowing system integration
-        prePresentBarrier = create_ref(api.VkImageMemoryBarrier,
-            sType = api.VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER,
-            srcAccessMask = api.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
-            dstAccessMask = 0,
-            oldLayout = api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-            newLayout = api.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
-            srcQueueFamilyIndex = api.VK_QUEUE_FAMILY_IGNORED,
-            dstQueueFamilyIndex = api.VK_QUEUE_FAMILY_IGNORED,
-            subresourceRange = api.VkImageSubresourceRange(api.VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1),
-            image = swapchain.buffers[i].image
-        )
+        prePresentBarrier = create(api.VkImageMemoryBarrier, (
+            :sType, api.VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER,
+            :srcAccessMask, api.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+            :dstAccessMask, 0,
+            :oldLayout, api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+            :newLayout, api.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
+            :srcQueueFamilyIndex, api.VK_QUEUE_FAMILY_IGNORED,
+            :dstQueueFamilyIndex, api.VK_QUEUE_FAMILY_IGNORED,
+            :subresourceRange, api.VkImageSubresourceRange(api.VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1),
+            :image, swapchain.buffers[i].image
+        ))
 
         api.vkCmdPipelineBarrier(
             cmd_buffers[i],
@@ -197,29 +217,27 @@ end
 
 
 function flushSetupCommandBuffer(device, setup_command_buffer, command_pool, queue)
-	if (setup_command_buffer == api.VK_NULL_HANDLE)
-		return nothing
-	end
-	err = api.vkEndCommandBuffer(setup_command_buffer)
-	check(err)
-    cmdbuff = [setup_command_buffer]
-	submitInfo = create_ref(api.VkSubmitInfo,
-        sType = api.VK_STRUCTURE_TYPE_SUBMIT_INFO,
-        pNext = C_NULL,
-        waitSemaphoreCount = 0,
-        pWaitDstStageMask = 0,
-    	commandBufferCount = 1,
-    	pCommandBuffers = cmdbuff,
-        signalSemaphoreCount = 0
-    )
+    if (setup_command_buffer == api.VK_NULL_HANDLE)
+        return nothing
+    end
+    err = api.vkEndCommandBuffer(setup_command_buffer)
+    check(err)
+    buffer_ref = [setup_command_buffer.ref]
+    submitInfo = create(api.VkSubmitInfo, (
+        :waitSemaphoreCount, 0,
+        :pWaitDstStageMask, 0,
+        :commandBufferCount, 1,
+        :pCommandBuffers, buffer_ref,
+        :signalSemaphoreCount, 0
+    ))
 
-	err = api.vkQueueSubmit(queue, 1, submitInfo, api.VK_NULL_HANDLE)
-	check(err)
-	err = api.vkQueueWaitIdle(queue)
-	check(err)
+    err = api.vkQueueSubmit(queue, 1, submitInfo, api.VK_NULL_HANDLE)
+    check(err)
+    err = api.vkQueueWaitIdle(queue)
+    check(err)
 
-	api.vkFreeCommandBuffers(device, command_pool, 1, cmdbuff)
-	nothing
+    api.vkFreeCommandBuffers(device, command_pool, 1, buffer_ref)
+    nothing
 end
 
 
@@ -227,12 +245,8 @@ end
 function prepareSemaphore(device)
     # This semaphore ensures that the image is complete
     # before starting to submit again
-    presentComplete = CreateSemaphore(device, C_NULL;
-        sType = api.VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO
-    )
-    renderComplete = CreateSemaphore(device, C_NULL;
-        sType = api.VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO
-    )
+    presentComplete = CreateSemaphore(device, C_NULL, ())
+    renderComplete = CreateSemaphore(device, C_NULL, ())
 
     # This semaphore ensures that all commands submitted
     # have been finished before submitting the image to the queue

@@ -52,19 +52,18 @@ const debug_callback_fun_ptr = cfunction(
     )
 )
 
-function setupDebugging(instance::api.VkInstance, flags)
+function setupDebugging(instance::Instance, flags)
     create_debug_callback_ptr = api.vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT")
 
-    dbgCreateInfo = create_ref(api.VkDebugReportCallbackCreateInfoEXT,
-        sType = api.VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT,
-        pfnCallback = debug_callback_fun_ptr,
-        flags = (
+    dbgCreateInfo = create(api.VkDebugReportCallbackCreateInfoEXT, (
+        :pfnCallback, debug_callback_fun_ptr,
+        :flags, (
             UInt32(api.VK_DEBUG_REPORT_INFORMATION_BIT_EXT) |
             UInt32(api.VK_DEBUG_REPORT_ERROR_BIT_EXT) |
             UInt32(api.VK_DEBUG_REPORT_WARNING_BIT_EXT) |
             UInt32(api.VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT)
         )
-    )
+    ))
 
     debugReportCallback = Ref{api.VkDebugReportCallbackEXT}()
     err = ccall(create_debug_callback_ptr, api.VkResult,
@@ -75,7 +74,7 @@ function setupDebugging(instance::api.VkInstance, flags)
     debugReportCallback[]
 end
 
-function create_instance(appname::AbstractString, validation=true)
+function Instance(appname::AbstractString, validation=true)
     enabledExtensions = [api.VK_KHR_SURFACE_EXTENSION_NAME]
     if validation
         push!(enabledExtensions, api.VK_EXT_DEBUG_REPORT_EXTENSION_NAME)
@@ -87,22 +86,17 @@ function create_instance(appname::AbstractString, validation=true)
         push!(enabledExtensions, api.VK_KHR_XCB_SURFACE_EXTENSION_NAME)
     end
 
-    appInfo = Ref(api.VkApplicationInfo(
-        api.VK_STRUCTURE_TYPE_APPLICATION_INFO,
-        default(Ptr{Void}),
-        struct_convert(Ptr{Cchar}, appname),
-        default(UInt32),
-        struct_convert(Ptr{Cchar}, appname),
-        default(UInt32),
-        api.VK_MAKE_VERSION(1, 0, 3)
+    app_info = create(api.VkApplicationInfo, (
+        :pApplicationName, appname,
+        :pEngineName, appname,
+        :apiVersion, api.VK_MAKE_VERSION(1, 0, 3)
     ))
-    instance = CreateInstance(C_NULL;
-        sType = api.VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
-        pApplicationInfo = appInfo,
-        enabledExtensionCount = length(enabledExtensions),
-        ppEnabledExtensionNames = enabledExtensions,
-        enabledLayerCount = length(validation_layer),
-        ppEnabledLayerNames = validation_layer
-    )
-    instance
+    instance = CreateInstance(C_NULL, (
+        :pApplicationInfo, app_info,
+        :enabledExtensionCount, length(enabledExtensions),
+        :ppEnabledExtensionNames, enabledExtensions,
+        :enabledLayerCount, length(validation_layer),
+        :ppEnabledLayerNames, validation_layer
+    ))
+    Instance(instance)
 end

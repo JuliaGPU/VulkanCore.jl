@@ -1,12 +1,12 @@
 
 type VulkanBuffer{ElType}
-	mem::api.VkDeviceMemory
-	buffer::api.VkBuffer
+    mem::api.VkDeviceMemory
+    buffer::api.VkBuffer
     allocation_info::api.VkMemoryAllocateInfo
-	size::Int
+    size::Int
 end
 # we allow types as buffers, so eltype is a bit weird
-Base.eltype{T<:Array}(v::VulkanBuffer{T}) = T
+Base.eltype{T}(v::VulkanBuffer{T}) = T
 Base.eltype{T<:Array}(v::VulkanBuffer{T}) = eltype(T)
 
 Base.length{T}(v::VulkanBuffer{T}) = div(v.size, sizeof(eltype(v)))
@@ -15,12 +15,12 @@ eltype_length{F<:FixedArray}(x::Type{F}) = length(F)
 flattened_length{T}(v::VulkanBuffer{T}) = length(v) * eltype_length(eltype(v))
 
 
-function get_descriptor(v::VulkanBuffer, offset=0)
-    descriptor = create(api.VkDescriptorBufferInfo,
-        buffer = v.buffer,
-        offset = offset,
-        range  = v.size
-    )
+function get_descriptor(v::VulkanBuffer, offset=0, range=v.size)
+    descriptor = create(Vector{api.VkDescriptorBufferInfo}, (
+        :buffer, v.buffer,
+        :offset, offset,
+        :range , range
+    ))
 end
 
 """
@@ -48,11 +48,11 @@ function allocate_memory(device, allocation_info_ref)
 end
 
 function CreateBuffer(device, container, usage, allocators=C_NULL)
-    CreateBuffer(device, allocators;
-        sType = api.VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
-        size = sizeof(container),
-        usage = usage,
-    )
+    CreateBuffer(device, allocators, (
+        :size, sizeof(container),
+        :usage, usage
+    ))
+
 end
 function get_memory_requirements(device, buffer)
     mem_requirements_ref = Ref{api.VkMemoryRequirements}()
@@ -83,12 +83,11 @@ function VulkanBuffer{T}(container::T, device, usage)
         mem_requirements.memoryTypeBits,
         api.VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT
     )
-    mem_alloc = create_ref(api.VkMemoryAllocateInfo,
-        sType = api.VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
-        pNext = C_NULL,
-        memoryTypeIndex = memtypeindex,
-        allocationSize = mem_requirements.size
-    )
+    mem_alloc = create(Ref{api.VkMemoryAllocateInfo}, (
+        :pNext, C_NULL,
+        :memoryTypeIndex, memtypeindex,
+        :allocationSize, mem_requirements.size
+    ))
     mem = allocate_memory(device, mem_alloc)
     vkbuff = VulkanBuffer{T}(mem, buffer, mem_alloc[], sizeof(container))
 
@@ -120,45 +119,38 @@ end
 
 function setup_binding_description()
     VERTEX_BUFFER_BIND_ID = 0
-    bindingDescriptions = [
-        create(api.VkVertexInputBindingDescription,
-            binding = VERTEX_BUFFER_BIND_ID,
-            stride = sizeof(Vertex{3, Float32}),
-            inputRate = api.VK_VERTEX_INPUT_RATE_VERTEX
-        )
-    ]
+    bindingDescriptions = create(Vector{api.VkVertexInputBindingDescription}, (
+        :binding, VERTEX_BUFFER_BIND_ID,
+        :stride, sizeof(Vertex{3, Float32}),
+        :inputRate, api.VK_VERTEX_INPUT_RATE_VERTEX
+    ))
 
     # Attribute descriptions
     # Describes memory layout and shader attribute locations
     # Location 0 : Position
-    attributeDescriptions = [
-        create(api.VkVertexInputAttributeDescription,
-            binding = VERTEX_BUFFER_BIND_ID,
-            location = 0,
-            format = api.VK_FORMAT_R32G32B32_SFLOAT,
-            offset = 0,
-        ),
-        create(api.VkVertexInputAttributeDescription,
-            binding = VERTEX_BUFFER_BIND_ID,
-            location = 1,
-            format = api.VK_FORMAT_R32G32B32_SFLOAT,
-            offset = sizeof(Float32) * 3,
-        ),
-        create(api.VkVertexInputAttributeDescription,
-            binding = VERTEX_BUFFER_BIND_ID,
-            location = 2,
-            format = api.VK_FORMAT_R32G32B32_SFLOAT,
-            offset = sizeof(Float32) * 6,
+    attributeDescriptions = create(Vector{api.VkVertexInputAttributeDescription}, (
+            :binding, VERTEX_BUFFER_BIND_ID,
+            :location, 0,
+            :format, api.VK_FORMAT_R32G32B32_SFLOAT,
+            :offset, 0,
+        ),(
+            :binding, VERTEX_BUFFER_BIND_ID,
+            :location, 1,
+            :format, api.VK_FORMAT_R32G32B32_SFLOAT,
+            :offset, sizeof(Float32) * 3,
+        ),(
+            :binding, VERTEX_BUFFER_BIND_ID,
+            :location, 2,
+            :format, api.VK_FORMAT_R32G32B32_SFLOAT,
+            :offset, sizeof(Float32) * 6,
         )
-    ]
+    )
     # Location 1 : Color
     # Assign to vertex buffer
-    vi = create_ref(api.VkPipelineVertexInputStateCreateInfo,
-        sType = api.VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
-        pNext = C_NULL,
-        vertexBindingDescriptionCount = length(bindingDescriptions),
-        pVertexBindingDescriptions = bindingDescriptions,
-        vertexAttributeDescriptionCount = length(attributeDescriptions),
-        pVertexAttributeDescriptions = attributeDescriptions,
-    )
+    vi = create(Ref{api.VkPipelineVertexInputStateCreateInfo}, (
+        :vertexBindingDescriptionCount, length(bindingDescriptions),
+        :pVertexBindingDescriptions, bindingDescriptions,
+        :vertexAttributeDescriptionCount, length(attributeDescriptions),
+        :pVertexAttributeDescriptions, attributeDescriptions,
+    ))
 end

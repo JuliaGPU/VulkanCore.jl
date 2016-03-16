@@ -28,4 +28,5 @@ typealias HINSTANCE Ptr{Void}
 typealias HWND Ptr{Void}
 
 include("api/vulkan_1.0.jl")
+
 end

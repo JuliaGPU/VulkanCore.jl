@@ -1,25 +1,8 @@
 
+
 """
-there are lots of pointer types to wrap. We introduce an abstract type for this
-to share some functionality
+Collect all devices
 """
-abstract VulkanPointerWrapper
-
-Base.cconvert(::Type{Ptr{Void}}, x::VulkanPointerWrapper) = x
-Base.unsafe_convert(::Type{Ptr{Void}}, x::VulkanPointerWrapper) = x.ref
-
-type PhysicalDevice <: VulkanPointerWrapper
-    ref::api.VkPhysicalDevice
-    memory_properties::api.VkPhysicalDeviceMemoryProperties
-end
-
-type Device <: VulkanPointerWrapper
-    ref::api.VkDevice
-    physical_device::PhysicalDevice
-end
-
-
-
 function collect_devices(instance)
     # Physical device
     gpu_count = Ref{UInt32}()
@@ -64,17 +47,16 @@ function get_graphic_queue(physical_device)
     index-1 # Vulkan is 0 indexed
 end
 
-function create_device(physical_device, requested_queues, enable_validation)
+function Device(physical_device, requested_queues, enable_validation)
     enabled_extensions = [api.VK_KHR_SWAPCHAIN_EXTENSION_NAME]
-    device = CreateDevice(physical_device, C_NULL;
-        sType = api.VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-        queueCreateInfoCount = 1,
-        pQueueCreateInfos = requested_queues,
-        enabledExtensionCount = length(enabled_extensions),
-        ppEnabledExtensionNames = enabled_extensions,
-        enabledLayerCount = length(validation_layer),
-        ppEnabledLayerNames = validation_layer
-    )
+    device = CreateDevice(physical_device, C_NULL, (
+        :queueCreateInfoCount, 1,
+        :pQueueCreateInfos, requested_queues,
+        :enabledExtensionCount, length(enabled_extensions),
+        :ppEnabledExtensionNames, enabled_extensions,
+        :enabledLayerCount, length(validation_layer),
+        :ppEnabledLayerNames, validation_layer
+    ))
     Device(device, physical_device)
 end
 
@@ -84,7 +66,6 @@ function get_graphic_device(instance, enable_validation)
     # Enumerate devices
     physical_devices = collect_devices(instance)
     # select the first one for now!
-
 
     physical_device_raw = physical_devices[1]
     deviceMemoryProperties = Ref{api.VkPhysicalDeviceMemoryProperties}()
@@ -97,19 +78,17 @@ function get_graphic_device(instance, enable_validation)
     # Vulkan device
     	# Vulkan device
     queuePriorities = [0.0f0]
-    queue_create_info = create_ref(api.VkDeviceQueueCreateInfo,
-        sType = api.VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
-        queueFamilyIndex = graphic_queue_index,
-        queueCount = 1,
-        pQueuePriorities = queuePriorities
-    )
-    device = create_device(physical_device, queue_create_info, enable_validation)
+    queue_create_info = create(api.VkDeviceQueueCreateInfo, (
+        :queueFamilyIndex, graphic_queue_index,
+        :queueCount, 1,
+        :pQueuePriorities, queuePriorities
+    ))
+    device = Device(physical_device, queue_create_info, enable_validation)
 
 
     # Get the graphics queue
     queue_ref = Ref{api.VkQueue}()
     api.vkGetDeviceQueue(device, graphic_queue_index, 0, queue_ref)
-
 
     # Set up device and instance specific functions
     connect!(instance, physical_device, device)
