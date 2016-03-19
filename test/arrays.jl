@@ -100,18 +100,64 @@ function VulkanBuffer{T}(container::T, device, usage)
     vkbuff
 end
 
+"""
+Prefix for VkFormat
+"""
 type2prefix{T<:AbstractFloat}(::Type{T}) = "SFLOAT"
 type2prefix{T<:Integer}(::Type{T}) = "SINT"
 type2prefix{T<:Unsigned}(::Type{T}) = "UINT"
-function type2vkformt(T)
-    len = length(T)
-    ET = eltype(T)
-    type2vkformt(len, ET)
+type2prefix{T<:UFixed}(::Type{T}) = "UNORM"
+type2prefix{T<:Fixed}(::Type{T}) = "SNORM"
+type2prefix{T<:Union{Colorant, FixedArraytype}}(::Type{T}) = type2prefix(eltype(T))
+
+"""
+For VkFormat, we need to specify the size of every component
+"""
+component_types{T<:FixedArray}(x::Type{T}) = ntuple(i->eltype(T), length(T))
+component_types{T}(x::Type{T}) = ntuple(i->fieldtype(T, i), nfields(T))
+component_types{T<:Number}(x::Type{T}) = (T,)
+
+"""
+VkFormat looks like e.g RxGxBx, with x == size of the element type.
+"""
+component_string(x) = "RGBA" # RGBA is used for most types, even if they're Vecs or what not
+# For color types we know better
+function component_string{T<:Colorant}(::Type{T})
+    if !(T <: AbstractRGB || (T<:TransparentColor && color_type(T) <: AbstractRGB))
+        error("$T not supported. Try any AbstractRGB, or transparent AbstractRGB value")
+    end
+    string(T.name.name)
 end
 
-function type2vkformt(len, ET)
-
+"""
+Takes julia types, mostly immutables, Colorants or FixedSizeArrays and returns
+the matching VkFormat symbol, which can be evaled to generate the matchin enum.
+"""
+function type2vkformatsymbol(T)
+    type2vkformatsymbol(component_types(T), component_string(T), type2prefix(T))
 end
+function type2vkformatsymbol(types::Tuple, component_str, prefix)
+    sym = "VK_FORMAT_"
+    @assert length(types) <= length(component_str)
+    for (c,t) in zip(component_str, types)
+        sym *= string(c, sizeof(t)*8)
+    end
+    sym *= "_"*prefix
+    symbol(sym)
+end
+
+"""
+Takes julia types, mostly immutables, Colorants or FixedSizeArrays and returns
+the matching VkFormat enum, needed for buffer/image layout specification.
+We use a generated function for this, to avoid eval and inline the correct enum
+for every type.
+"""
+@generated function type2vkformat{T}(x::Type{T})
+    sym = type2vkformatsymbol(T)
+    :(api.$sym)
+end
+
+
 
 type VertexArray
 
@@ -153,4 +199,32 @@ function setup_binding_description()
         :vertexAttributeDescriptionCount, length(attributeDescriptions),
         :pVertexAttributeDescriptions, attributeDescriptions,
     ))
+end
+
+type Image{T, N} <: VulkanArray{T, N}
+    ref::VkImage
+    mem::VkDeviceMemory
+    dimension::NTuple{N, Int}
+end
+
+function Image(device, array::Array{T,N}, usage,
+        miplevels=1, arrayLayers=1,
+        samples=VK_SAMPLE_COUNT_1_BIT,
+        tiling=api.VK_IMAGE_TILING_OPTIMAL
+    )
+    dims = ntuple(3) do i
+        i <= N ? size(array, i) : 1
+    end
+    image = CreateImage(device, C_NULL, (
+        :imageType, VkImageType(N-1),
+        :format, type2vkformat(T),
+        :extent, api.VkExtent3D(dims...),
+        :mipLevels, 1,
+        :arrayLayers, 1,
+        :samples, samples,
+        :tiling, tiling,
+        :usage, usage,
+        :flags, 0
+    ))
+    Image{T, N}(ref, size(array))
 end
