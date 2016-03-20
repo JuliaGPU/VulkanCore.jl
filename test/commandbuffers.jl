@@ -182,7 +182,7 @@ function buildCommandBuffers(
         api.vkCmdBindIndexBuffer(cmd_buffers[i], indices.buffer, 0, api.VK_INDEX_TYPE_UINT32)
 
         # Draw indexed triangle
-        api.vkCmdDrawIndexed(cmd_buffers[i], flattened_length(indices), 1, 0, 0, 1)
+        api.vkCmdDrawIndexed(cmd_buffers[i], flat_length(indices), 1, 0, 0, 1)
 
         api.vkCmdEndRenderPass(cmd_buffers[i])
 

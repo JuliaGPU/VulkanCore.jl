@@ -1,55 +1,4 @@
 
-abstract GPUArray{T, N}
-
-abstract VulkanArray{T, N}
-
-type VulkanBuffer{T} <: VulkanArray{T, 1}
-    mem::api.VkDeviceMemory
-    buffer::api.VkBuffer
-    allocation_info::api.VkMemoryAllocateInfo
-    size::Int
-end
-type Image{T, N} <: VulkanArray{T, N}
-    ref::VkImage
-    mem::VkDeviceMemory
-    dimension::NTuple{N, Int}
-end
-
-# we allow types as buffers, so eltype is a bit weird
-Base.eltype{T}(v::VulkanBuffer{T}) = T
-Base.eltype{T<:Array}(v::VulkanBuffer{T}) = eltype(T)
-
-Base.length{T}(v::VulkanBuffer{T}) = div(v.size, sizeof(eltype(v)))
-eltype_length(x) = 1
-eltype_length{F<:FixedArray}(x::Type{F}) = length(F)
-flat_length{T}(v::VulkanBuffer{T}) = length(v) * eltype_length(eltype(v))
-
-
-function get_descriptor(v::VulkanBuffer, offset=0, range=v.size)
-    descriptor = create(Vector{api.VkDescriptorBufferInfo}, (
-        :buffer, v.buffer,
-        :offset, offset,
-        :range , range
-    ))
-end
-
-"""
-Find the memory type index, which selects the properties of the memory to be allocated,
-as well as the heap the memory will come from.
-"""
-function get_memory_type(device, typebits, properties)
-    memory_types = device.physical_device.memory_properties.memoryTypes
-	for i_int=0:31
-		i = UInt32(i_int)
-		if ((typebits & 1) == 1)
-			if ((memory_types[i+1].propertyFlags & UInt32(properties)) == UInt32(properties))
-				return i
-			end
-		end
-		typebits >>= 1
-	end
-	error("Can't get no memory type!")
-end
 function allocate_memory(device, allocation_info_ref)
     mem_ref = Ref{api.VkDeviceMemory}()
     err = api.vkAllocateMemory(device, allocation_info_ref, C_NULL, mem_ref)
@@ -57,18 +6,7 @@ function allocate_memory(device, allocation_info_ref)
     mem_ref[]
 end
 
-function CreateBuffer(device, container, usage, allocators=C_NULL)
-    CreateBuffer(device, allocators, (
-        :size, sizeof(container),
-        :usage, usage
-    ))
 
-end
-function get_memory_requirements(device, buffer)
-    mem_requirements_ref = Ref{api.VkMemoryRequirements}()
-	api.vkGetBufferMemoryRequirements(device, buffer, mem_requirements_ref)
-    mem_requirements_ref[]
-end
 function map_buffer(device, buffer::VulkanBuffer)
     data_ref = Ref{Ptr{Void}}(C_NULL)
     alloc_size =  buffer.allocation_info.allocationSize
