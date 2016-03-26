@@ -39,7 +39,7 @@ app_info = Ref(api.VkApplicationInfo(
     1,
     pointer(appname),
     1,
-    api.VK_API_VERSION,
+    api.VK_VERSION,
 ))
 
 inst_info = Ref(api.VkInstanceCreateInfo(

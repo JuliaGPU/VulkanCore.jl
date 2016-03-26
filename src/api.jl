@@ -1,10 +1,12 @@
 module api
 
+const version = v"1.0.7"
+
 paths = ByteString[]
 const libvulkan = Libdl.find_library(["libvulkan", "vulkan", "libvulkan.so.1"], paths)
 @assert libvulkan != ""
 
-# External definitions
+#### External definitions
 
 # X11/X.h
 typealias Window UInt32 # unsigned long
@@ -27,6 +29,19 @@ typealias ANativeWindow Void # TODO: make opaque for now
 typealias HINSTANCE Ptr{Void}
 typealias HWND Ptr{Void}
 
-include("../deps/gen/vk_common.jl")
-include("../deps/gen/vk.jl")
+# Define VK_MAKE_VERSION
+VK_MAKE_VERSION(major, minor, patch) = (((major) << 22) | ((minor) << 12) | (patch))
+
+const common_file = joinpath(Pkg.dir("Vulkan"), "gen/api", "vk_common_$(version).jl")
+const api_file    = joinpath(Pkg.dir("Vulkan"), "gen/api", "vk_$(version).jl")
+
+if isfile(api_file) && isfile(common_file)
+  include(common_file)
+  include(api_file)
+else
+  error("Api $version not supported")
+end
+
+const VK_VERSION = version >= v"1.0.6" ? VK_API_VERSION_1_0 : VK_API_VERSION
+
 end
