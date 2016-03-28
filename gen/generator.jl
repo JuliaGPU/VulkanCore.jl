@@ -31,6 +31,11 @@ const VK_VERSIONS = Dict(
   v"1.0.7" => "8c3c9b4",
 )
 
+# callback to test if a header should actually be wrapped (for exclusion)
+function wrap_header(top_hdr::ASCIIString, cursor_header::ASCIIString)
+  return startswith(dirname(cursor_header), VK_INCLUDE)
+end
+
 function generate_bindings(version = last(sort(collect(keys(VK_VERSIONS)))))
   clang_includes = ASCIIString[]
   push!(clang_includes, LLVM_INCLUDE)
@@ -45,9 +50,10 @@ function generate_bindings(version = last(sort(collect(keys(VK_VERSIONS)))))
                         headers = VK_HEADERS,
                         output_file = "api/vk_$(version).jl",
                         common_file = "api/vk_common_$(version).jl",
-                        header_library = header_library,
                         clang_includes = clang_includes,
                         clang_args = clang_extraargs,
+                        header_wrapped = wrap_header,
+                        header_library = header_library,
                         clang_diagnostics = true)
 
   wc.options = wrap_c.InternalOptions(true, true)
