@@ -20,7 +20,7 @@ else
 end
 
 const VK_INCLUDE = "Vulkan-Docs/src/vulkan"
-const VK_HEADERS = map(x->joinpath(VK_INCLUDE, x), ["vulkan.h"])
+const VK_HEADERS = map(x->joinpath(VK_INCLUDE, x), ["vk_platform.h", "vulkan.h"])
 
 # Map versions to revisions
 const VK_VERSIONS = Dict(
