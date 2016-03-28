@@ -36,6 +36,38 @@ function wrap_header(top_hdr::ASCIIString, cursor_header::ASCIIString)
   return startswith(dirname(cursor_header), VK_INCLUDE)
 end
 
+# These rewriters are taken from CUDArt.jl
+function rewriter(ex :: Expr)
+  # Empty types get converted to Void
+  # This is important for opaque handles
+  if ex.head == :type
+    a3 = ex.args[3]
+    if isempty(a3.args)
+      objname = ex.args[2]
+      return :(typealias $objname Void)
+    end
+  end
+
+  # Early exit for everything but functions
+  ex.head == :function || return ex
+
+  decl, body = ex.args[1], ex.args[2]
+  # omit types from function prototypes
+  for i = 2:length(decl.args)
+    a = decl.args[i]
+    # a can be a symbol (and thus already have no type information attached)
+    if !(typeof(a) == Symbol) && a.head == :(::)
+      decl.args[i] = a.args[1]
+    end
+  end
+
+  return ex
+end
+
+rewriter(A::Array) = [rewriter(a) for a in A]
+
+rewriter(arg) = arg
+
 function generate_bindings(version = last(sort(collect(keys(VK_VERSIONS)))))
   clang_includes = ASCIIString[]
   push!(clang_includes, LLVM_INCLUDE)
@@ -54,8 +86,10 @@ function generate_bindings(version = last(sort(collect(keys(VK_VERSIONS)))))
                         clang_args = clang_extraargs,
                         header_wrapped = wrap_header,
                         header_library = header_library,
-                        clang_diagnostics = true)
+                        clang_diagnostics = false,
+                        rewriter = rewriter)
 
+  # wrap_structs, immutable_structs
   wc.options = wrap_c.InternalOptions(true, true)
   run(wc)
 end
