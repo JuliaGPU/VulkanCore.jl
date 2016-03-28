@@ -103,4 +103,23 @@ function generate_bindings(version = last(sort(collect(keys(VK_VERSIONS)))))
   run(wc)
 end
 
+function generate_spirv()
+  download("https://www.khronos.org/registry/spir-v/api/1.0/spirv.h", "spirv.h")
+
+  clang_includes = ASCIIString[]
+  push!(clang_includes, LLVM_INCLUDE)
+
+  const wc = wrap_c.init(;
+                        headers = ["./spirv.h"],
+                        output_file = "api/spirv.jl",
+                        common_file = "api/spirv_common_.jl",
+                        clang_includes = clang_includes,
+                        header_library = x->"libspirv",
+                        clang_diagnostics = false,
+                        rewriter = rewriter)
+
+  # wrap_structs, immutable_structs
+  wc.options = wrap_c.InternalOptions(true, true)
+  run(wc)
+end
 
