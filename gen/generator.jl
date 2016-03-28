@@ -21,6 +21,12 @@ end
 
 const VK_INCLUDE = "Vulkan-Docs/src/vulkan"
 const VK_HEADERS = map(x->joinpath(VK_INCLUDE, x), ["vk_platform.h", "vulkan.h"])
+const VK_EXTENSIONS = [
+  "VK_USE_PLATFORM_XCB_KHR",
+  "VK_USE_PLATFORM_WAYLAND_KHR",
+  "VK_USE_PLATFORM_MIR_KHR",
+  "VK_USE_PLATFORM_WIN32_KHR",
+  ]
 
 # Map versions to revisions
 const VK_VERSIONS = Dict(
@@ -73,8 +79,11 @@ function generate_bindings(version = last(sort(collect(keys(VK_VERSIONS)))))
   push!(clang_includes, LLVM_INCLUDE)
   push!(clang_includes, VK_INCLUDE)
 
-  clang_extraargs = ["-v"]
-  # clang_extraargs = ["-D", "__STDC_LIMIT_MACROS", "-D", "__STDC_CONSTANT_MACROS"]
+  clang_extraargs = ASCIIString[]
+  for extension in VK_EXTENSIONS
+    push!(clang_extraargs, "-D")
+    push!(clang_extraargs, extension)
+  end
 
   run(`$git checkout $(VK_VERSIONS[version])`)
 
