@@ -73,7 +73,6 @@ function create{T}(::Type{Ref{T}}, field_values::Tuple)
     field_filled = Bool[false for i=1:fieldcount]
     ref_instance = Ref{T}()
     weakref = WeakRef(ref_instance)
-    field_offsets = fieldoffsets(T)
     ref_ptr = Ptr{Int8}(Base.unsafe_convert(Ptr{T}, ref_instance))
 
     if !isempty(field_values)
@@ -88,7 +87,7 @@ function create{T}(::Type{Ref{T}}, field_values::Tuple)
 
                     FT = fieldtype(T, i)
                     try
-                        unsafe_store!(Ptr{FT}(ref_ptr+field_offsets[i]), struct_convert(FT, value, weakref))
+                        unsafe_store!(Ptr{FT}(ref_ptr+fieldoffset(T,i)), struct_convert(FT, value, weakref))
                         field_filled[i] = true
                         found = true
                     catch e
@@ -111,7 +110,7 @@ function create{T}(::Type{Ref{T}}, field_values::Tuple)
     @inbounds for i=1:fieldcount
         if !field_filled[i]
             FT = fieldtype(T, i)
-            unsafe_store!(Ptr{FT}(ref_ptr+field_offsets[i]), default(FT, T))
+            unsafe_store!(Ptr{FT}(ref_ptr+fieldoffset(T,i)), default(FT, T))
         end
     end
     # finalize the reference to free all sup references
@@ -131,7 +130,6 @@ function create{T}(::Type{Vector{T}}, field_value_list::Tuple...)
     field_filled_list = [Bool[false for i=1:fieldcount] for i=1:length(field_value_list)]
     ref_instance = Array(T, length(field_value_list))
     weakref = WeakRef(ref_instance)
-    field_offsets = fieldoffsets(T)
     ref_ptr = Ptr{Int8}(pointer(ref_instance))
     fnames = fieldnames(T)
     for (field_values, field_filled) in zip(field_value_list, field_filled_list)
@@ -144,7 +142,7 @@ function create{T}(::Type{Vector{T}}, field_value_list::Tuple...)
                 for i=1:fieldcount
                     if !field_filled[i] && fnames[i] == name # this means if there are doubles, we choose the first..suboptimal?
                         FT = fieldtype(T, i)
-                        unsafe_store!(Ptr{FT}(ref_ptr+field_offsets[i]), struct_convert(FT, value, weakref))
+                        unsafe_store!(Ptr{FT}(ref_ptr+fieldoffset(T,i)), struct_convert(FT, value, weakref))
                         field_filled[i] = true
                         found = true
                         break
@@ -167,7 +165,7 @@ function create{T}(::Type{Vector{T}}, field_value_list::Tuple...)
         @inbounds for i=1:fieldcount
             if !field_filled[i]
                 FT = fieldtype(T, i)
-                unsafe_store!(Ptr{FT}(ref_ptr+field_offsets[i]), default(FT, T))
+                unsafe_store!(Ptr{FT}(ref_ptr+fieldoffset(T,i)), default(FT, T))
             end
         end
         ref_ptr += sizeof(T)
@@ -248,7 +246,7 @@ function fieldptr{T}(ref::Array{T}, array_index::Integer, field::Symbol)
 end
 function fieldptr{T}(ref::Array{T}, array_index::Integer, field::Integer)
 	ptr = Ptr{Int8}(pointer(ref, array_index))
-	offset = fieldoffsets(T)[field]
+	offset = fieldoffset(T, field)
 	ptr += offset
 	FT = fieldtype(T, field)
 	Ptr{FT}(ptr)
@@ -263,7 +261,7 @@ this should be named unsafe?
 """
 function fieldptr{T}(ref::Ref{T}, field::Integer)
 	ptr = Ptr{Int8}(Base.unsafe_convert(Ptr{T}, ref))
-	offset = fieldoffsets(T)[field]
+	offset = fieldoffset(T, field)
 	ptr += offset
 	FT = fieldtype(T, field)
 	Ptr{FT}(ptr)
