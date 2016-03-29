@@ -17,15 +17,15 @@ end
 """
 Begin Recording, execute `f(cb)` and end recording aftewards.
 """
-function record!(f::Function, cb::CommandBuffer)
-    record!(cb)
+function record!(f::Function, cb::CommandBuffer, args...)
+    begin_recording!(cb, args...)
     f(cb)
     end_recording!(cb)
 end
 """
 Sets commandbuffer into recording state
 """
-function record!(
+function begin_recording!(
         cb::CommandBuffer,
         begin_info=create(api.VkCommandBufferBeginInfo, ())
     )
@@ -41,7 +41,7 @@ It's now ready to be submitted
 """
 function end_recording!(cb::CommandBuffer)
     cb.state != RECORDING && error("CommandBuffer state must be RECORDING to end recording. State found: $(cb.state)")
-    api.vkBeginCommandBuffer(cb)
+    api.vkEndCommandBuffer(cb)
     cb.state = READY_FOR_SUBMIT
     nothing
 end
@@ -49,7 +49,7 @@ end
 """
 Resets the commandbuffer and readys it for calling `record!`.
 """
-function reset!(cb::CommandBuffer, flag::api.VkFlags)
+function reset!(cb::CommandBuffer, flag::api.VkFlags = UInt32(0))
     api.vkResetCommandBuffer(cb, flag)
     cb.state = RESETTED
     nothing
@@ -61,16 +61,37 @@ function createCommandPool(device, swapchain)
         :flags, api.VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT
     ))
 end
+function submit(cb::CommandBuffer, queue)
+    buffer_ref = [cb.ref]
+    submitInfo = create(api.VkSubmitInfo, (
+        :waitSemaphoreCount, 0,
+        :pWaitDstStageMask, 0,
+        :commandBufferCount, 1,
+        :pCommandBuffers, buffer_ref,
+        :signalSemaphoreCount, 0
+    ))
 
-function createSetupCommandBuffer(device, command_pool)
-    setup_cb = CommandBuffer(device, command_pool)
-    # todo : Command buffer is also started here, better put somewhere else
-    # todo : Check if necessaray at all...
-    record!(setup_cb)
-    setup_cb
+    err = api.vkQueueSubmit(queue, 1, submitInfo, api.VK_NULL_HANDLE)
+    check(err)
 end
 
+function submit_sync(cb::CommandBuffer, queue)
+    submit(cb, queue)
+    err = api.vkQueueWaitIdle(queue)
+    check(err)
+end
 
+function free!(cb::CommandBuffer, device)
+    buffer_ref = [cb.ref]
+    api.vkFreeCommandBuffers(device, cb.commandpool, 1, buffer_ref)
+end
+
+function submit_once(f::Function, queue, device::Device, command_pool)
+    cb = CommandBuffer(device, command_pool)
+    record!(f, cb)
+    submit_sync(cb, queue)
+    free!(cb, device)
+end
 
 type DrawCommandBuffer
     buffers
@@ -213,31 +234,6 @@ function buildCommandBuffers(
         err = api.vkEndCommandBuffer(cmd_buffers[i])
         check(err)
     end
-end
-
-
-function flushSetupCommandBuffer(device, setup_command_buffer, command_pool, queue)
-    if (setup_command_buffer == api.VK_NULL_HANDLE)
-        return nothing
-    end
-    err = api.vkEndCommandBuffer(setup_command_buffer)
-    check(err)
-    buffer_ref = [setup_command_buffer.ref]
-    submitInfo = create(api.VkSubmitInfo, (
-        :waitSemaphoreCount, 0,
-        :pWaitDstStageMask, 0,
-        :commandBufferCount, 1,
-        :pCommandBuffers, buffer_ref,
-        :signalSemaphoreCount, 0
-    ))
-
-    err = api.vkQueueSubmit(queue, 1, submitInfo, api.VK_NULL_HANDLE)
-    check(err)
-    err = api.vkQueueWaitIdle(queue)
-    check(err)
-
-    api.vkFreeCommandBuffers(device, command_pool, 1, buffer_ref)
-    nothing
 end
 
 

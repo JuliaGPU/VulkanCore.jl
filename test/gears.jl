@@ -44,15 +44,16 @@ swapchain = SwapChain(instance, device, physical_device, window)
 #VulkanBase::prepare
 setupDebugging(instance, UInt32(api.VK_DEBUG_REPORT_ERROR_BIT_EXT) | UInt32(api.VK_DEBUG_REPORT_WARNING_BIT_EXT))
 command_pool = createCommandPool(device, swapchain)
-setup_command_buffer = createSetupCommandBuffer(device, command_pool)
-setupSwapChain(device, setup_command_buffer, width, height, swapchain)
-draw_commandbuffers = create_command_buffers(device, swapchain, command_pool)
-depth_stencil = setupDepthStencil(device, setup_command_buffer, swapchain.depth_format, devicememory_properties)
-renderpass = setup_renderpass(swapchain)
-pipeline_cache = CreatePipelineCache(device, C_NULL, ())
-framebuffers = setup_framebuffer(swapchain, depth_stencil, renderpass, width, height)
-flushSetupCommandBuffer(device, setup_command_buffer, command_pool, queue)
-setup_command_buffer = createSetupCommandBuffer(device, command_pool)
+
+submit_once(queue, device, command_pool) do cb
+    global draw_commandbuffers, depth_stencil, renderpass, pipeline_cache, framebuffers
+    setupSwapChain(device, cb, width, height, swapchain)
+    draw_commandbuffers = create_command_buffers(device, swapchain, command_pool)
+    depth_stencil = setupDepthStencil(device, cb, swapchain.depth_format, devicememory_properties)
+    renderpass = setup_renderpass(swapchain)
+    pipeline_cache = CreatePipelineCache(device, C_NULL, ())
+    framebuffers = setup_framebuffer(swapchain, depth_stencil, renderpass, width, height)
+end
 
 # Triangle::prepare()
 semaphore = prepareSemaphore(device)
@@ -93,97 +94,59 @@ buildCommandBuffers(
 	descriptorSet, pipeline, vertexbuffer, indexbuffer
 )
 
+pre_present_barriers = map(swapchain.buffers) do buffer
+    create(api.VkImageMemoryBarrier, (
+            :srcAccessMask, api.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+            :dstAccessMask, 0,
+            :oldLayout, api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+            :newLayout, api.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
+            :srcQueueFamilyIndex, api.VK_QUEUE_FAMILY_IGNORED,
+            :dstQueueFamilyIndex, api.VK_QUEUE_FAMILY_IGNORED,
+            :subresourceRange, api.VkImageSubresourceRange(api.VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1),
+            :image, buffer.image))
+end
+post_present_barriers = map(swapchain.buffers) do buffer
+    create(api.VkImageMemoryBarrier, (
+            :srcAccessMask, 0,
+            :dstAccessMask, api.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+            :oldLayout, api.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
+            :newLayout, api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+            :srcQueueFamilyIndex, api.VK_QUEUE_FAMILY_IGNORED,
+            :dstQueueFamilyIndex, api.VK_QUEUE_FAMILY_IGNORED,
+            :subresourceRange, api.VkImageSubresourceRange(api.VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1),
+            :image, buffer.image))
+end
+
+
 function render(device, swapchain, semaphores, queue, commandbuffer)
     api.vkDeviceWaitIdle(device)
     draw(swapchain, semaphores, queue, commandbuffer)
     api.vkDeviceWaitIdle(device)
 end
-function submitPostPresentBarrier(queue, postPresentCmdBuffer, image)
-    cmdBufInfo = create(api.VkCommandBufferBeginInfo, ())
 
-    err = api.vkBeginCommandBuffer(postPresentCmdBuffer, cmdBufInfo)
-    check(err)
-
-    postPresentBarrier = create(api.VkImageMemoryBarrier, (
-        :srcAccessMask, 0,
-        :dstAccessMask, api.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
-        :oldLayout, api.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
-        :newLayout, api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-        :srcQueueFamilyIndex, api.VK_QUEUE_FAMILY_IGNORED,
-        :dstQueueFamilyIndex, api.VK_QUEUE_FAMILY_IGNORED,
-        :subresourceRange, api.VkImageSubresourceRange(api.VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1),
-        :image, image
-    ))
-
-    api.vkCmdPipelineBarrier(
-        postPresentCmdBuffer,
-        api.VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
-        api.VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-        0, #api.VK_FLAGS_NONE,
-        0, C_NULL, # No memory barriers,
-        0, C_NULL, # No buffer barriers,
-        1, postPresentBarrier
-    )
-
-    err = api.vkEndCommandBuffer(postPresentCmdBuffer)
-    check(err)
-    cmd_ref = [postPresentCmdBuffer]
-    submit_info = create(api.VkSubmitInfo, (
-        :commandBufferCount, 1,
-        :pCommandBuffers, cmd_ref
-    ))
-    err = api.vkQueueSubmit(queue, 1, submit_info, api.VK_NULL_HANDLE)
-    check(err)
-end
-
-function submitPrePresentBarrier(queue, prePresentCmdBuffer, image)
-    cmdBufInfo = create(api.VkCommandBufferBeginInfo, ())
-    err = api.vkBeginCommandBuffer(prePresentCmdBuffer, cmdBufInfo);
-    check(err)
-
-    prePresentBarrier = create(api.VkImageMemoryBarrier, (
-        :srcAccessMask, api.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
-        :dstAccessMask, 0,
-        :oldLayout, api.VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-        :newLayout, api.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
-        :srcQueueFamilyIndex, api.VK_QUEUE_FAMILY_IGNORED,
-        :dstQueueFamilyIndex, api.VK_QUEUE_FAMILY_IGNORED,
-        :subresourceRange, api.VkImageSubresourceRange(api.VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1),
-        :image, image
-    ))
-
-    api.vkCmdPipelineBarrier(
-        prePresentCmdBuffer,
-        api.VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
-        api.VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-        0, #api.VK_FLAGS_NONE,
-        0, C_NULL, # No memory barriers,
-        0, C_NULL, # No buffer barriers,
-        1, prePresentBarrier
-    );
-
-    err = api.vkEndCommandBuffer(prePresentCmdBuffer);
-    check(err)
-    cmd_arr = [prePresentCmdBuffer]
-    submit_info = create(api.VkSubmitInfo, (
-        :commandBufferCount, 1,
-        :pCommandBuffers, cmd_arr
-    ))
-
-    err = api.vkQueueSubmit(queue, 1, submit_info, api.VK_NULL_HANDLE);
-    check(err)
+function submit_barrier(queue, cb, barrier)
+    # we could probably record only one of those per back buffer ahead of time
+    reset!(cb)
+    record!(cb) do cb
+        api.vkCmdPipelineBarrier(
+            cb,
+            api.VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
+            api.VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+            0, #api.VK_FLAGS_NONE,
+            0, C_NULL, # No memory barriers,
+            0, C_NULL, # No buffer barriers,
+            1, barrier)
+    end
+    submit(cb, queue)
 end
 
 function draw(swapchain, semaphores, queue, commandbuffer)
     current_buffer_ref = Ref{UInt32}()
     err = acquireNextImage(semaphores.presentComplete, current_buffer_ref, swapchain, device)
-    current_buffer = current_buffer_ref[]
     check(err)
-    submitPostPresentBarrier(
-        queue,
-        commandbuffer.postpresent,
-        swapchain.buffers[current_buffer+1].image
-    )
+
+    current_buffer = current_buffer_ref[]
+    submit_barrier(queue, commandbuffer.postpresent, post_present_barriers[current_buffer+1])
 
     cmd_arr = [commandbuffer.buffers[current_buffer+1].ref]
     pc_arr = [semaphores.presentComplete]
@@ -202,11 +165,7 @@ function draw(swapchain, semaphores, queue, commandbuffer)
 	err = api.vkQueueSubmit(queue, 1, submit_info, api.VK_NULL_HANDLE)
 	check(err)
 
-    submitPrePresentBarrier(
-        queue,
-        commandbuffer.prepresent,
-        swapchain.buffers[current_buffer+1].image
-    )
+    submit_barrier(queue, commandbuffer.postpresent, pre_present_barriers[current_buffer+1])
 
     # Present the current buffer to the swap chain
     # We pass the signal semaphore from the submit info
