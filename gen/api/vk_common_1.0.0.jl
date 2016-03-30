@@ -6,7 +6,7 @@ const VULKAN_H_ = 1
 const VK_VERSION_1_0 = 1
 
 # Skipping MacroDefinition: VK_MAKE_VERSION ( major , minor , patch ) ( ( ( major ) << 22 ) | ( ( minor ) << 12 ) | ( patch ) )
-# Skipping MacroDefinition: VK_API_VERSION_1_0 VK_MAKE_VERSION ( 1 , 0 , 0 )
+const VK_API_VERSION_1_0 = VK_MAKE_VERSION ( 1 , 0 , 0 )
 # Skipping MacroDefinition: VK_VERSION_MAJOR ( version ) ( ( uint32_t ) ( version ) >> 22 )
 # Skipping MacroDefinition: VK_VERSION_MINOR ( version ) ( ( ( uint32_t ) ( version ) >> 12 ) & 0x3ff )
 # Skipping MacroDefinition: VK_VERSION_PATCH ( version ) ( ( uint32_t ) ( version ) & 0xfff )
