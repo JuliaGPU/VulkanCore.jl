@@ -1,6 +1,6 @@
 module api
 
-const version = v"1.0.7"
+const version = v"1.0" # Latest branch  see generator.jl for other versions
 
 paths = ByteString[]
 const libvulkan = Libdl.find_library(["libvulkan", "vulkan", "libvulkan.so.1"], paths)
@@ -39,9 +39,13 @@ if isfile(api_file) && isfile(common_file)
   include(common_file)
   include(api_file)
 else
-  error("Api $version not supported")
+  error("Api version $version not supported")
 end
 
-const VK_VERSION = version >= v"1.0.6" ? VK_API_VERSION_1_0 : VK_API_VERSION
+try
+  const VK_VERSION = VK_API_VERSION
+catch
+  const VK_VERSION = VK_API_VERSION_1_0
+end
 
 end

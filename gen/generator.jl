@@ -35,6 +35,7 @@ const VK_VERSIONS = Dict(
   v"1.0.5" => "7380aee",
   v"1.0.6" => "13f85fa", # from here one VK_HEADER_VERSION is introduced
   v"1.0.7" => "8c3c9b4",
+  v"1.0"   => "1.0", # Generate from master branch
 )
 
 # callback to test if a header should actually be wrapped (for exclusion)
@@ -74,7 +75,7 @@ rewriter(A::Array) = [rewriter(a) for a in A]
 
 rewriter(arg) = arg
 
-function generate_bindings(version = last(sort(collect(keys(VK_VERSIONS)))))
+function generate_bindings(version = v"1.0")
   clang_includes = ASCIIString[]
   push!(clang_includes, LLVM_INCLUDE)
   push!(clang_includes, VK_INCLUDE)
@@ -85,7 +86,9 @@ function generate_bindings(version = last(sort(collect(keys(VK_VERSIONS)))))
     push!(clang_extraargs, extension)
   end
 
-  run(`$git checkout $(VK_VERSIONS[version])`)
+  git_commit = VK_VERSIONS[version]
+
+  run(`$git checkout $git_commit`)
 
   const wc = wrap_c.init(;
                         headers = VK_HEADERS,
