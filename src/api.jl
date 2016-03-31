@@ -42,9 +42,9 @@ else
   error("Api version $version not supported")
 end
 
-try
+if isdefined(:VK_API_VERSION)
   const VK_VERSION = VK_API_VERSION
-catch
+else
   const VK_VERSION = VK_API_VERSION_1_0
 end
 
