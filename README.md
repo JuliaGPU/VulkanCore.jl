@@ -1,6 +1,6 @@
 # VulkanCore
 
-[![Build Status](https://travis-ci.org/vchuravy/Vulkan.jl.svg?branch=master)](https://travis-ci.org/vchuravy/Vulkan.jl)
+[![Build Status](https://travis-ci.org/JuliaGPU/VulkanCore.jl.svg?branch=master)](https://travis-ci.org/JuliaGPU/VulkanCore.jl)
 
 VulkanCore wraps Vulkan and exposes the library calls necessary to work with
 Vulkan. It is targeted for developers wanting to directly work with Vulkan in
@@ -17,7 +17,27 @@ You are required to have a Vulkan capable device and the appropriate drivers.
 - [Vulkan Registry](https://www.khronos.org/registry/vulkan/)
 - [Vulkan Specification](https://www.khronos.org/registry/vulkan/specs/1.0/apispec.html)
 
-## Semantic Versioning
+## Usage
+The Vulkan wrapper is generated using  [Clang.jl](https://github.com/ihnorton/Clang.jl)
+with the [generator file](gen/generator.jl).
+
+The API aims to replicate the Vulkan C-API and is thus very bare bones and hands-on.
+
+```julia
+using VulkanCore
+
+count = Ref{Cuint}(0)
+
+# Scan layers
+err = vk.vkEnumerateInstanceLayerProperties(count, C_NULL)
+@assert err == vk.VK_SUCCESS
+
+global_layer_properties = Array(vk.VkLayerProperties, count[])
+err = vk.vkEnumerateInstanceLayerProperties(count, global_layer_properties)
+@assert err == vk.VK_SUCCESS
+```
+
+### Semantic Versioning
 VulkanCore aims to follow a restricted semantic versioning scheme. Since we are
 wrapping Vulkan the major and minor version are going to follow the Vulkan 
 standart. Vulkan `v"1.0.8"` maps to VukanCore.jl `v"1.0"`.
