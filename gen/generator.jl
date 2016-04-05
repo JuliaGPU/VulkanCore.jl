@@ -126,3 +126,5 @@ function generate_spirv()
   run(wc)
 end
 
+generate_bindings()
+generate_spirv()
