@@ -36,6 +36,8 @@ const api_dir = joinpath(Pkg.dir("VulkanCore"), "gen", "api")
 const common_file = joinpath(api_dir, "vk_common_$(version).jl")
 const api_file    = joinpath(api_dir, "vk_$(version).jl")
 
+using CEnum
+
 if isfile(api_file) && isfile(common_file)
   include(common_file)
   include(api_file)
@@ -46,7 +48,7 @@ end
 if isdefined(:VK_API_VERSION)
   const VK_VERSION = VK_API_VERSION
 else
-  const VK_VERSION = VK_API_VERSION_1_0
+  const VK_VERSION = VK_MAKE_VERSION(1,0,0)
 end
 
 end
