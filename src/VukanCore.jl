@@ -1,7 +1,7 @@
 __precompile__(true)
-module Vulkan
+module VulkanCore
 
-const vk = Vulkan
+const vk = VulkanCore
 export vk
 
 # OpenCL low level api

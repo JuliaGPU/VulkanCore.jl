@@ -32,8 +32,9 @@ typealias HWND Ptr{Void}
 # Define VK_MAKE_VERSION
 VK_MAKE_VERSION(major, minor, patch) = (((major) << 22) | ((minor) << 12) | (patch))
 
-const common_file = joinpath(Pkg.dir("Vulkan"), "gen/api", "vk_common_$(version).jl")
-const api_file    = joinpath(Pkg.dir("Vulkan"), "gen/api", "vk_$(version).jl")
+const api_dir = joinpath(Pkg.dir("VulkanCore"), "gen", "api")
+const common_file = joinpath(api_dir, "vk_common_$(version).jl")
+const api_file    = joinpath(api_dir, "vk_$(version).jl")
 
 if isfile(api_file) && isfile(common_file)
   include(common_file)
