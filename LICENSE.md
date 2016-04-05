@@ -1,4 +1,4 @@
-The Vulkan.jl package is licensed under the MIT "Expat" License:
+The VulkanCore.jl package is licensed under the MIT "Expat" License:
 
 > Copyright (c) 2016: Valentin Churavy.
 >
