@@ -1,5 +1,10 @@
 module api
 
+# We need our own CEnum, since Base.@enum does not support the full set of functionality of c's enums
+# see JuliaLang/julia#15728
+include("CEnum.jl")
+using .CEnum
+
 const version = v"1.0" # Latest branch  see generator.jl for other versions
 
 paths = ByteString[]
@@ -36,6 +41,7 @@ const api_dir = joinpath(Pkg.dir("VulkanCore"), "gen", "api")
 const common_file = joinpath(api_dir, "vk_common_$(version).jl")
 const api_file    = joinpath(api_dir, "vk_$(version).jl")
 
+
 if isfile(api_file) && isfile(common_file)
   include(common_file)
   include(api_file)
@@ -46,7 +52,7 @@ end
 if isdefined(:VK_API_VERSION)
   const VK_VERSION = VK_API_VERSION
 else
-  const VK_VERSION = VK_API_VERSION_1_0
+  const VK_VERSION = VK_MAKE_VERSION(1,0,0)
 end
 
 end

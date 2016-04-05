@@ -1,8 +1,11 @@
 __precompile__(true)
 module VulkanCore
 
-# OpenCL low level api
+
+# Vulkan low level api
 include("api.jl")
+
+include("../docs/vulkan_doc.jl")
 
 const vk = api
 export vk
