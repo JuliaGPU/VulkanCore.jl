@@ -9,6 +9,9 @@ Julia.
 If you are looking for a high-level julian API you might wish to take a look at
 [Vulkan.jl](https://github.com/JuliaGPU/Vulkan.jl).
 
+We parsed the [Vulkan XML specifications](https://github.com/JuliaGPU/Vulkan-Docs/blob/1.0/src/spec/vk.xml) and made them available via Julia's Documentation system. So this just works:
+![selection_003](https://cloud.githubusercontent.com/assets/1010467/14315568/6fe80854-fbfe-11e5-88b2-53b11ddc37e0.png)
+
 ### Installation
 You are required to have a Vulkan capable device and the appropriate drivers.
 
