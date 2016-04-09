@@ -14,6 +14,7 @@ We parsed the [Vulkan XML specifications](https://github.com/JuliaGPU/Vulkan-Doc
 
 ### Installation
 You are required to have a Vulkan capable device and the appropriate drivers.
+If these are present, just execute `Pkg.add("VulkanCore")` with Julia.
 
 ### References
 - [Vulkan](https://www.khronos.org/vulkan/)
