@@ -1,8 +1,8 @@
 module CEnum
 
-abstract Cenum{T}
-Base.(:|){T<:Cenum}(a::T, b::T) = T(Int(a) | Int(b))
-Base.(:&){T<:Cenum}(a::T, b::T) = T(Int(a) & Int(b))
+abstract type Cenum{T} end
+Base.(:|)(a::T, b::T) where {T<:Cenum} = T(Int(a) | Int(b))
+Base.(:&)(a::T, b::T) where {T<:Cenum} = T(Int(a) & Int(b))
 # typemin and typemax won't change for an enum, so we might as well inline them per type
 function Base.typemax{T<:Cenum}(::Type{T})
     last(enum_values(T))
@@ -14,7 +14,7 @@ Base.convert{T<:Integer}(::Type{Integer}, x::Cenum{T}) = Base.bitcast(T, x)
 Base.convert{T<:Integer,T2<:Integer}(::Type{T}, x::Cenum{T2}) = convert(T, Base.bitcast(T2, x))
 
 Base.write(io::IO, x::Cenum) = write(io, Int32(x))
-Base.read{T<:Cenum}(io::IO, ::Type{T}) = T(read(io, Int32))
+Base.read(io::IO, ::Type{T}) where {T<:Cenum} = T(read(io, Int32))
 
 enum_values{T<:Cenum}(::T) = enum_values(T)
 enum_names{T<:Cenum}(::T) = enum_names(T)
@@ -33,7 +33,7 @@ end
     return false
 end
 
-function enum_name{T<:Cenum}(x::T)
+function enum_name(x::T) where T<:Cenum
     index = findfirst(enum_values(T), Int(x))
     if index != 0
         return enum_names(T)[index]
@@ -86,7 +86,7 @@ macro cenum(name, args...)
     end
 
     expr = quote
-        bitstype 32 $typename <: CEnum.Cenum{UInt32}
+        primitive type $typename <: CEnum.Cenum{UInt32} 32 end
         function Base.convert(::Type{$typename}, x::Integer)
             is_member($typename, x) || Base.enum_argument_error($(Expr(:quote, name)), x)
             Base.bitcast($typename, convert(Int32, x))

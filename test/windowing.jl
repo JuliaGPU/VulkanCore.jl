@@ -59,13 +59,13 @@ module XCB
 	WINDOW_CLASS_INPUT_ONLY = 2
 )
 
-typealias xcb_connection_t Ptr{Void} # TODO create correct composite type
-typealias xcb_window_t UInt32
-typealias xcb_colormap_t UInt32
-typealias xcb_visualid_t UInt32
-typealias xcb_keycode_t UInt8
+const xcb_connection_t = Ptr{Void} # TODO create correct composite type
+const xcb_window_t = UInt32
+const xcb_colormap_t = UInt32
+const xcb_visualid_t = UInt32
+const xcb_keycode_t = UInt8
 
-immutable xcb_setup_t
+struct xcb_setup_t
 	status::UInt8
 	pad0::UInt8
 	uprotocol_major_version::UInt16
@@ -88,7 +88,7 @@ immutable xcb_setup_t
 	pad1::NTuple{4, UInt8}
 end
 
-immutable xcb_screen_t
+struct xcb_screen_t
 	root::xcb_window_t
 	default_colormap::xcb_colormap_t 
 	white_pixel::UInt32
@@ -107,12 +107,12 @@ immutable xcb_screen_t
 	allowed_depths_len::UInt8
 end
 const COPY_FROM_PARENT = Clong(0)
-immutable xcb_screen_iterator_t
+struct xcb_screen_iterator_t
 	data::Ptr{xcb_screen_t}
 	rem::Cint
 	index::Cint
 end
-immutable xcb_void_cookie_t
+struct xcb_void_cookie_t
 	sequence::Cuint
 end
 function xcb_connect(displayname, screenp)

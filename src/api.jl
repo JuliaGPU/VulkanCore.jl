@@ -14,25 +14,25 @@ const libvulkan = Libdl.find_library(["libvulkan", "vulkan", "libvulkan.so.1"], 
 #### External definitions
 
 # X11/X.h
-typealias Window UInt32 # unsigned long
-typealias VisualID UInt32 # unsigned long
+const Window = UInt32 # unsigned long
+const VisualID = UInt32 # unsigned long
 # X11/Xlib.h
-typealias Display Void # Opaque struct
+const Display = Void # Opaque struct
 # xcb.h
-typealias xcb_connection_t Void # opaque struct
-typealias xcb_window_t UInt32
-typealias xcb_visualid_t UInt32
+const xcb_connection_t = Void # opaque struct
+const xcb_window_t = UInt32
+const xcb_visualid_t = UInt32
 # Wayland
-typealias wl_display Void # TODO: make opaque for now
-typealias wl_surface Void # TODO: make opaque for now
+const wl_display = Void # TODO: make opaque for now
+const wl_surface = Void # TODO: make opaque for now
 # Mir
-typealias MirConnection Void # TODO: make opaque for now
-typealias MirSurface Void # TODO: make opaque for now
+const MirConnection = Void # TODO: make opaque for now
+const MirSurface = Void # TODO: make opaque for now
 # Android
-typealias ANativeWindow Void # TODO: make opaque for now
+const ANativeWindow = Void # TODO: make opaque for now
 # Windows
-typealias HINSTANCE Ptr{Void}
-typealias HWND Ptr{Void}
+const HINSTANCE = Ptr{Void}
+const HWND = Ptr{Void}
 
 # Define VK_MAKE_VERSION
 VK_MAKE_VERSION(major, minor, patch) = (((major) << 22) | ((minor) << 12) | (patch))
