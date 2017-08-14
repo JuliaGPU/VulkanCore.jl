@@ -1,4 +1,4 @@
-using Vulkan
+using VulkanCore
 using Base.Test
 
 const api = vk.api
@@ -21,10 +21,10 @@ assert(err == api.VK_SUCCESS)
 
 function Base.show(io::IO, lp::api.VkLayerProperties)
 	println(io, "Layer Properties: ")
-	println(io, "    Layer Name: ", bytestring(filter(x->x!=0, UInt8[lp.layerName...])))
+	println(io, "    Layer Name: ", String(filter(x->x!=0, UInt8[lp.layerName...])))
 	println(io, "    Spec Version: ", toversion(lp.specVersion))
 	println(io, "    Implementation Version: ", toversion(lp.implementationVersion))
-	println(io, "    description: ", bytestring(filter(x->x!=0, UInt8[lp.description...])))
+	println(io, "    description: ", String(filter(x->x!=0, UInt8[lp.description...])))
 end
 for elem in global_layer_properties
 	println(elem)
@@ -33,24 +33,24 @@ end
 appname = b"vulkaninfo"
 
 app_info = Ref(api.VkApplicationInfo(
-    api.VK_STRUCTURE_TYPE_APPLICATION_INFO,
-    C_NULL,
-    pointer(appname),
-    1,
-    pointer(appname),
-    1,
-    api.VK_VERSION,
+	api.VK_STRUCTURE_TYPE_APPLICATION_INFO,
+	C_NULL,
+	pointer(appname),
+	1,
+	pointer(appname),
+	1,
+	api.VK_VERSION,
 ))
 
 inst_info = Ref(api.VkInstanceCreateInfo(
-        api.VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
-        C_NULL,
-        UInt32(0),
-        Base.unsafe_convert(Ptr{api.VkApplicationInfo}, app_info),
-        0,
-        C_NULL,
-        0,
-        C_NULL,
+		api.VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
+		C_NULL,
+		UInt32(0),
+		Base.unsafe_convert(Ptr{api.VkApplicationInfo}, app_info),
+		0,
+		C_NULL,
+		0,
+		C_NULL,
 ))
 
 instance = Ref{api.VkInstance}(C_NULL)
@@ -59,7 +59,7 @@ err = api.vkCreateInstance(inst_info, C_NULL, instance)
 println(err)
 println(instance)
 
-gpu_count = Ref{Cuint}(0) 
+gpu_count = Ref{Cuint}(0)
 err = api.vkEnumeratePhysicalDevices(instance[], gpu_count, C_NULL)
 println(err)
 devices = Array(api.VkPhysicalDevice, gpu_count[])
@@ -76,7 +76,7 @@ println(err)
 function Base.show(io::IO, pdsp::api.VkPhysicalDeviceSparseProperties)
 	println(io, "Physical device Sparse Properties: ")
 	for name in fieldnames(pdsp)
-		println(io, "    ", name, " ", pdsp.(name) == 1)
+		println(io, "    ", name, " ", getfield(pdsp, name) == 1)
 	end
 end
 function Base.show(io::IO, pdp::api.VkPhysicalDeviceProperties)
@@ -87,7 +87,7 @@ function Base.show(io::IO, pdp::api.VkPhysicalDeviceProperties)
 	println(io, "    Vendor ID ", pdp.vendorID)
 	println(io, "    Device ID: ", pdp.deviceID)
 	println(io, "    Device Type: ", pdp.deviceType)
-	println(io, "    Device Name: ", bytestring(filter(x->x!=0, UInt8[pdp.deviceName...])))
+	println(io, "    Device Name: ", String(filter(x->x!=0, UInt8[pdp.deviceName...])))
 	println(io, "    Pipeline Cache UUID: ", pdp.pipelineCacheUUID)
 	println(io, "    Limits: ", pdp.limits)
 	println(io, "    Sparse Properties: \n    ", pdp.sparseProperties)
@@ -100,7 +100,7 @@ limitshow(x) = x
 function Base.show(io::IO, pdl::api.VkPhysicalDeviceLimits)
 	println(io, "Physical Device Limits: ")
 	for name in fieldnames(pdl)
-		println(io, "    ", name, " ", limitshow(pdl.(name)))
+		println(io, "    ", name, " ", limitshow(getfield(pdl, name)))
 	end
 end
 
@@ -125,7 +125,7 @@ api.vkGetPhysicalDeviceFeatures(devices[], devicefeatures)
 function Base.show(io::IO, df::api.VkPhysicalDeviceFeatures)
 	println(io, "Physical device features: ")
 	for name in fieldnames(df)
-		println(io, "    ", name, ": ", df.(name) != 1 ? "un" : "", "supported")
+		println(io, "    ", name, ": ", getfield(df, name) != 1 ? "un" : "", "supported")
 	end
 end
 println(devicefeatures[])
@@ -144,7 +144,7 @@ iter = Ref(XCB.setup_roots_iterator(setup))
 println(iter)
 
 for i=scr:-1:0
-    XCB.screen_next(iter)
+	XCB.screen_next(iter)
 end
 screen = unsafe_load(iter[].data, 1)
 
@@ -155,7 +155,7 @@ value_list[1] = screen.black_pixel
 value_list[2] = (
 	UInt32(XCB.EVENT_MASK_KEY_RELEASE) |
 	UInt32(XCB.EVENT_MASK_EXPOSURE) |
-    UInt32(XCB.EVENT_MASK_STRUCTURE_NOTIFY)
+	UInt32(XCB.EVENT_MASK_STRUCTURE_NOTIFY)
 )
 println(screen)
 
@@ -167,19 +167,19 @@ XCB.create_window(
 	value_mask, value_list
 )
 
-@windows_only begin
+if is_windows()
 	createInfo = Ref(api.VkWin32SurfaceCreateInfoKHR(
 		VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR,
-    	C_NULL,
-    	0,
-    	connection,
-    	window
+		C_NULL,
+		0,
+		connection,
+		window
 	))
 
-    err = vkCreateWin32SurfaceKHR(instance[], createInfo, C_NULL, surface);
+	err = vkCreateWin32SurfaceKHR(instance[], createInfo, C_NULL, surface);
 end
 
-@unix_only begin
+if is_unix()
 	createInfo = Ref(api.VkXcbSurfaceCreateInfoKHR(
 		api.VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR,
 		C_NULL,

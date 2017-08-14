@@ -10,7 +10,9 @@ end
 function Base.typemin{T<:Cenum}(::Type{T})
     first(enum_values(T))
 end
-Base.convert{T<:Integer}(::Type{T}, x::Cenum) = convert(T, Base.box(Int32, x))
+Base.convert{T<:Integer}(::Type{Integer}, x::Cenum{T}) = Base.bitcast(T, x)
+Base.convert{T<:Integer,T2<:Integer}(::Type{T}, x::Cenum{T2}) = convert(T, Base.bitcast(T2, x))
+
 Base.write(io::IO, x::Cenum) = write(io, Int32(x))
 Base.read{T<:Cenum}(io::IO, ::Type{T}) = T(read(io, Int32))
 
@@ -36,7 +38,7 @@ function enum_name{T<:Cenum}(x::T)
     if index != 0
         return enum_names(T)[index]
     end
-    error("Invalid enum: $x, name not found")
+    error("Invalid enum: $(Int(x)), name not found")
 end
 function Base.show(io::IO, x::Cenum)
     print(io, enum_name(x), "($(Int(x)))")
@@ -87,7 +89,7 @@ macro cenum(name, args...)
         bitstype 32 $typename <: CEnum.Cenum{UInt32}
         function Base.convert(::Type{$typename}, x::Integer)
             is_member($typename, x) || Base.enum_argument_error($(Expr(:quote, name)), x)
-            Base.box($typename, convert(Int32, x))
+            Base.bitcast($typename, convert(Int32, x))
         end
         CEnum.enum_names(::Type{$typename}) = tuple($(map(x-> Expr(:quote, first(x)), name_values)...))
         CEnum.enum_values(::Type{$typename}) = $values
