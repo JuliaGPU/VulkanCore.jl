@@ -139,60 +139,60 @@ const VK_IMG_filter_cubic = 1
 const VK_IMG_FILTER_CUBIC_SPEC_VERSION = 1
 const VK_IMG_FILTER_CUBIC_EXTENSION_NAME = "VK_IMG_filter_cubic"
 
-typealias VkFlags UInt32
-typealias VkBool32 UInt32
-typealias VkDeviceSize UInt64
-typealias VkSampleMask UInt32
-typealias VkInstance_T Void
-typealias VkInstance Ptr{VkInstance_T}
-typealias VkPhysicalDevice_T Void
-typealias VkPhysicalDevice Ptr{VkPhysicalDevice_T}
-typealias VkDevice_T Void
-typealias VkDevice Ptr{VkDevice_T}
-typealias VkQueue_T Void
-typealias VkQueue Ptr{VkQueue_T}
-typealias VkSemaphore_T Void
-typealias VkSemaphore Ptr{VkSemaphore_T}
-typealias VkCommandBuffer_T Void
-typealias VkCommandBuffer Ptr{VkCommandBuffer_T}
-typealias VkFence_T Void
-typealias VkFence Ptr{VkFence_T}
-typealias VkDeviceMemory_T Void
-typealias VkDeviceMemory Ptr{VkDeviceMemory_T}
-typealias VkBuffer_T Void
-typealias VkBuffer Ptr{VkBuffer_T}
-typealias VkImage_T Void
-typealias VkImage Ptr{VkImage_T}
-typealias VkEvent_T Void
-typealias VkEvent Ptr{VkEvent_T}
-typealias VkQueryPool_T Void
-typealias VkQueryPool Ptr{VkQueryPool_T}
-typealias VkBufferView_T Void
-typealias VkBufferView Ptr{VkBufferView_T}
-typealias VkImageView_T Void
-typealias VkImageView Ptr{VkImageView_T}
-typealias VkShaderModule_T Void
-typealias VkShaderModule Ptr{VkShaderModule_T}
-typealias VkPipelineCache_T Void
-typealias VkPipelineCache Ptr{VkPipelineCache_T}
-typealias VkPipelineLayout_T Void
-typealias VkPipelineLayout Ptr{VkPipelineLayout_T}
-typealias VkRenderPass_T Void
-typealias VkRenderPass Ptr{VkRenderPass_T}
-typealias VkPipeline_T Void
-typealias VkPipeline Ptr{VkPipeline_T}
-typealias VkDescriptorSetLayout_T Void
-typealias VkDescriptorSetLayout Ptr{VkDescriptorSetLayout_T}
-typealias VkSampler_T Void
-typealias VkSampler Ptr{VkSampler_T}
-typealias VkDescriptorPool_T Void
-typealias VkDescriptorPool Ptr{VkDescriptorPool_T}
-typealias VkDescriptorSet_T Void
-typealias VkDescriptorSet Ptr{VkDescriptorSet_T}
-typealias VkFramebuffer_T Void
-typealias VkFramebuffer Ptr{VkFramebuffer_T}
-typealias VkCommandPool_T Void
-typealias VkCommandPool Ptr{VkCommandPool_T}
+const VkFlags = UInt32
+const VkBool32 = UInt32
+const VkDeviceSize = UInt64
+const VkSampleMask = UInt32
+const VkInstance_T = Void
+const VkInstance = Ptr{VkInstance_T}
+const VkPhysicalDevice_T = Void
+const VkPhysicalDevice = Ptr{VkPhysicalDevice_T}
+const VkDevice_T = Void
+const VkDevice = Ptr{VkDevice_T}
+const VkQueue_T = Void
+const VkQueue = Ptr{VkQueue_T}
+const VkSemaphore_T = Void
+const VkSemaphore = Ptr{VkSemaphore_T}
+const VkCommandBuffer_T = Void
+const VkCommandBuffer = Ptr{VkCommandBuffer_T}
+const VkFence_T = Void
+const VkFence = Ptr{VkFence_T}
+const VkDeviceMemory_T = Void
+const VkDeviceMemory = Ptr{VkDeviceMemory_T}
+const VkBuffer_T = Void
+const VkBuffer = Ptr{VkBuffer_T}
+const VkImage_T = Void
+const VkImage = Ptr{VkImage_T}
+const VkEvent_T = Void
+const VkEvent = Ptr{VkEvent_T}
+const VkQueryPool_T = Void
+const VkQueryPool = Ptr{VkQueryPool_T}
+const VkBufferView_T = Void
+const VkBufferView = Ptr{VkBufferView_T}
+const VkImageView_T = Void
+const VkImageView = Ptr{VkImageView_T}
+const VkShaderModule_T = Void
+const VkShaderModule = Ptr{VkShaderModule_T}
+const VkPipelineCache_T = Void
+const VkPipelineCache = Ptr{VkPipelineCache_T}
+const VkPipelineLayout_T = Void
+const VkPipelineLayout = Ptr{VkPipelineLayout_T}
+const VkRenderPass_T = Void
+const VkRenderPass = Ptr{VkRenderPass_T}
+const VkPipeline_T = Void
+const VkPipeline = Ptr{VkPipeline_T}
+const VkDescriptorSetLayout_T = Void
+const VkDescriptorSetLayout = Ptr{VkDescriptorSetLayout_T}
+const VkSampler_T = Void
+const VkSampler = Ptr{VkSampler_T}
+const VkDescriptorPool_T = Void
+const VkDescriptorPool = Ptr{VkDescriptorPool_T}
+const VkDescriptorSet_T = Void
+const VkDescriptorSet = Ptr{VkDescriptorSet_T}
+const VkFramebuffer_T = Void
+const VkFramebuffer = Ptr{VkFramebuffer_T}
+const VkCommandPool_T = Void
+const VkCommandPool = Ptr{VkCommandPool_T}
 
 @cenum(VkPipelineCacheHeaderVersion,
     VK_PIPELINE_CACHE_HEADER_VERSION_ONE = 1,
@@ -777,7 +777,7 @@ typealias VkCommandPool Ptr{VkCommandPool_T}
     VK_SUBPASS_CONTENTS_MAX_ENUM = 2147483647,
 )
 
-typealias VkInstanceCreateFlags VkFlags
+const VkInstanceCreateFlags = VkFlags
 
 @cenum(VkFormatFeatureFlagBits,
     VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT = 1,
@@ -797,7 +797,7 @@ typealias VkInstanceCreateFlags VkFlags
     VK_FORMAT_FEATURE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkFormatFeatureFlags VkFlags
+const VkFormatFeatureFlags = VkFlags
 
 @cenum(VkImageUsageFlagBits,
     VK_IMAGE_USAGE_TRANSFER_SRC_BIT = 1,
@@ -811,7 +811,7 @@ typealias VkFormatFeatureFlags VkFlags
     VK_IMAGE_USAGE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkImageUsageFlags VkFlags
+const VkImageUsageFlags = VkFlags
 
 @cenum(VkImageCreateFlagBits,
     VK_IMAGE_CREATE_SPARSE_BINDING_BIT = 1,
@@ -822,7 +822,7 @@ typealias VkImageUsageFlags VkFlags
     VK_IMAGE_CREATE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkImageCreateFlags VkFlags
+const VkImageCreateFlags = VkFlags
 
 @cenum(VkSampleCountFlagBits,
     VK_SAMPLE_COUNT_1_BIT = 1,
@@ -835,7 +835,7 @@ typealias VkImageCreateFlags VkFlags
     VK_SAMPLE_COUNT_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkSampleCountFlags VkFlags
+const VkSampleCountFlags = VkFlags
 
 @cenum(VkQueueFlagBits,
     VK_QUEUE_GRAPHICS_BIT = 1,
@@ -845,7 +845,7 @@ typealias VkSampleCountFlags VkFlags
     VK_QUEUE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkQueueFlags VkFlags
+const VkQueueFlags = VkFlags
 
 @cenum(VkMemoryPropertyFlagBits,
     VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT = 1,
@@ -856,16 +856,16 @@ typealias VkQueueFlags VkFlags
     VK_MEMORY_PROPERTY_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkMemoryPropertyFlags VkFlags
+const VkMemoryPropertyFlags = VkFlags
 
 @cenum(VkMemoryHeapFlagBits,
     VK_MEMORY_HEAP_DEVICE_LOCAL_BIT = 1,
     VK_MEMORY_HEAP_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkMemoryHeapFlags VkFlags
-typealias VkDeviceCreateFlags VkFlags
-typealias VkDeviceQueueCreateFlags VkFlags
+const VkMemoryHeapFlags = VkFlags
+const VkDeviceCreateFlags = VkFlags
+const VkDeviceQueueCreateFlags = VkFlags
 
 @cenum(VkPipelineStageFlagBits,
     VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT = 1,
@@ -888,8 +888,8 @@ typealias VkDeviceQueueCreateFlags VkFlags
     VK_PIPELINE_STAGE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkPipelineStageFlags VkFlags
-typealias VkMemoryMapFlags VkFlags
+const VkPipelineStageFlags = VkFlags
+const VkMemoryMapFlags = VkFlags
 
 @cenum(VkImageAspectFlagBits,
     VK_IMAGE_ASPECT_COLOR_BIT = 1,
@@ -899,7 +899,7 @@ typealias VkMemoryMapFlags VkFlags
     VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkImageAspectFlags VkFlags
+const VkImageAspectFlags = VkFlags
 
 @cenum(VkSparseImageFormatFlagBits,
     VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT = 1,
@@ -908,24 +908,24 @@ typealias VkImageAspectFlags VkFlags
     VK_SPARSE_IMAGE_FORMAT_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkSparseImageFormatFlags VkFlags
+const VkSparseImageFormatFlags = VkFlags
 
 @cenum(VkSparseMemoryBindFlagBits,
     VK_SPARSE_MEMORY_BIND_METADATA_BIT = 1,
     VK_SPARSE_MEMORY_BIND_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkSparseMemoryBindFlags VkFlags
+const VkSparseMemoryBindFlags = VkFlags
 
 @cenum(VkFenceCreateFlagBits,
     VK_FENCE_CREATE_SIGNALED_BIT = 1,
     VK_FENCE_CREATE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkFenceCreateFlags VkFlags
-typealias VkSemaphoreCreateFlags VkFlags
-typealias VkEventCreateFlags VkFlags
-typealias VkQueryPoolCreateFlags VkFlags
+const VkFenceCreateFlags = VkFlags
+const VkSemaphoreCreateFlags = VkFlags
+const VkEventCreateFlags = VkFlags
+const VkQueryPoolCreateFlags = VkFlags
 
 @cenum(VkQueryPipelineStatisticFlagBits,
     VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT = 1,
@@ -942,7 +942,7 @@ typealias VkQueryPoolCreateFlags VkFlags
     VK_QUERY_PIPELINE_STATISTIC_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkQueryPipelineStatisticFlags VkFlags
+const VkQueryPipelineStatisticFlags = VkFlags
 
 @cenum(VkQueryResultFlagBits,
     VK_QUERY_RESULT_64_BIT = 1,
@@ -952,7 +952,7 @@ typealias VkQueryPipelineStatisticFlags VkFlags
     VK_QUERY_RESULT_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkQueryResultFlags VkFlags
+const VkQueryResultFlags = VkFlags
 
 @cenum(VkBufferCreateFlagBits,
     VK_BUFFER_CREATE_SPARSE_BINDING_BIT = 1,
@@ -961,7 +961,7 @@ typealias VkQueryResultFlags VkFlags
     VK_BUFFER_CREATE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkBufferCreateFlags VkFlags
+const VkBufferCreateFlags = VkFlags
 
 @cenum(VkBufferUsageFlagBits,
     VK_BUFFER_USAGE_TRANSFER_SRC_BIT = 1,
@@ -976,11 +976,11 @@ typealias VkBufferCreateFlags VkFlags
     VK_BUFFER_USAGE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkBufferUsageFlags VkFlags
-typealias VkBufferViewCreateFlags VkFlags
-typealias VkImageViewCreateFlags VkFlags
-typealias VkShaderModuleCreateFlags VkFlags
-typealias VkPipelineCacheCreateFlags VkFlags
+const VkBufferUsageFlags = VkFlags
+const VkBufferViewCreateFlags = VkFlags
+const VkImageViewCreateFlags = VkFlags
+const VkShaderModuleCreateFlags = VkFlags
+const VkPipelineCacheCreateFlags = VkFlags
 
 @cenum(VkPipelineCreateFlagBits,
     VK_PIPELINE_CREATE_DISABLE_OPTIMIZATION_BIT = 1,
@@ -989,8 +989,8 @@ typealias VkPipelineCacheCreateFlags VkFlags
     VK_PIPELINE_CREATE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkPipelineCreateFlags VkFlags
-typealias VkPipelineShaderStageCreateFlags VkFlags
+const VkPipelineCreateFlags = VkFlags
+const VkPipelineShaderStageCreateFlags = VkFlags
 
 @cenum(VkShaderStageFlagBits,
     VK_SHADER_STAGE_VERTEX_BIT = 1,
@@ -1004,11 +1004,11 @@ typealias VkPipelineShaderStageCreateFlags VkFlags
     VK_SHADER_STAGE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkPipelineVertexInputStateCreateFlags VkFlags
-typealias VkPipelineInputAssemblyStateCreateFlags VkFlags
-typealias VkPipelineTessellationStateCreateFlags VkFlags
-typealias VkPipelineViewportStateCreateFlags VkFlags
-typealias VkPipelineRasterizationStateCreateFlags VkFlags
+const VkPipelineVertexInputStateCreateFlags = VkFlags
+const VkPipelineInputAssemblyStateCreateFlags = VkFlags
+const VkPipelineTessellationStateCreateFlags = VkFlags
+const VkPipelineViewportStateCreateFlags = VkFlags
+const VkPipelineRasterizationStateCreateFlags = VkFlags
 
 @cenum(VkCullModeFlagBits,
     VK_CULL_MODE_NONE = 0,
@@ -1018,10 +1018,10 @@ typealias VkPipelineRasterizationStateCreateFlags VkFlags
     VK_CULL_MODE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkCullModeFlags VkFlags
-typealias VkPipelineMultisampleStateCreateFlags VkFlags
-typealias VkPipelineDepthStencilStateCreateFlags VkFlags
-typealias VkPipelineColorBlendStateCreateFlags VkFlags
+const VkCullModeFlags = VkFlags
+const VkPipelineMultisampleStateCreateFlags = VkFlags
+const VkPipelineDepthStencilStateCreateFlags = VkFlags
+const VkPipelineColorBlendStateCreateFlags = VkFlags
 
 @cenum(VkColorComponentFlagBits,
     VK_COLOR_COMPONENT_R_BIT = 1,
@@ -1031,30 +1031,30 @@ typealias VkPipelineColorBlendStateCreateFlags VkFlags
     VK_COLOR_COMPONENT_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkColorComponentFlags VkFlags
-typealias VkPipelineDynamicStateCreateFlags VkFlags
-typealias VkPipelineLayoutCreateFlags VkFlags
-typealias VkShaderStageFlags VkFlags
-typealias VkSamplerCreateFlags VkFlags
-typealias VkDescriptorSetLayoutCreateFlags VkFlags
+const VkColorComponentFlags = VkFlags
+const VkPipelineDynamicStateCreateFlags = VkFlags
+const VkPipelineLayoutCreateFlags = VkFlags
+const VkShaderStageFlags = VkFlags
+const VkSamplerCreateFlags = VkFlags
+const VkDescriptorSetLayoutCreateFlags = VkFlags
 
 @cenum(VkDescriptorPoolCreateFlagBits,
     VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT = 1,
     VK_DESCRIPTOR_POOL_CREATE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkDescriptorPoolCreateFlags VkFlags
-typealias VkDescriptorPoolResetFlags VkFlags
-typealias VkFramebufferCreateFlags VkFlags
-typealias VkRenderPassCreateFlags VkFlags
+const VkDescriptorPoolCreateFlags = VkFlags
+const VkDescriptorPoolResetFlags = VkFlags
+const VkFramebufferCreateFlags = VkFlags
+const VkRenderPassCreateFlags = VkFlags
 
 @cenum(VkAttachmentDescriptionFlagBits,
     VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT = 1,
     VK_ATTACHMENT_DESCRIPTION_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkAttachmentDescriptionFlags VkFlags
-typealias VkSubpassDescriptionFlags VkFlags
+const VkAttachmentDescriptionFlags = VkFlags
+const VkSubpassDescriptionFlags = VkFlags
 
 @cenum(VkAccessFlagBits,
     VK_ACCESS_INDIRECT_COMMAND_READ_BIT = 1,
@@ -1077,14 +1077,14 @@ typealias VkSubpassDescriptionFlags VkFlags
     VK_ACCESS_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkAccessFlags VkFlags
+const VkAccessFlags = VkFlags
 
 @cenum(VkDependencyFlagBits,
     VK_DEPENDENCY_BY_REGION_BIT = 1,
     VK_DEPENDENCY_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkDependencyFlags VkFlags
+const VkDependencyFlags = VkFlags
 
 @cenum(VkCommandPoolCreateFlagBits,
     VK_COMMAND_POOL_CREATE_TRANSIENT_BIT = 1,
@@ -1092,14 +1092,14 @@ typealias VkDependencyFlags VkFlags
     VK_COMMAND_POOL_CREATE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkCommandPoolCreateFlags VkFlags
+const VkCommandPoolCreateFlags = VkFlags
 
 @cenum(VkCommandPoolResetFlagBits,
     VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT = 1,
     VK_COMMAND_POOL_RESET_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkCommandPoolResetFlags VkFlags
+const VkCommandPoolResetFlags = VkFlags
 
 @cenum(VkCommandBufferUsageFlagBits,
     VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT = 1,
@@ -1108,21 +1108,21 @@ typealias VkCommandPoolResetFlags VkFlags
     VK_COMMAND_BUFFER_USAGE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkCommandBufferUsageFlags VkFlags
+const VkCommandBufferUsageFlags = VkFlags
 
 @cenum(VkQueryControlFlagBits,
     VK_QUERY_CONTROL_PRECISE_BIT = 1,
     VK_QUERY_CONTROL_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkQueryControlFlags VkFlags
+const VkQueryControlFlags = VkFlags
 
 @cenum(VkCommandBufferResetFlagBits,
     VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT = 1,
     VK_COMMAND_BUFFER_RESET_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkCommandBufferResetFlags VkFlags
+const VkCommandBufferResetFlags = VkFlags
 
 @cenum(VkStencilFaceFlagBits,
     VK_STENCIL_FACE_FRONT_BIT = 1,
@@ -1131,15 +1131,15 @@ typealias VkCommandBufferResetFlags VkFlags
     VK_STENCIL_FACE_FLAG_BITS_MAX_ENUM = 2147483647,
 )
 
-typealias VkStencilFaceFlags VkFlags
-typealias PFN_vkAllocationFunction Ptr{Void}
-typealias PFN_vkReallocationFunction Ptr{Void}
-typealias PFN_vkFreeFunction Ptr{Void}
-typealias PFN_vkInternalAllocationNotification Ptr{Void}
-typealias PFN_vkInternalFreeNotification Ptr{Void}
-typealias PFN_vkVoidFunction Ptr{Void}
+const VkStencilFaceFlags = VkFlags
+const PFN_vkAllocationFunction = Ptr{Void}
+const PFN_vkReallocationFunction = Ptr{Void}
+const PFN_vkFreeFunction = Ptr{Void}
+const PFN_vkInternalAllocationNotification = Ptr{Void}
+const PFN_vkInternalFreeNotification = Ptr{Void}
+const PFN_vkVoidFunction = Ptr{Void}
 
-immutable VkApplicationInfo
+struct VkApplicationInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     pApplicationName::Cstring
@@ -1149,7 +1149,7 @@ immutable VkApplicationInfo
     apiVersion::UInt32
 end
 
-immutable VkInstanceCreateInfo
+struct VkInstanceCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkInstanceCreateFlags
@@ -1160,7 +1160,7 @@ immutable VkInstanceCreateInfo
     ppEnabledExtensionNames::Ptr{Cstring}
 end
 
-immutable VkAllocationCallbacks
+struct VkAllocationCallbacks
     pUserData::Ptr{Void}
     pfnAllocation::PFN_vkAllocationFunction
     pfnReallocation::PFN_vkReallocationFunction
@@ -1169,7 +1169,7 @@ immutable VkAllocationCallbacks
     pfnInternalFree::PFN_vkInternalFreeNotification
 end
 
-immutable VkPhysicalDeviceFeatures
+struct VkPhysicalDeviceFeatures
     robustBufferAccess::VkBool32
     fullDrawIndexUint32::VkBool32
     imageCubeArray::VkBool32
@@ -1227,19 +1227,19 @@ immutable VkPhysicalDeviceFeatures
     inheritedQueries::VkBool32
 end
 
-immutable VkFormatProperties
+struct VkFormatProperties
     linearTilingFeatures::VkFormatFeatureFlags
     optimalTilingFeatures::VkFormatFeatureFlags
     bufferFeatures::VkFormatFeatureFlags
 end
 
-immutable VkExtent3D
+struct VkExtent3D
     width::UInt32
     height::UInt32
     depth::UInt32
 end
 
-immutable VkImageFormatProperties
+struct VkImageFormatProperties
     maxExtent::VkExtent3D
     maxMipLevels::UInt32
     maxArrayLayers::UInt32
@@ -1247,7 +1247,7 @@ immutable VkImageFormatProperties
     maxResourceSize::VkDeviceSize
 end
 
-immutable VkPhysicalDeviceLimits
+struct VkPhysicalDeviceLimits
     maxImageDimension1D::UInt32
     maxImageDimension2D::UInt32
     maxImageDimension3D::UInt32
@@ -1356,7 +1356,7 @@ immutable VkPhysicalDeviceLimits
     nonCoherentAtomSize::VkDeviceSize
 end
 
-immutable VkPhysicalDeviceSparseProperties
+struct VkPhysicalDeviceSparseProperties
     residencyStandard2DBlockShape::VkBool32
     residencyStandard2DMultisampleBlockShape::VkBool32
     residencyStandard3DBlockShape::VkBool32
@@ -1364,7 +1364,7 @@ immutable VkPhysicalDeviceSparseProperties
     residencyNonResidentStrict::VkBool32
 end
 
-immutable VkPhysicalDeviceProperties
+struct VkPhysicalDeviceProperties
     apiVersion::UInt32
     driverVersion::UInt32
     vendorID::UInt32
@@ -1376,31 +1376,31 @@ immutable VkPhysicalDeviceProperties
     sparseProperties::VkPhysicalDeviceSparseProperties
 end
 
-immutable VkQueueFamilyProperties
+struct VkQueueFamilyProperties
     queueFlags::VkQueueFlags
     queueCount::UInt32
     timestampValidBits::UInt32
     minImageTransferGranularity::VkExtent3D
 end
 
-immutable VkMemoryType
+struct VkMemoryType
     propertyFlags::VkMemoryPropertyFlags
     heapIndex::UInt32
 end
 
-immutable VkMemoryHeap
+struct VkMemoryHeap
     size::VkDeviceSize
     flags::VkMemoryHeapFlags
 end
 
-immutable VkPhysicalDeviceMemoryProperties
+struct VkPhysicalDeviceMemoryProperties
     memoryTypeCount::UInt32
     memoryTypes::NTuple{32,VkMemoryType}
     memoryHeapCount::UInt32
     memoryHeaps::NTuple{16,VkMemoryHeap}
 end
 
-immutable VkDeviceQueueCreateInfo
+struct VkDeviceQueueCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkDeviceQueueCreateFlags
@@ -1409,7 +1409,7 @@ immutable VkDeviceQueueCreateInfo
     pQueuePriorities::Ptr{Cfloat}
 end
 
-immutable VkDeviceCreateInfo
+struct VkDeviceCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkDeviceCreateFlags
@@ -1422,19 +1422,19 @@ immutable VkDeviceCreateInfo
     pEnabledFeatures::Ptr{VkPhysicalDeviceFeatures}
 end
 
-immutable VkExtensionProperties
+struct VkExtensionProperties
     extensionName::NTuple{256,UInt8}
     specVersion::UInt32
 end
 
-immutable VkLayerProperties
+struct VkLayerProperties
     layerName::NTuple{256,UInt8}
     specVersion::UInt32
     implementationVersion::UInt32
     description::NTuple{256,UInt8}
 end
 
-immutable VkSubmitInfo
+struct VkSubmitInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     waitSemaphoreCount::UInt32
@@ -1446,14 +1446,14 @@ immutable VkSubmitInfo
     pSignalSemaphores::Ptr{VkSemaphore}
 end
 
-immutable VkMemoryAllocateInfo
+struct VkMemoryAllocateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     allocationSize::VkDeviceSize
     memoryTypeIndex::UInt32
 end
 
-immutable VkMappedMemoryRange
+struct VkMappedMemoryRange
     sType::VkStructureType
     pNext::Ptr{Void}
     memory::VkDeviceMemory
@@ -1461,19 +1461,19 @@ immutable VkMappedMemoryRange
     size::VkDeviceSize
 end
 
-immutable VkMemoryRequirements
+struct VkMemoryRequirements
     size::VkDeviceSize
     alignment::VkDeviceSize
     memoryTypeBits::UInt32
 end
 
-immutable VkSparseImageFormatProperties
+struct VkSparseImageFormatProperties
     aspectMask::VkImageAspectFlags
     imageGranularity::VkExtent3D
     flags::VkSparseImageFormatFlags
 end
 
-immutable VkSparseImageMemoryRequirements
+struct VkSparseImageMemoryRequirements
     formatProperties::VkSparseImageFormatProperties
     imageMipTailFirstLod::UInt32
     imageMipTailSize::VkDeviceSize
@@ -1481,7 +1481,7 @@ immutable VkSparseImageMemoryRequirements
     imageMipTailStride::VkDeviceSize
 end
 
-immutable VkSparseMemoryBind
+struct VkSparseMemoryBind
     resourceOffset::VkDeviceSize
     size::VkDeviceSize
     memory::VkDeviceMemory
@@ -1489,31 +1489,31 @@ immutable VkSparseMemoryBind
     flags::VkSparseMemoryBindFlags
 end
 
-immutable VkSparseBufferMemoryBindInfo
+struct VkSparseBufferMemoryBindInfo
     buffer::VkBuffer
     bindCount::UInt32
     pBinds::Ptr{VkSparseMemoryBind}
 end
 
-immutable VkSparseImageOpaqueMemoryBindInfo
+struct VkSparseImageOpaqueMemoryBindInfo
     image::VkImage
     bindCount::UInt32
     pBinds::Ptr{VkSparseMemoryBind}
 end
 
-immutable VkImageSubresource
+struct VkImageSubresource
     aspectMask::VkImageAspectFlags
     mipLevel::UInt32
     arrayLayer::UInt32
 end
 
-immutable VkOffset3D
+struct VkOffset3D
     x::Int32
     y::Int32
     z::Int32
 end
 
-immutable VkSparseImageMemoryBind
+struct VkSparseImageMemoryBind
     subresource::VkImageSubresource
     offset::VkOffset3D
     extent::VkExtent3D
@@ -1522,13 +1522,13 @@ immutable VkSparseImageMemoryBind
     flags::VkSparseMemoryBindFlags
 end
 
-immutable VkSparseImageMemoryBindInfo
+struct VkSparseImageMemoryBindInfo
     image::VkImage
     bindCount::UInt32
     pBinds::Ptr{VkSparseImageMemoryBind}
 end
 
-immutable VkBindSparseInfo
+struct VkBindSparseInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     waitSemaphoreCount::UInt32
@@ -1543,25 +1543,25 @@ immutable VkBindSparseInfo
     pSignalSemaphores::Ptr{VkSemaphore}
 end
 
-immutable VkFenceCreateInfo
+struct VkFenceCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkFenceCreateFlags
 end
 
-immutable VkSemaphoreCreateInfo
+struct VkSemaphoreCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkSemaphoreCreateFlags
 end
 
-immutable VkEventCreateInfo
+struct VkEventCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkEventCreateFlags
 end
 
-immutable VkQueryPoolCreateInfo
+struct VkQueryPoolCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkQueryPoolCreateFlags
@@ -1570,7 +1570,7 @@ immutable VkQueryPoolCreateInfo
     pipelineStatistics::VkQueryPipelineStatisticFlags
 end
 
-immutable VkBufferCreateInfo
+struct VkBufferCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkBufferCreateFlags
@@ -1581,7 +1581,7 @@ immutable VkBufferCreateInfo
     pQueueFamilyIndices::Ptr{UInt32}
 end
 
-immutable VkBufferViewCreateInfo
+struct VkBufferViewCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkBufferViewCreateFlags
@@ -1591,7 +1591,7 @@ immutable VkBufferViewCreateInfo
     range::VkDeviceSize
 end
 
-immutable VkImageCreateInfo
+struct VkImageCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkImageCreateFlags
@@ -1609,7 +1609,7 @@ immutable VkImageCreateInfo
     initialLayout::VkImageLayout
 end
 
-immutable VkSubresourceLayout
+struct VkSubresourceLayout
     offset::VkDeviceSize
     size::VkDeviceSize
     rowPitch::VkDeviceSize
@@ -1617,14 +1617,14 @@ immutable VkSubresourceLayout
     depthPitch::VkDeviceSize
 end
 
-immutable VkComponentMapping
+struct VkComponentMapping
     r::VkComponentSwizzle
     g::VkComponentSwizzle
     b::VkComponentSwizzle
     a::VkComponentSwizzle
 end
 
-immutable VkImageSubresourceRange
+struct VkImageSubresourceRange
     aspectMask::VkImageAspectFlags
     baseMipLevel::UInt32
     levelCount::UInt32
@@ -1632,7 +1632,7 @@ immutable VkImageSubresourceRange
     layerCount::UInt32
 end
 
-immutable VkImageViewCreateInfo
+struct VkImageViewCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkImageViewCreateFlags
@@ -1643,7 +1643,7 @@ immutable VkImageViewCreateInfo
     subresourceRange::VkImageSubresourceRange
 end
 
-immutable VkShaderModuleCreateInfo
+struct VkShaderModuleCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkShaderModuleCreateFlags
@@ -1651,7 +1651,7 @@ immutable VkShaderModuleCreateInfo
     pCode::Ptr{UInt32}
 end
 
-immutable VkPipelineCacheCreateInfo
+struct VkPipelineCacheCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineCacheCreateFlags
@@ -1659,20 +1659,20 @@ immutable VkPipelineCacheCreateInfo
     pInitialData::Ptr{Void}
 end
 
-immutable VkSpecializationMapEntry
+struct VkSpecializationMapEntry
     constantID::UInt32
     offset::UInt32
     size::Csize_t
 end
 
-immutable VkSpecializationInfo
+struct VkSpecializationInfo
     mapEntryCount::UInt32
     pMapEntries::Ptr{VkSpecializationMapEntry}
     dataSize::Csize_t
     pData::Ptr{Void}
 end
 
-immutable VkPipelineShaderStageCreateInfo
+struct VkPipelineShaderStageCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineShaderStageCreateFlags
@@ -1682,20 +1682,20 @@ immutable VkPipelineShaderStageCreateInfo
     pSpecializationInfo::Ptr{VkSpecializationInfo}
 end
 
-immutable VkVertexInputBindingDescription
+struct VkVertexInputBindingDescription
     binding::UInt32
     stride::UInt32
     inputRate::VkVertexInputRate
 end
 
-immutable VkVertexInputAttributeDescription
+struct VkVertexInputAttributeDescription
     location::UInt32
     binding::UInt32
     format::VkFormat
     offset::UInt32
 end
 
-immutable VkPipelineVertexInputStateCreateInfo
+struct VkPipelineVertexInputStateCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineVertexInputStateCreateFlags
@@ -1705,7 +1705,7 @@ immutable VkPipelineVertexInputStateCreateInfo
     pVertexAttributeDescriptions::Ptr{VkVertexInputAttributeDescription}
 end
 
-immutable VkPipelineInputAssemblyStateCreateInfo
+struct VkPipelineInputAssemblyStateCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineInputAssemblyStateCreateFlags
@@ -1713,14 +1713,14 @@ immutable VkPipelineInputAssemblyStateCreateInfo
     primitiveRestartEnable::VkBool32
 end
 
-immutable VkPipelineTessellationStateCreateInfo
+struct VkPipelineTessellationStateCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineTessellationStateCreateFlags
     patchControlPoints::UInt32
 end
 
-immutable VkViewport
+struct VkViewport
     x::Cfloat
     y::Cfloat
     width::Cfloat
@@ -1729,22 +1729,22 @@ immutable VkViewport
     maxDepth::Cfloat
 end
 
-immutable VkOffset2D
+struct VkOffset2D
     x::Int32
     y::Int32
 end
 
-immutable VkExtent2D
+struct VkExtent2D
     width::UInt32
     height::UInt32
 end
 
-immutable VkRect2D
+struct VkRect2D
     offset::VkOffset2D
     extent::VkExtent2D
 end
 
-immutable VkPipelineViewportStateCreateInfo
+struct VkPipelineViewportStateCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineViewportStateCreateFlags
@@ -1754,7 +1754,7 @@ immutable VkPipelineViewportStateCreateInfo
     pScissors::Ptr{VkRect2D}
 end
 
-immutable VkPipelineRasterizationStateCreateInfo
+struct VkPipelineRasterizationStateCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineRasterizationStateCreateFlags
@@ -1770,7 +1770,7 @@ immutable VkPipelineRasterizationStateCreateInfo
     lineWidth::Cfloat
 end
 
-immutable VkPipelineMultisampleStateCreateInfo
+struct VkPipelineMultisampleStateCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineMultisampleStateCreateFlags
@@ -1782,7 +1782,7 @@ immutable VkPipelineMultisampleStateCreateInfo
     alphaToOneEnable::VkBool32
 end
 
-immutable VkStencilOpState
+struct VkStencilOpState
     failOp::VkStencilOp
     passOp::VkStencilOp
     depthFailOp::VkStencilOp
@@ -1792,7 +1792,7 @@ immutable VkStencilOpState
     reference::UInt32
 end
 
-immutable VkPipelineDepthStencilStateCreateInfo
+struct VkPipelineDepthStencilStateCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineDepthStencilStateCreateFlags
@@ -1807,7 +1807,7 @@ immutable VkPipelineDepthStencilStateCreateInfo
     maxDepthBounds::Cfloat
 end
 
-immutable VkPipelineColorBlendAttachmentState
+struct VkPipelineColorBlendAttachmentState
     blendEnable::VkBool32
     srcColorBlendFactor::VkBlendFactor
     dstColorBlendFactor::VkBlendFactor
@@ -1818,7 +1818,7 @@ immutable VkPipelineColorBlendAttachmentState
     colorWriteMask::VkColorComponentFlags
 end
 
-immutable VkPipelineColorBlendStateCreateInfo
+struct VkPipelineColorBlendStateCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineColorBlendStateCreateFlags
@@ -1829,7 +1829,7 @@ immutable VkPipelineColorBlendStateCreateInfo
     blendConstants::NTuple{4,Cfloat}
 end
 
-immutable VkPipelineDynamicStateCreateInfo
+struct VkPipelineDynamicStateCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineDynamicStateCreateFlags
@@ -1837,7 +1837,7 @@ immutable VkPipelineDynamicStateCreateInfo
     pDynamicStates::Ptr{VkDynamicState}
 end
 
-immutable VkGraphicsPipelineCreateInfo
+struct VkGraphicsPipelineCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineCreateFlags
@@ -1859,7 +1859,7 @@ immutable VkGraphicsPipelineCreateInfo
     basePipelineIndex::Int32
 end
 
-immutable VkComputePipelineCreateInfo
+struct VkComputePipelineCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineCreateFlags
@@ -1869,13 +1869,13 @@ immutable VkComputePipelineCreateInfo
     basePipelineIndex::Int32
 end
 
-immutable VkPushConstantRange
+struct VkPushConstantRange
     stageFlags::VkShaderStageFlags
     offset::UInt32
     size::UInt32
 end
 
-immutable VkPipelineLayoutCreateInfo
+struct VkPipelineLayoutCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkPipelineLayoutCreateFlags
@@ -1885,7 +1885,7 @@ immutable VkPipelineLayoutCreateInfo
     pPushConstantRanges::Ptr{VkPushConstantRange}
 end
 
-immutable VkSamplerCreateInfo
+struct VkSamplerCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkSamplerCreateFlags
@@ -1906,7 +1906,7 @@ immutable VkSamplerCreateInfo
     unnormalizedCoordinates::VkBool32
 end
 
-immutable VkDescriptorSetLayoutBinding
+struct VkDescriptorSetLayoutBinding
     binding::UInt32
     descriptorType::VkDescriptorType
     descriptorCount::UInt32
@@ -1914,7 +1914,7 @@ immutable VkDescriptorSetLayoutBinding
     pImmutableSamplers::Ptr{VkSampler}
 end
 
-immutable VkDescriptorSetLayoutCreateInfo
+struct VkDescriptorSetLayoutCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkDescriptorSetLayoutCreateFlags
@@ -1922,12 +1922,12 @@ immutable VkDescriptorSetLayoutCreateInfo
     pBindings::Ptr{VkDescriptorSetLayoutBinding}
 end
 
-immutable VkDescriptorPoolSize
+struct VkDescriptorPoolSize
     _type::VkDescriptorType
     descriptorCount::UInt32
 end
 
-immutable VkDescriptorPoolCreateInfo
+struct VkDescriptorPoolCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkDescriptorPoolCreateFlags
@@ -1936,7 +1936,7 @@ immutable VkDescriptorPoolCreateInfo
     pPoolSizes::Ptr{VkDescriptorPoolSize}
 end
 
-immutable VkDescriptorSetAllocateInfo
+struct VkDescriptorSetAllocateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     descriptorPool::VkDescriptorPool
@@ -1944,19 +1944,19 @@ immutable VkDescriptorSetAllocateInfo
     pSetLayouts::Ptr{VkDescriptorSetLayout}
 end
 
-immutable VkDescriptorImageInfo
+struct VkDescriptorImageInfo
     sampler::VkSampler
     imageView::VkImageView
     imageLayout::VkImageLayout
 end
 
-immutable VkDescriptorBufferInfo
+struct VkDescriptorBufferInfo
     buffer::VkBuffer
     offset::VkDeviceSize
     range::VkDeviceSize
 end
 
-immutable VkWriteDescriptorSet
+struct VkWriteDescriptorSet
     sType::VkStructureType
     pNext::Ptr{Void}
     dstSet::VkDescriptorSet
@@ -1969,7 +1969,7 @@ immutable VkWriteDescriptorSet
     pTexelBufferView::Ptr{VkBufferView}
 end
 
-immutable VkCopyDescriptorSet
+struct VkCopyDescriptorSet
     sType::VkStructureType
     pNext::Ptr{Void}
     srcSet::VkDescriptorSet
@@ -1981,7 +1981,7 @@ immutable VkCopyDescriptorSet
     descriptorCount::UInt32
 end
 
-immutable VkFramebufferCreateInfo
+struct VkFramebufferCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkFramebufferCreateFlags
@@ -1993,7 +1993,7 @@ immutable VkFramebufferCreateInfo
     layers::UInt32
 end
 
-immutable VkAttachmentDescription
+struct VkAttachmentDescription
     flags::VkAttachmentDescriptionFlags
     format::VkFormat
     samples::VkSampleCountFlagBits
@@ -2005,12 +2005,12 @@ immutable VkAttachmentDescription
     finalLayout::VkImageLayout
 end
 
-immutable VkAttachmentReference
+struct VkAttachmentReference
     attachment::UInt32
     layout::VkImageLayout
 end
 
-immutable VkSubpassDescription
+struct VkSubpassDescription
     flags::VkSubpassDescriptionFlags
     pipelineBindPoint::VkPipelineBindPoint
     inputAttachmentCount::UInt32
@@ -2023,7 +2023,7 @@ immutable VkSubpassDescription
     pPreserveAttachments::Ptr{UInt32}
 end
 
-immutable VkSubpassDependency
+struct VkSubpassDependency
     srcSubpass::UInt32
     dstSubpass::UInt32
     srcStageMask::VkPipelineStageFlags
@@ -2033,7 +2033,7 @@ immutable VkSubpassDependency
     dependencyFlags::VkDependencyFlags
 end
 
-immutable VkRenderPassCreateInfo
+struct VkRenderPassCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkRenderPassCreateFlags
@@ -2045,14 +2045,14 @@ immutable VkRenderPassCreateInfo
     pDependencies::Ptr{VkSubpassDependency}
 end
 
-immutable VkCommandPoolCreateInfo
+struct VkCommandPoolCreateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkCommandPoolCreateFlags
     queueFamilyIndex::UInt32
 end
 
-immutable VkCommandBufferAllocateInfo
+struct VkCommandBufferAllocateInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     commandPool::VkCommandPool
@@ -2060,7 +2060,7 @@ immutable VkCommandBufferAllocateInfo
     commandBufferCount::UInt32
 end
 
-immutable VkCommandBufferInheritanceInfo
+struct VkCommandBufferInheritanceInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     renderPass::VkRenderPass
@@ -2071,27 +2071,27 @@ immutable VkCommandBufferInheritanceInfo
     pipelineStatistics::VkQueryPipelineStatisticFlags
 end
 
-immutable VkCommandBufferBeginInfo
+struct VkCommandBufferBeginInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkCommandBufferUsageFlags
     pInheritanceInfo::Ptr{VkCommandBufferInheritanceInfo}
 end
 
-immutable VkBufferCopy
+struct VkBufferCopy
     srcOffset::VkDeviceSize
     dstOffset::VkDeviceSize
     size::VkDeviceSize
 end
 
-immutable VkImageSubresourceLayers
+struct VkImageSubresourceLayers
     aspectMask::VkImageAspectFlags
     mipLevel::UInt32
     baseArrayLayer::UInt32
     layerCount::UInt32
 end
 
-immutable VkImageCopy
+struct VkImageCopy
     srcSubresource::VkImageSubresourceLayers
     srcOffset::VkOffset3D
     dstSubresource::VkImageSubresourceLayers
@@ -2099,14 +2099,14 @@ immutable VkImageCopy
     extent::VkExtent3D
 end
 
-immutable VkImageBlit
+struct VkImageBlit
     srcSubresource::VkImageSubresourceLayers
     srcOffsets::NTuple{2,VkOffset3D}
     dstSubresource::VkImageSubresourceLayers
     dstOffsets::NTuple{2,VkOffset3D}
 end
 
-immutable VkBufferImageCopy
+struct VkBufferImageCopy
     bufferOffset::VkDeviceSize
     bufferRowLength::UInt32
     bufferImageHeight::UInt32
@@ -2115,32 +2115,32 @@ immutable VkBufferImageCopy
     imageExtent::VkExtent3D
 end
 
-immutable VkClearColorValue
+struct VkClearColorValue
     _VkClearColorValue::NTuple{4,Cfloat}
 end
 
-immutable VkClearDepthStencilValue
+struct VkClearDepthStencilValue
     depth::Cfloat
     stencil::UInt32
 end
 
-immutable VkClearValue
+struct VkClearValue
     _VkClearValue::VkClearColorValue
 end
 
-immutable VkClearAttachment
+struct VkClearAttachment
     aspectMask::VkImageAspectFlags
     colorAttachment::UInt32
     clearValue::VkClearValue
 end
 
-immutable VkClearRect
+struct VkClearRect
     rect::VkRect2D
     baseArrayLayer::UInt32
     layerCount::UInt32
 end
 
-immutable VkImageResolve
+struct VkImageResolve
     srcSubresource::VkImageSubresourceLayers
     srcOffset::VkOffset3D
     dstSubresource::VkImageSubresourceLayers
@@ -2148,14 +2148,14 @@ immutable VkImageResolve
     extent::VkExtent3D
 end
 
-immutable VkMemoryBarrier
+struct VkMemoryBarrier
     sType::VkStructureType
     pNext::Ptr{Void}
     srcAccessMask::VkAccessFlags
     dstAccessMask::VkAccessFlags
 end
 
-immutable VkBufferMemoryBarrier
+struct VkBufferMemoryBarrier
     sType::VkStructureType
     pNext::Ptr{Void}
     srcAccessMask::VkAccessFlags
@@ -2167,7 +2167,7 @@ immutable VkBufferMemoryBarrier
     size::VkDeviceSize
 end
 
-immutable VkImageMemoryBarrier
+struct VkImageMemoryBarrier
     sType::VkStructureType
     pNext::Ptr{Void}
     srcAccessMask::VkAccessFlags
@@ -2180,7 +2180,7 @@ immutable VkImageMemoryBarrier
     subresourceRange::VkImageSubresourceRange
 end
 
-immutable VkRenderPassBeginInfo
+struct VkRenderPassBeginInfo
     sType::VkStructureType
     pNext::Ptr{Void}
     renderPass::VkRenderPass
@@ -2190,13 +2190,13 @@ immutable VkRenderPassBeginInfo
     pClearValues::Ptr{VkClearValue}
 end
 
-immutable VkDispatchIndirectCommand
+struct VkDispatchIndirectCommand
     x::UInt32
     y::UInt32
     z::UInt32
 end
 
-immutable VkDrawIndexedIndirectCommand
+struct VkDrawIndexedIndirectCommand
     indexCount::UInt32
     instanceCount::UInt32
     firstIndex::UInt32
@@ -2204,152 +2204,152 @@ immutable VkDrawIndexedIndirectCommand
     firstInstance::UInt32
 end
 
-immutable VkDrawIndirectCommand
+struct VkDrawIndirectCommand
     vertexCount::UInt32
     instanceCount::UInt32
     firstVertex::UInt32
     firstInstance::UInt32
 end
 
-typealias PFN_vkCreateInstance Ptr{Void}
-typealias PFN_vkDestroyInstance Ptr{Void}
-typealias PFN_vkEnumeratePhysicalDevices Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceFeatures Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceFormatProperties Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceImageFormatProperties Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceProperties Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceQueueFamilyProperties Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceMemoryProperties Ptr{Void}
-typealias PFN_vkGetInstanceProcAddr Ptr{Void}
-typealias PFN_vkGetDeviceProcAddr Ptr{Void}
-typealias PFN_vkCreateDevice Ptr{Void}
-typealias PFN_vkDestroyDevice Ptr{Void}
-typealias PFN_vkEnumerateInstanceExtensionProperties Ptr{Void}
-typealias PFN_vkEnumerateDeviceExtensionProperties Ptr{Void}
-typealias PFN_vkEnumerateInstanceLayerProperties Ptr{Void}
-typealias PFN_vkEnumerateDeviceLayerProperties Ptr{Void}
-typealias PFN_vkGetDeviceQueue Ptr{Void}
-typealias PFN_vkQueueSubmit Ptr{Void}
-typealias PFN_vkQueueWaitIdle Ptr{Void}
-typealias PFN_vkDeviceWaitIdle Ptr{Void}
-typealias PFN_vkAllocateMemory Ptr{Void}
-typealias PFN_vkFreeMemory Ptr{Void}
-typealias PFN_vkMapMemory Ptr{Void}
-typealias PFN_vkUnmapMemory Ptr{Void}
-typealias PFN_vkFlushMappedMemoryRanges Ptr{Void}
-typealias PFN_vkInvalidateMappedMemoryRanges Ptr{Void}
-typealias PFN_vkGetDeviceMemoryCommitment Ptr{Void}
-typealias PFN_vkBindBufferMemory Ptr{Void}
-typealias PFN_vkBindImageMemory Ptr{Void}
-typealias PFN_vkGetBufferMemoryRequirements Ptr{Void}
-typealias PFN_vkGetImageMemoryRequirements Ptr{Void}
-typealias PFN_vkGetImageSparseMemoryRequirements Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceSparseImageFormatProperties Ptr{Void}
-typealias PFN_vkQueueBindSparse Ptr{Void}
-typealias PFN_vkCreateFence Ptr{Void}
-typealias PFN_vkDestroyFence Ptr{Void}
-typealias PFN_vkResetFences Ptr{Void}
-typealias PFN_vkGetFenceStatus Ptr{Void}
-typealias PFN_vkWaitForFences Ptr{Void}
-typealias PFN_vkCreateSemaphore Ptr{Void}
-typealias PFN_vkDestroySemaphore Ptr{Void}
-typealias PFN_vkCreateEvent Ptr{Void}
-typealias PFN_vkDestroyEvent Ptr{Void}
-typealias PFN_vkGetEventStatus Ptr{Void}
-typealias PFN_vkSetEvent Ptr{Void}
-typealias PFN_vkResetEvent Ptr{Void}
-typealias PFN_vkCreateQueryPool Ptr{Void}
-typealias PFN_vkDestroyQueryPool Ptr{Void}
-typealias PFN_vkGetQueryPoolResults Ptr{Void}
-typealias PFN_vkCreateBuffer Ptr{Void}
-typealias PFN_vkDestroyBuffer Ptr{Void}
-typealias PFN_vkCreateBufferView Ptr{Void}
-typealias PFN_vkDestroyBufferView Ptr{Void}
-typealias PFN_vkCreateImage Ptr{Void}
-typealias PFN_vkDestroyImage Ptr{Void}
-typealias PFN_vkGetImageSubresourceLayout Ptr{Void}
-typealias PFN_vkCreateImageView Ptr{Void}
-typealias PFN_vkDestroyImageView Ptr{Void}
-typealias PFN_vkCreateShaderModule Ptr{Void}
-typealias PFN_vkDestroyShaderModule Ptr{Void}
-typealias PFN_vkCreatePipelineCache Ptr{Void}
-typealias PFN_vkDestroyPipelineCache Ptr{Void}
-typealias PFN_vkGetPipelineCacheData Ptr{Void}
-typealias PFN_vkMergePipelineCaches Ptr{Void}
-typealias PFN_vkCreateGraphicsPipelines Ptr{Void}
-typealias PFN_vkCreateComputePipelines Ptr{Void}
-typealias PFN_vkDestroyPipeline Ptr{Void}
-typealias PFN_vkCreatePipelineLayout Ptr{Void}
-typealias PFN_vkDestroyPipelineLayout Ptr{Void}
-typealias PFN_vkCreateSampler Ptr{Void}
-typealias PFN_vkDestroySampler Ptr{Void}
-typealias PFN_vkCreateDescriptorSetLayout Ptr{Void}
-typealias PFN_vkDestroyDescriptorSetLayout Ptr{Void}
-typealias PFN_vkCreateDescriptorPool Ptr{Void}
-typealias PFN_vkDestroyDescriptorPool Ptr{Void}
-typealias PFN_vkResetDescriptorPool Ptr{Void}
-typealias PFN_vkAllocateDescriptorSets Ptr{Void}
-typealias PFN_vkFreeDescriptorSets Ptr{Void}
-typealias PFN_vkUpdateDescriptorSets Ptr{Void}
-typealias PFN_vkCreateFramebuffer Ptr{Void}
-typealias PFN_vkDestroyFramebuffer Ptr{Void}
-typealias PFN_vkCreateRenderPass Ptr{Void}
-typealias PFN_vkDestroyRenderPass Ptr{Void}
-typealias PFN_vkGetRenderAreaGranularity Ptr{Void}
-typealias PFN_vkCreateCommandPool Ptr{Void}
-typealias PFN_vkDestroyCommandPool Ptr{Void}
-typealias PFN_vkResetCommandPool Ptr{Void}
-typealias PFN_vkAllocateCommandBuffers Ptr{Void}
-typealias PFN_vkFreeCommandBuffers Ptr{Void}
-typealias PFN_vkBeginCommandBuffer Ptr{Void}
-typealias PFN_vkEndCommandBuffer Ptr{Void}
-typealias PFN_vkResetCommandBuffer Ptr{Void}
-typealias PFN_vkCmdBindPipeline Ptr{Void}
-typealias PFN_vkCmdSetViewport Ptr{Void}
-typealias PFN_vkCmdSetScissor Ptr{Void}
-typealias PFN_vkCmdSetLineWidth Ptr{Void}
-typealias PFN_vkCmdSetDepthBias Ptr{Void}
-typealias PFN_vkCmdSetBlendConstants Ptr{Void}
-typealias PFN_vkCmdSetDepthBounds Ptr{Void}
-typealias PFN_vkCmdSetStencilCompareMask Ptr{Void}
-typealias PFN_vkCmdSetStencilWriteMask Ptr{Void}
-typealias PFN_vkCmdSetStencilReference Ptr{Void}
-typealias PFN_vkCmdBindDescriptorSets Ptr{Void}
-typealias PFN_vkCmdBindIndexBuffer Ptr{Void}
-typealias PFN_vkCmdBindVertexBuffers Ptr{Void}
-typealias PFN_vkCmdDraw Ptr{Void}
-typealias PFN_vkCmdDrawIndexed Ptr{Void}
-typealias PFN_vkCmdDrawIndirect Ptr{Void}
-typealias PFN_vkCmdDrawIndexedIndirect Ptr{Void}
-typealias PFN_vkCmdDispatch Ptr{Void}
-typealias PFN_vkCmdDispatchIndirect Ptr{Void}
-typealias PFN_vkCmdCopyBuffer Ptr{Void}
-typealias PFN_vkCmdCopyImage Ptr{Void}
-typealias PFN_vkCmdBlitImage Ptr{Void}
-typealias PFN_vkCmdCopyBufferToImage Ptr{Void}
-typealias PFN_vkCmdCopyImageToBuffer Ptr{Void}
-typealias PFN_vkCmdUpdateBuffer Ptr{Void}
-typealias PFN_vkCmdFillBuffer Ptr{Void}
-typealias PFN_vkCmdClearColorImage Ptr{Void}
-typealias PFN_vkCmdClearDepthStencilImage Ptr{Void}
-typealias PFN_vkCmdClearAttachments Ptr{Void}
-typealias PFN_vkCmdResolveImage Ptr{Void}
-typealias PFN_vkCmdSetEvent Ptr{Void}
-typealias PFN_vkCmdResetEvent Ptr{Void}
-typealias PFN_vkCmdWaitEvents Ptr{Void}
-typealias PFN_vkCmdPipelineBarrier Ptr{Void}
-typealias PFN_vkCmdBeginQuery Ptr{Void}
-typealias PFN_vkCmdEndQuery Ptr{Void}
-typealias PFN_vkCmdResetQueryPool Ptr{Void}
-typealias PFN_vkCmdWriteTimestamp Ptr{Void}
-typealias PFN_vkCmdCopyQueryPoolResults Ptr{Void}
-typealias PFN_vkCmdPushConstants Ptr{Void}
-typealias PFN_vkCmdBeginRenderPass Ptr{Void}
-typealias PFN_vkCmdNextSubpass Ptr{Void}
-typealias PFN_vkCmdEndRenderPass Ptr{Void}
-typealias PFN_vkCmdExecuteCommands Ptr{Void}
-typealias VkSurfaceKHR_T Void
-typealias VkSurfaceKHR Ptr{VkSurfaceKHR_T}
+const PFN_vkCreateInstance = Ptr{Void}
+const PFN_vkDestroyInstance = Ptr{Void}
+const PFN_vkEnumeratePhysicalDevices = Ptr{Void}
+const PFN_vkGetPhysicalDeviceFeatures = Ptr{Void}
+const PFN_vkGetPhysicalDeviceFormatProperties = Ptr{Void}
+const PFN_vkGetPhysicalDeviceImageFormatProperties = Ptr{Void}
+const PFN_vkGetPhysicalDeviceProperties = Ptr{Void}
+const PFN_vkGetPhysicalDeviceQueueFamilyProperties = Ptr{Void}
+const PFN_vkGetPhysicalDeviceMemoryProperties = Ptr{Void}
+const PFN_vkGetInstanceProcAddr = Ptr{Void}
+const PFN_vkGetDeviceProcAddr = Ptr{Void}
+const PFN_vkCreateDevice = Ptr{Void}
+const PFN_vkDestroyDevice = Ptr{Void}
+const PFN_vkEnumerateInstanceExtensionProperties = Ptr{Void}
+const PFN_vkEnumerateDeviceExtensionProperties = Ptr{Void}
+const PFN_vkEnumerateInstanceLayerProperties = Ptr{Void}
+const PFN_vkEnumerateDeviceLayerProperties = Ptr{Void}
+const PFN_vkGetDeviceQueue = Ptr{Void}
+const PFN_vkQueueSubmit = Ptr{Void}
+const PFN_vkQueueWaitIdle = Ptr{Void}
+const PFN_vkDeviceWaitIdle = Ptr{Void}
+const PFN_vkAllocateMemory = Ptr{Void}
+const PFN_vkFreeMemory = Ptr{Void}
+const PFN_vkMapMemory = Ptr{Void}
+const PFN_vkUnmapMemory = Ptr{Void}
+const PFN_vkFlushMappedMemoryRanges = Ptr{Void}
+const PFN_vkInvalidateMappedMemoryRanges = Ptr{Void}
+const PFN_vkGetDeviceMemoryCommitment = Ptr{Void}
+const PFN_vkBindBufferMemory = Ptr{Void}
+const PFN_vkBindImageMemory = Ptr{Void}
+const PFN_vkGetBufferMemoryRequirements = Ptr{Void}
+const PFN_vkGetImageMemoryRequirements = Ptr{Void}
+const PFN_vkGetImageSparseMemoryRequirements = Ptr{Void}
+const PFN_vkGetPhysicalDeviceSparseImageFormatProperties = Ptr{Void}
+const PFN_vkQueueBindSparse = Ptr{Void}
+const PFN_vkCreateFence = Ptr{Void}
+const PFN_vkDestroyFence = Ptr{Void}
+const PFN_vkResetFences = Ptr{Void}
+const PFN_vkGetFenceStatus = Ptr{Void}
+const PFN_vkWaitForFences = Ptr{Void}
+const PFN_vkCreateSemaphore = Ptr{Void}
+const PFN_vkDestroySemaphore = Ptr{Void}
+const PFN_vkCreateEvent = Ptr{Void}
+const PFN_vkDestroyEvent = Ptr{Void}
+const PFN_vkGetEventStatus = Ptr{Void}
+const PFN_vkSetEvent = Ptr{Void}
+const PFN_vkResetEvent = Ptr{Void}
+const PFN_vkCreateQueryPool = Ptr{Void}
+const PFN_vkDestroyQueryPool = Ptr{Void}
+const PFN_vkGetQueryPoolResults = Ptr{Void}
+const PFN_vkCreateBuffer = Ptr{Void}
+const PFN_vkDestroyBuffer = Ptr{Void}
+const PFN_vkCreateBufferView = Ptr{Void}
+const PFN_vkDestroyBufferView = Ptr{Void}
+const PFN_vkCreateImage = Ptr{Void}
+const PFN_vkDestroyImage = Ptr{Void}
+const PFN_vkGetImageSubresourceLayout = Ptr{Void}
+const PFN_vkCreateImageView = Ptr{Void}
+const PFN_vkDestroyImageView = Ptr{Void}
+const PFN_vkCreateShaderModule = Ptr{Void}
+const PFN_vkDestroyShaderModule = Ptr{Void}
+const PFN_vkCreatePipelineCache = Ptr{Void}
+const PFN_vkDestroyPipelineCache = Ptr{Void}
+const PFN_vkGetPipelineCacheData = Ptr{Void}
+const PFN_vkMergePipelineCaches = Ptr{Void}
+const PFN_vkCreateGraphicsPipelines = Ptr{Void}
+const PFN_vkCreateComputePipelines = Ptr{Void}
+const PFN_vkDestroyPipeline = Ptr{Void}
+const PFN_vkCreatePipelineLayout = Ptr{Void}
+const PFN_vkDestroyPipelineLayout = Ptr{Void}
+const PFN_vkCreateSampler = Ptr{Void}
+const PFN_vkDestroySampler = Ptr{Void}
+const PFN_vkCreateDescriptorSetLayout = Ptr{Void}
+const PFN_vkDestroyDescriptorSetLayout = Ptr{Void}
+const PFN_vkCreateDescriptorPool = Ptr{Void}
+const PFN_vkDestroyDescriptorPool = Ptr{Void}
+const PFN_vkResetDescriptorPool = Ptr{Void}
+const PFN_vkAllocateDescriptorSets = Ptr{Void}
+const PFN_vkFreeDescriptorSets = Ptr{Void}
+const PFN_vkUpdateDescriptorSets = Ptr{Void}
+const PFN_vkCreateFramebuffer = Ptr{Void}
+const PFN_vkDestroyFramebuffer = Ptr{Void}
+const PFN_vkCreateRenderPass = Ptr{Void}
+const PFN_vkDestroyRenderPass = Ptr{Void}
+const PFN_vkGetRenderAreaGranularity = Ptr{Void}
+const PFN_vkCreateCommandPool = Ptr{Void}
+const PFN_vkDestroyCommandPool = Ptr{Void}
+const PFN_vkResetCommandPool = Ptr{Void}
+const PFN_vkAllocateCommandBuffers = Ptr{Void}
+const PFN_vkFreeCommandBuffers = Ptr{Void}
+const PFN_vkBeginCommandBuffer = Ptr{Void}
+const PFN_vkEndCommandBuffer = Ptr{Void}
+const PFN_vkResetCommandBuffer = Ptr{Void}
+const PFN_vkCmdBindPipeline = Ptr{Void}
+const PFN_vkCmdSetViewport = Ptr{Void}
+const PFN_vkCmdSetScissor = Ptr{Void}
+const PFN_vkCmdSetLineWidth = Ptr{Void}
+const PFN_vkCmdSetDepthBias = Ptr{Void}
+const PFN_vkCmdSetBlendConstants = Ptr{Void}
+const PFN_vkCmdSetDepthBounds = Ptr{Void}
+const PFN_vkCmdSetStencilCompareMask = Ptr{Void}
+const PFN_vkCmdSetStencilWriteMask = Ptr{Void}
+const PFN_vkCmdSetStencilReference = Ptr{Void}
+const PFN_vkCmdBindDescriptorSets = Ptr{Void}
+const PFN_vkCmdBindIndexBuffer = Ptr{Void}
+const PFN_vkCmdBindVertexBuffers = Ptr{Void}
+const PFN_vkCmdDraw = Ptr{Void}
+const PFN_vkCmdDrawIndexed = Ptr{Void}
+const PFN_vkCmdDrawIndirect = Ptr{Void}
+const PFN_vkCmdDrawIndexedIndirect = Ptr{Void}
+const PFN_vkCmdDispatch = Ptr{Void}
+const PFN_vkCmdDispatchIndirect = Ptr{Void}
+const PFN_vkCmdCopyBuffer = Ptr{Void}
+const PFN_vkCmdCopyImage = Ptr{Void}
+const PFN_vkCmdBlitImage = Ptr{Void}
+const PFN_vkCmdCopyBufferToImage = Ptr{Void}
+const PFN_vkCmdCopyImageToBuffer = Ptr{Void}
+const PFN_vkCmdUpdateBuffer = Ptr{Void}
+const PFN_vkCmdFillBuffer = Ptr{Void}
+const PFN_vkCmdClearColorImage = Ptr{Void}
+const PFN_vkCmdClearDepthStencilImage = Ptr{Void}
+const PFN_vkCmdClearAttachments = Ptr{Void}
+const PFN_vkCmdResolveImage = Ptr{Void}
+const PFN_vkCmdSetEvent = Ptr{Void}
+const PFN_vkCmdResetEvent = Ptr{Void}
+const PFN_vkCmdWaitEvents = Ptr{Void}
+const PFN_vkCmdPipelineBarrier = Ptr{Void}
+const PFN_vkCmdBeginQuery = Ptr{Void}
+const PFN_vkCmdEndQuery = Ptr{Void}
+const PFN_vkCmdResetQueryPool = Ptr{Void}
+const PFN_vkCmdWriteTimestamp = Ptr{Void}
+const PFN_vkCmdCopyQueryPoolResults = Ptr{Void}
+const PFN_vkCmdPushConstants = Ptr{Void}
+const PFN_vkCmdBeginRenderPass = Ptr{Void}
+const PFN_vkCmdNextSubpass = Ptr{Void}
+const PFN_vkCmdEndRenderPass = Ptr{Void}
+const PFN_vkCmdExecuteCommands = Ptr{Void}
+const VkSurfaceKHR_T = Void
+const VkSurfaceKHR = Ptr{VkSurfaceKHR_T}
 
 @cenum(VkColorSpaceKHR,
     VK_COLORSPACE_SRGB_NONLINEAR_KHR = 0,
@@ -2381,7 +2381,7 @@ typealias VkSurfaceKHR Ptr{VkSurfaceKHR_T}
     VK_SURFACE_TRANSFORM_FLAG_BITS_MAX_ENUM_KHR = 2147483647,
 )
 
-typealias VkSurfaceTransformFlagsKHR VkFlags
+const VkSurfaceTransformFlagsKHR = VkFlags
 
 @cenum(VkCompositeAlphaFlagBitsKHR,
     VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR = 1,
@@ -2391,9 +2391,9 @@ typealias VkSurfaceTransformFlagsKHR VkFlags
     VK_COMPOSITE_ALPHA_FLAG_BITS_MAX_ENUM_KHR = 2147483647,
 )
 
-typealias VkCompositeAlphaFlagsKHR VkFlags
+const VkCompositeAlphaFlagsKHR = VkFlags
 
-immutable VkSurfaceCapabilitiesKHR
+struct VkSurfaceCapabilitiesKHR
     minImageCount::UInt32
     maxImageCount::UInt32
     currentExtent::VkExtent2D
@@ -2406,21 +2406,21 @@ immutable VkSurfaceCapabilitiesKHR
     supportedUsageFlags::VkImageUsageFlags
 end
 
-immutable VkSurfaceFormatKHR
+struct VkSurfaceFormatKHR
     format::VkFormat
     colorSpace::VkColorSpaceKHR
 end
 
-typealias PFN_vkDestroySurfaceKHR Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceSurfaceSupportKHR Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceSurfaceFormatsKHR Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceSurfacePresentModesKHR Ptr{Void}
-typealias VkSwapchainKHR_T Void
-typealias VkSwapchainKHR Ptr{VkSwapchainKHR_T}
-typealias VkSwapchainCreateFlagsKHR VkFlags
+const PFN_vkDestroySurfaceKHR = Ptr{Void}
+const PFN_vkGetPhysicalDeviceSurfaceSupportKHR = Ptr{Void}
+const PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR = Ptr{Void}
+const PFN_vkGetPhysicalDeviceSurfaceFormatsKHR = Ptr{Void}
+const PFN_vkGetPhysicalDeviceSurfacePresentModesKHR = Ptr{Void}
+const VkSwapchainKHR_T = Void
+const VkSwapchainKHR = Ptr{VkSwapchainKHR_T}
+const VkSwapchainCreateFlagsKHR = VkFlags
 
-immutable VkSwapchainCreateInfoKHR
+struct VkSwapchainCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkSwapchainCreateFlagsKHR
@@ -2441,7 +2441,7 @@ immutable VkSwapchainCreateInfoKHR
     oldSwapchain::VkSwapchainKHR
 end
 
-immutable VkPresentInfoKHR
+struct VkPresentInfoKHR
     sType::VkStructureType
     pNext::Ptr{Void}
     waitSemaphoreCount::UInt32
@@ -2452,15 +2452,15 @@ immutable VkPresentInfoKHR
     pResults::Ptr{VkResult}
 end
 
-typealias PFN_vkCreateSwapchainKHR Ptr{Void}
-typealias PFN_vkDestroySwapchainKHR Ptr{Void}
-typealias PFN_vkGetSwapchainImagesKHR Ptr{Void}
-typealias PFN_vkAcquireNextImageKHR Ptr{Void}
-typealias PFN_vkQueuePresentKHR Ptr{Void}
-typealias VkDisplayKHR_T Void
-typealias VkDisplayKHR Ptr{VkDisplayKHR_T}
-typealias VkDisplayModeKHR_T Void
-typealias VkDisplayModeKHR Ptr{VkDisplayModeKHR_T}
+const PFN_vkCreateSwapchainKHR = Ptr{Void}
+const PFN_vkDestroySwapchainKHR = Ptr{Void}
+const PFN_vkGetSwapchainImagesKHR = Ptr{Void}
+const PFN_vkAcquireNextImageKHR = Ptr{Void}
+const PFN_vkQueuePresentKHR = Ptr{Void}
+const VkDisplayKHR_T = Void
+const VkDisplayKHR = Ptr{VkDisplayKHR_T}
+const VkDisplayModeKHR_T = Void
+const VkDisplayModeKHR = Ptr{VkDisplayModeKHR_T}
 
 @cenum(VkDisplayPlaneAlphaFlagBitsKHR,
     VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR = 1,
@@ -2470,11 +2470,11 @@ typealias VkDisplayModeKHR Ptr{VkDisplayModeKHR_T}
     VK_DISPLAY_PLANE_ALPHA_FLAG_BITS_MAX_ENUM_KHR = 2147483647,
 )
 
-typealias VkDisplayPlaneAlphaFlagsKHR VkFlags
-typealias VkDisplayModeCreateFlagsKHR VkFlags
-typealias VkDisplaySurfaceCreateFlagsKHR VkFlags
+const VkDisplayPlaneAlphaFlagsKHR = VkFlags
+const VkDisplayModeCreateFlagsKHR = VkFlags
+const VkDisplaySurfaceCreateFlagsKHR = VkFlags
 
-immutable VkDisplayPropertiesKHR
+struct VkDisplayPropertiesKHR
     display::VkDisplayKHR
     displayName::Cstring
     physicalDimensions::VkExtent2D
@@ -2484,24 +2484,24 @@ immutable VkDisplayPropertiesKHR
     persistentContent::VkBool32
 end
 
-immutable VkDisplayModeParametersKHR
+struct VkDisplayModeParametersKHR
     visibleRegion::VkExtent2D
     refreshRate::UInt32
 end
 
-immutable VkDisplayModePropertiesKHR
+struct VkDisplayModePropertiesKHR
     displayMode::VkDisplayModeKHR
     parameters::VkDisplayModeParametersKHR
 end
 
-immutable VkDisplayModeCreateInfoKHR
+struct VkDisplayModeCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkDisplayModeCreateFlagsKHR
     parameters::VkDisplayModeParametersKHR
 end
 
-immutable VkDisplayPlaneCapabilitiesKHR
+struct VkDisplayPlaneCapabilitiesKHR
     supportedAlpha::VkDisplayPlaneAlphaFlagsKHR
     minSrcPosition::VkOffset2D
     maxSrcPosition::VkOffset2D
@@ -2513,12 +2513,12 @@ immutable VkDisplayPlaneCapabilitiesKHR
     maxDstExtent::VkExtent2D
 end
 
-immutable VkDisplayPlanePropertiesKHR
+struct VkDisplayPlanePropertiesKHR
     currentDisplay::VkDisplayKHR
     currentStackIndex::UInt32
 end
 
-immutable VkDisplaySurfaceCreateInfoKHR
+struct VkDisplaySurfaceCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkDisplaySurfaceCreateFlagsKHR
@@ -2531,15 +2531,15 @@ immutable VkDisplaySurfaceCreateInfoKHR
     imageExtent::VkExtent2D
 end
 
-typealias PFN_vkGetPhysicalDeviceDisplayPropertiesKHR Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR Ptr{Void}
-typealias PFN_vkGetDisplayPlaneSupportedDisplaysKHR Ptr{Void}
-typealias PFN_vkGetDisplayModePropertiesKHR Ptr{Void}
-typealias PFN_vkCreateDisplayModeKHR Ptr{Void}
-typealias PFN_vkGetDisplayPlaneCapabilitiesKHR Ptr{Void}
-typealias PFN_vkCreateDisplayPlaneSurfaceKHR Ptr{Void}
+const PFN_vkGetPhysicalDeviceDisplayPropertiesKHR = Ptr{Void}
+const PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR = Ptr{Void}
+const PFN_vkGetDisplayPlaneSupportedDisplaysKHR = Ptr{Void}
+const PFN_vkGetDisplayModePropertiesKHR = Ptr{Void}
+const PFN_vkCreateDisplayModeKHR = Ptr{Void}
+const PFN_vkGetDisplayPlaneCapabilitiesKHR = Ptr{Void}
+const PFN_vkCreateDisplayPlaneSurfaceKHR = Ptr{Void}
 
-immutable VkDisplayPresentInfoKHR
+struct VkDisplayPresentInfoKHR
     sType::VkStructureType
     pNext::Ptr{Void}
     srcRect::VkRect2D
@@ -2547,10 +2547,10 @@ immutable VkDisplayPresentInfoKHR
     persistent::VkBool32
 end
 
-typealias PFN_vkCreateSharedSwapchainsKHR Ptr{Void}
-typealias VkXcbSurfaceCreateFlagsKHR VkFlags
+const PFN_vkCreateSharedSwapchainsKHR = Ptr{Void}
+const VkXcbSurfaceCreateFlagsKHR = VkFlags
 
-immutable VkXcbSurfaceCreateInfoKHR
+struct VkXcbSurfaceCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkXcbSurfaceCreateFlagsKHR
@@ -2558,11 +2558,11 @@ immutable VkXcbSurfaceCreateInfoKHR
     window::xcb_window_t
 end
 
-typealias PFN_vkCreateXcbSurfaceKHR Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR Ptr{Void}
-typealias VkWaylandSurfaceCreateFlagsKHR VkFlags
+const PFN_vkCreateXcbSurfaceKHR = Ptr{Void}
+const PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR = Ptr{Void}
+const VkWaylandSurfaceCreateFlagsKHR = VkFlags
 
-immutable VkWaylandSurfaceCreateInfoKHR
+struct VkWaylandSurfaceCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkWaylandSurfaceCreateFlagsKHR
@@ -2570,11 +2570,11 @@ immutable VkWaylandSurfaceCreateInfoKHR
     surface::Ptr{wl_surface}
 end
 
-typealias PFN_vkCreateWaylandSurfaceKHR Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR Ptr{Void}
-typealias VkMirSurfaceCreateFlagsKHR VkFlags
+const PFN_vkCreateWaylandSurfaceKHR = Ptr{Void}
+const PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR = Ptr{Void}
+const VkMirSurfaceCreateFlagsKHR = VkFlags
 
-immutable VkMirSurfaceCreateInfoKHR
+struct VkMirSurfaceCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkMirSurfaceCreateFlagsKHR
@@ -2582,11 +2582,11 @@ immutable VkMirSurfaceCreateInfoKHR
     mirSurface::Ptr{Cint}
 end
 
-typealias PFN_vkCreateMirSurfaceKHR Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceMirPresentationSupportKHR Ptr{Void}
-typealias VkWin32SurfaceCreateFlagsKHR VkFlags
+const PFN_vkCreateMirSurfaceKHR = Ptr{Void}
+const PFN_vkGetPhysicalDeviceMirPresentationSupportKHR = Ptr{Void}
+const VkWin32SurfaceCreateFlagsKHR = VkFlags
 
-immutable VkWin32SurfaceCreateInfoKHR
+struct VkWin32SurfaceCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkWin32SurfaceCreateFlagsKHR
@@ -2594,10 +2594,10 @@ immutable VkWin32SurfaceCreateInfoKHR
     hwnd::Cint
 end
 
-typealias PFN_vkCreateWin32SurfaceKHR Ptr{Void}
-typealias PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR Ptr{Void}
-typealias VkDebugReportCallbackEXT_T Void
-typealias VkDebugReportCallbackEXT Ptr{VkDebugReportCallbackEXT_T}
+const PFN_vkCreateWin32SurfaceKHR = Ptr{Void}
+const PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR = Ptr{Void}
+const VkDebugReportCallbackEXT_T = Void
+const VkDebugReportCallbackEXT = Ptr{VkDebugReportCallbackEXT_T}
 
 @cenum(VkDebugReportObjectTypeEXT,
     VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT = 0,
@@ -2651,10 +2651,10 @@ typealias VkDebugReportCallbackEXT Ptr{VkDebugReportCallbackEXT_T}
     VK_DEBUG_REPORT_FLAG_BITS_MAX_ENUM_EXT = 2147483647,
 )
 
-typealias VkDebugReportFlagsEXT VkFlags
-typealias PFN_vkDebugReportCallbackEXT Ptr{Void}
+const VkDebugReportFlagsEXT = VkFlags
+const PFN_vkDebugReportCallbackEXT = Ptr{Void}
 
-immutable VkDebugReportCallbackCreateInfoEXT
+struct VkDebugReportCallbackCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Void}
     flags::VkDebugReportFlagsEXT
@@ -2662,6 +2662,6 @@ immutable VkDebugReportCallbackCreateInfoEXT
     pUserData::Ptr{Void}
 end
 
-typealias PFN_vkCreateDebugReportCallbackEXT Ptr{Void}
-typealias PFN_vkDestroyDebugReportCallbackEXT Ptr{Void}
-typealias PFN_vkDebugReportMessageEXT Ptr{Void}
+const PFN_vkCreateDebugReportCallbackEXT = Ptr{Void}
+const PFN_vkDestroyDebugReportCallbackEXT = Ptr{Void}
+const PFN_vkDebugReportMessageEXT = Ptr{Void}

@@ -7,7 +7,7 @@ const linux = 1
 const SPV_VERSION = 0x00010000
 const SPV_REVISION = 4
 
-typealias SpvId UInt32
+const SpvId = UInt32
 
 @cenum(SpvSourceLanguage_,
     SpvSourceLanguageUnknown = 0,
