@@ -12,7 +12,7 @@ count = Ref{Cuint}(0)
 # Scan layers
 err = api.vkEnumerateInstanceLayerProperties(count, C_NULL)
 assert(err == api.VK_SUCCESS)
-global_layer_properties = Array(api.VkLayerProperties, count[])
+global_layer_properties = Array{api.VkLayerProperties}(count[])
 err = api.vkEnumerateInstanceLayerProperties(count, global_layer_properties)
 assert(err == api.VK_SUCCESS)
 
@@ -62,7 +62,7 @@ println(instance)
 gpu_count = Ref{Cuint}(0)
 err = api.vkEnumeratePhysicalDevices(instance[], gpu_count, C_NULL)
 println(err)
-devices = Array(api.VkPhysicalDevice, gpu_count[])
+devices = Array{api.VkPhysicalDevice}(gpu_count[])
 
 err = api.vkEnumeratePhysicalDevices(instance[], gpu_count, devices)
 
@@ -110,7 +110,7 @@ println(deviceprops[])
 queue_count = Ref{Cuint}(0)
 
 api.vkGetPhysicalDeviceQueueFamilyProperties(devices[], queue_count, C_NULL)
-queueprops = Array(api.VkQueueFamilyProperties, queue_count[])
+queueprops = Array{api.VkQueueFamilyProperties}(queue_count[])
 println(queue_count[])
 api.vkGetPhysicalDeviceQueueFamilyProperties(devices[], queue_count, queueprops)
 println(queueprops)

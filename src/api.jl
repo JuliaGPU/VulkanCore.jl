@@ -8,7 +8,7 @@ using .CEnum
 const version = v"1.0" # Latest branch  see generator.jl for other versions
 
 paths = String[]
-const libvulkan = Libdl.find_library(["libvulkan", "vulkan", "libvulkan.so.1"], paths)
+const libvulkan = Libdl.find_library(["libvulkan", "vulkan", "vulkan-1", "libvulkan.so.1"], paths)
 @assert libvulkan != ""
 
 #### External definitions
