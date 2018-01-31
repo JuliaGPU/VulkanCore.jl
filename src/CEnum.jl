@@ -1,8 +1,8 @@
 module CEnum
 
 abstract type Cenum{T} end
-Base.(:|)(a::T, b::T) where {T<:Cenum} = T(Int(a) | Int(b))
-Base.(:&)(a::T, b::T) where {T<:Cenum} = T(Int(a) & Int(b))
+Base.:|(a::T, b::T) where {T<:Cenum} = T(Int(a) | Int(b))
+Base.:&(a::T, b::T) where {T<:Cenum} = T(Int(a) & Int(b))
 # typemin and typemax won't change for an enum, so we might as well inline them per type
 function Base.typemax{T<:Cenum}(::Type{T})
     last(enum_values(T))
@@ -47,7 +47,7 @@ end
 function islinear(array)
     isempty(array) && return false # false, really? it's kinda undefined?
     lastval = first(array)
-    for val in rest(array, 2)
+    for val in Iterators.rest(array, 2)
         val-lastval == 1 || return false
     end
     return true
