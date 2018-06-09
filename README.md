@@ -58,7 +58,7 @@ primarily a wrapper you might focus your attention on the high-level API at
 
 ## Thanks
 This package is inspired by the work done on [CUDArt.jl](https://github.com/JuliaGPU/CUDArt.jl)
-and [OpenCL.jl](https://github.com/JuliaGPU/CUDArt.jl). 
+and [OpenCL.jl](https://github.com/JuliaGPU/OpenCL.jl). 
 
 A big thank you also to all core Julia developers, who made this possible in the 
 first place.
