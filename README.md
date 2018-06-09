@@ -44,7 +44,7 @@ err = vk.vkEnumerateInstanceLayerProperties(count, global_layer_properties)
 ### Semantic Versioning
 VulkanCore aims to follow a restricted semantic versioning scheme. Since we are
 wrapping Vulkan the major and minor version are going to follow the Vulkan 
-standart. Vulkan `v"1.0.8"` maps to VukanCore.jl `v"1.0"`.
+standard. Vulkan `v"1.0.8"` maps to VukanCore.jl `v"1.0"`.
 Point releases are reserved for internal development *and* point release updates
 to the Vulkan specfication.
 
