@@ -7,11 +7,13 @@ using .CEnum
 
 const version = v"1.0" # Latest branch  see generator.jl for other versions
 
+using Libdl
 paths = String[]
 const libvulkan = Libdl.find_library(["libvulkan", "vulkan", "vulkan-1", "libvulkan.so.1"], paths)
 @assert libvulkan != ""
 
 #### External definitions
+const Void = Ptr{Nothing}
 
 # X11/X.h
 const Window = UInt32 # unsigned long
@@ -49,7 +51,7 @@ else
   error("Api version $version not supported")
 end
 
-if isdefined(:VK_API_VERSION)
+if isdefined(api, :VK_API_VERSION)
   const VK_VERSION = VK_API_VERSION
 else
   const VK_VERSION = VK_MAKE_VERSION(1,0,0)

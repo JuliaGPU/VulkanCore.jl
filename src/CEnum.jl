@@ -4,26 +4,26 @@ abstract type Cenum{T} end
 Base.:|(a::T, b::T) where {T<:Cenum} = UInt32(a) | UInt32(b)
 Base.:&(a::T, b::T) where {T<:Cenum} = UInt32(a) & UInt32(b)
 # typemin and typemax won't change for an enum, so we might as well inline them per type
-function Base.typemax{T<:Cenum}(::Type{T})
+function Base.typemax(::Type{T}) where {T<:Cenum}
     last(enum_values(T))
 end
-function Base.typemin{T<:Cenum}(::Type{T})
+function Base.typemin(::Type{T}) where {T<:Cenum}
     first(enum_values(T))
 end
-Base.convert{T<:Integer}(::Type{Integer}, x::Cenum{T}) = Base.bitcast(T, x)
-Base.convert{T<:Integer,T2<:Integer}(::Type{T}, x::Cenum{T2}) = convert(T, Base.bitcast(T2, x))
+Base.convert(::Type{Integer}, x::Cenum{T}) where {T<:Integer} = Base.bitcast(T, x)
+Base.convert(::Type{T}, x::Cenum{T2}) where {T<:Integer,T2<:Integer} = convert(T, Base.bitcast(T2, x))
 
 Base.write(io::IO, x::Cenum) = write(io, Int32(x))
 Base.read(io::IO, ::Type{T}) where {T<:Cenum} = T(read(io, Int32))
 
-enum_values{T<:Cenum}(::T) = enum_values(T)
-enum_names{T<:Cenum}(::T) = enum_names(T)
+enum_values(::T) where {T<:Cenum} = enum_values(T)
+enum_names(::T) where {T<:Cenum} = enum_names(T)
 
-function is_member{T<:Cenum}(::Type{T}, x::Integer)
+function is_member(::Type{T}, x::Integer) where {T<:Cenum}
     is_member(T, enum_values(T), x)
 end
-@inline is_member{T<:Cenum}(::Type{T}, r::UnitRange, x::Integer) = x in r
-@inline function is_member{T<:Cenum}(::Type{T}, values::Tuple, x::Integer)
+@inline is_member(::Type{T}, r::UnitRange, x::Integer) where {T<:Cenum} = x in r
+@inline function is_member(::Type{T}, values::Tuple, x::Integer) where {T<:Cenum}
     lo, hi = typemin(T), typemax(T)
     x<lo || x>hi && return false
     for val in values
@@ -82,7 +82,7 @@ macro cenum(name, args...)
     value_block = Expr(:block)
     typename = esc(name)
     for (ename, value) in name_values
-        push!(value_block.args, :(const $(esc(ename)) = $typename($value)))
+        push!(value_block.args, :(const $(esc(ename)) = reinterpret($typename, UInt32(0) + Int32($value))))
     end
 
     expr = quote
