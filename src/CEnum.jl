@@ -34,14 +34,17 @@ end
 end
 
 function enum_name(x::T) where T<:Cenum
-    index = findfirst(enum_values(T), Int(x))
+    val = convert(Int, x)
+    index = findfirst(e->e==val, enum_values(T))
     if index != 0
         return enum_names(T)[index]
     end
     error("Invalid enum: $(Int(x)), name not found")
 end
+
 function Base.show(io::IO, x::Cenum)
-    print(io, enum_name(x), "($(Int(x)))")
+    val = convert(Int, x)
+    print(io, enum_name(x), "($(convert(Int32, x)))")
 end
 
 function islinear(array)
@@ -82,14 +85,14 @@ macro cenum(name, args...)
     value_block = Expr(:block)
     typename = esc(name)
     for (ename, value) in name_values
-        push!(value_block.args, :(const $(esc(ename)) = reinterpret($typename, UInt32(0) + Int32($value))))
+        push!(value_block.args, :(const $(esc(ename)) = convert($typename, $value)))
     end
 
     expr = quote
         primitive type $typename <: CEnum.Cenum{UInt32} 32 end
         function Base.convert(::Type{$typename}, x::Integer)
             is_member($typename, x) || Base.Enums.enum_argument_error($(Expr(:quote, name)), x)
-            Base.bitcast($typename, convert(Int32, x))
+            reinterpret($typename, convert(Int32, x))
         end
         CEnum.enum_names(::Type{$typename}) = tuple($(map(x-> Expr(:quote, first(x)), name_values)...))
         CEnum.enum_values(::Type{$typename}) = $values
