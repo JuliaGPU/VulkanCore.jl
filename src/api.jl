@@ -13,7 +13,7 @@ const libvulkan = Libdl.find_library(["libvulkan", "vulkan", "vulkan-1", "libvul
 @assert libvulkan != ""
 
 #### External definitions
-const Void = Ptr{Nothing}
+const Void = Nothing
 
 # X11/X.h
 const Window = UInt32 # unsigned long
