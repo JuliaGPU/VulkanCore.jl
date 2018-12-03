@@ -1,7 +1,6 @@
 name = "VulkanCore"
-uuid = "2acc6841-08b4-44ed-b4cc-ea5ac90711f2"
+uuid = "16167f82-ea26-5cba-b1de-ed6fd5e30a11"
 
 [deps]
-Clang = "40e3b903-d033-50b4-a0cc-940c62c95e31"
 Compat = "34da2185-b29b-5c13-b0c7-acf172513d20"
 Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
