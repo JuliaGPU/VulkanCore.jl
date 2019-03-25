@@ -1,3 +1,7 @@
 *.jl.cov
 *.jl.*.cov
 *.jl.mem
+
+Vulkan-Headers
+Vulkan-Docs
+spirv.h
