@@ -1,4 +1,4 @@
-doc"""
+"""
 `vkCreateInstance` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -15,7 +15,7 @@ parameters:
 """
 api.vkCreateInstance
 
-doc"""
+"""
 `vkDestroyInstance` returns `void`
 
 
@@ -35,7 +35,7 @@ usage:
 """
 api.vkDestroyInstance
 
-doc"""
+"""
 `vkEnumeratePhysicalDevices` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -54,7 +54,7 @@ parameters:
 """
 api.vkEnumeratePhysicalDevices
 
-doc"""
+"""
 `vkGetDeviceProcAddr` returns `PFN_vkVoidFunction`
 
 
@@ -70,7 +70,7 @@ usage:
 """
 api.vkGetDeviceProcAddr
 
-doc"""
+"""
 `vkGetInstanceProcAddr` returns `PFN_vkVoidFunction`
 
 
@@ -88,7 +88,7 @@ usage:
 """
 api.vkGetInstanceProcAddr
 
-doc"""
+"""
 `vkGetPhysicalDeviceProperties` returns `void`
 
 
@@ -101,7 +101,7 @@ parameters:
 """
 api.vkGetPhysicalDeviceProperties
 
-doc"""
+"""
 `vkGetPhysicalDeviceQueueFamilyProperties` returns `void`
 
 
@@ -118,7 +118,7 @@ parameters:
 """
 api.vkGetPhysicalDeviceQueueFamilyProperties
 
-doc"""
+"""
 `vkGetPhysicalDeviceMemoryProperties` returns `void`
 
 
@@ -131,7 +131,7 @@ parameters:
 """
 api.vkGetPhysicalDeviceMemoryProperties
 
-doc"""
+"""
 `vkGetPhysicalDeviceFeatures` returns `void`
 
 
@@ -144,7 +144,7 @@ parameters:
 """
 api.vkGetPhysicalDeviceFeatures
 
-doc"""
+"""
 `vkGetPhysicalDeviceFormatProperties` returns `void`
 
 
@@ -158,7 +158,7 @@ parameters:
 """
 api.vkGetPhysicalDeviceFormatProperties
 
-doc"""
+"""
 `vkGetPhysicalDeviceImageFormatProperties` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -179,7 +179,7 @@ parameters:
 """
 api.vkGetPhysicalDeviceImageFormatProperties
 
-doc"""
+"""
 `vkCreateDevice` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -197,7 +197,7 @@ parameters:
 """
 api.vkCreateDevice
 
-doc"""
+"""
 `vkDestroyDevice` returns `void`
 
 
@@ -217,7 +217,7 @@ usage:
 """
 api.vkDestroyDevice
 
-doc"""
+"""
 `vkEnumerateInstanceLayerProperties` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_INCOMPLETE
@@ -235,7 +235,7 @@ parameters:
 """
 api.vkEnumerateInstanceLayerProperties
 
-doc"""
+"""
 `vkEnumerateInstanceExtensionProperties` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_INCOMPLETE
@@ -258,7 +258,7 @@ usage:
 """
 api.vkEnumerateInstanceExtensionProperties
 
-doc"""
+"""
 `vkEnumerateDeviceLayerProperties` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_INCOMPLETE
@@ -277,7 +277,7 @@ parameters:
 """
 api.vkEnumerateDeviceLayerProperties
 
-doc"""
+"""
 `vkEnumerateDeviceExtensionProperties` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_INCOMPLETE
@@ -301,7 +301,7 @@ usage:
 """
 api.vkEnumerateDeviceExtensionProperties
 
-doc"""
+"""
 `vkGetDeviceQueue` returns `void`
 
 
@@ -319,7 +319,7 @@ usage:
 """
 api.vkGetDeviceQueue
 
-doc"""
+"""
 `vkQueueSubmit` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -345,7 +345,7 @@ usage:
 """
 api.vkQueueSubmit
 
-doc"""
+"""
 `vkQueueWaitIdle` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -359,7 +359,7 @@ parameters:
 """
 api.vkQueueWaitIdle
 
-doc"""
+"""
 `vkDeviceWaitIdle` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -373,7 +373,7 @@ parameters:
 """
 api.vkDeviceWaitIdle
 
-doc"""
+"""
 `vkAllocateMemory` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -393,7 +393,7 @@ usage:
 """
 api.vkAllocateMemory
 
-doc"""
+"""
 `vkFreeMemory` returns `void`
 
 
@@ -412,7 +412,7 @@ usage:
 """
 api.vkFreeMemory
 
-doc"""
+"""
 `vkMapMemory` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -438,7 +438,7 @@ usage:
 """
 api.vkMapMemory
 
-doc"""
+"""
 `vkUnmapMemory` returns `void`
 
 
@@ -454,7 +454,7 @@ usage:
 """
 api.vkUnmapMemory
 
-doc"""
+"""
 `vkFlushMappedMemoryRanges` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -473,7 +473,7 @@ usage:
 """
 api.vkFlushMappedMemoryRanges
 
-doc"""
+"""
 `vkInvalidateMappedMemoryRanges` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -492,7 +492,7 @@ usage:
 """
 api.vkInvalidateMappedMemoryRanges
 
-doc"""
+"""
 `vkGetDeviceMemoryCommitment` returns `void`
 
 
@@ -508,7 +508,7 @@ usage:
 """
 api.vkGetDeviceMemoryCommitment
 
-doc"""
+"""
 `vkGetBufferMemoryRequirements` returns `void`
 
 
@@ -522,7 +522,7 @@ parameters:
 """
 api.vkGetBufferMemoryRequirements
 
-doc"""
+"""
 `vkBindBufferMemory` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -550,7 +550,7 @@ usage:
 """
 api.vkBindBufferMemory
 
-doc"""
+"""
 `vkGetImageMemoryRequirements` returns `void`
 
 
@@ -564,7 +564,7 @@ parameters:
 """
 api.vkGetImageMemoryRequirements
 
-doc"""
+"""
 `vkBindImageMemory` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -589,7 +589,7 @@ usage:
 """
 api.vkBindImageMemory
 
-doc"""
+"""
 `vkGetImageSparseMemoryRequirements` returns `void`
 
 
@@ -609,7 +609,7 @@ usage:
 """
 api.vkGetImageSparseMemoryRequirements
 
-doc"""
+"""
 `vkGetPhysicalDeviceSparseImageFormatProperties` returns `void`
 
 
@@ -637,7 +637,7 @@ usage:
 """
 api.vkGetPhysicalDeviceSparseImageFormatProperties
 
-doc"""
+"""
 `vkQueueBindSparse` returns `VkResult`
 
 queues : sparse_binding
@@ -664,7 +664,7 @@ usage:
 """
 api.vkQueueBindSparse
 
-doc"""
+"""
 `vkCreateFence` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -682,7 +682,7 @@ parameters:
 """
 api.vkCreateFence
 
-doc"""
+"""
 `vkDestroyFence` returns `void`
 
 
@@ -703,7 +703,7 @@ usage:
 """
 api.vkDestroyFence
 
-doc"""
+"""
 `vkResetFences` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -723,7 +723,7 @@ usage:
 """
 api.vkResetFences
 
-doc"""
+"""
 `vkGetFenceStatus` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_NOT_READY
@@ -738,7 +738,7 @@ parameters:
 """
 api.vkGetFenceStatus
 
-doc"""
+"""
 `vkWaitForFences` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_TIMEOUT
@@ -757,7 +757,7 @@ parameters:
 """
 api.vkWaitForFences
 
-doc"""
+"""
 `vkCreateSemaphore` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -775,7 +775,7 @@ parameters:
 """
 api.vkCreateSemaphore
 
-doc"""
+"""
 `vkDestroySemaphore` returns `void`
 
 
@@ -796,7 +796,7 @@ usage:
 """
 api.vkDestroySemaphore
 
-doc"""
+"""
 `vkCreateEvent` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -814,7 +814,7 @@ parameters:
 """
 api.vkCreateEvent
 
-doc"""
+"""
 `vkDestroyEvent` returns `void`
 
 
@@ -835,7 +835,7 @@ usage:
 """
 api.vkDestroyEvent
 
-doc"""
+"""
 `vkGetEventStatus` returns `VkResult`
 
 successcodes : VK_EVENT_SET,VK_EVENT_RESET
@@ -850,7 +850,7 @@ parameters:
 """
 api.vkGetEventStatus
 
-doc"""
+"""
 `vkSetEvent` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -866,7 +866,7 @@ parameters:
 """
 api.vkSetEvent
 
-doc"""
+"""
 `vkResetEvent` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -882,7 +882,7 @@ parameters:
 """
 api.vkResetEvent
 
-doc"""
+"""
 `vkCreateQueryPool` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -900,7 +900,7 @@ parameters:
 """
 api.vkCreateQueryPool
 
-doc"""
+"""
 `vkDestroyQueryPool` returns `void`
 
 
@@ -921,7 +921,7 @@ usage:
 """
 api.vkDestroyQueryPool
 
-doc"""
+"""
 `vkGetQueryPoolResults` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_NOT_READY
@@ -951,7 +951,7 @@ usage:
 """
 api.vkGetQueryPoolResults
 
-doc"""
+"""
 `vkCreateBuffer` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -971,7 +971,7 @@ usage:
 """
 api.vkCreateBuffer
 
-doc"""
+"""
 `vkDestroyBuffer` returns `void`
 
 
@@ -992,7 +992,7 @@ usage:
 """
 api.vkDestroyBuffer
 
-doc"""
+"""
 `vkCreateBufferView` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1010,7 +1010,7 @@ parameters:
 """
 api.vkCreateBufferView
 
-doc"""
+"""
 `vkDestroyBufferView` returns `void`
 
 
@@ -1031,7 +1031,7 @@ usage:
 """
 api.vkDestroyBufferView
 
-doc"""
+"""
 `vkCreateImage` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1051,7 +1051,7 @@ usage:
 """
 api.vkCreateImage
 
-doc"""
+"""
 `vkDestroyImage` returns `void`
 
 
@@ -1072,7 +1072,7 @@ usage:
 """
 api.vkDestroyImage
 
-doc"""
+"""
 `vkGetImageSubresourceLayout` returns `void`
 
 
@@ -1090,7 +1090,7 @@ usage:
 """
 api.vkGetImageSubresourceLayout
 
-doc"""
+"""
 `vkCreateImageView` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1108,7 +1108,7 @@ parameters:
 """
 api.vkCreateImageView
 
-doc"""
+"""
 `vkDestroyImageView` returns `void`
 
 
@@ -1129,7 +1129,7 @@ usage:
 """
 api.vkDestroyImageView
 
-doc"""
+"""
 `vkCreateShaderModule` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1147,7 +1147,7 @@ parameters:
 """
 api.vkCreateShaderModule
 
-doc"""
+"""
 `vkDestroyShaderModule` returns `void`
 
 
@@ -1167,7 +1167,7 @@ usage:
 """
 api.vkDestroyShaderModule
 
-doc"""
+"""
 `vkCreatePipelineCache` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1185,7 +1185,7 @@ parameters:
 """
 api.vkCreatePipelineCache
 
-doc"""
+"""
 `vkDestroyPipelineCache` returns `void`
 
 
@@ -1205,7 +1205,7 @@ usage:
 """
 api.vkDestroyPipelineCache
 
-doc"""
+"""
 `vkGetPipelineCacheData` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1225,7 +1225,7 @@ parameters:
 """
 api.vkGetPipelineCacheData
 
-doc"""
+"""
 `vkMergePipelineCaches` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1246,7 +1246,7 @@ usage:
 """
 api.vkMergePipelineCaches
 
-doc"""
+"""
 `vkCreateGraphicsPipelines` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1271,7 +1271,7 @@ usage:
 """
 api.vkCreateGraphicsPipelines
 
-doc"""
+"""
 `vkCreateComputePipelines` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1296,7 +1296,7 @@ usage:
 """
 api.vkCreateComputePipelines
 
-doc"""
+"""
 `vkDestroyPipeline` returns `void`
 
 
@@ -1317,7 +1317,7 @@ usage:
 """
 api.vkDestroyPipeline
 
-doc"""
+"""
 `vkCreatePipelineLayout` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1335,7 +1335,7 @@ parameters:
 """
 api.vkCreatePipelineLayout
 
-doc"""
+"""
 `vkDestroyPipelineLayout` returns `void`
 
 
@@ -1355,7 +1355,7 @@ usage:
 """
 api.vkDestroyPipelineLayout
 
-doc"""
+"""
 `vkCreateSampler` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1373,7 +1373,7 @@ parameters:
 """
 api.vkCreateSampler
 
-doc"""
+"""
 `vkDestroySampler` returns `void`
 
 
@@ -1394,7 +1394,7 @@ usage:
 """
 api.vkDestroySampler
 
-doc"""
+"""
 `vkCreateDescriptorSetLayout` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1412,7 +1412,7 @@ parameters:
 """
 api.vkCreateDescriptorSetLayout
 
-doc"""
+"""
 `vkDestroyDescriptorSetLayout` returns `void`
 
 
@@ -1432,7 +1432,7 @@ usage:
 """
 api.vkDestroyDescriptorSetLayout
 
-doc"""
+"""
 `vkCreateDescriptorPool` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1450,7 +1450,7 @@ parameters:
 """
 api.vkCreateDescriptorPool
 
-doc"""
+"""
 `vkDestroyDescriptorPool` returns `void`
 
 
@@ -1471,7 +1471,7 @@ usage:
 """
 api.vkDestroyDescriptorPool
 
-doc"""
+"""
 `vkResetDescriptorPool` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1491,7 +1491,7 @@ usage:
 """
 api.vkResetDescriptorPool
 
-doc"""
+"""
 `vkAllocateDescriptorSets` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1509,7 +1509,7 @@ parameters:
 """
 api.vkAllocateDescriptorSets
 
-doc"""
+"""
 `vkFreeDescriptorSets` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1534,7 +1534,7 @@ usage:
 """
 api.vkFreeDescriptorSets
 
-doc"""
+"""
 `vkUpdateDescriptorSets` returns `void`
 
 
@@ -1556,7 +1556,7 @@ parameters:
 """
 api.vkUpdateDescriptorSets
 
-doc"""
+"""
 `vkCreateFramebuffer` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1574,7 +1574,7 @@ parameters:
 """
 api.vkCreateFramebuffer
 
-doc"""
+"""
 `vkDestroyFramebuffer` returns `void`
 
 
@@ -1595,7 +1595,7 @@ usage:
 """
 api.vkDestroyFramebuffer
 
-doc"""
+"""
 `vkCreateRenderPass` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1613,7 +1613,7 @@ parameters:
 """
 api.vkCreateRenderPass
 
-doc"""
+"""
 `vkDestroyRenderPass` returns `void`
 
 
@@ -1634,7 +1634,7 @@ usage:
 """
 api.vkDestroyRenderPass
 
-doc"""
+"""
 `vkGetRenderAreaGranularity` returns `void`
 
 
@@ -1648,7 +1648,7 @@ parameters:
 """
 api.vkGetRenderAreaGranularity
 
-doc"""
+"""
 `vkCreateCommandPool` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1666,7 +1666,7 @@ parameters:
 """
 api.vkCreateCommandPool
 
-doc"""
+"""
 `vkDestroyCommandPool` returns `void`
 
 
@@ -1687,7 +1687,7 @@ usage:
 """
 api.vkDestroyCommandPool
 
-doc"""
+"""
 `vkResetCommandPool` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1707,7 +1707,7 @@ usage:
 """
 api.vkResetCommandPool
 
-doc"""
+"""
 `vkAllocateCommandBuffers` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1725,7 +1725,7 @@ parameters:
 """
 api.vkAllocateCommandBuffers
 
-doc"""
+"""
 `vkFreeCommandBuffers` returns `void`
 
 
@@ -1747,7 +1747,7 @@ usage:
 """
 api.vkFreeCommandBuffers
 
-doc"""
+"""
 `vkBeginCommandBuffer` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1768,7 +1768,7 @@ usage:
 """
 api.vkBeginCommandBuffer
 
-doc"""
+"""
 `vkEndCommandBuffer` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1787,7 +1787,7 @@ usage:
 """
 api.vkEndCommandBuffer
 
-doc"""
+"""
 `vkResetCommandBuffer` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -1807,7 +1807,7 @@ usage:
 """
 api.vkResetCommandBuffer
 
-doc"""
+"""
 `vkCmdBindPipeline` returns `void`
 
 queues : graphics,compute
@@ -1831,7 +1831,7 @@ usage:
 """
 api.vkCmdBindPipeline
 
-doc"""
+"""
 `vkCmdSetViewport` returns `void`
 
 queues : graphics
@@ -1854,7 +1854,7 @@ usage:
 """
 api.vkCmdSetViewport
 
-doc"""
+"""
 `vkCmdSetScissor` returns `void`
 
 queues : graphics
@@ -1880,7 +1880,7 @@ usage:
 """
 api.vkCmdSetScissor
 
-doc"""
+"""
 `vkCmdSetLineWidth` returns `void`
 
 queues : graphics
@@ -1899,7 +1899,7 @@ usage:
 """
 api.vkCmdSetLineWidth
 
-doc"""
+"""
 `vkCmdSetDepthBias` returns `void`
 
 queues : graphics
@@ -1920,7 +1920,7 @@ usage:
 """
 api.vkCmdSetDepthBias
 
-doc"""
+"""
 `vkCmdSetBlendConstants` returns `void`
 
 queues : graphics
@@ -1937,7 +1937,7 @@ parameters:
 """
 api.vkCmdSetBlendConstants
 
-doc"""
+"""
 `vkCmdSetDepthBounds` returns `void`
 
 queues : graphics
@@ -1958,7 +1958,7 @@ usage:
 """
 api.vkCmdSetDepthBounds
 
-doc"""
+"""
 `vkCmdSetStencilCompareMask` returns `void`
 
 queues : graphics
@@ -1976,7 +1976,7 @@ parameters:
 """
 api.vkCmdSetStencilCompareMask
 
-doc"""
+"""
 `vkCmdSetStencilWriteMask` returns `void`
 
 queues : graphics
@@ -1994,7 +1994,7 @@ parameters:
 """
 api.vkCmdSetStencilWriteMask
 
-doc"""
+"""
 `vkCmdSetStencilReference` returns `void`
 
 queues : graphics
@@ -2012,7 +2012,7 @@ parameters:
 """
 api.vkCmdSetStencilReference
 
-doc"""
+"""
 `vkCmdBindDescriptorSets` returns `void`
 
 queues : graphics,compute
@@ -2043,7 +2043,7 @@ usage:
 """
 api.vkCmdBindDescriptorSets
 
-doc"""
+"""
 `vkCmdBindIndexBuffer` returns `void`
 
 queues : graphics
@@ -2066,7 +2066,7 @@ usage:
 """
 api.vkCmdBindIndexBuffer
 
-doc"""
+"""
 `vkCmdBindVertexBuffers` returns `void`
 
 queues : graphics
@@ -2093,7 +2093,7 @@ usage:
 """
 api.vkCmdBindVertexBuffers
 
-doc"""
+"""
 `vkCmdDraw` returns `void`
 
 queues : graphics
@@ -2128,7 +2128,7 @@ usage:
 """
 api.vkCmdDraw
 
-doc"""
+"""
 `vkCmdDrawIndexed` returns `void`
 
 queues : graphics
@@ -2165,7 +2165,7 @@ usage:
 """
 api.vkCmdDrawIndexed
 
-doc"""
+"""
 `vkCmdDrawIndirect` returns `void`
 
 queues : graphics
@@ -2206,7 +2206,7 @@ usage:
 """
 api.vkCmdDrawIndirect
 
-doc"""
+"""
 `vkCmdDrawIndexedIndirect` returns `void`
 
 queues : graphics
@@ -2247,7 +2247,7 @@ usage:
 """
 api.vkCmdDrawIndexedIndirect
 
-doc"""
+"""
 `vkCmdDispatch` returns `void`
 
 queues : compute
@@ -2280,7 +2280,7 @@ usage:
 """
 api.vkCmdDispatch
 
-doc"""
+"""
 `vkCmdDispatchIndirect` returns `void`
 
 queues : compute
@@ -2312,7 +2312,7 @@ usage:
 """
 api.vkCmdDispatchIndirect
 
-doc"""
+"""
 `vkCmdCopyBuffer` returns `void`
 
 queues : transfer,graphics,compute
@@ -2339,7 +2339,7 @@ usage:
 """
 api.vkCmdCopyBuffer
 
-doc"""
+"""
 `vkCmdCopyImage` returns `void`
 
 queues : transfer,graphics,compute
@@ -2374,7 +2374,7 @@ usage:
 """
 api.vkCmdCopyImage
 
-doc"""
+"""
 `vkCmdBlitImage` returns `void`
 
 queues : graphics
@@ -2415,7 +2415,7 @@ usage:
 """
 api.vkCmdBlitImage
 
-doc"""
+"""
 `vkCmdCopyBufferToImage` returns `void`
 
 queues : transfer,graphics,compute
@@ -2446,7 +2446,7 @@ usage:
 """
 api.vkCmdCopyBufferToImage
 
-doc"""
+"""
 `vkCmdCopyImageToBuffer` returns `void`
 
 queues : transfer,graphics,compute
@@ -2477,7 +2477,7 @@ usage:
 """
 api.vkCmdCopyImageToBuffer
 
-doc"""
+"""
 `vkCmdUpdateBuffer` returns `void`
 
 queues : transfer,graphics,compute
@@ -2492,7 +2492,7 @@ parameters:
     `dstOffset::VkDeviceSize`
     `dataSize::VkDeviceSize`
     `pData::uint32_t`
-        len : $dataSize \over 4$
+        len : dataSize / 4
 
 usage:
 
@@ -2505,7 +2505,7 @@ usage:
 """
 api.vkCmdUpdateBuffer
 
-doc"""
+"""
 `vkCmdFillBuffer` returns `void`
 
 queues : graphics,compute
@@ -2530,7 +2530,7 @@ usage:
 """
 api.vkCmdFillBuffer
 
-doc"""
+"""
 `vkCmdClearColorImage` returns `void`
 
 queues : graphics,compute
@@ -2557,7 +2557,7 @@ usage:
 """
 api.vkCmdClearColorImage
 
-doc"""
+"""
 `vkCmdClearDepthStencilImage` returns `void`
 
 queues : graphics
@@ -2584,7 +2584,7 @@ usage:
 """
 api.vkCmdClearDepthStencilImage
 
-doc"""
+"""
 `vkCmdClearAttachments` returns `void`
 
 queues : graphics
@@ -2610,7 +2610,7 @@ usage:
 """
 api.vkCmdClearAttachments
 
-doc"""
+"""
 `vkCmdResolveImage` returns `void`
 
 queues : graphics
@@ -2645,7 +2645,7 @@ usage:
 """
 api.vkCmdResolveImage
 
-doc"""
+"""
 `vkCmdSetEvent` returns `void`
 
 queues : graphics,compute
@@ -2666,7 +2666,7 @@ usage:
 """
 api.vkCmdSetEvent
 
-doc"""
+"""
 `vkCmdResetEvent` returns `void`
 
 queues : graphics,compute
@@ -2687,7 +2687,7 @@ usage:
 """
 api.vkCmdResetEvent
 
-doc"""
+"""
 `vkCmdWaitEvents` returns `void`
 
 queues : graphics,compute
@@ -2727,7 +2727,7 @@ usage:
 """
 api.vkCmdWaitEvents
 
-doc"""
+"""
 `vkCmdPipelineBarrier` returns `void`
 
 queues : transfer,graphics,compute
@@ -2765,7 +2765,7 @@ usage:
 """
 api.vkCmdPipelineBarrier
 
-doc"""
+"""
 `vkCmdBeginQuery` returns `void`
 
 queues : graphics,compute
@@ -2794,7 +2794,7 @@ usage:
 """
 api.vkCmdBeginQuery
 
-doc"""
+"""
 `vkCmdEndQuery` returns `void`
 
 queues : graphics,compute
@@ -2815,7 +2815,7 @@ usage:
 """
 api.vkCmdEndQuery
 
-doc"""
+"""
 `vkCmdResetQueryPool` returns `void`
 
 queues : graphics,compute
@@ -2837,7 +2837,7 @@ usage:
 """
 api.vkCmdResetQueryPool
 
-doc"""
+"""
 `vkCmdWriteTimestamp` returns `void`
 
 queues : graphics,compute
@@ -2859,7 +2859,7 @@ usage:
 """
 api.vkCmdWriteTimestamp
 
-doc"""
+"""
 `vkCmdCopyQueryPoolResults` returns `void`
 
 queues : graphics,compute
@@ -2890,7 +2890,7 @@ usage:
 """
 api.vkCmdCopyQueryPoolResults
 
-doc"""
+"""
 `vkCmdPushConstants` returns `void`
 
 queues : graphics,compute
@@ -2916,7 +2916,7 @@ usage:
 """
 api.vkCmdPushConstants
 
-doc"""
+"""
 `vkCmdBeginRenderPass` returns `void`
 
 queues : graphics
@@ -2940,7 +2940,7 @@ usage:
 """
 api.vkCmdBeginRenderPass
 
-doc"""
+"""
 `vkCmdNextSubpass` returns `void`
 
 queues : graphics
@@ -2959,7 +2959,7 @@ usage:
 """
 api.vkCmdNextSubpass
 
-doc"""
+"""
 `vkCmdEndRenderPass` returns `void`
 
 queues : graphics
@@ -2977,7 +2977,7 @@ usage:
 """
 api.vkCmdEndRenderPass
 
-doc"""
+"""
 `vkCmdExecuteCommands` returns `void`
 
 queues : transfer,graphics,compute
@@ -3012,7 +3012,7 @@ usage:
 """
 api.vkCmdExecuteCommands
 
-# doc"""
+# """
 # `vkCreateAndroidSurfaceKHR` returns `VkResult`
 #
 # successcodes : VK_SUCCESS
@@ -3030,7 +3030,7 @@ api.vkCmdExecuteCommands
 # """
 # api.vkCreateAndroidSurfaceKHR
 
-doc"""
+"""
 `vkGetPhysicalDeviceDisplayPropertiesKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_INCOMPLETE
@@ -3049,7 +3049,7 @@ parameters:
 """
 api.vkGetPhysicalDeviceDisplayPropertiesKHR
 
-doc"""
+"""
 `vkGetPhysicalDeviceDisplayPlanePropertiesKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_INCOMPLETE
@@ -3068,7 +3068,7 @@ parameters:
 """
 api.vkGetPhysicalDeviceDisplayPlanePropertiesKHR
 
-doc"""
+"""
 `vkGetDisplayPlaneSupportedDisplaysKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_INCOMPLETE
@@ -3090,7 +3090,7 @@ usage:
 """
 api.vkGetDisplayPlaneSupportedDisplaysKHR
 
-doc"""
+"""
 `vkGetDisplayModePropertiesKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_INCOMPLETE
@@ -3110,7 +3110,7 @@ parameters:
 """
 api.vkGetDisplayModePropertiesKHR
 
-doc"""
+"""
 `vkCreateDisplayModeKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -3130,7 +3130,7 @@ parameters:
 """
 api.vkCreateDisplayModeKHR
 
-doc"""
+"""
 `vkGetDisplayPlaneCapabilitiesKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -3148,7 +3148,7 @@ parameters:
 """
 api.vkGetDisplayPlaneCapabilitiesKHR
 
-doc"""
+"""
 `vkCreateDisplayPlaneSurfaceKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -3166,7 +3166,7 @@ parameters:
 """
 api.vkCreateDisplayPlaneSurfaceKHR
 
-doc"""
+"""
 `vkCreateSharedSwapchainsKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -3188,7 +3188,7 @@ parameters:
 """
 api.vkCreateSharedSwapchainsKHR
 
-doc"""
+"""
 `vkCreateMirSurfaceKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -3206,7 +3206,7 @@ parameters:
 """
 api.vkCreateMirSurfaceKHR
 
-doc"""
+"""
 `vkGetPhysicalDeviceMirPresentationSupportKHR` returns `VkBool32`
 
 
@@ -3222,7 +3222,7 @@ usage:
 """
 api.vkGetPhysicalDeviceMirPresentationSupportKHR
 
-doc"""
+"""
 `vkDestroySurfaceKHR` returns `void`
 
 
@@ -3243,7 +3243,7 @@ usage:
 """
 api.vkDestroySurfaceKHR
 
-doc"""
+"""
 `vkGetPhysicalDeviceSurfaceSupportKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -3262,7 +3262,7 @@ usage:
 """
 api.vkGetPhysicalDeviceSurfaceSupportKHR
 
-doc"""
+"""
 `vkGetPhysicalDeviceSurfaceCapabilitiesKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_INCOMPLETE
@@ -3278,7 +3278,7 @@ parameters:
 """
 api.vkGetPhysicalDeviceSurfaceCapabilitiesKHR
 
-doc"""
+"""
 `vkGetPhysicalDeviceSurfaceFormatsKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_INCOMPLETE
@@ -3298,7 +3298,7 @@ parameters:
 """
 api.vkGetPhysicalDeviceSurfaceFormatsKHR
 
-doc"""
+"""
 `vkGetPhysicalDeviceSurfacePresentModesKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_INCOMPLETE
@@ -3318,7 +3318,7 @@ parameters:
 """
 api.vkGetPhysicalDeviceSurfacePresentModesKHR
 
-doc"""
+"""
 `vkCreateSwapchainKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -3337,7 +3337,7 @@ parameters:
 """
 api.vkCreateSwapchainKHR
 
-doc"""
+"""
 `vkDestroySwapchainKHR` returns `void`
 
 
@@ -3358,7 +3358,7 @@ usage:
 """
 api.vkDestroySwapchainKHR
 
-doc"""
+"""
 `vkGetSwapchainImagesKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_INCOMPLETE
@@ -3378,7 +3378,7 @@ parameters:
 """
 api.vkGetSwapchainImagesKHR
 
-doc"""
+"""
 `vkAcquireNextImageKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_SUBOPTIMAL_KHR
@@ -3405,7 +3405,7 @@ usage:
 """
 api.vkAcquireNextImageKHR
 
-doc"""
+"""
 `vkQueuePresentKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS,VK_SUBOPTIMAL_KHR
@@ -3424,7 +3424,7 @@ usage:
 """
 api.vkQueuePresentKHR
 
-doc"""
+"""
 `vkCreateWaylandSurfaceKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -3442,7 +3442,7 @@ parameters:
 """
 api.vkCreateWaylandSurfaceKHR
 
-doc"""
+"""
 `vkGetPhysicalDeviceWaylandPresentationSupportKHR` returns `VkBool32`
 
 
@@ -3458,7 +3458,7 @@ usage:
 """
 api.vkGetPhysicalDeviceWaylandPresentationSupportKHR
 
-doc"""
+"""
 `vkCreateWin32SurfaceKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -3476,7 +3476,7 @@ parameters:
 """
 api.vkCreateWin32SurfaceKHR
 
-doc"""
+"""
 `vkGetPhysicalDeviceWin32PresentationSupportKHR` returns `VkBool32`
 
 
@@ -3491,7 +3491,7 @@ usage:
 """
 api.vkGetPhysicalDeviceWin32PresentationSupportKHR
 
-# doc"""
+# """
 # `vkCreateXlibSurfaceKHR` returns `VkResult`
 #
 # successcodes : VK_SUCCESS
@@ -3509,7 +3509,7 @@ api.vkGetPhysicalDeviceWin32PresentationSupportKHR
 # """
 # api.vkCreateXlibSurfaceKHR
 
-# doc"""
+# """
 # `vkGetPhysicalDeviceXlibPresentationSupportKHR` returns `VkBool32`
 #
 #
@@ -3526,7 +3526,7 @@ api.vkGetPhysicalDeviceWin32PresentationSupportKHR
 # """
 # api.vkGetPhysicalDeviceXlibPresentationSupportKHR
 
-doc"""
+"""
 `vkCreateXcbSurfaceKHR` returns `VkResult`
 
 successcodes : VK_SUCCESS
@@ -3544,7 +3544,7 @@ parameters:
 """
 api.vkCreateXcbSurfaceKHR
 
-doc"""
+"""
 `vkGetPhysicalDeviceXcbPresentationSupportKHR` returns `VkBool32`
 
 
@@ -3561,7 +3561,7 @@ usage:
 """
 api.vkGetPhysicalDeviceXcbPresentationSupportKHR
 
-doc"""
+"""
 `vkCreateDebugReportCallbackEXT` returns `VkResult`
 
 
@@ -3577,7 +3577,7 @@ parameters:
 """
 api.vkCreateDebugReportCallbackEXT
 
-doc"""
+"""
 `vkDestroyDebugReportCallbackEXT` returns `void`
 
 
@@ -3596,7 +3596,7 @@ usage:
 """
 api.vkDestroyDebugReportCallbackEXT
 
-doc"""
+"""
 `vkDebugReportMessageEXT` returns `void`
 
 
