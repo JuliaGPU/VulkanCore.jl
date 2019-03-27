@@ -11,7 +11,7 @@ VK_VERSION_MAJOR(version) = Cuint(version) >> 22
 VK_VERSION_MINOR(version) = (Cuint(version) >> 12) & 0x3ff
 VK_VERSION_PATCH(version) = Cuint(version) & 0xfff
 
-const VK_HEADER_VERSION = 105
+const VK_HEADER_VERSION = 101
 const VK_NULL_HANDLE = 0
 
 # Skipping MacroDefinition: VK_DEFINE_HANDLE ( object ) typedef struct object ## _T * object ;
@@ -34,7 +34,7 @@ const VK_MAX_EXTENSION_NAME_SIZE = 256
 const VK_MAX_DESCRIPTION_SIZE = 256
 const VK_VERSION_1_1 = 1
 
-VK_API_VERSION_1_1() = VK_MAKE_VERSION(1, 1, 0)
+# Skipping MacroDefinition: VK_API_VERSION_1_1 VK_MAKE_VERSION ( 1 , 1 , 0 )
 
 const VK_MAX_DEVICE_GROUP_SIZE = 32
 const VK_LUID_SIZE = 8
@@ -185,9 +185,6 @@ const VK_KHR_SWAPCHAIN_MUTABLE_FORMAT_EXTENSION_NAME = "VK_KHR_swapchain_mutable
 const VK_KHR_vulkan_memory_model = 1
 const VK_KHR_VULKAN_MEMORY_MODEL_SPEC_VERSION = 3
 const VK_KHR_VULKAN_MEMORY_MODEL_EXTENSION_NAME = "VK_KHR_vulkan_memory_model"
-const VK_KHR_surface_protected_capabilities = 1
-const VK_KHR_SURFACE_PROTECTED_CAPABILITIES_SPEC_VERSION = 1
-const VK_KHR_SURFACE_PROTECTED_CAPABILITIES_EXTENSION_NAME = "VK_KHR_surface_protected_capabilities"
 const VK_EXT_debug_report = 1
 const VK_EXT_DEBUG_REPORT_SPEC_VERSION = 9
 const VK_EXT_DEBUG_REPORT_EXTENSION_NAME = "VK_EXT_debug_report"
@@ -221,9 +218,6 @@ const VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME = "VK_NV_dedicated_allocation"
 const VK_EXT_transform_feedback = 1
 const VK_EXT_TRANSFORM_FEEDBACK_SPEC_VERSION = 1
 const VK_EXT_TRANSFORM_FEEDBACK_EXTENSION_NAME = "VK_EXT_transform_feedback"
-const VK_NVX_image_view_handle = 1
-const VK_NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION = 1
-const VK_NVX_IMAGE_VIEW_HANDLE_EXTENSION_NAME = "VK_NVX_image_view_handle"
 const VK_AMD_draw_indirect_count = 1
 const VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION = 1
 const VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME = "VK_AMD_draw_indirect_count"
@@ -412,9 +406,6 @@ const VK_AMD_MEMORY_OVERALLOCATION_BEHAVIOR_EXTENSION_NAME = "VK_AMD_memory_over
 const VK_EXT_vertex_attribute_divisor = 1
 const VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION = 3
 const VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME = "VK_EXT_vertex_attribute_divisor"
-const VK_EXT_pipeline_creation_feedback = 1
-const VK_EXT_PIPELINE_CREATION_FEEDBACK_SPEC_VERSION = 1
-const VK_EXT_PIPELINE_CREATION_FEEDBACK_EXTENSION_NAME = "VK_EXT_pipeline_creation_feedback"
 const VK_NV_shader_subgroup_partitioned = 1
 const VK_NV_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION = 1
 const VK_NV_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME = "VK_NV_shader_subgroup_partitioned"
@@ -439,9 +430,6 @@ const VK_NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_EXTENSION_NAME = "VK_NV_device_diagnos
 const VK_EXT_pci_bus_info = 1
 const VK_EXT_PCI_BUS_INFO_SPEC_VERSION = 2
 const VK_EXT_PCI_BUS_INFO_EXTENSION_NAME = "VK_EXT_pci_bus_info"
-const VK_AMD_display_native_hdr = 1
-const VK_AMD_DISPLAY_NATIVE_HDR_SPEC_VERSION = 1
-const VK_AMD_DISPLAY_NATIVE_HDR_EXTENSION_NAME = "VK_AMD_display_native_hdr"
 const VK_EXT_fragment_density_map = 1
 const VK_EXT_FRAGMENT_DENSITY_MAP_SPEC_VERSION = 1
 const VK_EXT_FRAGMENT_DENSITY_MAP_EXTENSION_NAME = "VK_EXT_fragment_density_map"
@@ -475,12 +463,6 @@ const VK_EXT_VALIDATION_FEATURES_EXTENSION_NAME = "VK_EXT_validation_features"
 const VK_NV_cooperative_matrix = 1
 const VK_NV_COOPERATIVE_MATRIX_SPEC_VERSION = 1
 const VK_NV_COOPERATIVE_MATRIX_EXTENSION_NAME = "VK_NV_cooperative_matrix"
-const VK_EXT_ycbcr_image_arrays = 1
-const VK_EXT_YCBCR_IMAGE_ARRAYS_SPEC_VERSION = 1
-const VK_EXT_YCBCR_IMAGE_ARRAYS_EXTENSION_NAME = "VK_EXT_ycbcr_image_arrays"
-const VK_EXT_host_query_reset = 1
-const VK_EXT_HOST_QUERY_RESET_SPEC_VERSION = 1
-const VK_EXT_HOST_QUERY_RESET_EXTENSION_NAME = "VK_EXT_host_query_reset"
 const VkFlags = UInt32
 const VkBool32 = UInt32
 const VkDeviceSize = UInt64
@@ -555,7 +537,6 @@ const VkCommandPool = UInt64
     VK_ERROR_FRAGMENTATION_EXT = -1000161000,
     VK_ERROR_NOT_PERMITTED_EXT = -1000174001,
     VK_ERROR_INVALID_DEVICE_ADDRESS_EXT = -1000244000,
-    VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT = -1000255000,
     VK_ERROR_OUT_OF_POOL_MEMORY_KHR = -1000069000,
     VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR = -1000072003,
     VK_RESULT_BEGIN_RANGE = -12,
@@ -705,9 +686,7 @@ const VkCommandPool = UInt64
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT = 1000028000,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_PROPERTIES_EXT = 1000028001,
     VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT = 1000028002,
-    VK_STRUCTURE_TYPE_IMAGE_VIEW_HANDLE_INFO_NVX = 1000030000,
     VK_STRUCTURE_TYPE_TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD = 1000041000,
-    VK_STRUCTURE_TYPE_STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP = 1000049000,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV = 1000050000,
     VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV = 1000056000,
     VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_NV = 1000056001,
@@ -855,8 +834,6 @@ const VkCommandPool = UInt64
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT = 1000190000,
     VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT = 1000190001,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT = 1000190002,
-    VK_STRUCTURE_TYPE_PRESENT_FRAME_TOKEN_GGP = 1000191000,
-    VK_STRUCTURE_TYPE_PIPELINE_CREATION_FEEDBACK_CREATE_INFO_EXT = 1000192000,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DRIVER_PROPERTIES_KHR = 1000196000,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES_KHR = 1000197000,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES_KHR = 1000199000,
@@ -872,10 +849,7 @@ const VkCommandPool = UInt64
     VK_STRUCTURE_TYPE_QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV = 1000206001,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES_KHR = 1000211000,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT = 1000212000,
-    VK_STRUCTURE_TYPE_DISPLAY_NATIVE_HDR_SURFACE_CAPABILITIES_AMD = 1000213000,
-    VK_STRUCTURE_TYPE_SWAPCHAIN_DISPLAY_NATIVE_HDR_CREATE_INFO_AMD = 1000213001,
     VK_STRUCTURE_TYPE_IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA = 1000214000,
-    VK_STRUCTURE_TYPE_METAL_SURFACE_CREATE_INFO_EXT = 1000217000,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT = 1000218000,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT = 1000218001,
     VK_STRUCTURE_TYPE_RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT = 1000218002,
@@ -883,7 +857,6 @@ const VkCommandPool = UInt64
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT = 1000237000,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT = 1000238000,
     VK_STRUCTURE_TYPE_MEMORY_PRIORITY_ALLOCATE_INFO_EXT = 1000238001,
-    VK_STRUCTURE_TYPE_SURFACE_PROTECTED_CAPABILITIES_KHR = 1000239000,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEDICATED_ALLOCATION_IMAGE_ALIASING_FEATURES_NV = 1000240000,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_ADDRESS_FEATURES_EXT = 1000244000,
     VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO_EXT = 1000244001,
@@ -893,11 +866,6 @@ const VkCommandPool = UInt64
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_NV = 1000249000,
     VK_STRUCTURE_TYPE_COOPERATIVE_MATRIX_PROPERTIES_NV = 1000249001,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_NV = 1000249002,
-    VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT = 1000252000,
-    VK_STRUCTURE_TYPE_SURFACE_FULL_SCREEN_EXCLUSIVE_INFO_EXT = 1000255000,
-    VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_FULL_SCREEN_EXCLUSIVE_EXT = 1000255002,
-    VK_STRUCTURE_TYPE_SURFACE_FULL_SCREEN_EXCLUSIVE_WIN32_INFO_EXT = 1000255001,
-    VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES_EXT = 1000261000,
     VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT = 1000011000,
     VK_STRUCTURE_TYPE_RENDER_PASS_MULTIVIEW_CREATE_INFO_KHR = 1000053000,
     VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_FEATURES_KHR = 1000053001,
@@ -4165,7 +4133,6 @@ const VkSurfaceKHR = UInt64
     VK_COLOR_SPACE_ADOBERGB_NONLINEAR_EXT = 1000104012,
     VK_COLOR_SPACE_PASS_THROUGH_EXT = 1000104013,
     VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT = 1000104014,
-    VK_COLOR_SPACE_DISPLAY_NATIVE_AMD = 1000213000,
     VK_COLORSPACE_SRGB_NONLINEAR_KHR = 0,
     VK_COLOR_SPACE_BEGIN_RANGE_KHR = 0,
     VK_COLOR_SPACE_END_RANGE_KHR = 0,
@@ -4457,17 +4424,9 @@ const VkDeviceGroupSubmitInfoKHR = VkDeviceGroupSubmitInfo
 const VkDeviceGroupBindSparseInfoKHR = VkDeviceGroupBindSparseInfo
 const VkBindBufferMemoryDeviceGroupInfoKHR = VkBindBufferMemoryDeviceGroupInfo
 const VkBindImageMemoryDeviceGroupInfoKHR = VkBindImageMemoryDeviceGroupInfo
-
-struct VkPhysicalDeviceSurfaceInfo2KHR
-    sType::VkStructureType
-    pNext::Ptr{Cvoid}
-    surface::VkSurfaceKHR
-end
-
 const PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR = Ptr{Cvoid}
 const PFN_vkCmdSetDeviceMaskKHR = Ptr{Cvoid}
 const PFN_vkCmdDispatchBaseKHR = Ptr{Cvoid}
-const PFN_vkGetDeviceGroupSurfacePresentModes2EXT = Ptr{Cvoid}
 const VkCommandPoolTrimFlagsKHR = VkCommandPoolTrimFlags
 const PFN_vkTrimCommandPoolKHR = Ptr{Cvoid}
 const VkPhysicalDeviceGroupPropertiesKHR = VkPhysicalDeviceGroupProperties
@@ -4710,6 +4669,12 @@ const VkInputAttachmentAspectReferenceKHR = VkInputAttachmentAspectReference
 const VkImageViewUsageCreateInfoKHR = VkImageViewUsageCreateInfo
 const VkPipelineTessellationDomainOriginStateCreateInfoKHR = VkPipelineTessellationDomainOriginStateCreateInfo
 
+struct VkPhysicalDeviceSurfaceInfo2KHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    surface::VkSurfaceKHR
+end
+
 struct VkSurfaceCapabilities2KHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
@@ -4826,10 +4791,9 @@ end
     VK_DRIVER_ID_QUALCOMM_PROPRIETARY_KHR = 8,
     VK_DRIVER_ID_ARM_PROPRIETARY_KHR = 9,
     VK_DRIVER_ID_GOOGLE_PASTEL_KHR = 10,
-    VK_DRIVER_ID_GGP_PROPRIETARY_KHR = 11,
     VK_DRIVER_ID_BEGIN_RANGE_KHR = 1,
-    VK_DRIVER_ID_END_RANGE_KHR = 11,
-    VK_DRIVER_ID_RANGE_SIZE_KHR = 11,
+    VK_DRIVER_ID_END_RANGE_KHR = 10,
+    VK_DRIVER_ID_RANGE_SIZE_KHR = 10,
     VK_DRIVER_ID_MAX_ENUM_KHR = 2147483647,
 )
 
@@ -4905,12 +4869,6 @@ struct VkPhysicalDeviceVulkanMemoryModelFeaturesKHR
     vulkanMemoryModel::VkBool32
     vulkanMemoryModelDeviceScope::VkBool32
     vulkanMemoryModelAvailabilityVisibilityChains::VkBool32
-end
-
-struct VkSurfaceProtectedCapabilitiesKHR
-    sType::VkStructureType
-    pNext::Ptr{Cvoid}
-    supportsProtected::VkBool32
 end
 
 const VkDebugReportCallbackEXT = UInt64
@@ -5088,16 +5046,6 @@ const PFN_vkCmdEndTransformFeedbackEXT = Ptr{Cvoid}
 const PFN_vkCmdBeginQueryIndexedEXT = Ptr{Cvoid}
 const PFN_vkCmdEndQueryIndexedEXT = Ptr{Cvoid}
 const PFN_vkCmdDrawIndirectByteCountEXT = Ptr{Cvoid}
-
-struct VkImageViewHandleInfoNVX
-    sType::VkStructureType
-    pNext::Ptr{Cvoid}
-    imageView::VkImageView
-    descriptorType::VkDescriptorType
-    sampler::VkSampler
-end
-
-const PFN_vkGetImageViewHandleNVX = Ptr{Cvoid}
 const PFN_vkCmdDrawIndirectCountAMD = Ptr{Cvoid}
 const PFN_vkCmdDrawIndexedIndirectCountAMD = Ptr{Cvoid}
 
@@ -6517,28 +6465,6 @@ struct VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT
     vertexAttributeInstanceRateZeroDivisor::VkBool32
 end
 
-@cenum(VkPipelineCreationFeedbackFlagBitsEXT,
-    VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT_EXT = 1,
-    VK_PIPELINE_CREATION_FEEDBACK_APPLICATION_PIPELINE_CACHE_HIT_BIT_EXT = 2,
-    VK_PIPELINE_CREATION_FEEDBACK_BASE_PIPELINE_ACCELERATION_BIT_EXT = 4,
-    VK_PIPELINE_CREATION_FEEDBACK_FLAG_BITS_MAX_ENUM_EXT = 2147483647,
-)
-
-const VkPipelineCreationFeedbackFlagsEXT = VkFlags
-
-struct VkPipelineCreationFeedbackEXT
-    flags::VkPipelineCreationFeedbackFlagsEXT
-    duration::UInt64
-end
-
-struct VkPipelineCreationFeedbackCreateInfoEXT
-    sType::VkStructureType
-    pNext::Ptr{Cvoid}
-    pPipelineCreationFeedback::Ptr{VkPipelineCreationFeedbackEXT}
-    pipelineStageCreationFeedbackCount::UInt32
-    pPipelineStageCreationFeedbacks::Ptr{VkPipelineCreationFeedbackEXT}
-end
-
 struct VkPhysicalDeviceComputeShaderDerivativesFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
@@ -6632,20 +6558,6 @@ struct VkPhysicalDevicePCIBusInfoPropertiesEXT
     pciFunction::UInt32
 end
 
-struct VkDisplayNativeHdrSurfaceCapabilitiesAMD
-    sType::VkStructureType
-    pNext::Ptr{Cvoid}
-    localDimmingSupport::VkBool32
-end
-
-struct VkSwapchainDisplayNativeHdrCreateInfoAMD
-    sType::VkStructureType
-    pNext::Ptr{Cvoid}
-    localDimmingEnable::VkBool32
-end
-
-const PFN_vkSetLocalDimmingAMD = Ptr{Cvoid}
-
 struct VkPhysicalDeviceFragmentDensityMapFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
@@ -6718,7 +6630,7 @@ end
 struct VkBufferDeviceAddressCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
-    deviceAddress::VkDeviceAddress
+    deviceAddress::VkDeviceSize
 end
 
 const PFN_vkGetBufferDeviceAddressEXT = Ptr{Cvoid}
@@ -6815,17 +6727,3 @@ struct VkPhysicalDeviceCooperativeMatrixPropertiesNV
 end
 
 const PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV = Ptr{Cvoid}
-
-struct VkPhysicalDeviceYcbcrImageArraysFeaturesEXT
-    sType::VkStructureType
-    pNext::Ptr{Cvoid}
-    ycbcrImageArrays::VkBool32
-end
-
-struct VkPhysicalDeviceHostQueryResetFeaturesEXT
-    sType::VkStructureType
-    pNext::Ptr{Cvoid}
-    hostQueryReset::VkBool32
-end
-
-const PFN_vkResetQueryPoolEXT = Ptr{Cvoid}

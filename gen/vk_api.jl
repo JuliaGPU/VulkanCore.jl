@@ -796,10 +796,6 @@ function vkCmdDispatchBaseKHR(commandBuffer, baseGroupX, baseGroupY, baseGroupZ,
     ccall((:vkCmdDispatchBaseKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
 end
 
-function vkGetDeviceGroupSurfacePresentModes2EXT(device, pSurfaceInfo, pModes)
-    ccall((:vkGetDeviceGroupSurfacePresentModes2EXT, libvulkan), VkResult, (VkDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{VkDeviceGroupPresentModeFlagsKHR}), device, pSurfaceInfo, pModes)
-end
-
 function vkTrimCommandPoolKHR(device, commandPool, flags)
     ccall((:vkTrimCommandPoolKHR, libvulkan), Cvoid, (VkDevice, VkCommandPool, VkCommandPoolTrimFlags), device, commandPool, flags)
 end
@@ -1002,10 +998,6 @@ end
 
 function vkCmdDrawIndirectByteCountEXT(commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride)
     ccall((:vkCmdDrawIndirectByteCountEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride)
-end
-
-function vkGetImageViewHandleNVX(device, pInfo)
-    ccall((:vkGetImageViewHandleNVX, libvulkan), UInt32, (VkDevice, Ptr{VkImageViewHandleInfoNVX}), device, pInfo)
 end
 
 function vkCmdDrawIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
@@ -1284,18 +1276,10 @@ function vkGetQueueCheckpointDataNV(queue, pCheckpointDataCount, pCheckpointData
     ccall((:vkGetQueueCheckpointDataNV, libvulkan), Cvoid, (VkQueue, Ptr{UInt32}, Ptr{VkCheckpointDataNV}), queue, pCheckpointDataCount, pCheckpointData)
 end
 
-function vkSetLocalDimmingAMD(swapChain, localDimmingEnable)
-    ccall((:vkSetLocalDimmingAMD, libvulkan), Cvoid, (VkSwapchainKHR, VkBool32), swapChain, localDimmingEnable)
-end
-
 function vkGetBufferDeviceAddressEXT(device, pInfo)
     ccall((:vkGetBufferDeviceAddressEXT, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfoEXT}), device, pInfo)
 end
 
 function vkGetPhysicalDeviceCooperativeMatrixPropertiesNV(physicalDevice, pPropertyCount, pProperties)
     ccall((:vkGetPhysicalDeviceCooperativeMatrixPropertiesNV, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkCooperativeMatrixPropertiesNV}), physicalDevice, pPropertyCount, pProperties)
-end
-
-function vkResetQueryPoolEXT(device, queryPool, firstQuery, queryCount)
-    ccall((:vkResetQueryPoolEXT, libvulkan), Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
 end
