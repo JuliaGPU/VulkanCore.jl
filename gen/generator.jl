@@ -8,7 +8,7 @@ else
     run(`git -C $VK_DIR fetch`)
 end
 
-# run(`$git checkout some_commit`)
+run(`git -C $VK_DIR checkout v1.1.114`)
 
 # generate Vulkan bindings
 const VK_INCLUDE = joinpath(@__DIR__, "Vulkan-Headers", "include")

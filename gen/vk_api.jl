@@ -1,11 +1,11 @@
-# Julia wrapper for header: /Users/gnimuc/.julia/dev/VulkanCore/gen/Vulkan-Headers/include/vulkan/vk_platform.h
-# Automatically generated using Clang.jl wrap_c
+# Julia wrapper for header: vk_platform.h
+# Automatically generated using Clang.jl
 
-# Julia wrapper for header: /Users/gnimuc/.julia/dev/VulkanCore/gen/Vulkan-Headers/include/vulkan/vulkan.h
-# Automatically generated using Clang.jl wrap_c
+# Julia wrapper for header: vulkan.h
+# Automatically generated using Clang.jl
 
-# Julia wrapper for header: /Users/gnimuc/.julia/dev/VulkanCore/gen/Vulkan-Headers/include/vulkan/vulkan_core.h
-# Automatically generated using Clang.jl wrap_c
+# Julia wrapper for header: vulkan_core.h
+# Automatically generated using Clang.jl
 
 
 function vkCreateInstance(pCreateInfo, pAllocator, pInstance)
@@ -401,7 +401,7 @@ function vkCmdSetDepthBias(commandBuffer, depthBiasConstantFactor, depthBiasClam
 end
 
 function vkCmdSetBlendConstants(commandBuffer, blendConstants)
-    ccall((:vkCmdSetBlendConstants, libvulkan), Cvoid, (VkCommandBuffer, NTuple{4, Cfloat}), commandBuffer, blendConstants)
+    ccall((:vkCmdSetBlendConstants, libvulkan), Cvoid, (VkCommandBuffer, Ptr{Cfloat}), commandBuffer, blendConstants)
 end
 
 function vkCmdSetDepthBounds(commandBuffer, minDepthBounds, maxDepthBounds)
@@ -1000,6 +1000,10 @@ function vkCmdDrawIndirectByteCountEXT(commandBuffer, instanceCount, firstInstan
     ccall((:vkCmdDrawIndirectByteCountEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride)
 end
 
+function vkGetImageViewHandleNVX(device, pInfo)
+    ccall((:vkGetImageViewHandleNVX, libvulkan), UInt32, (VkDevice, Ptr{VkImageViewHandleInfoNVX}), device, pInfo)
+end
+
 function vkCmdDrawIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
     ccall((:vkCmdDrawIndirectCountAMD, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
@@ -1276,10 +1280,62 @@ function vkGetQueueCheckpointDataNV(queue, pCheckpointDataCount, pCheckpointData
     ccall((:vkGetQueueCheckpointDataNV, libvulkan), Cvoid, (VkQueue, Ptr{UInt32}, Ptr{VkCheckpointDataNV}), queue, pCheckpointDataCount, pCheckpointData)
 end
 
+function vkInitializePerformanceApiINTEL(device, pInitializeInfo)
+    ccall((:vkInitializePerformanceApiINTEL, libvulkan), VkResult, (VkDevice, Ptr{VkInitializePerformanceApiInfoINTEL}), device, pInitializeInfo)
+end
+
+function vkUninitializePerformanceApiINTEL(device)
+    ccall((:vkUninitializePerformanceApiINTEL, libvulkan), Cvoid, (VkDevice,), device)
+end
+
+function vkCmdSetPerformanceMarkerINTEL(commandBuffer, pMarkerInfo)
+    ccall((:vkCmdSetPerformanceMarkerINTEL, libvulkan), VkResult, (VkCommandBuffer, Ptr{VkPerformanceMarkerInfoINTEL}), commandBuffer, pMarkerInfo)
+end
+
+function vkCmdSetPerformanceStreamMarkerINTEL(commandBuffer, pMarkerInfo)
+    ccall((:vkCmdSetPerformanceStreamMarkerINTEL, libvulkan), VkResult, (VkCommandBuffer, Ptr{VkPerformanceStreamMarkerInfoINTEL}), commandBuffer, pMarkerInfo)
+end
+
+function vkCmdSetPerformanceOverrideINTEL(commandBuffer, pOverrideInfo)
+    ccall((:vkCmdSetPerformanceOverrideINTEL, libvulkan), VkResult, (VkCommandBuffer, Ptr{VkPerformanceOverrideInfoINTEL}), commandBuffer, pOverrideInfo)
+end
+
+function vkAcquirePerformanceConfigurationINTEL(device, pAcquireInfo, pConfiguration)
+    ccall((:vkAcquirePerformanceConfigurationINTEL, libvulkan), VkResult, (VkDevice, Ptr{VkPerformanceConfigurationAcquireInfoINTEL}, Ptr{VkPerformanceConfigurationINTEL}), device, pAcquireInfo, pConfiguration)
+end
+
+function vkReleasePerformanceConfigurationINTEL(device, configuration)
+    ccall((:vkReleasePerformanceConfigurationINTEL, libvulkan), VkResult, (VkDevice, VkPerformanceConfigurationINTEL), device, configuration)
+end
+
+function vkQueueSetPerformanceConfigurationINTEL(queue, configuration)
+    ccall((:vkQueueSetPerformanceConfigurationINTEL, libvulkan), VkResult, (VkQueue, VkPerformanceConfigurationINTEL), queue, configuration)
+end
+
+function vkGetPerformanceParameterINTEL(device, parameter, pValue)
+    ccall((:vkGetPerformanceParameterINTEL, libvulkan), VkResult, (VkDevice, VkPerformanceParameterTypeINTEL, Ptr{VkPerformanceValueINTEL}), device, parameter, pValue)
+end
+
+function vkSetLocalDimmingAMD(device, swapChain, localDimmingEnable)
+    ccall((:vkSetLocalDimmingAMD, libvulkan), Cvoid, (VkDevice, VkSwapchainKHR, VkBool32), device, swapChain, localDimmingEnable)
+end
+
 function vkGetBufferDeviceAddressEXT(device, pInfo)
     ccall((:vkGetBufferDeviceAddressEXT, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfoEXT}), device, pInfo)
 end
 
 function vkGetPhysicalDeviceCooperativeMatrixPropertiesNV(physicalDevice, pPropertyCount, pProperties)
     ccall((:vkGetPhysicalDeviceCooperativeMatrixPropertiesNV, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkCooperativeMatrixPropertiesNV}), physicalDevice, pPropertyCount, pProperties)
+end
+
+function vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV(physicalDevice, pCombinationCount, pCombinations)
+    ccall((:vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkFramebufferMixedSamplesCombinationNV}), physicalDevice, pCombinationCount, pCombinations)
+end
+
+function vkCreateHeadlessSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateHeadlessSurfaceEXT, libvulkan), VkResult, (VkInstance, Ptr{VkHeadlessSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkResetQueryPoolEXT(device, queryPool, firstQuery, queryCount)
+    ccall((:vkResetQueryPoolEXT, libvulkan), Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
 end

@@ -4,7 +4,7 @@
 
 VulkanCore wraps Vulkan and exposes the library calls necessary to work with
 Vulkan. It is targeted for developers wanting to directly work with Vulkan in
-Julia. 
+Julia.
 
 If you are looking for a high-level julian API you might wish to take a look at
 [Vulkan.jl](https://github.com/JuliaGPU/Vulkan.jl).
@@ -28,28 +28,18 @@ with the [generator file](gen/generator.jl).
 The API aims to replicate the Vulkan C-API and is thus very bare bones and hands-on.
 
 ```julia
-using VulkanCore
+using VulkanCore.LibVulkan
 
 count = Ref{Cuint}(0)
 
 # Scan layers
-err = vk.vkEnumerateInstanceLayerProperties(count, C_NULL)
-@assert err == vk.VK_SUCCESS
+err = vkEnumerateInstanceLayerProperties(count, C_NULL)
+@assert err == VK_SUCCESS
 
 global_layer_properties = Array(vk.VkLayerProperties, count[])
-err = vk.vkEnumerateInstanceLayerProperties(count, global_layer_properties)
-@assert err == vk.VK_SUCCESS
+err = vkEnumerateInstanceLayerProperties(count, global_layer_properties)
+@assert err == VK_SUCCESS
 ```
-
-### Semantic Versioning
-VulkanCore aims to follow a restricted semantic versioning scheme. Since we are
-wrapping Vulkan the major and minor version are going to follow the Vulkan 
-standard. Vulkan `v"1.0.8"` maps to VukanCore.jl `v"1.0"`.
-Point releases are reserved for internal development *and* point release updates
-to the Vulkan specfication.
-
-As such you as a consumer of the package can target a specific Vulkan release by
-requiring a specific version of VulkanCore.jl.
 
 ## Contributing
 You are welcome to submit pull-request for improvments, but since this is
@@ -58,7 +48,7 @@ primarily a wrapper you might focus your attention on the high-level API at
 
 ## Thanks
 This package is inspired by the work done on [CUDArt.jl](https://github.com/JuliaGPU/CUDArt.jl)
-and [OpenCL.jl](https://github.com/JuliaGPU/OpenCL.jl). 
+and [OpenCL.jl](https://github.com/JuliaGPU/OpenCL.jl).
 
-A big thank you also to all core Julia developers, who made this possible in the 
+A big thank you also to all core Julia developers, who made this possible in the
 first place.
