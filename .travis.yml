@@ -1,34 +1,25 @@
+# Documentation: http://docs.travis-ci.com/user/languages/julia/
 language: julia
-
 os:
   - linux
-  - osx
-
 julia:
   - 1.0
   - 1.1
+  - 1.2
   - nightly
-
 matrix:
   allow_failures:
     - julia: nightly
-
+  fast_finish: true
 notifications:
   email: false
-
-# jobs:
-#   include:
-#     - stage: "Documentation"
-#       julia: 1.0
-#       os: linux
-#       script:
-#         - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
-#                                                Pkg.build(); Pkg.instantiate()'
-#         - julia --project=docs/ docs/make.jl
-#       after_success: skip
-
+dist: trusty
+sudo: false
+addons:
+  apt:
+    packages:
+    - xorg-dev
+before_script:
+  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start; fi
 after_success:
-  # push coverage results to Coveralls
-  - julia -e 'using Pkg; cd(Pkg.dir("Clang")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
-  # push coverage results to Codecov
-  - julia -e 'using Pkg; cd(Pkg.dir("Clang")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
+  - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(process_folder())'
