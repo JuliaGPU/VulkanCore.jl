@@ -6,7 +6,7 @@ VulkanCore wraps Vulkan and exposes the library calls necessary to work with
 Vulkan. It is targeted for developers wanting to directly work with Vulkan in
 Julia.
 
-If you are looking for a high-level julian API you might wish to take a look at
+If you are looking for a high-level Julian API you might wish to take a look at
 [Vulkan.jl](https://github.com/JuliaGPU/Vulkan.jl).
 
 We parsed the [Vulkan XML specifications](https://github.com/JuliaGPU/Vulkan-Docs/blob/1.0/src/spec/vk.xml) and made them available via Julia's Documentation system. So this just works:
@@ -14,15 +14,15 @@ We parsed the [Vulkan XML specifications](https://github.com/JuliaGPU/Vulkan-Doc
 
 ### Installation
 You are required to have a Vulkan capable device and the appropriate drivers.
-If these are present, just execute `Pkg.add("VulkanCore")` with Julia.
+If these are present, just run `pkg> add VulkanCore` in Julia.
 
 ### References
 - [Vulkan](https://www.khronos.org/vulkan/)
 - [Vulkan Registry](https://www.khronos.org/registry/vulkan/)
-- [Vulkan Specification](https://www.khronos.org/registry/vulkan/specs/1.0/apispec.html)
+- [Vulkan Specification](https://www.khronos.org/registry/vulkan/#apispecs)
 
 ## Usage
-The Vulkan wrapper is generated using  [Clang.jl](https://github.com/ihnorton/Clang.jl)
+The Vulkan wrapper is generated using  [Clang.jl](https://github.com/JuliaInterop/Clang.jl)
 with the [generator file](gen/generator.jl).
 
 The API aims to replicate the Vulkan C-API and is thus very bare bones and hands-on.
@@ -36,13 +36,13 @@ count = Ref{Cuint}(0)
 err = vkEnumerateInstanceLayerProperties(count, C_NULL)
 @assert err == VK_SUCCESS
 
-global_layer_properties = Array(vk.VkLayerProperties, count[])
+global_layer_properties = Vector{VkLayerProperties}(undef, count[])
 err = vkEnumerateInstanceLayerProperties(count, global_layer_properties)
 @assert err == VK_SUCCESS
 ```
 
 ## Contributing
-You are welcome to submit pull-request for improvments, but since this is
+You are welcome to submit pull-request for improvements, but since this is
 primarily a wrapper you might focus your attention on the high-level API at
 [Vulkan.jl](https://github.com/JuliaGPU/Vulkan.jl).
 

@@ -19,7 +19,7 @@ include(joinpath(@__DIR__, "..", "gen", "vk_api.jl"))
 
 # export everything
 foreach(names(@__MODULE__, all=true)) do s
-   if startswith(string(s), "VK_") || startswith(string(s), "vk") || startswith(string(s), "VULKAN")
+   if startswith(string(s), "VK_") || startswith(string(s), "Vk") || startswith(string(s), "vk")
        @eval export $s
    end
 end
