@@ -12,20 +12,21 @@ run(`git -C $VK_DIR checkout v1.2.151`)
 
 # generate Vulkan bindings
 const VK_INCLUDE = joinpath(@__DIR__, "Vulkan-Headers", "include")
-const VK_HEADERS = map(x -> joinpath(VK_INCLUDE, "vulkan", x), ["vk_platform.h", "vulkan.h", "vulkan_core.h"])
+const VK_HEADERS = map(x -> joinpath(VK_INCLUDE, "vulkan", x), ["vk_platform.h", "vulkan.h", "vulkan_core.h", "vulkan_beta.h"])
 VK_EXTENSIONS = [
     "VK_USE_PLATFORM_ANDROID_KHR",
-    "VK_USE_PLATFORM_FUCHSIA",
+    # "VK_USE_PLATFORM_FUCHSIA",
     "VK_USE_PLATFORM_IOS_MVK",
     "VK_USE_PLATFORM_MACOS_MVK",
     "VK_USE_PLATFORM_METAL_EXT",
     "VK_USE_PLATFORM_VI_NN",
-    "VK_USE_PLATFORM_WAYLAND_KHR",
-    "VK_USE_PLATFORM_WIN32_KHR",
+    # "VK_USE_PLATFORM_WAYLAND_KHR",
+    # "VK_USE_PLATFORM_WIN32_KHR",
     "VK_USE_PLATFORM_XCB_KHR",
     "VK_USE_PLATFORM_XLIB_KHR",
     "VK_USE_PLATFORM_XLIB_XRANDR_EXT",
-    "VK_USE_PLATFORM_GGP",
+    # "VK_USE_PLATFORM_GGP",
+    "VK_ENABLE_BETA_EXTENSIONS",
     ]
 
 clang_extraargs = String[]

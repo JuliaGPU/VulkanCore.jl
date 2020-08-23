@@ -8372,3 +8372,245 @@ struct VkPhysicalDevice4444FormatsFeaturesEXT
     formatA4R4G4B4::VkBool32
     formatA4B4G4R4::VkBool32
 end
+
+const VULKAN_BETA_H_ = 1
+const VK_KHR_deferred_host_operations = 1
+const VK_KHR_DEFERRED_HOST_OPERATIONS_SPEC_VERSION = 3
+const VK_KHR_DEFERRED_HOST_OPERATIONS_EXTENSION_NAME = "VK_KHR_deferred_host_operations"
+const VK_KHR_pipeline_library = 1
+const VK_KHR_PIPELINE_LIBRARY_SPEC_VERSION = 1
+const VK_KHR_PIPELINE_LIBRARY_EXTENSION_NAME = "VK_KHR_pipeline_library"
+const VK_KHR_ray_tracing = 1
+const VK_KHR_RAY_TRACING_SPEC_VERSION = 8
+const VK_KHR_RAY_TRACING_EXTENSION_NAME = "VK_KHR_ray_tracing"
+
+struct VkDeferredOperationInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    operationHandle::Cint
+end
+
+struct VkPipelineLibraryCreateInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    libraryCount::Cint
+    pLibraries::Ptr{Cint}
+end
+
+@cenum VkAccelerationStructureBuildTypeKHR::UInt32 begin
+    VK_ACCELERATION_STRUCTURE_BUILD_TYPE_HOST_KHR = 0
+    VK_ACCELERATION_STRUCTURE_BUILD_TYPE_DEVICE_KHR = 1
+    VK_ACCELERATION_STRUCTURE_BUILD_TYPE_HOST_OR_DEVICE_KHR = 2
+    VK_ACCELERATION_STRUCTURE_BUILD_TYPE_MAX_ENUM_KHR = 2147483647
+end
+
+
+struct VkDeviceOrHostAddressKHR
+    hostAddress::Ptr{Cvoid}
+end
+
+struct VkDeviceOrHostAddressConstKHR
+    hostAddress::Ptr{Cvoid}
+end
+
+struct VkAccelerationStructureBuildOffsetInfoKHR
+    primitiveCount::Cint
+    primitiveOffset::Cint
+    firstVertex::Cint
+    transformOffset::Cint
+end
+
+struct VkRayTracingShaderGroupCreateInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    type::Cint
+    generalShader::Cint
+    closestHitShader::Cint
+    anyHitShader::Cint
+    intersectionShader::Cint
+    pShaderGroupCaptureReplayHandle::Ptr{Cvoid}
+end
+
+struct VkRayTracingPipelineInterfaceCreateInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    maxPayloadSize::Cint
+    maxAttributeSize::Cint
+    maxCallableSize::Cint
+end
+
+struct VkRayTracingPipelineCreateInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    flags::Cint
+    stageCount::Cint
+    pStages::Ptr{Cint}
+    groupCount::Cint
+    pGroups::Ptr{VkRayTracingShaderGroupCreateInfoKHR}
+    maxRecursionDepth::Cint
+    libraries::VkPipelineLibraryCreateInfoKHR
+    pLibraryInterface::Ptr{VkRayTracingPipelineInterfaceCreateInfoKHR}
+    layout::Cint
+    basePipelineHandle::Cint
+    basePipelineIndex::Cint
+end
+
+struct VkAccelerationStructureGeometryTrianglesDataKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    vertexFormat::Cint
+    vertexData::VkDeviceOrHostAddressConstKHR
+    vertexStride::Cint
+    indexType::Cint
+    indexData::VkDeviceOrHostAddressConstKHR
+    transformData::VkDeviceOrHostAddressConstKHR
+end
+
+struct VkAccelerationStructureGeometryAabbsDataKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    data::VkDeviceOrHostAddressConstKHR
+    stride::Cint
+end
+
+struct VkAccelerationStructureGeometryInstancesDataKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    arrayOfPointers::Cint
+    data::VkDeviceOrHostAddressConstKHR
+end
+
+struct VkAccelerationStructureGeometryDataKHR
+    triangles::VkAccelerationStructureGeometryTrianglesDataKHR
+end
+
+struct VkAccelerationStructureGeometryKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    geometryType::Cint
+    geometry::VkAccelerationStructureGeometryDataKHR
+    flags::Cint
+end
+
+struct VkAccelerationStructureBuildGeometryInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    type::Cint
+    flags::Cint
+    update::Cint
+    srcAccelerationStructure::Cint
+    dstAccelerationStructure::Cint
+    geometryArrayOfPointers::Cint
+    geometryCount::Cint
+    ppGeometries::Ptr{Ptr{VkAccelerationStructureGeometryKHR}}
+    scratchData::VkDeviceOrHostAddressKHR
+end
+
+struct VkAccelerationStructureCreateGeometryTypeInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    geometryType::Cint
+    maxPrimitiveCount::Cint
+    indexType::Cint
+    maxVertexCount::Cint
+    vertexFormat::Cint
+    allowsTransforms::Cint
+end
+
+struct VkAccelerationStructureCreateInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    compactedSize::Cint
+    type::Cint
+    flags::Cint
+    maxGeometryCount::Cint
+    pGeometryInfos::Ptr{VkAccelerationStructureCreateGeometryTypeInfoKHR}
+    deviceAddress::Cint
+end
+
+struct VkAccelerationStructureMemoryRequirementsInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    type::Cint
+    buildType::VkAccelerationStructureBuildTypeKHR
+    accelerationStructure::Cint
+end
+
+struct VkPhysicalDeviceRayTracingFeaturesKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    rayTracing::Cint
+    rayTracingShaderGroupHandleCaptureReplay::Cint
+    rayTracingShaderGroupHandleCaptureReplayMixed::Cint
+    rayTracingAccelerationStructureCaptureReplay::Cint
+    rayTracingIndirectTraceRays::Cint
+    rayTracingIndirectAccelerationStructureBuild::Cint
+    rayTracingHostAccelerationStructureCommands::Cint
+    rayQuery::Cint
+    rayTracingPrimitiveCulling::Cint
+end
+
+struct VkPhysicalDeviceRayTracingPropertiesKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    shaderGroupHandleSize::Cint
+    maxRecursionDepth::Cint
+    maxShaderGroupStride::Cint
+    shaderGroupBaseAlignment::Cint
+    maxGeometryCount::Cint
+    maxInstanceCount::Cint
+    maxPrimitiveCount::Cint
+    maxDescriptorSetAccelerationStructures::Cint
+    shaderGroupHandleCaptureReplaySize::Cint
+end
+
+struct VkAccelerationStructureDeviceAddressInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    accelerationStructure::Cint
+end
+
+struct VkAccelerationStructureVersionKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    versionData::Ptr{Cint}
+end
+
+struct VkStridedBufferRegionKHR
+    buffer::Cint
+    offset::Cint
+    stride::Cint
+    size::Cint
+end
+
+struct VkTraceRaysIndirectCommandKHR
+    width::Cint
+    height::Cint
+    depth::Cint
+end
+
+struct VkCopyAccelerationStructureToMemoryInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    src::Cint
+    dst::VkDeviceOrHostAddressKHR
+    mode::Cint
+end
+
+struct VkCopyMemoryToAccelerationStructureInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    src::VkDeviceOrHostAddressConstKHR
+    dst::Cint
+    mode::Cint
+end
+
+struct VkCopyAccelerationStructureInfoKHR
+    sType::Cint
+    pNext::Ptr{Cvoid}
+    src::Cint
+    dst::Cint
+    mode::Cint
+end
+
+# Skipping Typedef: CXType_FunctionProto VKAPI_PTR

@@ -1523,3 +1523,6 @@ end
 function vkGetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, pData)
     ccall((:vkGetPrivateDataEXT, libvulkan), Cvoid, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, Ptr{UInt64}), device, objectType, objectHandle, privateDataSlot, pData)
 end
+# Julia wrapper for header: vulkan_beta.h
+# Automatically generated using Clang.jl
+
