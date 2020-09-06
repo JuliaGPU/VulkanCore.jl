@@ -1,17 +1,10 @@
 using Clang
 
-# get the headers
-VK_DIR = joinpath(@__DIR__, "Vulkan-Headers")
-if !isdir(VK_DIR)
-    run(`git clone https://github.com/KhronosGroup/Vulkan-Headers.git $VK_DIR`)
-else
-    run(`git -C $VK_DIR fetch`)
-end
+import Vulkan_Headers_jll
 
-run(`git -C $VK_DIR checkout v1.2.151`)
 
 # generate Vulkan bindings
-const VK_INCLUDE = joinpath(@__DIR__, "Vulkan-Headers", "include")
+const VK_INCLUDE = joinpath(Vulkan_Headers_jll.artifact_dir, "include")
 const VK_HEADERS = map(x -> joinpath(VK_INCLUDE, "vulkan", x), ["vk_platform.h", "vulkan.h", "vulkan_core.h", "vulkan_beta.h"])
 VK_EXTENSIONS = [
     "VK_USE_PLATFORM_ANDROID_KHR",
