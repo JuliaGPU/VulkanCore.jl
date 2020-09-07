@@ -1,3 +1,11 @@
+const xcb_connection_t = UInt32
+const xcb_visualid_t = UInt32
+const xcb_window_t = UInt32
+const Window = UInt32
+const Display = Cvoid
+const VisualID = UInt32
+const RROutput = UInt32
+
 # Automatically generated using Clang.jl
 
 

@@ -8,3 +8,5 @@
 Vulkan-Headers
 Vulkan-Docs
 spirv.h
+/gen/ctypes.jl
+/gen/LibTemplate.jl
