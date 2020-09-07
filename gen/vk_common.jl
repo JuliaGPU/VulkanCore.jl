@@ -612,6 +612,51 @@ const VK_EXT_IMAGE_ROBUSTNESS_EXTENSION_NAME = "VK_EXT_image_robustness"
 const VK_EXT_4444_formats = 1
 const VK_EXT_4444_FORMATS_SPEC_VERSION = 1
 const VK_EXT_4444_FORMATS_EXTENSION_NAME = "VK_EXT_4444_formats"
+const VULKAN_ANDROID_H_ = 1
+const VK_KHR_android_surface = 1
+const VK_KHR_ANDROID_SURFACE_SPEC_VERSION = 6
+const VK_KHR_ANDROID_SURFACE_EXTENSION_NAME = "VK_KHR_android_surface"
+const VK_ANDROID_external_memory_android_hardware_buffer = 1
+const VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION = 3
+const VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_EXTENSION_NAME = "VK_ANDROID_external_memory_android_hardware_buffer"
+const VULKAN_IOS_H_ = 1
+const VK_MVK_ios_surface = 1
+const VK_MVK_IOS_SURFACE_SPEC_VERSION = 3
+const VK_MVK_IOS_SURFACE_EXTENSION_NAME = "VK_MVK_ios_surface"
+const VULKAN_MACOS_H_ = 1
+const VK_MVK_macos_surface = 1
+const VK_MVK_MACOS_SURFACE_SPEC_VERSION = 3
+const VK_MVK_MACOS_SURFACE_EXTENSION_NAME = "VK_MVK_macos_surface"
+const VULKAN_METAL_H_ = 1
+const VK_EXT_metal_surface = 1
+const VK_EXT_METAL_SURFACE_SPEC_VERSION = 1
+const VK_EXT_METAL_SURFACE_EXTENSION_NAME = "VK_EXT_metal_surface"
+const VULKAN_VI_H_ = 1
+const VK_NN_vi_surface = 1
+const VK_NN_VI_SURFACE_SPEC_VERSION = 1
+const VK_NN_VI_SURFACE_EXTENSION_NAME = "VK_NN_vi_surface"
+const VULKAN_XCB_H_ = 1
+const VK_KHR_xcb_surface = 1
+const VK_KHR_XCB_SURFACE_SPEC_VERSION = 6
+const VK_KHR_XCB_SURFACE_EXTENSION_NAME = "VK_KHR_xcb_surface"
+const VULKAN_XLIB_H_ = 1
+const VK_KHR_xlib_surface = 1
+const VK_KHR_XLIB_SURFACE_SPEC_VERSION = 6
+const VK_KHR_XLIB_SURFACE_EXTENSION_NAME = "VK_KHR_xlib_surface"
+const VULKAN_XLIB_XRANDR_H_ = 1
+const VK_EXT_acquire_xlib_display = 1
+const VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION = 1
+const VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME = "VK_EXT_acquire_xlib_display"
+const VULKAN_BETA_H_ = 1
+const VK_KHR_deferred_host_operations = 1
+const VK_KHR_DEFERRED_HOST_OPERATIONS_SPEC_VERSION = 3
+const VK_KHR_DEFERRED_HOST_OPERATIONS_EXTENSION_NAME = "VK_KHR_deferred_host_operations"
+const VK_KHR_pipeline_library = 1
+const VK_KHR_PIPELINE_LIBRARY_SPEC_VERSION = 1
+const VK_KHR_PIPELINE_LIBRARY_EXTENSION_NAME = "VK_KHR_pipeline_library"
+const VK_KHR_ray_tracing = 1
+const VK_KHR_RAY_TRACING_SPEC_VERSION = 8
+const VK_KHR_RAY_TRACING_EXTENSION_NAME = "VK_KHR_ray_tracing"
 const VkBool32 = UInt32
 const VkDeviceAddress = UInt64
 const VkDeviceSize = UInt64
@@ -8373,28 +8418,152 @@ struct VkPhysicalDevice4444FormatsFeaturesEXT
     formatA4B4G4R4::VkBool32
 end
 
-const VULKAN_BETA_H_ = 1
-const VK_KHR_deferred_host_operations = 1
-const VK_KHR_DEFERRED_HOST_OPERATIONS_SPEC_VERSION = 3
-const VK_KHR_DEFERRED_HOST_OPERATIONS_EXTENSION_NAME = "VK_KHR_deferred_host_operations"
-const VK_KHR_pipeline_library = 1
-const VK_KHR_PIPELINE_LIBRARY_SPEC_VERSION = 1
-const VK_KHR_PIPELINE_LIBRARY_EXTENSION_NAME = "VK_KHR_pipeline_library"
-const VK_KHR_ray_tracing = 1
-const VK_KHR_RAY_TRACING_SPEC_VERSION = 8
-const VK_KHR_RAY_TRACING_EXTENSION_NAME = "VK_KHR_ray_tracing"
+const ANativeWindow = Cvoid
+const VkAndroidSurfaceCreateFlagsKHR = VkFlags
 
-struct VkDeferredOperationInfoKHR
-    sType::Cint
+struct VkAndroidSurfaceCreateInfoKHR
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    operationHandle::Cint
+    flags::VkAndroidSurfaceCreateFlagsKHR
+    window::Ptr{ANativeWindow}
 end
 
-struct VkPipelineLibraryCreateInfoKHR
-    sType::Cint
+const PFN_vkCreateAndroidSurfaceKHR = Ptr{Cvoid}
+const AHardwareBuffer = Cvoid
+
+struct VkAndroidHardwareBufferUsageANDROID
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    libraryCount::Cint
-    pLibraries::Ptr{Cint}
+    androidHardwareBufferUsage::UInt64
+end
+
+struct VkAndroidHardwareBufferPropertiesANDROID
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    allocationSize::VkDeviceSize
+    memoryTypeBits::UInt32
+end
+
+struct VkAndroidHardwareBufferFormatPropertiesANDROID
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    format::VkFormat
+    externalFormat::UInt64
+    formatFeatures::VkFormatFeatureFlags
+    samplerYcbcrConversionComponents::VkComponentMapping
+    suggestedYcbcrModel::VkSamplerYcbcrModelConversion
+    suggestedYcbcrRange::VkSamplerYcbcrRange
+    suggestedXChromaOffset::VkChromaLocation
+    suggestedYChromaOffset::VkChromaLocation
+end
+
+struct VkImportAndroidHardwareBufferInfoANDROID
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    buffer::Ptr{AHardwareBuffer}
+end
+
+struct VkMemoryGetAndroidHardwareBufferInfoANDROID
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    memory::VkDeviceMemory
+end
+
+struct VkExternalFormatANDROID
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    externalFormat::UInt64
+end
+
+const PFN_vkGetAndroidHardwareBufferPropertiesANDROID = Ptr{Cvoid}
+const PFN_vkGetMemoryAndroidHardwareBufferANDROID = Ptr{Cvoid}
+const VkIOSSurfaceCreateFlagsMVK = VkFlags
+
+struct VkIOSSurfaceCreateInfoMVK
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkIOSSurfaceCreateFlagsMVK
+    pView::Ptr{Cvoid}
+end
+
+const PFN_vkCreateIOSSurfaceMVK = Ptr{Cvoid}
+const VkMacOSSurfaceCreateFlagsMVK = VkFlags
+
+struct VkMacOSSurfaceCreateInfoMVK
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkMacOSSurfaceCreateFlagsMVK
+    pView::Ptr{Cvoid}
+end
+
+const PFN_vkCreateMacOSSurfaceMVK = Ptr{Cvoid}
+const CAMetalLayer = Cvoid
+const VkMetalSurfaceCreateFlagsEXT = VkFlags
+
+struct VkMetalSurfaceCreateInfoEXT
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkMetalSurfaceCreateFlagsEXT
+    pLayer::Ptr{CAMetalLayer}
+end
+
+const PFN_vkCreateMetalSurfaceEXT = Ptr{Cvoid}
+const VkViSurfaceCreateFlagsNN = VkFlags
+
+struct VkViSurfaceCreateInfoNN
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkViSurfaceCreateFlagsNN
+    window::Ptr{Cvoid}
+end
+
+const PFN_vkCreateViSurfaceNN = Ptr{Cvoid}
+const VkXcbSurfaceCreateFlagsKHR = VkFlags
+
+struct VkXcbSurfaceCreateInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkXcbSurfaceCreateFlagsKHR
+    connection::Ptr{xcb_connection_t}
+    window::xcb_window_t
+end
+
+const PFN_vkCreateXcbSurfaceKHR = Ptr{Cvoid}
+const PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR = Ptr{Cvoid}
+const VkXlibSurfaceCreateFlagsKHR = VkFlags
+
+struct VkXlibSurfaceCreateInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkXlibSurfaceCreateFlagsKHR
+    dpy::Ptr{Display}
+    window::Window
+end
+
+const PFN_vkCreateXlibSurfaceKHR = Ptr{Cvoid}
+const PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR = Ptr{Cvoid}
+const PFN_vkAcquireXlibDisplayEXT = Ptr{Cvoid}
+const PFN_vkGetRandROutputDisplayEXT = Ptr{Cvoid}
+const VkDeferredOperationKHR_T = Cvoid
+const VkDeferredOperationKHR = Ptr{VkDeferredOperationKHR_T}
+
+struct VkDeferredOperationInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    operationHandle::VkDeferredOperationKHR
+end
+
+const PFN_vkCreateDeferredOperationKHR = Ptr{Cvoid}
+const PFN_vkDestroyDeferredOperationKHR = Ptr{Cvoid}
+const PFN_vkGetDeferredOperationMaxConcurrencyKHR = Ptr{Cvoid}
+const PFN_vkGetDeferredOperationResultKHR = Ptr{Cvoid}
+const PFN_vkDeferredOperationJoinKHR = Ptr{Cvoid}
+
+struct VkPipelineLibraryCreateInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    libraryCount::UInt32
+    pLibraries::Ptr{VkPipeline}
 end
 
 @cenum VkAccelerationStructureBuildTypeKHR::UInt32 begin
@@ -8406,77 +8575,77 @@ end
 
 
 struct VkDeviceOrHostAddressKHR
-    hostAddress::Ptr{Cvoid}
+    deviceAddress::VkDeviceAddress
 end
 
 struct VkDeviceOrHostAddressConstKHR
-    hostAddress::Ptr{Cvoid}
+    deviceAddress::VkDeviceAddress
 end
 
 struct VkAccelerationStructureBuildOffsetInfoKHR
-    primitiveCount::Cint
-    primitiveOffset::Cint
-    firstVertex::Cint
-    transformOffset::Cint
+    primitiveCount::UInt32
+    primitiveOffset::UInt32
+    firstVertex::UInt32
+    transformOffset::UInt32
 end
 
 struct VkRayTracingShaderGroupCreateInfoKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    type::Cint
-    generalShader::Cint
-    closestHitShader::Cint
-    anyHitShader::Cint
-    intersectionShader::Cint
+    type::VkRayTracingShaderGroupTypeKHR
+    generalShader::UInt32
+    closestHitShader::UInt32
+    anyHitShader::UInt32
+    intersectionShader::UInt32
     pShaderGroupCaptureReplayHandle::Ptr{Cvoid}
 end
 
 struct VkRayTracingPipelineInterfaceCreateInfoKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    maxPayloadSize::Cint
-    maxAttributeSize::Cint
-    maxCallableSize::Cint
+    maxPayloadSize::UInt32
+    maxAttributeSize::UInt32
+    maxCallableSize::UInt32
 end
 
 struct VkRayTracingPipelineCreateInfoKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    flags::Cint
-    stageCount::Cint
-    pStages::Ptr{Cint}
-    groupCount::Cint
+    flags::VkPipelineCreateFlags
+    stageCount::UInt32
+    pStages::Ptr{VkPipelineShaderStageCreateInfo}
+    groupCount::UInt32
     pGroups::Ptr{VkRayTracingShaderGroupCreateInfoKHR}
-    maxRecursionDepth::Cint
+    maxRecursionDepth::UInt32
     libraries::VkPipelineLibraryCreateInfoKHR
     pLibraryInterface::Ptr{VkRayTracingPipelineInterfaceCreateInfoKHR}
-    layout::Cint
-    basePipelineHandle::Cint
-    basePipelineIndex::Cint
+    layout::VkPipelineLayout
+    basePipelineHandle::VkPipeline
+    basePipelineIndex::Int32
 end
 
 struct VkAccelerationStructureGeometryTrianglesDataKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    vertexFormat::Cint
+    vertexFormat::VkFormat
     vertexData::VkDeviceOrHostAddressConstKHR
-    vertexStride::Cint
-    indexType::Cint
+    vertexStride::VkDeviceSize
+    indexType::VkIndexType
     indexData::VkDeviceOrHostAddressConstKHR
     transformData::VkDeviceOrHostAddressConstKHR
 end
 
 struct VkAccelerationStructureGeometryAabbsDataKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
     data::VkDeviceOrHostAddressConstKHR
-    stride::Cint
+    stride::VkDeviceSize
 end
 
 struct VkAccelerationStructureGeometryInstancesDataKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    arrayOfPointers::Cint
+    arrayOfPointers::VkBool32
     data::VkDeviceOrHostAddressConstKHR
 end
 
@@ -8485,132 +8654,149 @@ struct VkAccelerationStructureGeometryDataKHR
 end
 
 struct VkAccelerationStructureGeometryKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    geometryType::Cint
+    geometryType::VkGeometryTypeKHR
     geometry::VkAccelerationStructureGeometryDataKHR
-    flags::Cint
+    flags::VkGeometryFlagsKHR
 end
 
 struct VkAccelerationStructureBuildGeometryInfoKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    type::Cint
-    flags::Cint
-    update::Cint
-    srcAccelerationStructure::Cint
-    dstAccelerationStructure::Cint
-    geometryArrayOfPointers::Cint
-    geometryCount::Cint
+    type::VkAccelerationStructureTypeKHR
+    flags::VkBuildAccelerationStructureFlagsKHR
+    update::VkBool32
+    srcAccelerationStructure::VkAccelerationStructureKHR
+    dstAccelerationStructure::VkAccelerationStructureKHR
+    geometryArrayOfPointers::VkBool32
+    geometryCount::UInt32
     ppGeometries::Ptr{Ptr{VkAccelerationStructureGeometryKHR}}
     scratchData::VkDeviceOrHostAddressKHR
 end
 
 struct VkAccelerationStructureCreateGeometryTypeInfoKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    geometryType::Cint
-    maxPrimitiveCount::Cint
-    indexType::Cint
-    maxVertexCount::Cint
-    vertexFormat::Cint
-    allowsTransforms::Cint
+    geometryType::VkGeometryTypeKHR
+    maxPrimitiveCount::UInt32
+    indexType::VkIndexType
+    maxVertexCount::UInt32
+    vertexFormat::VkFormat
+    allowsTransforms::VkBool32
 end
 
 struct VkAccelerationStructureCreateInfoKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    compactedSize::Cint
-    type::Cint
-    flags::Cint
-    maxGeometryCount::Cint
+    compactedSize::VkDeviceSize
+    type::VkAccelerationStructureTypeKHR
+    flags::VkBuildAccelerationStructureFlagsKHR
+    maxGeometryCount::UInt32
     pGeometryInfos::Ptr{VkAccelerationStructureCreateGeometryTypeInfoKHR}
-    deviceAddress::Cint
+    deviceAddress::VkDeviceAddress
 end
 
 struct VkAccelerationStructureMemoryRequirementsInfoKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    type::Cint
+    type::VkAccelerationStructureMemoryRequirementsTypeKHR
     buildType::VkAccelerationStructureBuildTypeKHR
-    accelerationStructure::Cint
+    accelerationStructure::VkAccelerationStructureKHR
 end
 
 struct VkPhysicalDeviceRayTracingFeaturesKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    rayTracing::Cint
-    rayTracingShaderGroupHandleCaptureReplay::Cint
-    rayTracingShaderGroupHandleCaptureReplayMixed::Cint
-    rayTracingAccelerationStructureCaptureReplay::Cint
-    rayTracingIndirectTraceRays::Cint
-    rayTracingIndirectAccelerationStructureBuild::Cint
-    rayTracingHostAccelerationStructureCommands::Cint
-    rayQuery::Cint
-    rayTracingPrimitiveCulling::Cint
+    rayTracing::VkBool32
+    rayTracingShaderGroupHandleCaptureReplay::VkBool32
+    rayTracingShaderGroupHandleCaptureReplayMixed::VkBool32
+    rayTracingAccelerationStructureCaptureReplay::VkBool32
+    rayTracingIndirectTraceRays::VkBool32
+    rayTracingIndirectAccelerationStructureBuild::VkBool32
+    rayTracingHostAccelerationStructureCommands::VkBool32
+    rayQuery::VkBool32
+    rayTracingPrimitiveCulling::VkBool32
 end
 
 struct VkPhysicalDeviceRayTracingPropertiesKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    shaderGroupHandleSize::Cint
-    maxRecursionDepth::Cint
-    maxShaderGroupStride::Cint
-    shaderGroupBaseAlignment::Cint
-    maxGeometryCount::Cint
-    maxInstanceCount::Cint
-    maxPrimitiveCount::Cint
-    maxDescriptorSetAccelerationStructures::Cint
-    shaderGroupHandleCaptureReplaySize::Cint
+    shaderGroupHandleSize::UInt32
+    maxRecursionDepth::UInt32
+    maxShaderGroupStride::UInt32
+    shaderGroupBaseAlignment::UInt32
+    maxGeometryCount::UInt64
+    maxInstanceCount::UInt64
+    maxPrimitiveCount::UInt64
+    maxDescriptorSetAccelerationStructures::UInt32
+    shaderGroupHandleCaptureReplaySize::UInt32
 end
 
 struct VkAccelerationStructureDeviceAddressInfoKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    accelerationStructure::Cint
+    accelerationStructure::VkAccelerationStructureKHR
 end
 
 struct VkAccelerationStructureVersionKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    versionData::Ptr{Cint}
+    versionData::Ptr{UInt8}
 end
 
 struct VkStridedBufferRegionKHR
-    buffer::Cint
-    offset::Cint
-    stride::Cint
-    size::Cint
+    buffer::VkBuffer
+    offset::VkDeviceSize
+    stride::VkDeviceSize
+    size::VkDeviceSize
 end
 
 struct VkTraceRaysIndirectCommandKHR
-    width::Cint
-    height::Cint
-    depth::Cint
+    width::UInt32
+    height::UInt32
+    depth::UInt32
 end
 
 struct VkCopyAccelerationStructureToMemoryInfoKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    src::Cint
+    src::VkAccelerationStructureKHR
     dst::VkDeviceOrHostAddressKHR
-    mode::Cint
+    mode::VkCopyAccelerationStructureModeKHR
 end
 
 struct VkCopyMemoryToAccelerationStructureInfoKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
     src::VkDeviceOrHostAddressConstKHR
-    dst::Cint
-    mode::Cint
+    dst::VkAccelerationStructureKHR
+    mode::VkCopyAccelerationStructureModeKHR
 end
 
 struct VkCopyAccelerationStructureInfoKHR
-    sType::Cint
+    sType::VkStructureType
     pNext::Ptr{Cvoid}
-    src::Cint
-    dst::Cint
-    mode::Cint
+    src::VkAccelerationStructureKHR
+    dst::VkAccelerationStructureKHR
+    mode::VkCopyAccelerationStructureModeKHR
 end
 
-# Skipping Typedef: CXType_FunctionProto VKAPI_PTR
+const PFN_vkCreateAccelerationStructureKHR = Ptr{Cvoid}
+const PFN_vkGetAccelerationStructureMemoryRequirementsKHR = Ptr{Cvoid}
+const PFN_vkCmdBuildAccelerationStructureKHR = Ptr{Cvoid}
+const PFN_vkCmdBuildAccelerationStructureIndirectKHR = Ptr{Cvoid}
+const PFN_vkBuildAccelerationStructureKHR = Ptr{Cvoid}
+const PFN_vkCopyAccelerationStructureKHR = Ptr{Cvoid}
+const PFN_vkCopyAccelerationStructureToMemoryKHR = Ptr{Cvoid}
+const PFN_vkCopyMemoryToAccelerationStructureKHR = Ptr{Cvoid}
+const PFN_vkWriteAccelerationStructuresPropertiesKHR = Ptr{Cvoid}
+const PFN_vkCmdCopyAccelerationStructureKHR = Ptr{Cvoid}
+const PFN_vkCmdCopyAccelerationStructureToMemoryKHR = Ptr{Cvoid}
+const PFN_vkCmdCopyMemoryToAccelerationStructureKHR = Ptr{Cvoid}
+const PFN_vkCmdTraceRaysKHR = Ptr{Cvoid}
+const PFN_vkCreateRayTracingPipelinesKHR = Ptr{Cvoid}
+const PFN_vkGetAccelerationStructureDeviceAddressKHR = Ptr{Cvoid}
+const PFN_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR = Ptr{Cvoid}
+const PFN_vkCmdTraceRaysIndirectKHR = Ptr{Cvoid}
+const PFN_vkGetDeviceAccelerationStructureCompatibilityKHR = Ptr{Cvoid}
