@@ -1,4 +1,4 @@
-const xcb_connection_t = UInt32
+const xcb_connection_t = Cvoid
 const xcb_visualid_t = UInt32
 const xcb_window_t = UInt32
 const Window = UInt32

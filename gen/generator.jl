@@ -40,7 +40,7 @@ run(wc)
 
 # these types currently come from XCB and Xlib
 unknown_types = [
-    "xcb_connection_t" => "UInt32",
+    "xcb_connection_t" => "Cvoid",
     "xcb_visualid_t" => "UInt32",
     "xcb_window_t" => "UInt32",
     "Window" => "UInt32",
@@ -49,11 +49,28 @@ unknown_types = [
     "RROutput" => "UInt32",
 ]
 
-# Declare these types as const at the top of vk_common.jl
+# declare these types as const at the top of vk_common.jl
 vk_common_contents = readlines(common_file)
 open(common_file, "w") do io
     for (k, v) ∈ unknown_types
         write(io, "const $k = $v\n")
     end
     write(io, "\n" * join(vk_common_contents, "\n"))
+end
+
+api_str = join(readlines("vk_api.jl"), "\n")
+
+wrapped_funcs = String[]
+for func ∈ eachmatch(r"function (.*)\((.*)\)\n    (ccall.*)\nend", api_str)
+    name, args, body = func.captures
+    wrapped_func = """
+    function $name($args, fun_ptr)
+        $(replace(body, "(:$name, libvulkan)" => "fun_ptr"))
+    end
+    """
+    push!(wrapped_funcs, wrapped_func)
+end
+
+open("vk_api.jl", "a+") do io
+    write(io, "\n" * join(wrapped_funcs, "\n"))
 end

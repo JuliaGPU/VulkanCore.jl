@@ -1661,3 +1661,1663 @@ end
 function vkGetDeviceAccelerationStructureCompatibilityKHR(device, version)
     ccall((:vkGetDeviceAccelerationStructureCompatibilityKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAccelerationStructureVersionKHR}), device, version)
 end
+
+function vkCreateInstance(pCreateInfo, pAllocator, pInstance, fun_ptr)
+    ccall(fun_ptr, VkResult, (Ptr{VkInstanceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkInstance}), pCreateInfo, pAllocator, pInstance)
+end
+
+function vkDestroyInstance(instance, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkInstance, Ptr{VkAllocationCallbacks}), instance, pAllocator)
+end
+
+function vkEnumeratePhysicalDevices(instance, pPhysicalDeviceCount, pPhysicalDevices, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDevice}), instance, pPhysicalDeviceCount, pPhysicalDevices)
+end
+
+function vkGetPhysicalDeviceFeatures(physicalDevice, pFeatures, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures}), physicalDevice, pFeatures)
+end
+
+function vkGetPhysicalDeviceFormatProperties(physicalDevice, format, pFormatProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties}), physicalDevice, format, pFormatProperties)
+end
+
+function vkGetPhysicalDeviceImageFormatProperties(physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlags, VkImageCreateFlags, Ptr{VkImageFormatProperties}), physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties)
+end
+
+function vkGetPhysicalDeviceProperties(physicalDevice, pProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties}), physicalDevice, pProperties)
+end
+
+function vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
+end
+
+function vkGetPhysicalDeviceMemoryProperties(physicalDevice, pMemoryProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties}), physicalDevice, pMemoryProperties)
+end
+
+function vkGetInstanceProcAddr(instance, pName, fun_ptr)
+    ccall(fun_ptr, PFN_vkVoidFunction, (VkInstance, Cstring), instance, pName)
+end
+
+function vkGetDeviceProcAddr(device, pName, fun_ptr)
+    ccall(fun_ptr, PFN_vkVoidFunction, (VkDevice, Cstring), device, pName)
+end
+
+function vkCreateDevice(physicalDevice, pCreateInfo, pAllocator, pDevice, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkDeviceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDevice}), physicalDevice, pCreateInfo, pAllocator, pDevice)
+end
+
+function vkDestroyDevice(device, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkAllocationCallbacks}), device, pAllocator)
+end
+
+function vkEnumerateInstanceExtensionProperties(pLayerName, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (Cstring, Ptr{UInt32}, Ptr{VkExtensionProperties}), pLayerName, pPropertyCount, pProperties)
+end
+
+function vkEnumerateDeviceExtensionProperties(physicalDevice, pLayerName, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Cstring, Ptr{UInt32}, Ptr{VkExtensionProperties}), physicalDevice, pLayerName, pPropertyCount, pProperties)
+end
+
+function vkEnumerateInstanceLayerProperties(pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (Ptr{UInt32}, Ptr{VkLayerProperties}), pPropertyCount, pProperties)
+end
+
+function vkEnumerateDeviceLayerProperties(physicalDevice, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkLayerProperties}), physicalDevice, pPropertyCount, pProperties)
+end
+
+function vkGetDeviceQueue(device, queueFamilyIndex, queueIndex, pQueue, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, UInt32, UInt32, Ptr{VkQueue}), device, queueFamilyIndex, queueIndex, pQueue)
+end
+
+function vkQueueSubmit(queue, submitCount, pSubmits, fence, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkQueue, UInt32, Ptr{VkSubmitInfo}, VkFence), queue, submitCount, pSubmits, fence)
+end
+
+function vkQueueWaitIdle(queue, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkQueue,), queue)
+end
+
+function vkDeviceWaitIdle(device, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice,), device)
+end
+
+function vkAllocateMemory(device, pAllocateInfo, pAllocator, pMemory, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkMemoryAllocateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDeviceMemory}), device, pAllocateInfo, pAllocator, pMemory)
+end
+
+function vkFreeMemory(device, memory, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkDeviceMemory, Ptr{VkAllocationCallbacks}), device, memory, pAllocator)
+end
+
+function vkMapMemory(device, memory, offset, size, flags, ppData, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDeviceMemory, VkDeviceSize, VkDeviceSize, VkMemoryMapFlags, Ptr{Ptr{Cvoid}}), device, memory, offset, size, flags, ppData)
+end
+
+function vkUnmapMemory(device, memory, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkDeviceMemory), device, memory)
+end
+
+function vkFlushMappedMemoryRanges(device, memoryRangeCount, pMemoryRanges, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkMappedMemoryRange}), device, memoryRangeCount, pMemoryRanges)
+end
+
+function vkInvalidateMappedMemoryRanges(device, memoryRangeCount, pMemoryRanges, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkMappedMemoryRange}), device, memoryRangeCount, pMemoryRanges)
+end
+
+function vkGetDeviceMemoryCommitment(device, memory, pCommittedMemoryInBytes, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkDeviceMemory, Ptr{VkDeviceSize}), device, memory, pCommittedMemoryInBytes)
+end
+
+function vkBindBufferMemory(device, buffer, memory, memoryOffset, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkBuffer, VkDeviceMemory, VkDeviceSize), device, buffer, memory, memoryOffset)
+end
+
+function vkBindImageMemory(device, image, memory, memoryOffset, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkImage, VkDeviceMemory, VkDeviceSize), device, image, memory, memoryOffset)
+end
+
+function vkGetBufferMemoryRequirements(device, buffer, pMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkBuffer, Ptr{VkMemoryRequirements}), device, buffer, pMemoryRequirements)
+end
+
+function vkGetImageMemoryRequirements(device, image, pMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkImage, Ptr{VkMemoryRequirements}), device, image, pMemoryRequirements)
+end
+
+function vkGetImageSparseMemoryRequirements(device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkImage, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements}), device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
+end
+
+function vkGetPhysicalDeviceSparseImageFormatProperties(physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, VkFormat, VkImageType, VkSampleCountFlagBits, VkImageUsageFlags, VkImageTiling, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties}), physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties)
+end
+
+function vkQueueBindSparse(queue, bindInfoCount, pBindInfo, fence, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkQueue, UInt32, Ptr{VkBindSparseInfo}, VkFence), queue, bindInfoCount, pBindInfo, fence)
+end
+
+function vkCreateFence(device, pCreateInfo, pAllocator, pFence, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkFenceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, pCreateInfo, pAllocator, pFence)
+end
+
+function vkDestroyFence(device, fence, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkFence, Ptr{VkAllocationCallbacks}), device, fence, pAllocator)
+end
+
+function vkResetFences(device, fenceCount, pFences, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkFence}), device, fenceCount, pFences)
+end
+
+function vkGetFenceStatus(device, fence, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkFence), device, fence)
+end
+
+function vkWaitForFences(device, fenceCount, pFences, waitAll, timeout, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkFence}, VkBool32, UInt64), device, fenceCount, pFences, waitAll, timeout)
+end
+
+function vkCreateSemaphore(device, pCreateInfo, pAllocator, pSemaphore, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSemaphore}), device, pCreateInfo, pAllocator, pSemaphore)
+end
+
+function vkDestroySemaphore(device, semaphore, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkSemaphore, Ptr{VkAllocationCallbacks}), device, semaphore, pAllocator)
+end
+
+function vkCreateEvent(device, pCreateInfo, pAllocator, pEvent, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkEventCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkEvent}), device, pCreateInfo, pAllocator, pEvent)
+end
+
+function vkDestroyEvent(device, event, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkEvent, Ptr{VkAllocationCallbacks}), device, event, pAllocator)
+end
+
+function vkGetEventStatus(device, event, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkEvent), device, event)
+end
+
+function vkSetEvent(device, event, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkEvent), device, event)
+end
+
+function vkResetEvent(device, event, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkEvent), device, event)
+end
+
+function vkCreateQueryPool(device, pCreateInfo, pAllocator, pQueryPool, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkQueryPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkQueryPool}), device, pCreateInfo, pAllocator, pQueryPool)
+end
+
+function vkDestroyQueryPool(device, queryPool, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkQueryPool, Ptr{VkAllocationCallbacks}), device, queryPool, pAllocator)
+end
+
+function vkGetQueryPoolResults(device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkQueryPool, UInt32, UInt32, Csize_t, Ptr{Cvoid}, VkDeviceSize, VkQueryResultFlags), device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags)
+end
+
+function vkCreateBuffer(device, pCreateInfo, pAllocator, pBuffer, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkBufferCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkBuffer}), device, pCreateInfo, pAllocator, pBuffer)
+end
+
+function vkDestroyBuffer(device, buffer, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkBuffer, Ptr{VkAllocationCallbacks}), device, buffer, pAllocator)
+end
+
+function vkCreateBufferView(device, pCreateInfo, pAllocator, pView, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkBufferViewCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkBufferView}), device, pCreateInfo, pAllocator, pView)
+end
+
+function vkDestroyBufferView(device, bufferView, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkBufferView, Ptr{VkAllocationCallbacks}), device, bufferView, pAllocator)
+end
+
+function vkCreateImage(device, pCreateInfo, pAllocator, pImage, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImageCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkImage}), device, pCreateInfo, pAllocator, pImage)
+end
+
+function vkDestroyImage(device, image, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkImage, Ptr{VkAllocationCallbacks}), device, image, pAllocator)
+end
+
+function vkGetImageSubresourceLayout(device, image, pSubresource, pLayout, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkImage, Ptr{VkImageSubresource}, Ptr{VkSubresourceLayout}), device, image, pSubresource, pLayout)
+end
+
+function vkCreateImageView(device, pCreateInfo, pAllocator, pView, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImageViewCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkImageView}), device, pCreateInfo, pAllocator, pView)
+end
+
+function vkDestroyImageView(device, imageView, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkImageView, Ptr{VkAllocationCallbacks}), device, imageView, pAllocator)
+end
+
+function vkCreateShaderModule(device, pCreateInfo, pAllocator, pShaderModule, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkShaderModuleCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkShaderModule}), device, pCreateInfo, pAllocator, pShaderModule)
+end
+
+function vkDestroyShaderModule(device, shaderModule, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkShaderModule, Ptr{VkAllocationCallbacks}), device, shaderModule, pAllocator)
+end
+
+function vkCreatePipelineCache(device, pCreateInfo, pAllocator, pPipelineCache, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPipelineCacheCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipelineCache}), device, pCreateInfo, pAllocator, pPipelineCache)
+end
+
+function vkDestroyPipelineCache(device, pipelineCache, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkPipelineCache, Ptr{VkAllocationCallbacks}), device, pipelineCache, pAllocator)
+end
+
+function vkGetPipelineCacheData(device, pipelineCache, pDataSize, pData, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, Ptr{Csize_t}, Ptr{Cvoid}), device, pipelineCache, pDataSize, pData)
+end
+
+function vkMergePipelineCaches(device, dstCache, srcCacheCount, pSrcCaches, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkPipelineCache}), device, dstCache, srcCacheCount, pSrcCaches)
+end
+
+function vkCreateGraphicsPipelines(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkGraphicsPipelineCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+end
+
+function vkCreateComputePipelines(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkComputePipelineCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+end
+
+function vkDestroyPipeline(device, pipeline, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkPipeline, Ptr{VkAllocationCallbacks}), device, pipeline, pAllocator)
+end
+
+function vkCreatePipelineLayout(device, pCreateInfo, pAllocator, pPipelineLayout, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPipelineLayoutCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipelineLayout}), device, pCreateInfo, pAllocator, pPipelineLayout)
+end
+
+function vkDestroyPipelineLayout(device, pipelineLayout, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkPipelineLayout, Ptr{VkAllocationCallbacks}), device, pipelineLayout, pAllocator)
+end
+
+function vkCreateSampler(device, pCreateInfo, pAllocator, pSampler, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSamplerCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSampler}), device, pCreateInfo, pAllocator, pSampler)
+end
+
+function vkDestroySampler(device, sampler, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkSampler, Ptr{VkAllocationCallbacks}), device, sampler, pAllocator)
+end
+
+function vkCreateDescriptorSetLayout(device, pCreateInfo, pAllocator, pSetLayout, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorSetLayout}), device, pCreateInfo, pAllocator, pSetLayout)
+end
+
+function vkDestroyDescriptorSetLayout(device, descriptorSetLayout, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkDescriptorSetLayout, Ptr{VkAllocationCallbacks}), device, descriptorSetLayout, pAllocator)
+end
+
+function vkCreateDescriptorPool(device, pCreateInfo, pAllocator, pDescriptorPool, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDescriptorPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorPool}), device, pCreateInfo, pAllocator, pDescriptorPool)
+end
+
+function vkDestroyDescriptorPool(device, descriptorPool, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkDescriptorPool, Ptr{VkAllocationCallbacks}), device, descriptorPool, pAllocator)
+end
+
+function vkResetDescriptorPool(device, descriptorPool, flags, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDescriptorPool, VkDescriptorPoolResetFlags), device, descriptorPool, flags)
+end
+
+function vkAllocateDescriptorSets(device, pAllocateInfo, pDescriptorSets, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDescriptorSetAllocateInfo}, Ptr{VkDescriptorSet}), device, pAllocateInfo, pDescriptorSets)
+end
+
+function vkFreeDescriptorSets(device, descriptorPool, descriptorSetCount, pDescriptorSets, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDescriptorPool, UInt32, Ptr{VkDescriptorSet}), device, descriptorPool, descriptorSetCount, pDescriptorSets)
+end
+
+function vkUpdateDescriptorSets(device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, UInt32, Ptr{VkWriteDescriptorSet}, UInt32, Ptr{VkCopyDescriptorSet}), device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies)
+end
+
+function vkCreateFramebuffer(device, pCreateInfo, pAllocator, pFramebuffer, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkFramebufferCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkFramebuffer}), device, pCreateInfo, pAllocator, pFramebuffer)
+end
+
+function vkDestroyFramebuffer(device, framebuffer, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkFramebuffer, Ptr{VkAllocationCallbacks}), device, framebuffer, pAllocator)
+end
+
+function vkCreateRenderPass(device, pCreateInfo, pAllocator, pRenderPass, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
+end
+
+function vkDestroyRenderPass(device, renderPass, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkRenderPass, Ptr{VkAllocationCallbacks}), device, renderPass, pAllocator)
+end
+
+function vkGetRenderAreaGranularity(device, renderPass, pGranularity, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkRenderPass, Ptr{VkExtent2D}), device, renderPass, pGranularity)
+end
+
+function vkCreateCommandPool(device, pCreateInfo, pAllocator, pCommandPool, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCommandPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkCommandPool}), device, pCreateInfo, pAllocator, pCommandPool)
+end
+
+function vkDestroyCommandPool(device, commandPool, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkCommandPool, Ptr{VkAllocationCallbacks}), device, commandPool, pAllocator)
+end
+
+function vkResetCommandPool(device, commandPool, flags, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkCommandPool, VkCommandPoolResetFlags), device, commandPool, flags)
+end
+
+function vkAllocateCommandBuffers(device, pAllocateInfo, pCommandBuffers, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCommandBufferAllocateInfo}, Ptr{VkCommandBuffer}), device, pAllocateInfo, pCommandBuffers)
+end
+
+function vkFreeCommandBuffers(device, commandPool, commandBufferCount, pCommandBuffers, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkCommandPool, UInt32, Ptr{VkCommandBuffer}), device, commandPool, commandBufferCount, pCommandBuffers)
+end
+
+function vkBeginCommandBuffer(commandBuffer, pBeginInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkCommandBuffer, Ptr{VkCommandBufferBeginInfo}), commandBuffer, pBeginInfo)
+end
+
+function vkEndCommandBuffer(commandBuffer, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkCommandBuffer,), commandBuffer)
+end
+
+function vkResetCommandBuffer(commandBuffer, flags, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkCommandBuffer, VkCommandBufferResetFlags), commandBuffer, flags)
+end
+
+function vkCmdBindPipeline(commandBuffer, pipelineBindPoint, pipeline, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipeline), commandBuffer, pipelineBindPoint, pipeline)
+end
+
+function vkCmdSetViewport(commandBuffer, firstViewport, viewportCount, pViewports, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkViewport}), commandBuffer, firstViewport, viewportCount, pViewports)
+end
+
+function vkCmdSetScissor(commandBuffer, firstScissor, scissorCount, pScissors, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstScissor, scissorCount, pScissors)
+end
+
+function vkCmdSetLineWidth(commandBuffer, lineWidth, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Cfloat), commandBuffer, lineWidth)
+end
+
+function vkCmdSetDepthBias(commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Cfloat, Cfloat, Cfloat), commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor)
+end
+
+function vkCmdSetBlendConstants(commandBuffer, blendConstants, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{Cfloat}), commandBuffer, blendConstants)
+end
+
+function vkCmdSetDepthBounds(commandBuffer, minDepthBounds, maxDepthBounds, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Cfloat, Cfloat), commandBuffer, minDepthBounds, maxDepthBounds)
+end
+
+function vkCmdSetStencilCompareMask(commandBuffer, faceMask, compareMask, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, compareMask)
+end
+
+function vkCmdSetStencilWriteMask(commandBuffer, faceMask, writeMask, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, writeMask)
+end
+
+function vkCmdSetStencilReference(commandBuffer, faceMask, reference, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, reference)
+end
+
+function vkCmdBindDescriptorSets(commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, UInt32, UInt32, Ptr{VkDescriptorSet}, UInt32, Ptr{UInt32}), commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets)
+end
+
+function vkCmdBindIndexBuffer(commandBuffer, buffer, offset, indexType, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkIndexType), commandBuffer, buffer, offset, indexType)
+end
+
+function vkCmdBindVertexBuffers(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets)
+end
+
+function vkCmdDraw(commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32), commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance)
+end
+
+function vkCmdDrawIndexed(commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, Int32, UInt32), commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance)
+end
+
+function vkCmdDrawIndirect(commandBuffer, buffer, offset, drawCount, stride, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
+end
+
+function vkCmdDrawIndexedIndirect(commandBuffer, buffer, offset, drawCount, stride, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
+end
+
+function vkCmdDispatch(commandBuffer, groupCountX, groupCountY, groupCountZ, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32), commandBuffer, groupCountX, groupCountY, groupCountZ)
+end
+
+function vkCmdDispatchIndirect(commandBuffer, buffer, offset, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize), commandBuffer, buffer, offset)
+end
+
+function vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkBuffer, UInt32, Ptr{VkBufferCopy}), commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions)
+end
+
+function vkCmdCopyImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageCopy}), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions)
+end
+
+function vkCmdBlitImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageBlit}, VkFilter), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter)
+end
+
+function vkCmdCopyBufferToImage(commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, UInt32, Ptr{VkBufferImageCopy}), commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions)
+end
+
+function vkCmdCopyImageToBuffer(commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkBuffer, UInt32, Ptr{VkBufferImageCopy}), commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions)
+end
+
+function vkCmdUpdateBuffer(commandBuffer, dstBuffer, dstOffset, dataSize, pData, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkDeviceSize, Ptr{Cvoid}), commandBuffer, dstBuffer, dstOffset, dataSize, pData)
+end
+
+function vkCmdFillBuffer(commandBuffer, dstBuffer, dstOffset, size, data, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkDeviceSize, UInt32), commandBuffer, dstBuffer, dstOffset, size, data)
+end
+
+function vkCmdClearColorImage(commandBuffer, image, imageLayout, pColor, rangeCount, pRanges, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, Ptr{VkClearColorValue}, UInt32, Ptr{VkImageSubresourceRange}), commandBuffer, image, imageLayout, pColor, rangeCount, pRanges)
+end
+
+function vkCmdClearDepthStencilImage(commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, Ptr{VkClearDepthStencilValue}, UInt32, Ptr{VkImageSubresourceRange}), commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges)
+end
+
+function vkCmdClearAttachments(commandBuffer, attachmentCount, pAttachments, rectCount, pRects, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkClearAttachment}, UInt32, Ptr{VkClearRect}), commandBuffer, attachmentCount, pAttachments, rectCount, pRects)
+end
+
+function vkCmdResolveImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageResolve}), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions)
+end
+
+function vkCmdSetEvent(commandBuffer, event, stageMask, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkEvent, VkPipelineStageFlags), commandBuffer, event, stageMask)
+end
+
+function vkCmdResetEvent(commandBuffer, event, stageMask, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkEvent, VkPipelineStageFlags), commandBuffer, event, stageMask)
+end
+
+function vkCmdWaitEvents(commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkEvent}, VkPipelineStageFlags, VkPipelineStageFlags, UInt32, Ptr{VkMemoryBarrier}, UInt32, Ptr{VkBufferMemoryBarrier}, UInt32, Ptr{VkImageMemoryBarrier}), commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
+end
+
+function vkCmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineStageFlags, VkPipelineStageFlags, VkDependencyFlags, UInt32, Ptr{VkMemoryBarrier}, UInt32, Ptr{VkBufferMemoryBarrier}, UInt32, Ptr{VkImageMemoryBarrier}), commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
+end
+
+function vkCmdBeginQuery(commandBuffer, queryPool, query, flags, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, VkQueryControlFlags), commandBuffer, queryPool, query, flags)
+end
+
+function vkCmdEndQuery(commandBuffer, queryPool, query, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkQueryPool, UInt32), commandBuffer, queryPool, query)
+end
+
+function vkCmdResetQueryPool(commandBuffer, queryPool, firstQuery, queryCount, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32), commandBuffer, queryPool, firstQuery, queryCount)
+end
+
+function vkCmdWriteTimestamp(commandBuffer, pipelineStage, queryPool, query, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineStageFlagBits, VkQueryPool, UInt32), commandBuffer, pipelineStage, queryPool, query)
+end
+
+function vkCmdCopyQueryPoolResults(commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32, VkBuffer, VkDeviceSize, VkDeviceSize, VkQueryResultFlags), commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags)
+end
+
+function vkCmdPushConstants(commandBuffer, layout, stageFlags, offset, size, pValues, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineLayout, VkShaderStageFlags, UInt32, UInt32, Ptr{Cvoid}), commandBuffer, layout, stageFlags, offset, size, pValues)
+end
+
+function vkCmdBeginRenderPass(commandBuffer, pRenderPassBegin, contents, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, VkSubpassContents), commandBuffer, pRenderPassBegin, contents)
+end
+
+function vkCmdNextSubpass(commandBuffer, contents, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkSubpassContents), commandBuffer, contents)
+end
+
+function vkCmdEndRenderPass(commandBuffer, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer,), commandBuffer)
+end
+
+function vkCmdExecuteCommands(commandBuffer, commandBufferCount, pCommandBuffers, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkCommandBuffer}), commandBuffer, commandBufferCount, pCommandBuffers)
+end
+
+function vkEnumerateInstanceVersion(pApiVersion, fun_ptr)
+    ccall(fun_ptr, VkResult, (Ptr{UInt32},), pApiVersion)
+end
+
+function vkBindBufferMemory2(device, bindInfoCount, pBindInfos, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindBufferMemoryInfo}), device, bindInfoCount, pBindInfos)
+end
+
+function vkBindImageMemory2(device, bindInfoCount, pBindInfos, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindImageMemoryInfo}), device, bindInfoCount, pBindInfos)
+end
+
+function vkGetDeviceGroupPeerMemoryFeatures(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, UInt32, UInt32, UInt32, Ptr{VkPeerMemoryFeatureFlags}), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
+end
+
+function vkCmdSetDeviceMask(commandBuffer, deviceMask, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32), commandBuffer, deviceMask)
+end
+
+function vkCmdDispatchBase(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
+end
+
+function vkEnumeratePhysicalDeviceGroups(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDeviceGroupProperties}), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
+end
+
+function vkGetImageMemoryRequirements2(device, pInfo, pMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkImageMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+end
+
+function vkGetBufferMemoryRequirements2(device, pInfo, pMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkBufferMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+end
+
+function vkGetImageSparseMemoryRequirements2(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkImageSparseMemoryRequirementsInfo2}, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements2}), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
+end
+
+function vkGetPhysicalDeviceFeatures2(physicalDevice, pFeatures, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures2}), physicalDevice, pFeatures)
+end
+
+function vkGetPhysicalDeviceProperties2(physicalDevice, pProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties2}), physicalDevice, pProperties)
+end
+
+function vkGetPhysicalDeviceFormatProperties2(physicalDevice, format, pFormatProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties2}), physicalDevice, format, pFormatProperties)
+end
+
+function vkGetPhysicalDeviceImageFormatProperties2(physicalDevice, pImageFormatInfo, pImageFormatProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceImageFormatInfo2}, Ptr{VkImageFormatProperties2}), physicalDevice, pImageFormatInfo, pImageFormatProperties)
+end
+
+function vkGetPhysicalDeviceQueueFamilyProperties2(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties2}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
+end
+
+function vkGetPhysicalDeviceMemoryProperties2(physicalDevice, pMemoryProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties2}), physicalDevice, pMemoryProperties)
+end
+
+function vkGetPhysicalDeviceSparseImageFormatProperties2(physicalDevice, pFormatInfo, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSparseImageFormatInfo2}, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties2}), physicalDevice, pFormatInfo, pPropertyCount, pProperties)
+end
+
+function vkTrimCommandPool(device, commandPool, flags, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkCommandPool, VkCommandPoolTrimFlags), device, commandPool, flags)
+end
+
+function vkGetDeviceQueue2(device, pQueueInfo, pQueue, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkDeviceQueueInfo2}, Ptr{VkQueue}), device, pQueueInfo, pQueue)
+end
+
+function vkCreateSamplerYcbcrConversion(device, pCreateInfo, pAllocator, pYcbcrConversion, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSamplerYcbcrConversionCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSamplerYcbcrConversion}), device, pCreateInfo, pAllocator, pYcbcrConversion)
+end
+
+function vkDestroySamplerYcbcrConversion(device, ycbcrConversion, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkSamplerYcbcrConversion, Ptr{VkAllocationCallbacks}), device, ycbcrConversion, pAllocator)
+end
+
+function vkCreateDescriptorUpdateTemplate(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDescriptorUpdateTemplateCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorUpdateTemplate}), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
+end
+
+function vkDestroyDescriptorUpdateTemplate(device, descriptorUpdateTemplate, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkDescriptorUpdateTemplate, Ptr{VkAllocationCallbacks}), device, descriptorUpdateTemplate, pAllocator)
+end
+
+function vkUpdateDescriptorSetWithTemplate(device, descriptorSet, descriptorUpdateTemplate, pData, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, Ptr{Cvoid}), device, descriptorSet, descriptorUpdateTemplate, pData)
+end
+
+function vkGetPhysicalDeviceExternalBufferProperties(physicalDevice, pExternalBufferInfo, pExternalBufferProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalBufferInfo}, Ptr{VkExternalBufferProperties}), physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
+end
+
+function vkGetPhysicalDeviceExternalFenceProperties(physicalDevice, pExternalFenceInfo, pExternalFenceProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalFenceInfo}, Ptr{VkExternalFenceProperties}), physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
+end
+
+function vkGetPhysicalDeviceExternalSemaphoreProperties(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalSemaphoreInfo}, Ptr{VkExternalSemaphoreProperties}), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
+end
+
+function vkGetDescriptorSetLayoutSupport(device, pCreateInfo, pSupport, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkDescriptorSetLayoutSupport}), device, pCreateInfo, pSupport)
+end
+
+function vkCmdDrawIndirectCount(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+end
+
+function vkCmdDrawIndexedIndirectCount(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+end
+
+function vkCreateRenderPass2(device, pCreateInfo, pAllocator, pRenderPass, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo2}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
+end
+
+function vkCmdBeginRenderPass2(commandBuffer, pRenderPassBegin, pSubpassBeginInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, Ptr{VkSubpassBeginInfo}), commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
+end
+
+function vkCmdNextSubpass2(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkSubpassBeginInfo}, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassBeginInfo, pSubpassEndInfo)
+end
+
+function vkCmdEndRenderPass2(commandBuffer, pSubpassEndInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassEndInfo)
+end
+
+function vkResetQueryPool(device, queryPool, firstQuery, queryCount, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
+end
+
+function vkGetSemaphoreCounterValue(device, semaphore, pValue, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkSemaphore, Ptr{UInt64}), device, semaphore, pValue)
+end
+
+function vkWaitSemaphores(device, pWaitInfo, timeout, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreWaitInfo}, UInt64), device, pWaitInfo, timeout)
+end
+
+function vkSignalSemaphore(device, pSignalInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreSignalInfo}), device, pSignalInfo)
+end
+
+function vkGetBufferDeviceAddress(device, pInfo, fun_ptr)
+    ccall(fun_ptr, VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+end
+
+function vkGetBufferOpaqueCaptureAddress(device, pInfo, fun_ptr)
+    ccall(fun_ptr, UInt64, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+end
+
+function vkGetDeviceMemoryOpaqueCaptureAddress(device, pInfo, fun_ptr)
+    ccall(fun_ptr, UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
+end
+
+function vkDestroySurfaceKHR(instance, surface, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkInstance, VkSurfaceKHR, Ptr{VkAllocationCallbacks}), instance, surface, pAllocator)
+end
+
+function vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, queueFamilyIndex, surface, pSupported, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, UInt32, VkSurfaceKHR, Ptr{VkBool32}), physicalDevice, queueFamilyIndex, surface, pSupported)
+end
+
+function vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, surface, pSurfaceCapabilities, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{VkSurfaceCapabilitiesKHR}), physicalDevice, surface, pSurfaceCapabilities)
+end
+
+function vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkSurfaceFormatKHR}), physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats)
+end
+
+function vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, pPresentModeCount, pPresentModes, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, surface, pPresentModeCount, pPresentModes)
+end
+
+function vkCreateSwapchainKHR(device, pCreateInfo, pAllocator, pSwapchain, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSwapchainCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSwapchainKHR}), device, pCreateInfo, pAllocator, pSwapchain)
+end
+
+function vkDestroySwapchainKHR(device, swapchain, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkSwapchainKHR, Ptr{VkAllocationCallbacks}), device, swapchain, pAllocator)
+end
+
+function vkGetSwapchainImagesKHR(device, swapchain, pSwapchainImageCount, pSwapchainImages, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR, Ptr{UInt32}, Ptr{VkImage}), device, swapchain, pSwapchainImageCount, pSwapchainImages)
+end
+
+function vkAcquireNextImageKHR(device, swapchain, timeout, semaphore, fence, pImageIndex, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR, UInt64, VkSemaphore, VkFence, Ptr{UInt32}), device, swapchain, timeout, semaphore, fence, pImageIndex)
+end
+
+function vkQueuePresentKHR(queue, pPresentInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkQueue, Ptr{VkPresentInfoKHR}), queue, pPresentInfo)
+end
+
+function vkGetDeviceGroupPresentCapabilitiesKHR(device, pDeviceGroupPresentCapabilities, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDeviceGroupPresentCapabilitiesKHR}), device, pDeviceGroupPresentCapabilities)
+end
+
+function vkGetDeviceGroupSurfacePresentModesKHR(device, surface, pModes, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkSurfaceKHR, Ptr{VkDeviceGroupPresentModeFlagsKHR}), device, surface, pModes)
+end
+
+function vkGetPhysicalDevicePresentRectanglesKHR(physicalDevice, surface, pRectCount, pRects, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkRect2D}), physicalDevice, surface, pRectCount, pRects)
+end
+
+function vkAcquireNextImage2KHR(device, pAcquireInfo, pImageIndex, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAcquireNextImageInfoKHR}, Ptr{UInt32}), device, pAcquireInfo, pImageIndex)
+end
+
+function vkGetPhysicalDeviceDisplayPropertiesKHR(physicalDevice, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPropertiesKHR}), physicalDevice, pPropertyCount, pProperties)
+end
+
+function vkGetPhysicalDeviceDisplayPlanePropertiesKHR(physicalDevice, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPlanePropertiesKHR}), physicalDevice, pPropertyCount, pProperties)
+end
+
+function vkGetDisplayPlaneSupportedDisplaysKHR(physicalDevice, planeIndex, pDisplayCount, pDisplays, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, UInt32, Ptr{UInt32}, Ptr{VkDisplayKHR}), physicalDevice, planeIndex, pDisplayCount, pDisplays)
+end
+
+function vkGetDisplayModePropertiesKHR(physicalDevice, display, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{UInt32}, Ptr{VkDisplayModePropertiesKHR}), physicalDevice, display, pPropertyCount, pProperties)
+end
+
+function vkCreateDisplayModeKHR(physicalDevice, display, pCreateInfo, pAllocator, pMode, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{VkDisplayModeCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkDisplayModeKHR}), physicalDevice, display, pCreateInfo, pAllocator, pMode)
+end
+
+function vkGetDisplayPlaneCapabilitiesKHR(physicalDevice, mode, planeIndex, pCapabilities, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkDisplayModeKHR, UInt32, Ptr{VkDisplayPlaneCapabilitiesKHR}), physicalDevice, mode, planeIndex, pCapabilities)
+end
+
+function vkCreateDisplayPlaneSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkDisplaySurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkCreateSharedSwapchainsKHR(device, swapchainCount, pCreateInfos, pAllocator, pSwapchains, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkSwapchainCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSwapchainKHR}), device, swapchainCount, pCreateInfos, pAllocator, pSwapchains)
+end
+
+function vkGetPhysicalDeviceFeatures2KHR(physicalDevice, pFeatures, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures2}), physicalDevice, pFeatures)
+end
+
+function vkGetPhysicalDeviceProperties2KHR(physicalDevice, pProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties2}), physicalDevice, pProperties)
+end
+
+function vkGetPhysicalDeviceFormatProperties2KHR(physicalDevice, format, pFormatProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties2}), physicalDevice, format, pFormatProperties)
+end
+
+function vkGetPhysicalDeviceImageFormatProperties2KHR(physicalDevice, pImageFormatInfo, pImageFormatProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceImageFormatInfo2}, Ptr{VkImageFormatProperties2}), physicalDevice, pImageFormatInfo, pImageFormatProperties)
+end
+
+function vkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties2}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
+end
+
+function vkGetPhysicalDeviceMemoryProperties2KHR(physicalDevice, pMemoryProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties2}), physicalDevice, pMemoryProperties)
+end
+
+function vkGetPhysicalDeviceSparseImageFormatProperties2KHR(physicalDevice, pFormatInfo, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSparseImageFormatInfo2}, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties2}), physicalDevice, pFormatInfo, pPropertyCount, pProperties)
+end
+
+function vkGetDeviceGroupPeerMemoryFeaturesKHR(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, UInt32, UInt32, UInt32, Ptr{VkPeerMemoryFeatureFlags}), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
+end
+
+function vkCmdSetDeviceMaskKHR(commandBuffer, deviceMask, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32), commandBuffer, deviceMask)
+end
+
+function vkCmdDispatchBaseKHR(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
+end
+
+function vkTrimCommandPoolKHR(device, commandPool, flags, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkCommandPool, VkCommandPoolTrimFlags), device, commandPool, flags)
+end
+
+function vkEnumeratePhysicalDeviceGroupsKHR(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDeviceGroupProperties}), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
+end
+
+function vkGetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevice, pExternalBufferInfo, pExternalBufferProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalBufferInfo}, Ptr{VkExternalBufferProperties}), physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
+end
+
+function vkGetMemoryFdKHR(device, pGetFdInfo, pFd, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkMemoryGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
+end
+
+function vkGetMemoryFdPropertiesKHR(device, handleType, fd, pMemoryFdProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryFdPropertiesKHR}), device, handleType, fd, pMemoryFdProperties)
+end
+
+function vkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalSemaphoreInfo}, Ptr{VkExternalSemaphoreProperties}), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
+end
+
+function vkImportSemaphoreFdKHR(device, pImportSemaphoreFdInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImportSemaphoreFdInfoKHR}), device, pImportSemaphoreFdInfo)
+end
+
+function vkGetSemaphoreFdKHR(device, pGetFdInfo, pFd, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
+end
+
+function vkCmdPushDescriptorSetKHR(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, UInt32, UInt32, Ptr{VkWriteDescriptorSet}), commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites)
+end
+
+function vkCmdPushDescriptorSetWithTemplateKHR(commandBuffer, descriptorUpdateTemplate, layout, set, pData, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkDescriptorUpdateTemplate, VkPipelineLayout, UInt32, Ptr{Cvoid}), commandBuffer, descriptorUpdateTemplate, layout, set, pData)
+end
+
+function vkCreateDescriptorUpdateTemplateKHR(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDescriptorUpdateTemplateCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorUpdateTemplate}), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
+end
+
+function vkDestroyDescriptorUpdateTemplateKHR(device, descriptorUpdateTemplate, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkDescriptorUpdateTemplate, Ptr{VkAllocationCallbacks}), device, descriptorUpdateTemplate, pAllocator)
+end
+
+function vkUpdateDescriptorSetWithTemplateKHR(device, descriptorSet, descriptorUpdateTemplate, pData, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, Ptr{Cvoid}), device, descriptorSet, descriptorUpdateTemplate, pData)
+end
+
+function vkCreateRenderPass2KHR(device, pCreateInfo, pAllocator, pRenderPass, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo2}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
+end
+
+function vkCmdBeginRenderPass2KHR(commandBuffer, pRenderPassBegin, pSubpassBeginInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, Ptr{VkSubpassBeginInfo}), commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
+end
+
+function vkCmdNextSubpass2KHR(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkSubpassBeginInfo}, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassBeginInfo, pSubpassEndInfo)
+end
+
+function vkCmdEndRenderPass2KHR(commandBuffer, pSubpassEndInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassEndInfo)
+end
+
+function vkGetSwapchainStatusKHR(device, swapchain, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
+end
+
+function vkGetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice, pExternalFenceInfo, pExternalFenceProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalFenceInfo}, Ptr{VkExternalFenceProperties}), physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
+end
+
+function vkImportFenceFdKHR(device, pImportFenceFdInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImportFenceFdInfoKHR}), device, pImportFenceFdInfo)
+end
+
+function vkGetFenceFdKHR(device, pGetFdInfo, pFd, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkFenceGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
+end
+
+function vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR(physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, UInt32, Ptr{UInt32}, Ptr{VkPerformanceCounterKHR}, Ptr{VkPerformanceCounterDescriptionKHR}), physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions)
+end
+
+function vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR(physicalDevice, pPerformanceQueryCreateInfo, pNumPasses, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkQueryPoolPerformanceCreateInfoKHR}, Ptr{UInt32}), physicalDevice, pPerformanceQueryCreateInfo, pNumPasses)
+end
+
+function vkAcquireProfilingLockKHR(device, pInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAcquireProfilingLockInfoKHR}), device, pInfo)
+end
+
+function vkReleaseProfilingLockKHR(device, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice,), device)
+end
+
+function vkGetPhysicalDeviceSurfaceCapabilities2KHR(physicalDevice, pSurfaceInfo, pSurfaceCapabilities, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{VkSurfaceCapabilities2KHR}), physicalDevice, pSurfaceInfo, pSurfaceCapabilities)
+end
+
+function vkGetPhysicalDeviceSurfaceFormats2KHR(physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{UInt32}, Ptr{VkSurfaceFormat2KHR}), physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats)
+end
+
+function vkGetPhysicalDeviceDisplayProperties2KHR(physicalDevice, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayProperties2KHR}), physicalDevice, pPropertyCount, pProperties)
+end
+
+function vkGetPhysicalDeviceDisplayPlaneProperties2KHR(physicalDevice, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPlaneProperties2KHR}), physicalDevice, pPropertyCount, pProperties)
+end
+
+function vkGetDisplayModeProperties2KHR(physicalDevice, display, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{UInt32}, Ptr{VkDisplayModeProperties2KHR}), physicalDevice, display, pPropertyCount, pProperties)
+end
+
+function vkGetDisplayPlaneCapabilities2KHR(physicalDevice, pDisplayPlaneInfo, pCapabilities, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkDisplayPlaneInfo2KHR}, Ptr{VkDisplayPlaneCapabilities2KHR}), physicalDevice, pDisplayPlaneInfo, pCapabilities)
+end
+
+function vkGetImageMemoryRequirements2KHR(device, pInfo, pMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkImageMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+end
+
+function vkGetBufferMemoryRequirements2KHR(device, pInfo, pMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkBufferMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+end
+
+function vkGetImageSparseMemoryRequirements2KHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkImageSparseMemoryRequirementsInfo2}, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements2}), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
+end
+
+function vkCreateSamplerYcbcrConversionKHR(device, pCreateInfo, pAllocator, pYcbcrConversion, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSamplerYcbcrConversionCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSamplerYcbcrConversion}), device, pCreateInfo, pAllocator, pYcbcrConversion)
+end
+
+function vkDestroySamplerYcbcrConversionKHR(device, ycbcrConversion, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkSamplerYcbcrConversion, Ptr{VkAllocationCallbacks}), device, ycbcrConversion, pAllocator)
+end
+
+function vkBindBufferMemory2KHR(device, bindInfoCount, pBindInfos, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindBufferMemoryInfo}), device, bindInfoCount, pBindInfos)
+end
+
+function vkBindImageMemory2KHR(device, bindInfoCount, pBindInfos, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindImageMemoryInfo}), device, bindInfoCount, pBindInfos)
+end
+
+function vkGetDescriptorSetLayoutSupportKHR(device, pCreateInfo, pSupport, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkDescriptorSetLayoutSupport}), device, pCreateInfo, pSupport)
+end
+
+function vkCmdDrawIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+end
+
+function vkCmdDrawIndexedIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+end
+
+function vkGetSemaphoreCounterValueKHR(device, semaphore, pValue, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkSemaphore, Ptr{UInt64}), device, semaphore, pValue)
+end
+
+function vkWaitSemaphoresKHR(device, pWaitInfo, timeout, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreWaitInfo}, UInt64), device, pWaitInfo, timeout)
+end
+
+function vkSignalSemaphoreKHR(device, pSignalInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreSignalInfo}), device, pSignalInfo)
+end
+
+function vkGetBufferDeviceAddressKHR(device, pInfo, fun_ptr)
+    ccall(fun_ptr, VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+end
+
+function vkGetBufferOpaqueCaptureAddressKHR(device, pInfo, fun_ptr)
+    ccall(fun_ptr, UInt64, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+end
+
+function vkGetDeviceMemoryOpaqueCaptureAddressKHR(device, pInfo, fun_ptr)
+    ccall(fun_ptr, UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
+end
+
+function vkGetPipelineExecutablePropertiesKHR(device, pPipelineInfo, pExecutableCount, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPipelineInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutablePropertiesKHR}), device, pPipelineInfo, pExecutableCount, pProperties)
+end
+
+function vkGetPipelineExecutableStatisticsKHR(device, pExecutableInfo, pStatisticCount, pStatistics, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableStatisticKHR}), device, pExecutableInfo, pStatisticCount, pStatistics)
+end
+
+function vkGetPipelineExecutableInternalRepresentationsKHR(device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableInternalRepresentationKHR}), device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations)
+end
+
+function vkCreateDebugReportCallbackEXT(instance, pCreateInfo, pAllocator, pCallback, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkDebugReportCallbackCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkDebugReportCallbackEXT}), instance, pCreateInfo, pAllocator, pCallback)
+end
+
+function vkDestroyDebugReportCallbackEXT(instance, callback, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkInstance, VkDebugReportCallbackEXT, Ptr{VkAllocationCallbacks}), instance, callback, pAllocator)
+end
+
+function vkDebugReportMessageEXT(instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkInstance, VkDebugReportFlagsEXT, VkDebugReportObjectTypeEXT, UInt64, Csize_t, Int32, Cstring, Cstring), instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage)
+end
+
+function vkDebugMarkerSetObjectTagEXT(device, pTagInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDebugMarkerObjectTagInfoEXT}), device, pTagInfo)
+end
+
+function vkDebugMarkerSetObjectNameEXT(device, pNameInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDebugMarkerObjectNameInfoEXT}), device, pNameInfo)
+end
+
+function vkCmdDebugMarkerBeginEXT(commandBuffer, pMarkerInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkDebugMarkerMarkerInfoEXT}), commandBuffer, pMarkerInfo)
+end
+
+function vkCmdDebugMarkerEndEXT(commandBuffer, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer,), commandBuffer)
+end
+
+function vkCmdDebugMarkerInsertEXT(commandBuffer, pMarkerInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkDebugMarkerMarkerInfoEXT}), commandBuffer, pMarkerInfo)
+end
+
+function vkCmdBindTransformFeedbackBuffersEXT(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes)
+end
+
+function vkCmdBeginTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets)
+end
+
+function vkCmdEndTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets)
+end
+
+function vkCmdBeginQueryIndexedEXT(commandBuffer, queryPool, query, flags, index, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, VkQueryControlFlags, UInt32), commandBuffer, queryPool, query, flags, index)
+end
+
+function vkCmdEndQueryIndexedEXT(commandBuffer, queryPool, query, index, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32), commandBuffer, queryPool, query, index)
+end
+
+function vkCmdDrawIndirectByteCountEXT(commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride)
+end
+
+function vkGetImageViewHandleNVX(device, pInfo, fun_ptr)
+    ccall(fun_ptr, UInt32, (VkDevice, Ptr{VkImageViewHandleInfoNVX}), device, pInfo)
+end
+
+function vkGetImageViewAddressNVX(device, imageView, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkImageView, Ptr{VkImageViewAddressPropertiesNVX}), device, imageView, pProperties)
+end
+
+function vkCmdDrawIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+end
+
+function vkCmdDrawIndexedIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+end
+
+function vkGetShaderInfoAMD(device, pipeline, shaderStage, infoType, pInfoSize, pInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPipeline, VkShaderStageFlagBits, VkShaderInfoTypeAMD, Ptr{Csize_t}, Ptr{Cvoid}), device, pipeline, shaderStage, infoType, pInfoSize, pInfo)
+end
+
+function vkGetPhysicalDeviceExternalImageFormatPropertiesNV(physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlags, VkImageCreateFlags, VkExternalMemoryHandleTypeFlagsNV, Ptr{VkExternalImageFormatPropertiesNV}), physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties)
+end
+
+function vkCmdBeginConditionalRenderingEXT(commandBuffer, pConditionalRenderingBegin, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkConditionalRenderingBeginInfoEXT}), commandBuffer, pConditionalRenderingBegin)
+end
+
+function vkCmdEndConditionalRenderingEXT(commandBuffer, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer,), commandBuffer)
+end
+
+function vkCmdSetViewportWScalingNV(commandBuffer, firstViewport, viewportCount, pViewportWScalings, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkViewportWScalingNV}), commandBuffer, firstViewport, viewportCount, pViewportWScalings)
+end
+
+function vkReleaseDisplayEXT(physicalDevice, display, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkDisplayKHR), physicalDevice, display)
+end
+
+function vkGetPhysicalDeviceSurfaceCapabilities2EXT(physicalDevice, surface, pSurfaceCapabilities, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{VkSurfaceCapabilities2EXT}), physicalDevice, surface, pSurfaceCapabilities)
+end
+
+function vkDisplayPowerControlEXT(device, display, pDisplayPowerInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDisplayKHR, Ptr{VkDisplayPowerInfoEXT}), device, display, pDisplayPowerInfo)
+end
+
+function vkRegisterDeviceEventEXT(device, pDeviceEventInfo, pAllocator, pFence, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDeviceEventInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, pDeviceEventInfo, pAllocator, pFence)
+end
+
+function vkRegisterDisplayEventEXT(device, display, pDisplayEventInfo, pAllocator, pFence, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDisplayKHR, Ptr{VkDisplayEventInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, display, pDisplayEventInfo, pAllocator, pFence)
+end
+
+function vkGetSwapchainCounterEXT(device, swapchain, counter, pCounterValue, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR, VkSurfaceCounterFlagBitsEXT, Ptr{UInt64}), device, swapchain, counter, pCounterValue)
+end
+
+function vkGetRefreshCycleDurationGOOGLE(device, swapchain, pDisplayTimingProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR, Ptr{VkRefreshCycleDurationGOOGLE}), device, swapchain, pDisplayTimingProperties)
+end
+
+function vkGetPastPresentationTimingGOOGLE(device, swapchain, pPresentationTimingCount, pPresentationTimings, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR, Ptr{UInt32}, Ptr{VkPastPresentationTimingGOOGLE}), device, swapchain, pPresentationTimingCount, pPresentationTimings)
+end
+
+function vkCmdSetDiscardRectangleEXT(commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles)
+end
+
+function vkSetHdrMetadataEXT(device, swapchainCount, pSwapchains, pMetadata, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, UInt32, Ptr{VkSwapchainKHR}, Ptr{VkHdrMetadataEXT}), device, swapchainCount, pSwapchains, pMetadata)
+end
+
+function vkSetDebugUtilsObjectNameEXT(device, pNameInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDebugUtilsObjectNameInfoEXT}), device, pNameInfo)
+end
+
+function vkSetDebugUtilsObjectTagEXT(device, pTagInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDebugUtilsObjectTagInfoEXT}), device, pTagInfo)
+end
+
+function vkQueueBeginDebugUtilsLabelEXT(queue, pLabelInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkQueue, Ptr{VkDebugUtilsLabelEXT}), queue, pLabelInfo)
+end
+
+function vkQueueEndDebugUtilsLabelEXT(queue, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkQueue,), queue)
+end
+
+function vkQueueInsertDebugUtilsLabelEXT(queue, pLabelInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkQueue, Ptr{VkDebugUtilsLabelEXT}), queue, pLabelInfo)
+end
+
+function vkCmdBeginDebugUtilsLabelEXT(commandBuffer, pLabelInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkDebugUtilsLabelEXT}), commandBuffer, pLabelInfo)
+end
+
+function vkCmdEndDebugUtilsLabelEXT(commandBuffer, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer,), commandBuffer)
+end
+
+function vkCmdInsertDebugUtilsLabelEXT(commandBuffer, pLabelInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkDebugUtilsLabelEXT}), commandBuffer, pLabelInfo)
+end
+
+function vkCreateDebugUtilsMessengerEXT(instance, pCreateInfo, pAllocator, pMessenger, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkDebugUtilsMessengerCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkDebugUtilsMessengerEXT}), instance, pCreateInfo, pAllocator, pMessenger)
+end
+
+function vkDestroyDebugUtilsMessengerEXT(instance, messenger, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkInstance, VkDebugUtilsMessengerEXT, Ptr{VkAllocationCallbacks}), instance, messenger, pAllocator)
+end
+
+function vkSubmitDebugUtilsMessageEXT(instance, messageSeverity, messageTypes, pCallbackData, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkInstance, VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagsEXT, Ptr{VkDebugUtilsMessengerCallbackDataEXT}), instance, messageSeverity, messageTypes, pCallbackData)
+end
+
+function vkCmdSetSampleLocationsEXT(commandBuffer, pSampleLocationsInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkSampleLocationsInfoEXT}), commandBuffer, pSampleLocationsInfo)
+end
+
+function vkGetPhysicalDeviceMultisamplePropertiesEXT(physicalDevice, samples, pMultisampleProperties, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, VkSampleCountFlagBits, Ptr{VkMultisamplePropertiesEXT}), physicalDevice, samples, pMultisampleProperties)
+end
+
+function vkGetImageDrmFormatModifierPropertiesEXT(device, image, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkImage, Ptr{VkImageDrmFormatModifierPropertiesEXT}), device, image, pProperties)
+end
+
+function vkCreateValidationCacheEXT(device, pCreateInfo, pAllocator, pValidationCache, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkValidationCacheCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkValidationCacheEXT}), device, pCreateInfo, pAllocator, pValidationCache)
+end
+
+function vkDestroyValidationCacheEXT(device, validationCache, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkValidationCacheEXT, Ptr{VkAllocationCallbacks}), device, validationCache, pAllocator)
+end
+
+function vkMergeValidationCachesEXT(device, dstCache, srcCacheCount, pSrcCaches, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkValidationCacheEXT, UInt32, Ptr{VkValidationCacheEXT}), device, dstCache, srcCacheCount, pSrcCaches)
+end
+
+function vkGetValidationCacheDataEXT(device, validationCache, pDataSize, pData, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkValidationCacheEXT, Ptr{Csize_t}, Ptr{Cvoid}), device, validationCache, pDataSize, pData)
+end
+
+function vkCmdBindShadingRateImageNV(commandBuffer, imageView, imageLayout, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImageView, VkImageLayout), commandBuffer, imageView, imageLayout)
+end
+
+function vkCmdSetViewportShadingRatePaletteNV(commandBuffer, firstViewport, viewportCount, pShadingRatePalettes, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkShadingRatePaletteNV}), commandBuffer, firstViewport, viewportCount, pShadingRatePalettes)
+end
+
+function vkCmdSetCoarseSampleOrderNV(commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkCoarseSampleOrderTypeNV, UInt32, Ptr{VkCoarseSampleOrderCustomNV}), commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders)
+end
+
+function vkCreateAccelerationStructureNV(device, pCreateInfo, pAllocator, pAccelerationStructure, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureNV}), device, pCreateInfo, pAllocator, pAccelerationStructure)
+end
+
+function vkDestroyAccelerationStructureKHR(device, accelerationStructure, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
+end
+
+function vkDestroyAccelerationStructureNV(device, accelerationStructure, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
+end
+
+function vkGetAccelerationStructureMemoryRequirementsNV(device, pInfo, pMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoNV}, Ptr{VkMemoryRequirements2KHR}), device, pInfo, pMemoryRequirements)
+end
+
+function vkBindAccelerationStructureMemoryKHR(device, bindInfoCount, pBindInfos, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
+end
+
+function vkBindAccelerationStructureMemoryNV(device, bindInfoCount, pBindInfos, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
+end
+
+function vkCmdBuildAccelerationStructureNV(commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureInfoNV}, VkBuffer, VkDeviceSize, VkBool32, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkBuffer, VkDeviceSize), commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset)
+end
+
+function vkCmdCopyAccelerationStructureNV(commandBuffer, dst, src, mode, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkCopyAccelerationStructureModeKHR), commandBuffer, dst, src, mode)
+end
+
+function vkCmdTraceRaysNV(commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, UInt32, UInt32, UInt32), commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth)
+end
+
+function vkCreateRayTracingPipelinesNV(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+end
+
+function vkGetRayTracingShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
+end
+
+function vkGetRayTracingShaderGroupHandlesNV(device, pipeline, firstGroup, groupCount, dataSize, pData, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
+end
+
+function vkGetAccelerationStructureHandleNV(device, accelerationStructure, dataSize, pData, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkAccelerationStructureKHR, Csize_t, Ptr{Cvoid}), device, accelerationStructure, dataSize, pData)
+end
+
+function vkCmdWriteAccelerationStructuresPropertiesKHR(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+end
+
+function vkCmdWriteAccelerationStructuresPropertiesNV(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+end
+
+function vkCompileDeferredNV(device, pipeline, shader, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPipeline, UInt32), device, pipeline, shader)
+end
+
+function vkGetMemoryHostPointerPropertiesEXT(device, handleType, pHostPointer, pMemoryHostPointerProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Ptr{Cvoid}, Ptr{VkMemoryHostPointerPropertiesEXT}), device, handleType, pHostPointer, pMemoryHostPointerProperties)
+end
+
+function vkCmdWriteBufferMarkerAMD(commandBuffer, pipelineStage, dstBuffer, dstOffset, marker, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineStageFlagBits, VkBuffer, VkDeviceSize, UInt32), commandBuffer, pipelineStage, dstBuffer, dstOffset, marker)
+end
+
+function vkGetPhysicalDeviceCalibrateableTimeDomainsEXT(physicalDevice, pTimeDomainCount, pTimeDomains, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkTimeDomainEXT}), physicalDevice, pTimeDomainCount, pTimeDomains)
+end
+
+function vkGetCalibratedTimestampsEXT(device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkCalibratedTimestampInfoEXT}, Ptr{UInt64}, Ptr{UInt64}), device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation)
+end
+
+function vkCmdDrawMeshTasksNV(commandBuffer, taskCount, firstTask, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32), commandBuffer, taskCount, firstTask)
+end
+
+function vkCmdDrawMeshTasksIndirectNV(commandBuffer, buffer, offset, drawCount, stride, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
+end
+
+function vkCmdDrawMeshTasksIndirectCountNV(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+end
+
+function vkCmdSetExclusiveScissorNV(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors)
+end
+
+function vkCmdSetCheckpointNV(commandBuffer, pCheckpointMarker, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{Cvoid}), commandBuffer, pCheckpointMarker)
+end
+
+function vkGetQueueCheckpointDataNV(queue, pCheckpointDataCount, pCheckpointData, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkQueue, Ptr{UInt32}, Ptr{VkCheckpointDataNV}), queue, pCheckpointDataCount, pCheckpointData)
+end
+
+function vkInitializePerformanceApiINTEL(device, pInitializeInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkInitializePerformanceApiInfoINTEL}), device, pInitializeInfo)
+end
+
+function vkUninitializePerformanceApiINTEL(device, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice,), device)
+end
+
+function vkCmdSetPerformanceMarkerINTEL(commandBuffer, pMarkerInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkCommandBuffer, Ptr{VkPerformanceMarkerInfoINTEL}), commandBuffer, pMarkerInfo)
+end
+
+function vkCmdSetPerformanceStreamMarkerINTEL(commandBuffer, pMarkerInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkCommandBuffer, Ptr{VkPerformanceStreamMarkerInfoINTEL}), commandBuffer, pMarkerInfo)
+end
+
+function vkCmdSetPerformanceOverrideINTEL(commandBuffer, pOverrideInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkCommandBuffer, Ptr{VkPerformanceOverrideInfoINTEL}), commandBuffer, pOverrideInfo)
+end
+
+function vkAcquirePerformanceConfigurationINTEL(device, pAcquireInfo, pConfiguration, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPerformanceConfigurationAcquireInfoINTEL}, Ptr{VkPerformanceConfigurationINTEL}), device, pAcquireInfo, pConfiguration)
+end
+
+function vkReleasePerformanceConfigurationINTEL(device, configuration, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPerformanceConfigurationINTEL), device, configuration)
+end
+
+function vkQueueSetPerformanceConfigurationINTEL(queue, configuration, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkQueue, VkPerformanceConfigurationINTEL), queue, configuration)
+end
+
+function vkGetPerformanceParameterINTEL(device, parameter, pValue, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPerformanceParameterTypeINTEL, Ptr{VkPerformanceValueINTEL}), device, parameter, pValue)
+end
+
+function vkSetLocalDimmingAMD(device, swapChain, localDimmingEnable, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkSwapchainKHR, VkBool32), device, swapChain, localDimmingEnable)
+end
+
+function vkGetBufferDeviceAddressEXT(device, pInfo, fun_ptr)
+    ccall(fun_ptr, VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+end
+
+function vkGetPhysicalDeviceToolPropertiesEXT(physicalDevice, pToolCount, pToolProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkPhysicalDeviceToolPropertiesEXT}), physicalDevice, pToolCount, pToolProperties)
+end
+
+function vkGetPhysicalDeviceCooperativeMatrixPropertiesNV(physicalDevice, pPropertyCount, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkCooperativeMatrixPropertiesNV}), physicalDevice, pPropertyCount, pProperties)
+end
+
+function vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV(physicalDevice, pCombinationCount, pCombinations, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkFramebufferMixedSamplesCombinationNV}), physicalDevice, pCombinationCount, pCombinations)
+end
+
+function vkCreateHeadlessSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkHeadlessSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkCmdSetLineStippleEXT(commandBuffer, lineStippleFactor, lineStipplePattern, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt16), commandBuffer, lineStippleFactor, lineStipplePattern)
+end
+
+function vkResetQueryPoolEXT(device, queryPool, firstQuery, queryCount, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
+end
+
+function vkCmdSetCullModeEXT(commandBuffer, cullMode, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkCullModeFlags), commandBuffer, cullMode)
+end
+
+function vkCmdSetFrontFaceEXT(commandBuffer, frontFace, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkFrontFace), commandBuffer, frontFace)
+end
+
+function vkCmdSetPrimitiveTopologyEXT(commandBuffer, primitiveTopology, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPrimitiveTopology), commandBuffer, primitiveTopology)
+end
+
+function vkCmdSetViewportWithCountEXT(commandBuffer, viewportCount, pViewports, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkViewport}), commandBuffer, viewportCount, pViewports)
+end
+
+function vkCmdSetScissorWithCountEXT(commandBuffer, scissorCount, pScissors, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkRect2D}), commandBuffer, scissorCount, pScissors)
+end
+
+function vkCmdBindVertexBuffers2EXT(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides)
+end
+
+function vkCmdSetDepthTestEnableEXT(commandBuffer, depthTestEnable, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthTestEnable)
+end
+
+function vkCmdSetDepthWriteEnableEXT(commandBuffer, depthWriteEnable, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthWriteEnable)
+end
+
+function vkCmdSetDepthCompareOpEXT(commandBuffer, depthCompareOp, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkCompareOp), commandBuffer, depthCompareOp)
+end
+
+function vkCmdSetDepthBoundsTestEnableEXT(commandBuffer, depthBoundsTestEnable, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthBoundsTestEnable)
+end
+
+function vkCmdSetStencilTestEnableEXT(commandBuffer, stencilTestEnable, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, stencilTestEnable)
+end
+
+function vkCmdSetStencilOpEXT(commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkStencilFaceFlags, VkStencilOp, VkStencilOp, VkStencilOp, VkCompareOp), commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp)
+end
+
+function vkGetGeneratedCommandsMemoryRequirementsNV(device, pInfo, pMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkGeneratedCommandsMemoryRequirementsInfoNV}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+end
+
+function vkCmdPreprocessGeneratedCommandsNV(commandBuffer, pGeneratedCommandsInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkGeneratedCommandsInfoNV}), commandBuffer, pGeneratedCommandsInfo)
+end
+
+function vkCmdExecuteGeneratedCommandsNV(commandBuffer, isPreprocessed, pGeneratedCommandsInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32, Ptr{VkGeneratedCommandsInfoNV}), commandBuffer, isPreprocessed, pGeneratedCommandsInfo)
+end
+
+function vkCmdBindPipelineShaderGroupNV(commandBuffer, pipelineBindPoint, pipeline, groupIndex, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipeline, UInt32), commandBuffer, pipelineBindPoint, pipeline, groupIndex)
+end
+
+function vkCreateIndirectCommandsLayoutNV(device, pCreateInfo, pAllocator, pIndirectCommandsLayout, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkIndirectCommandsLayoutCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkIndirectCommandsLayoutNV}), device, pCreateInfo, pAllocator, pIndirectCommandsLayout)
+end
+
+function vkDestroyIndirectCommandsLayoutNV(device, indirectCommandsLayout, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkIndirectCommandsLayoutNV, Ptr{VkAllocationCallbacks}), device, indirectCommandsLayout, pAllocator)
+end
+
+function vkCreatePrivateDataSlotEXT(device, pCreateInfo, pAllocator, pPrivateDataSlot, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPrivateDataSlotCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkPrivateDataSlotEXT}), device, pCreateInfo, pAllocator, pPrivateDataSlot)
+end
+
+function vkDestroyPrivateDataSlotEXT(device, privateDataSlot, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkPrivateDataSlotEXT, Ptr{VkAllocationCallbacks}), device, privateDataSlot, pAllocator)
+end
+
+function vkSetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, data, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, UInt64), device, objectType, objectHandle, privateDataSlot, data)
+end
+
+function vkGetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, pData, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, Ptr{UInt64}), device, objectType, objectHandle, privateDataSlot, pData)
+end
+
+function vkCreateAndroidSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkAndroidSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkGetAndroidHardwareBufferPropertiesANDROID(device, buffer, pProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{AHardwareBuffer}, Ptr{VkAndroidHardwareBufferPropertiesANDROID}), device, buffer, pProperties)
+end
+
+function vkGetMemoryAndroidHardwareBufferANDROID(device, pInfo, pBuffer, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkMemoryGetAndroidHardwareBufferInfoANDROID}, Ptr{Ptr{AHardwareBuffer}}), device, pInfo, pBuffer)
+end
+
+function vkCreateIOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkIOSSurfaceCreateInfoMVK}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkCreateMacOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkMacOSSurfaceCreateInfoMVK}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkCreateMetalSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkMetalSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkCreateViSurfaceNN(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkViSurfaceCreateInfoNN}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkCreateXcbSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkXcbSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkGetPhysicalDeviceXcbPresentationSupportKHR(physicalDevice, queueFamilyIndex, connection, visual_id, fun_ptr)
+    ccall(fun_ptr, VkBool32, (VkPhysicalDevice, UInt32, Ptr{xcb_connection_t}, xcb_visualid_t), physicalDevice, queueFamilyIndex, connection, visual_id)
+end
+
+function vkCreateXlibSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkXlibSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkGetPhysicalDeviceXlibPresentationSupportKHR(physicalDevice, queueFamilyIndex, dpy, visualID, fun_ptr)
+    ccall(fun_ptr, VkBool32, (VkPhysicalDevice, UInt32, Ptr{Display}, VisualID), physicalDevice, queueFamilyIndex, dpy, visualID)
+end
+
+function vkAcquireXlibDisplayEXT(physicalDevice, dpy, display, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{Display}, VkDisplayKHR), physicalDevice, dpy, display)
+end
+
+function vkGetRandROutputDisplayEXT(physicalDevice, dpy, rrOutput, pDisplay, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{Display}, RROutput, Ptr{VkDisplayKHR}), physicalDevice, dpy, rrOutput, pDisplay)
+end
+
+function vkCreateDeferredOperationKHR(device, pAllocator, pDeferredOperation, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAllocationCallbacks}, Ptr{VkDeferredOperationKHR}), device, pAllocator, pDeferredOperation)
+end
+
+function vkDestroyDeferredOperationKHR(device, operation, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkDeferredOperationKHR, Ptr{VkAllocationCallbacks}), device, operation, pAllocator)
+end
+
+function vkGetDeferredOperationMaxConcurrencyKHR(device, operation, fun_ptr)
+    ccall(fun_ptr, UInt32, (VkDevice, VkDeferredOperationKHR), device, operation)
+end
+
+function vkGetDeferredOperationResultKHR(device, operation, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+end
+
+function vkDeferredOperationJoinKHR(device, operation, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+end
+
+function vkCreateAccelerationStructureKHR(device, pCreateInfo, pAllocator, pAccelerationStructure, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureKHR}), device, pCreateInfo, pAllocator, pAccelerationStructure)
+end
+
+function vkGetAccelerationStructureMemoryRequirementsKHR(device, pInfo, pMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoKHR}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+end
+
+function vkCmdBuildAccelerationStructureKHR(commandBuffer, infoCount, pInfos, ppOffsetInfos, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), commandBuffer, infoCount, pInfos, ppOffsetInfos)
+end
+
+function vkCmdBuildAccelerationStructureIndirectKHR(commandBuffer, pInfo, indirectBuffer, indirectOffset, indirectStride, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, VkBuffer, VkDeviceSize, UInt32), commandBuffer, pInfo, indirectBuffer, indirectOffset, indirectStride)
+end
+
+function vkBuildAccelerationStructureKHR(device, infoCount, pInfos, ppOffsetInfos, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), device, infoCount, pInfos, ppOffsetInfos)
+end
+
+function vkCopyAccelerationStructureKHR(device, pInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureInfoKHR}), device, pInfo)
+end
+
+function vkCopyAccelerationStructureToMemoryKHR(device, pInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), device, pInfo)
+end
+
+function vkCopyMemoryToAccelerationStructureKHR(device, pInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), device, pInfo)
+end
+
+function vkWriteAccelerationStructuresPropertiesKHR(device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, Csize_t, Ptr{Cvoid}, Csize_t), device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride)
+end
+
+function vkCmdCopyAccelerationStructureKHR(commandBuffer, pInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureInfoKHR}), commandBuffer, pInfo)
+end
+
+function vkCmdCopyAccelerationStructureToMemoryKHR(commandBuffer, pInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), commandBuffer, pInfo)
+end
+
+function vkCmdCopyMemoryToAccelerationStructureKHR(commandBuffer, pInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), commandBuffer, pInfo)
+end
+
+function vkCmdTraceRaysKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, UInt32, UInt32, UInt32), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth)
+end
+
+function vkCreateRayTracingPipelinesKHR(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+end
+
+function vkGetAccelerationStructureDeviceAddressKHR(device, pInfo, fun_ptr)
+    ccall(fun_ptr, VkDeviceAddress, (VkDevice, Ptr{VkAccelerationStructureDeviceAddressInfoKHR}), device, pInfo)
+end
+
+function vkGetRayTracingCaptureReplayShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
+end
+
+function vkCmdTraceRaysIndirectKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, buffer, offset, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, VkBuffer, VkDeviceSize), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, buffer, offset)
+end
+
+function vkGetDeviceAccelerationStructureCompatibilityKHR(device, version, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAccelerationStructureVersionKHR}), device, version)
+end
