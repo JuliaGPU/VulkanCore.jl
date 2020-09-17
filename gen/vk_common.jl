@@ -1,11 +1,3 @@
-const xcb_connection_t = Cvoid
-const xcb_visualid_t = UInt32
-const xcb_window_t = UInt32
-const Window = UInt32
-const Display = Cvoid
-const VisualID = UInt32
-const RROutput = UInt32
-
 # Automatically generated using Clang.jl
 
 
@@ -627,6 +619,10 @@ const VK_KHR_ANDROID_SURFACE_EXTENSION_NAME = "VK_KHR_android_surface"
 const VK_ANDROID_external_memory_android_hardware_buffer = 1
 const VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION = 3
 const VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_EXTENSION_NAME = "VK_ANDROID_external_memory_android_hardware_buffer"
+const VULKAN_FUCHSIA_H_ = 1
+const VK_FUCHSIA_imagepipe_surface = 1
+const VK_FUCHSIA_IMAGEPIPE_SURFACE_SPEC_VERSION = 1
+const VK_FUCHSIA_IMAGEPIPE_SURFACE_EXTENSION_NAME = "VK_FUCHSIA_imagepipe_surface"
 const VULKAN_IOS_H_ = 1
 const VK_MVK_ios_surface = 1
 const VK_MVK_IOS_SURFACE_SPEC_VERSION = 3
@@ -643,6 +639,35 @@ const VULKAN_VI_H_ = 1
 const VK_NN_vi_surface = 1
 const VK_NN_VI_SURFACE_SPEC_VERSION = 1
 const VK_NN_VI_SURFACE_EXTENSION_NAME = "VK_NN_vi_surface"
+const VULKAN_WAYLAND_H_ = 1
+const VK_KHR_wayland_surface = 1
+const VK_KHR_WAYLAND_SURFACE_SPEC_VERSION = 6
+const VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME = "VK_KHR_wayland_surface"
+const VULKAN_WIN32_H_ = 1
+const VK_KHR_win32_surface = 1
+const VK_KHR_WIN32_SURFACE_SPEC_VERSION = 6
+const VK_KHR_WIN32_SURFACE_EXTENSION_NAME = "VK_KHR_win32_surface"
+const VK_KHR_external_memory_win32 = 1
+const VK_KHR_EXTERNAL_MEMORY_WIN32_SPEC_VERSION = 1
+const VK_KHR_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME = "VK_KHR_external_memory_win32"
+const VK_KHR_win32_keyed_mutex = 1
+const VK_KHR_WIN32_KEYED_MUTEX_SPEC_VERSION = 1
+const VK_KHR_WIN32_KEYED_MUTEX_EXTENSION_NAME = "VK_KHR_win32_keyed_mutex"
+const VK_KHR_external_semaphore_win32 = 1
+const VK_KHR_EXTERNAL_SEMAPHORE_WIN32_SPEC_VERSION = 1
+const VK_KHR_EXTERNAL_SEMAPHORE_WIN32_EXTENSION_NAME = "VK_KHR_external_semaphore_win32"
+const VK_KHR_external_fence_win32 = 1
+const VK_KHR_EXTERNAL_FENCE_WIN32_SPEC_VERSION = 1
+const VK_KHR_EXTERNAL_FENCE_WIN32_EXTENSION_NAME = "VK_KHR_external_fence_win32"
+const VK_NV_external_memory_win32 = 1
+const VK_NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION = 1
+const VK_NV_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME = "VK_NV_external_memory_win32"
+const VK_NV_win32_keyed_mutex = 1
+const VK_NV_WIN32_KEYED_MUTEX_SPEC_VERSION = 2
+const VK_NV_WIN32_KEYED_MUTEX_EXTENSION_NAME = "VK_NV_win32_keyed_mutex"
+const VK_EXT_full_screen_exclusive = 1
+const VK_EXT_FULL_SCREEN_EXCLUSIVE_SPEC_VERSION = 4
+const VK_EXT_FULL_SCREEN_EXCLUSIVE_EXTENSION_NAME = "VK_EXT_full_screen_exclusive"
 const VULKAN_XCB_H_ = 1
 const VK_KHR_xcb_surface = 1
 const VK_KHR_XCB_SURFACE_SPEC_VERSION = 6
@@ -655,6 +680,13 @@ const VULKAN_XLIB_XRANDR_H_ = 1
 const VK_EXT_acquire_xlib_display = 1
 const VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION = 1
 const VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME = "VK_EXT_acquire_xlib_display"
+const VULKAN_GGP_H_ = 1
+const VK_GGP_stream_descriptor_surface = 1
+const VK_GGP_STREAM_DESCRIPTOR_SURFACE_SPEC_VERSION = 1
+const VK_GGP_STREAM_DESCRIPTOR_SURFACE_EXTENSION_NAME = "VK_GGP_stream_descriptor_surface"
+const VK_GGP_frame_token = 1
+const VK_GGP_FRAME_TOKEN_SPEC_VERSION = 1
+const VK_GGP_FRAME_TOKEN_EXTENSION_NAME = "VK_GGP_frame_token"
 const VULKAN_BETA_H_ = 1
 const VK_KHR_deferred_host_operations = 1
 const VK_KHR_DEFERRED_HOST_OPERATIONS_SPEC_VERSION = 3
@@ -8485,6 +8517,16 @@ end
 
 const PFN_vkGetAndroidHardwareBufferPropertiesANDROID = Ptr{Cvoid}
 const PFN_vkGetMemoryAndroidHardwareBufferANDROID = Ptr{Cvoid}
+const VkImagePipeSurfaceCreateFlagsFUCHSIA = VkFlags
+
+struct VkImagePipeSurfaceCreateInfoFUCHSIA
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkImagePipeSurfaceCreateFlagsFUCHSIA
+    imagePipeHandle::Cint
+end
+
+const PFN_vkCreateImagePipeSurfaceFUCHSIA = Ptr{Cvoid}
 const VkIOSSurfaceCreateFlagsMVK = VkFlags
 
 struct VkIOSSurfaceCreateInfoMVK
@@ -8526,6 +8568,199 @@ struct VkViSurfaceCreateInfoNN
 end
 
 const PFN_vkCreateViSurfaceNN = Ptr{Cvoid}
+const VkWaylandSurfaceCreateFlagsKHR = VkFlags
+
+struct VkWaylandSurfaceCreateInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkWaylandSurfaceCreateFlagsKHR
+    display::Ptr{wl_display}
+    surface::Ptr{wl_surface}
+end
+
+const PFN_vkCreateWaylandSurfaceKHR = Ptr{Cvoid}
+const PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR = Ptr{Cvoid}
+const VkWin32SurfaceCreateFlagsKHR = VkFlags
+
+struct VkWin32SurfaceCreateInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkWin32SurfaceCreateFlagsKHR
+    hinstance::Cint
+    hwnd::Cint
+end
+
+const PFN_vkCreateWin32SurfaceKHR = Ptr{Cvoid}
+const PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR = Ptr{Cvoid}
+
+struct VkImportMemoryWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    handleType::VkExternalMemoryHandleTypeFlagBits
+    handle::Cint
+    name::Cint
+end
+
+struct VkExportMemoryWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    pAttributes::Ptr{Cint}
+    dwAccess::Cint
+    name::Cint
+end
+
+struct VkMemoryWin32HandlePropertiesKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    memoryTypeBits::UInt32
+end
+
+struct VkMemoryGetWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    memory::VkDeviceMemory
+    handleType::VkExternalMemoryHandleTypeFlagBits
+end
+
+const PFN_vkGetMemoryWin32HandleKHR = Ptr{Cvoid}
+const PFN_vkGetMemoryWin32HandlePropertiesKHR = Ptr{Cvoid}
+
+struct VkWin32KeyedMutexAcquireReleaseInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    acquireCount::UInt32
+    pAcquireSyncs::Ptr{VkDeviceMemory}
+    pAcquireKeys::Ptr{UInt64}
+    pAcquireTimeouts::Ptr{UInt32}
+    releaseCount::UInt32
+    pReleaseSyncs::Ptr{VkDeviceMemory}
+    pReleaseKeys::Ptr{UInt64}
+end
+
+struct VkImportSemaphoreWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    semaphore::VkSemaphore
+    flags::VkSemaphoreImportFlags
+    handleType::VkExternalSemaphoreHandleTypeFlagBits
+    handle::Cint
+    name::Cint
+end
+
+struct VkExportSemaphoreWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    pAttributes::Ptr{Cint}
+    dwAccess::Cint
+    name::Cint
+end
+
+struct VkD3D12FenceSubmitInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    waitSemaphoreValuesCount::UInt32
+    pWaitSemaphoreValues::Ptr{UInt64}
+    signalSemaphoreValuesCount::UInt32
+    pSignalSemaphoreValues::Ptr{UInt64}
+end
+
+struct VkSemaphoreGetWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    semaphore::VkSemaphore
+    handleType::VkExternalSemaphoreHandleTypeFlagBits
+end
+
+const PFN_vkImportSemaphoreWin32HandleKHR = Ptr{Cvoid}
+const PFN_vkGetSemaphoreWin32HandleKHR = Ptr{Cvoid}
+
+struct VkImportFenceWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    fence::VkFence
+    flags::VkFenceImportFlags
+    handleType::VkExternalFenceHandleTypeFlagBits
+    handle::Cint
+    name::Cint
+end
+
+struct VkExportFenceWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    pAttributes::Ptr{Cint}
+    dwAccess::Cint
+    name::Cint
+end
+
+struct VkFenceGetWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    fence::VkFence
+    handleType::VkExternalFenceHandleTypeFlagBits
+end
+
+const PFN_vkImportFenceWin32HandleKHR = Ptr{Cvoid}
+const PFN_vkGetFenceWin32HandleKHR = Ptr{Cvoid}
+
+struct VkImportMemoryWin32HandleInfoNV
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    handleType::VkExternalMemoryHandleTypeFlagsNV
+    handle::Cint
+end
+
+struct VkExportMemoryWin32HandleInfoNV
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    pAttributes::Ptr{Cint}
+    dwAccess::Cint
+end
+
+const PFN_vkGetMemoryWin32HandleNV = Ptr{Cvoid}
+
+struct VkWin32KeyedMutexAcquireReleaseInfoNV
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    acquireCount::UInt32
+    pAcquireSyncs::Ptr{VkDeviceMemory}
+    pAcquireKeys::Ptr{UInt64}
+    pAcquireTimeoutMilliseconds::Ptr{UInt32}
+    releaseCount::UInt32
+    pReleaseSyncs::Ptr{VkDeviceMemory}
+    pReleaseKeys::Ptr{UInt64}
+end
+
+@cenum VkFullScreenExclusiveEXT::UInt32 begin
+    VK_FULL_SCREEN_EXCLUSIVE_DEFAULT_EXT = 0
+    VK_FULL_SCREEN_EXCLUSIVE_ALLOWED_EXT = 1
+    VK_FULL_SCREEN_EXCLUSIVE_DISALLOWED_EXT = 2
+    VK_FULL_SCREEN_EXCLUSIVE_APPLICATION_CONTROLLED_EXT = 3
+    VK_FULL_SCREEN_EXCLUSIVE_MAX_ENUM_EXT = 2147483647
+end
+
+
+struct VkSurfaceFullScreenExclusiveInfoEXT
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    fullScreenExclusive::VkFullScreenExclusiveEXT
+end
+
+struct VkSurfaceCapabilitiesFullScreenExclusiveEXT
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    fullScreenExclusiveSupported::VkBool32
+end
+
+struct VkSurfaceFullScreenExclusiveWin32InfoEXT
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    hmonitor::Cint
+end
+
+const PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT = Ptr{Cvoid}
+const PFN_vkAcquireFullScreenExclusiveModeEXT = Ptr{Cvoid}
+const PFN_vkReleaseFullScreenExclusiveModeEXT = Ptr{Cvoid}
+const PFN_vkGetDeviceGroupSurfacePresentModes2EXT = Ptr{Cvoid}
 const VkXcbSurfaceCreateFlagsKHR = VkFlags
 
 struct VkXcbSurfaceCreateInfoKHR
@@ -8552,6 +8787,23 @@ const PFN_vkCreateXlibSurfaceKHR = Ptr{Cvoid}
 const PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR = Ptr{Cvoid}
 const PFN_vkAcquireXlibDisplayEXT = Ptr{Cvoid}
 const PFN_vkGetRandROutputDisplayEXT = Ptr{Cvoid}
+const VkStreamDescriptorSurfaceCreateFlagsGGP = VkFlags
+
+struct VkStreamDescriptorSurfaceCreateInfoGGP
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkStreamDescriptorSurfaceCreateFlagsGGP
+    streamDescriptor::Cint
+end
+
+const PFN_vkCreateStreamDescriptorSurfaceGGP = Ptr{Cvoid}
+
+struct VkPresentFrameTokenGGP
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    frameToken::Cint
+end
+
 const VkDeferredOperationKHR_T = Cvoid
 const VkDeferredOperationKHR = Ptr{VkDeferredOperationKHR_T}
 

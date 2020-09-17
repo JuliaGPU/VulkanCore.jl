@@ -1530,6 +1530,10 @@ function vkGetMemoryAndroidHardwareBufferANDROID(device, pInfo, pBuffer)
     ccall((:vkGetMemoryAndroidHardwareBufferANDROID, libvulkan), VkResult, (VkDevice, Ptr{VkMemoryGetAndroidHardwareBufferInfoANDROID}, Ptr{Ptr{AHardwareBuffer}}), device, pInfo, pBuffer)
 end
 
+function vkCreateImagePipeSurfaceFUCHSIA(instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateImagePipeSurfaceFUCHSIA, libvulkan), VkResult, (VkInstance, Ptr{VkImagePipeSurfaceCreateInfoFUCHSIA}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
 function vkCreateIOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface)
     ccall((:vkCreateIOSSurfaceMVK, libvulkan), VkResult, (VkInstance, Ptr{VkIOSSurfaceCreateInfoMVK}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
@@ -1544,6 +1548,66 @@ end
 
 function vkCreateViSurfaceNN(instance, pCreateInfo, pAllocator, pSurface)
     ccall((:vkCreateViSurfaceNN, libvulkan), VkResult, (VkInstance, Ptr{VkViSurfaceCreateInfoNN}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkCreateWaylandSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateWaylandSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkWaylandSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkGetPhysicalDeviceWaylandPresentationSupportKHR(physicalDevice, queueFamilyIndex, display)
+    ccall((:vkGetPhysicalDeviceWaylandPresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{wl_display}), physicalDevice, queueFamilyIndex, display)
+end
+
+function vkCreateWin32SurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateWin32SurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkWin32SurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkGetPhysicalDeviceWin32PresentationSupportKHR(physicalDevice, queueFamilyIndex)
+    ccall((:vkGetPhysicalDeviceWin32PresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32), physicalDevice, queueFamilyIndex)
+end
+
+function vkGetMemoryWin32HandleKHR(device, pGetWin32HandleInfo, pHandle)
+    ccall((:vkGetMemoryWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkMemoryGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
+end
+
+function vkGetMemoryWin32HandlePropertiesKHR(device, handleType, handle, pMemoryWin32HandleProperties)
+    ccall((:vkGetMemoryWin32HandlePropertiesKHR, libvulkan), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryWin32HandlePropertiesKHR}), device, handleType, handle, pMemoryWin32HandleProperties)
+end
+
+function vkImportSemaphoreWin32HandleKHR(device, pImportSemaphoreWin32HandleInfo)
+    ccall((:vkImportSemaphoreWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkImportSemaphoreWin32HandleInfoKHR}), device, pImportSemaphoreWin32HandleInfo)
+end
+
+function vkGetSemaphoreWin32HandleKHR(device, pGetWin32HandleInfo, pHandle)
+    ccall((:vkGetSemaphoreWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
+end
+
+function vkImportFenceWin32HandleKHR(device, pImportFenceWin32HandleInfo)
+    ccall((:vkImportFenceWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkImportFenceWin32HandleInfoKHR}), device, pImportFenceWin32HandleInfo)
+end
+
+function vkGetFenceWin32HandleKHR(device, pGetWin32HandleInfo, pHandle)
+    ccall((:vkGetFenceWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkFenceGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
+end
+
+function vkGetMemoryWin32HandleNV(device, memory, handleType, pHandle)
+    ccall((:vkGetMemoryWin32HandleNV, libvulkan), VkResult, (VkDevice, VkDeviceMemory, VkExternalMemoryHandleTypeFlagsNV, Ptr{Cint}), device, memory, handleType, pHandle)
+end
+
+function vkGetPhysicalDeviceSurfacePresentModes2EXT(physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes)
+    ccall((:vkGetPhysicalDeviceSurfacePresentModes2EXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes)
+end
+
+function vkAcquireFullScreenExclusiveModeEXT(device, swapchain)
+    ccall((:vkAcquireFullScreenExclusiveModeEXT, libvulkan), VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
+end
+
+function vkReleaseFullScreenExclusiveModeEXT(device, swapchain)
+    ccall((:vkReleaseFullScreenExclusiveModeEXT, libvulkan), VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
+end
+
+function vkGetDeviceGroupSurfacePresentModes2EXT(device, pSurfaceInfo, pModes)
+    ccall((:vkGetDeviceGroupSurfacePresentModes2EXT, libvulkan), VkResult, (VkDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{VkDeviceGroupPresentModeFlagsKHR}), device, pSurfaceInfo, pModes)
 end
 
 function vkCreateXcbSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
@@ -1568,6 +1632,10 @@ end
 
 function vkGetRandROutputDisplayEXT(physicalDevice, dpy, rrOutput, pDisplay)
     ccall((:vkGetRandROutputDisplayEXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{Display}, RROutput, Ptr{VkDisplayKHR}), physicalDevice, dpy, rrOutput, pDisplay)
+end
+
+function vkCreateStreamDescriptorSurfaceGGP(instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateStreamDescriptorSurfaceGGP, libvulkan), VkResult, (VkInstance, Ptr{VkStreamDescriptorSurfaceCreateInfoGGP}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateDeferredOperationKHR(device, pAllocator, pDeferredOperation)
@@ -3190,6 +3258,10 @@ function vkGetMemoryAndroidHardwareBufferANDROID(device, pInfo, pBuffer, fun_ptr
     ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkMemoryGetAndroidHardwareBufferInfoANDROID}, Ptr{Ptr{AHardwareBuffer}}), device, pInfo, pBuffer)
 end
 
+function vkCreateImagePipeSurfaceFUCHSIA(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkImagePipeSurfaceCreateInfoFUCHSIA}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
 function vkCreateIOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
     ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkIOSSurfaceCreateInfoMVK}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
@@ -3204,6 +3276,66 @@ end
 
 function vkCreateViSurfaceNN(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
     ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkViSurfaceCreateInfoNN}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkCreateWaylandSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkWaylandSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkGetPhysicalDeviceWaylandPresentationSupportKHR(physicalDevice, queueFamilyIndex, display, fun_ptr)
+    ccall(fun_ptr, VkBool32, (VkPhysicalDevice, UInt32, Ptr{wl_display}), physicalDevice, queueFamilyIndex, display)
+end
+
+function vkCreateWin32SurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkWin32SurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkGetPhysicalDeviceWin32PresentationSupportKHR(physicalDevice, queueFamilyIndex, fun_ptr)
+    ccall(fun_ptr, VkBool32, (VkPhysicalDevice, UInt32), physicalDevice, queueFamilyIndex)
+end
+
+function vkGetMemoryWin32HandleKHR(device, pGetWin32HandleInfo, pHandle, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkMemoryGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
+end
+
+function vkGetMemoryWin32HandlePropertiesKHR(device, handleType, handle, pMemoryWin32HandleProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryWin32HandlePropertiesKHR}), device, handleType, handle, pMemoryWin32HandleProperties)
+end
+
+function vkImportSemaphoreWin32HandleKHR(device, pImportSemaphoreWin32HandleInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImportSemaphoreWin32HandleInfoKHR}), device, pImportSemaphoreWin32HandleInfo)
+end
+
+function vkGetSemaphoreWin32HandleKHR(device, pGetWin32HandleInfo, pHandle, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
+end
+
+function vkImportFenceWin32HandleKHR(device, pImportFenceWin32HandleInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImportFenceWin32HandleInfoKHR}), device, pImportFenceWin32HandleInfo)
+end
+
+function vkGetFenceWin32HandleKHR(device, pGetWin32HandleInfo, pHandle, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkFenceGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
+end
+
+function vkGetMemoryWin32HandleNV(device, memory, handleType, pHandle, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDeviceMemory, VkExternalMemoryHandleTypeFlagsNV, Ptr{Cint}), device, memory, handleType, pHandle)
+end
+
+function vkGetPhysicalDeviceSurfacePresentModes2EXT(physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes)
+end
+
+function vkAcquireFullScreenExclusiveModeEXT(device, swapchain, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
+end
+
+function vkReleaseFullScreenExclusiveModeEXT(device, swapchain, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
+end
+
+function vkGetDeviceGroupSurfacePresentModes2EXT(device, pSurfaceInfo, pModes, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{VkDeviceGroupPresentModeFlagsKHR}), device, pSurfaceInfo, pModes)
 end
 
 function vkCreateXcbSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
@@ -3228,6 +3360,10 @@ end
 
 function vkGetRandROutputDisplayEXT(physicalDevice, dpy, rrOutput, pDisplay, fun_ptr)
     ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{Display}, RROutput, Ptr{VkDisplayKHR}), physicalDevice, dpy, rrOutput, pDisplay)
+end
+
+function vkCreateStreamDescriptorSurfaceGGP(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkStreamDescriptorSurfaceCreateInfoGGP}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateDeferredOperationKHR(device, pAllocator, pDeferredOperation, fun_ptr)
