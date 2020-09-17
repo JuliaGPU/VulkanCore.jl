@@ -39,9 +39,6 @@ const ANativeWindow = Cvoid # TODO: make opaque for now
 const HINSTANCE = Ptr{Cvoid}
 const HWND = Ptr{Cvoid}
 
-export xcb_connection_t, xcb_visualid_t, xcb_window_t, Window, VisualID, Display, RROutput, wl_display, wl_surface, MirConnection, MirSurface, ANativeWindow, HINSTANCE, HWND
-
-
 include(joinpath(@__DIR__, "..", "gen", "vk_common.jl"))
 include(joinpath(@__DIR__, "..", "gen", "vk_api.jl"))
 
