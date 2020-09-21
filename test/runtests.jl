@@ -5,6 +5,8 @@ using GLFW
 
 const api = vk
 
+include("vk_utils.jl")
+
 err = api.VkResult(0)
 count = Ref{Cuint}(0)
 # Scan layers
@@ -14,15 +16,11 @@ global_layer_properties = Vector{api.VkLayerProperties}(undef, count[])
 err = api.vkEnumerateInstanceLayerProperties(count, global_layer_properties)
 @assert err == api.VK_SUCCESS
 
-toversion(version::Cuint) = VersionNumber(VK_VERSION_MAJOR(version),
-										  VK_VERSION_MINOR(version),
-										  VK_VERSION_PATCH(version))
-
 function Base.show(io::IO, lp::api.VkLayerProperties)
 	println(io, "Layer Properties: ")
 	println(io, "    Layer Name: ", String(filter(x->x!=0, UInt8[lp.layerName...])))
-	println(io, "    Spec Version: ", toversion(lp.specVersion))
-	println(io, "    Implementation Version: ", toversion(lp.implementationVersion))
+	println(io, "    Spec Version: ", convert_vk(VersionNumber, lp.specVersion))
+	println(io, "    Implementation Version: ", convert_vk(VersionNumber, lp.implementationVersion))
 	println(io, "    description: ", String(filter(x->x!=0, UInt8[lp.description...])))
 end
 for elem in global_layer_properties
@@ -37,7 +35,7 @@ app_info = Ref(VkApplicationInfo(VK_STRUCTURE_TYPE_APPLICATION_INFO,
 								 1,
 								 pointer(appname),
 								 1,
-								 VK_MAKE_VERSION(1,1,0)))
+								 convert_vk_back(UInt32, v"1.1")))
 
 inst_info = Ref(VkInstanceCreateInfo(VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
 								     C_NULL,
@@ -74,8 +72,8 @@ function Base.show(io::IO, pdsp::VkPhysicalDeviceSparseProperties)
 end
 function Base.show(io::IO, pdp::VkPhysicalDeviceProperties)
 	println(io, "Physical Device Properties: ")
-	println(io, "    API Version: ", toversion(pdp.apiVersion))
-	println(io, "    Driver Version: ", toversion(pdp.driverVersion))
+	println(io, "    API Version: ", convert_vk(VersionNumber, pdp.apiVersion))
+	println(io, "    Driver Version: ", convert_vk(VersionNumber, pdp.driverVersion))
 
 	println(io, "    Vendor ID ", pdp.vendorID)
 	println(io, "    Device ID: ", pdp.deviceID)

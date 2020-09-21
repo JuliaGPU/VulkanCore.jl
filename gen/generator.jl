@@ -1,18 +1,13 @@
 using Clang
 
-# get the headers
-VK_DIR = joinpath(@__DIR__, "Vulkan-Headers")
-if !isdir(VK_DIR)
-    run(`git clone https://github.com/KhronosGroup/Vulkan-Headers.git $VK_DIR`)
-else
-    run(`git -C $VK_DIR fetch`)
-end
+import Vulkan_Headers_jll
 
-run(`git -C $VK_DIR checkout v1.1.114`)
 
-# generate Vulkan bindings
-const VK_INCLUDE = joinpath(@__DIR__, "Vulkan-Headers", "include")
-const VK_HEADERS = map(x->joinpath(VK_INCLUDE, "vulkan", x), ["vk_platform.h", "vulkan.h", "vulkan_core.h"])
+# get include directory & vulkan.h
+VK_INCLUDE = joinpath(Vulkan_Headers_jll.artifact_dir, "include", "vulkan")
+VK_HEADERS = [joinpath(VK_INCLUDE, "vulkan.h")]
+
+# include all extensions
 VK_EXTENSIONS = [
     "VK_USE_PLATFORM_ANDROID_KHR",
     "VK_USE_PLATFORM_FUCHSIA",
@@ -26,21 +21,38 @@ VK_EXTENSIONS = [
     "VK_USE_PLATFORM_XLIB_KHR",
     "VK_USE_PLATFORM_XLIB_XRANDR_EXT",
     "VK_USE_PLATFORM_GGP",
+    "VK_ENABLE_BETA_EXTENSIONS",
     ]
 
-clang_extraargs = String[]
-for extension in VK_EXTENSIONS
-    push!(clang_extraargs, "-D")
-    push!(clang_extraargs, extension)
-end
+common_file = joinpath(@__DIR__, "vk_common.jl")
+api_file = joinpath(@__DIR__, "vk_api.jl")
 
-wc = init(; headers = VK_HEADERS,
-            output_file = joinpath(@__DIR__, "vk_api.jl"),
-            common_file = joinpath(@__DIR__, "vk_common.jl"),
-            clang_includes = vcat(VK_INCLUDE, CLANG_INCLUDE),
-            clang_args = clang_extraargs,
-            header_wrapped = (root, current)->root == current,
-            header_library = x->"libvulkan",
-            clang_diagnostics = true,
+wc = init(; headers=VK_HEADERS,
+output_file=api_file,
+            common_file=common_file,
+            clang_includes=vcat(VK_INCLUDE, CLANG_INCLUDE),
+            clang_args="-D" .* VK_EXTENSIONS,
+            header_wrapped=(root, current) -> (startswith(current, VK_INCLUDE) ? true : false),
+            header_library=x -> "libvulkan",
+            clang_diagnostics=true,
             )
+
+# it should complain that some header files are not present (zircon/types.h, wayland-client.h...) but it should be OK since nothing from those files is actually wrapped
 run(wc)
+
+api_str = join(readlines(api_file), "\n")
+
+# add an additional method which uses a function pointer for each API function
+wrapped_funcs = String[]
+for func ∈ eachmatch(r"function (.*)\((.*)\)\n    (ccall.*)\nend", api_str)
+    name, args, body = func.captures
+    wrapped_func = """
+    function $name($args, fun_ptr)
+        $(replace(body, "(:$name, libvulkan)" => "fun_ptr"))
+    end
+    """
+    push!(wrapped_funcs, wrapped_func)
+end
+open(api_file, "a+") do io
+    write(io, "\n" * join(wrapped_funcs, "\n"))
+end

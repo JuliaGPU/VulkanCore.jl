@@ -4,10 +4,10 @@ const HEIGHT = 600
 # fill application info
 sType = VK_STRUCTURE_TYPE_APPLICATION_INFO
 pApplicationName = pointer(b"Vulkan Instance")
-applicationVersion = VK_MAKE_VERSION(1, 1, 0)
+applicationVersion = convert_vk_back(UInt32, v"1.1")
 pEngineName = pointer(b"Test")
-engineVersion = VK_MAKE_VERSION(1, 1, 0)
-apiVersion = VK_MAKE_VERSION(1, 1, 0)
+engineVersion = convert_vk_back(UInt32, v"1.1")
+apiVersion = convert_vk_back(UInt32, v"1.1")
 appInfoRef = VkApplicationInfo(sType, C_NULL, pApplicationName, applicationVersion, pEngineName, engineVersion, apiVersion) |> Ref
 
 # fill create info
