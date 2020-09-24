@@ -3,7 +3,7 @@ module LibVulkan
 import Libdl
 
 paths = String[]
-const libvulkan = Libdl.find_library(["libvulkan", "vulkan", "vulkan-1", "libvulkan.so.1"], paths)
+const libvulkan = Libdl.find_library(["libvulkan", "vulkan", "vulkan-1", "libvulkan.so.1", "libMoltenVK"], paths)
 @assert libvulkan != ""
 
 using CEnum

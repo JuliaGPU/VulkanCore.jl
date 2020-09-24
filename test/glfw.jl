@@ -16,7 +16,7 @@ flags = UInt32(0)
 pApplicationInfo = Base.unsafe_convert(Ptr{VkApplicationInfo}, appInfoRef)
 requiredExtensions = GLFW.GetRequiredInstanceExtensions()
 @static if Sys.isapple()
-    @assert "VK_MVK_macos_surface" in requiredExtensions
+    @assert ("VK_MVK_macos_surface" in requiredExtensions) || ("VK_EXT_metal_surface" in requiredExtensions)
 end
 enabledExtensionCount = Ref{Cuint}(0)
 ppEnabledExtensionNames = ccall((:glfwGetRequiredInstanceExtensions, GLFW.libglfw), Ptr{Cstring}, (Ref{Cuint},), enabledExtensionCount)
