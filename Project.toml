@@ -8,7 +8,7 @@ Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 Vulkan_Headers_jll = "8d446b21-f3ad-5576-a034-752265b9b6f9"
 
 [compat]
-CEnum = "~0.2.0"
+CEnum = "0.4.0"
 julia = "1"
 
 [extras]
