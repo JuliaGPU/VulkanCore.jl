@@ -39,6 +39,17 @@ const ANativeWindow = Cvoid # TODO: make opaque for now
 const HINSTANCE = Ptr{Cvoid}
 const HWND = Ptr{Cvoid}
 
+# TODO: Clang.jl should support this kinda macros
+VK_MAKE_VERSION(major, minor, patch) = ( Cuint(major) << 22 ) | ( Cuint(minor) << 12 ) | patch
+
+VK_VERSION_MAJOR(version) = Cuint(version) >> 22
+VK_VERSION_MINOR(version) = (Cuint(version) >> 12) & 0x3ff
+VK_VERSION_PATCH(version) = Cuint(version) & 0xfff
+
+const VK_API_VERSION_1_0 = VK_MAKE_VERSION(1, 0, 0)
+const VK_API_VERSION_1_1 = VK_MAKE_VERSION(1, 1, 0)
+const VK_API_VERSION_1_2 = VK_MAKE_VERSION(1, 2, 0)
+
 include(joinpath(@__DIR__, "..", "gen", "vk_common.jl"))
 include(joinpath(@__DIR__, "..", "gen", "vk_api.jl"))
 
