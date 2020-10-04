@@ -16,12 +16,13 @@ libvulkan_handle = C_NULL
 
 function __init__()
     libname = get(ENV, "JULIA_VULKAN_SDK_LIBNAME", "")
-    locations = get(ENV, "JULIA_VULKAN_SDK_SEARCH_PATH", "")
+    locations = [get(ENV, "JULIA_VULKAN_SDK_SEARCH_PATH", "")]
     if isempty(libname)
         libname = Libdl.find_library(["libvulkan", "vulkan", "vulkan-1", "libvulkan.so.1"], locations)
     end
     @assert libname != "" "cannot detect Vulkan SDK."
     global libvulkan_handle = Libdl.dlopen(libname)
+    @assert libvulkan_handle != C_NULL "cannot dlopen libvulkan."
 end
 
 using CEnum
@@ -70,6 +71,8 @@ const VK_API_VERSION_1_2 = VK_MAKE_VERSION(1, 2, 0)
 
 include(joinpath(@__DIR__, "..", "gen", "vk_common.jl"))
 include(joinpath(@__DIR__, "..", "gen", "vk_api.jl"))
+
+const VK_HEADER_VERSION_COMPLETE = VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION)
 
 # export everything
 foreach(names(@__MODULE__, all=true)) do s

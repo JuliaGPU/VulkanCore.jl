@@ -1,6 +1,7 @@
 # VulkanCore
 
-[![Build Status](https://travis-ci.org/JuliaGPU/VulkanCore.jl.svg?branch=master)](https://travis-ci.org/JuliaGPU/VulkanCore.jl)
+![CI](https://github.com/JuliaGPU/VulkanCore.jl/workflows/CI/badge.svg)
+![TagBot](https://github.com/JuliaGPU/VulkanCore.jl/workflows/TagBot/badge.svg)
 
 VulkanCore wraps Vulkan and exposes the library calls necessary to work with
 Vulkan. It is targeted for developers wanting to directly work with Vulkan in
@@ -22,7 +23,7 @@ If these are present, just run `pkg> add VulkanCore` in Julia.
 - [Vulkan Specification](https://www.khronos.org/registry/vulkan/#apispecs)
 
 ## Usage
-The Vulkan wrapper is generated using  [Clang.jl](https://github.com/JuliaInterop/Clang.jl)
+The Vulkan wrapper is generated using [Clang.jl](https://github.com/JuliaInterop/Clang.jl)
 with the [generator file](gen/generator.jl).
 
 The API aims to replicate the Vulkan C-API and is thus very bare bones and hands-on.
