@@ -22,6 +22,7 @@ function __init__()
     end
     @assert libname != "" "cannot detect Vulkan SDK."
     global libvulkan_handle = Libdl.dlopen(libname)
+    @assert libvulkan_handle != C_NULL "cannot dlopen libvulkan."
 end
 
 using CEnum

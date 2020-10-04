@@ -14,14 +14,7 @@ jobs:
       VULKAN_SDK: $GITHUB_WORKSPACE/../$VulkanSDKVersion/x86_64
     steps:
     - uses: actions/checkout@v2
-    - name: Cache
-      id: cache
-      uses: actions/cache@v2
-      with:
-        path: ${{env.VULKAN_SDK}}
-        key: VulkanSdk${{env.VulkanSDKVersion}}ExtractedLinux
     - name: Download & Extract Vulkan SDK
-      if: steps.cache.outputs.cache-hit != 'true'
       run: |
         wget --no-cookies -O ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/linux/vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz?u=
         tar -zxf ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz -C ../
@@ -43,16 +36,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set env
+    - name: Set Environment variables
       run: echo "::set-env name=VULKAN_SDK::C:\VulkanSDK\${{env.VulkanSDKVersion}}"
-    - name: Cache
-      id: cache
-      uses: actions/cache@v2
-      with:
-        path: ${{env.VULKAN_SDK}}
-        key: VulkanSdk${{env.VulkanSDKVersion}}WindowsExtracted2
     - name: Download & Install Vulkan SDK
-      if: steps.cache.outputs.cache-hit != 'true'
       run: |
         Invoke-WebRequest -Uri https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/windows/VulkanSDK-${{env.VulkanSDKVersion}}-Installer.exe?u= -OutFile ../vulkan-sdk-${{env.VulkanSDKVersion}}.exe
         $installer = Start-Process -FilePath ../vulkan-sdk-${{env.VulkanSDKVersion}}.exe -Wait -PassThru -ArgumentList @("/S");
@@ -76,21 +62,14 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set env
+    - name: Set Environment variables
       run: |
         VULKAN_SDK=$GITHUB_WORKSPACE/../vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS
         echo ::set-env name=VULKAN_SDK::$VULKAN_SDK
-        echo ::set-env name=JULIA_VULKAN_SDK_SEARCH_PATH::$VULKAN_SDK/bin
+        echo ::set-env name=JULIA_VULKAN_SDK_SEARCH_PATH::$VULKAN_SDK/lib
         echo ::set-env name=VK_LAYER_PATH::$VULKAN_SDK/share/vulkan/explicit_layer.d
         echo ::set-env name=VK_ICD_FILENAMES::$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json
-    - name: Cache
-      id: cache
-      uses: actions/cache@v2
-      with:
-        path: ${{env.VULKAN_SDK}}
-        key: VulkanSdk${{env.VulkanSDKVersion}}ExtractedMacos
     - name: Download & Extract Vulkan SDK
-      if: steps.cache.outputs.cache-hit != 'true'
       run: |
         wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg?u=
         hdiutil attach ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg
