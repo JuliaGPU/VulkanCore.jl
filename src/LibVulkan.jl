@@ -2,9 +2,27 @@ module LibVulkan
 
 import Libdl
 
-paths = String[]
-const libvulkan = Libdl.find_library(["libvulkan", "vulkan", "vulkan-1", "libvulkan.so.1", "libMoltenVK"], paths)
-@assert libvulkan != ""
+@static if Sys.iswindows()
+    const libvulkan = "vulkan-1.dll" 
+elseif Sys.isapple()
+    const libvulkan = "libvulkan.dylib"
+elseif Sys.islinux()
+    const libvulkan = "libvulkan.so.1"
+else
+    const libvulkan = "libvulkan"
+end
+
+libvulkan_handle = C_NULL
+
+function __init__()
+    libname = get(ENV, "JULIA_VULKAN_SDK_LIBNAME", "")
+    locations = get(ENV, "JULIA_VULKAN_SDK_SEARCH_PATH", "")
+    if isempty(libname)
+        libname = Libdl.find_library(["libvulkan", "vulkan", "vulkan-1", "libvulkan.so.1"], locations)
+    end
+    @assert libname != "" "cannot detect Vulkan SDK."
+    global libvulkan_handle = Libdl.dlopen(libname)
+end
 
 using CEnum
 
