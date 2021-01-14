@@ -57,6 +57,19 @@ const ANativeWindow = Cvoid # TODO: make opaque for now
 # Windows
 const HINSTANCE = Ptr{Cvoid}
 const HWND = Ptr{Cvoid}
+const HMONITOR = Ptr{Cvoid}
+const HANDLE = HMONITOR
+const DWORD = UInt32
+const LPCWSTR = UInt16
+const SECURITY_ATTRIBUTES = Cvoid # opaque struct
+# DirectFB
+const IDirectFB = Cvoid # opaque struct
+const IDirectFBSurface = Cvoid # opaque struct
+# Zircon
+const zx_handle_t = UInt32
+# GGP C
+const GgpStreamDescriptor = UInt32
+const GgpFrameToken = UInt32
 
 # TODO: Clang.jl should support this kinda macros
 VK_MAKE_VERSION(major, minor, patch) = ( Cuint(major) << 22 ) | ( Cuint(minor) << 12 ) | patch
