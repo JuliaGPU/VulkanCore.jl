@@ -676,6 +676,10 @@ const VULKAN_XLIB_H_ = 1
 const VK_KHR_xlib_surface = 1
 const VK_KHR_XLIB_SURFACE_SPEC_VERSION = 6
 const VK_KHR_XLIB_SURFACE_EXTENSION_NAME = "VK_KHR_xlib_surface"
+const VULKAN_DIRECTFB_H_ = 1
+const VK_EXT_directfb_surface = 1
+const VK_EXT_DIRECTFB_SURFACE_SPEC_VERSION = 1
+const VK_EXT_DIRECTFB_SURFACE_EXTENSION_NAME = "VK_EXT_directfb_surface"
 const VULKAN_XLIB_XRANDR_H_ = 1
 const VK_EXT_acquire_xlib_display = 1
 const VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION = 1
@@ -8785,6 +8789,18 @@ end
 
 const PFN_vkCreateXlibSurfaceKHR = Ptr{Cvoid}
 const PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR = Ptr{Cvoid}
+const VkDirectFBSurfaceCreateFlagsEXT = VkFlags
+
+struct VkDirectFBSurfaceCreateInfoEXT
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkDirectFBSurfaceCreateFlagsEXT
+    dfb::Ptr{Cint}
+    surface::Ptr{Cint}
+end
+
+const PFN_vkCreateDirectFBSurfaceEXT = Ptr{Cvoid}
+const PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT = Ptr{Cvoid}
 const PFN_vkAcquireXlibDisplayEXT = Ptr{Cvoid}
 const PFN_vkGetRandROutputDisplayEXT = Ptr{Cvoid}
 const VkStreamDescriptorSurfaceCreateFlagsGGP = VkFlags

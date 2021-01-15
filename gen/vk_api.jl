@@ -1626,6 +1626,14 @@ function vkGetPhysicalDeviceXlibPresentationSupportKHR(physicalDevice, queueFami
     ccall((:vkGetPhysicalDeviceXlibPresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{Display}, VisualID), physicalDevice, queueFamilyIndex, dpy, visualID)
 end
 
+function vkCreateDirectFBSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateDirectFBSurfaceEXT, libvulkan), VkResult, (VkInstance, Ptr{VkDirectFBSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkGetPhysicalDeviceDirectFBPresentationSupportEXT(physicalDevice, queueFamilyIndex, dfb)
+    ccall((:vkGetPhysicalDeviceDirectFBPresentationSupportEXT, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{Cint}), physicalDevice, queueFamilyIndex, dfb)
+end
+
 function vkAcquireXlibDisplayEXT(physicalDevice, dpy, display)
     ccall((:vkAcquireXlibDisplayEXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{Display}, VkDisplayKHR), physicalDevice, dpy, display)
 end
@@ -3352,6 +3360,14 @@ end
 
 function vkGetPhysicalDeviceXlibPresentationSupportKHR(physicalDevice, queueFamilyIndex, dpy, visualID, fun_ptr)
     ccall(fun_ptr, VkBool32, (VkPhysicalDevice, UInt32, Ptr{Display}, VisualID), physicalDevice, queueFamilyIndex, dpy, visualID)
+end
+
+function vkCreateDirectFBSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkDirectFBSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkGetPhysicalDeviceDirectFBPresentationSupportEXT(physicalDevice, queueFamilyIndex, dfb, fun_ptr)
+    ccall(fun_ptr, VkBool32, (VkPhysicalDevice, UInt32, Ptr{Cint}), physicalDevice, queueFamilyIndex, dfb)
 end
 
 function vkAcquireXlibDisplayEXT(physicalDevice, dpy, display, fun_ptr)

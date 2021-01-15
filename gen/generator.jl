@@ -9,6 +9,7 @@ VK_HEADERS = [joinpath(VK_INCLUDE, "vulkan.h")]
 
 # include all extensions
 VK_EXTENSIONS = [
+    "VK_USE_PLATFORM_DIRECTFB_EXT",
     "VK_USE_PLATFORM_ANDROID_KHR",
     "VK_USE_PLATFORM_FUCHSIA",
     "VK_USE_PLATFORM_IOS_MVK",
