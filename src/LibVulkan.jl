@@ -2,10 +2,24 @@ module LibVulkan
 
 import Libdl
 
-const libnames = ["vulkan-1", "libvulkan", "libvulkan.so.1"]
-const libvulkan = Libdl.find_library(libnames)
+const libnames = []#"vulkan-1", "vulkan", "libvulkan", "libvulkan.so.1"]
 
-!isempty(libvulkan) || error("Failed to retrieve a valid Vulkan library. Tried: $(join(libnames, ", "))")
+const libextrapaths = []
+
+foreach([get(ENV, "JULIA_VULKAN_LIBNAME", ""), get(ENV, "JULIA_VULKAN_SDK_LIBNAME", "")]) do libname
+    !isempty(libname) && push!(libnames, libname)
+end
+
+foreach([get(ENV, "JULIA_VULKAN_SEARCH_PATH", ""), get(ENV, "JULIA_VULKAN_SDK_SEARCH_PATH", "")]) do search_path
+    !isempty(search_path) && push!(libextrapaths, search_path)
+end
+
+const libvulkan = Libdl.find_library(libnames, libextrapaths)
+
+!isempty(libvulkan) || error("""
+Failed to retrieve a valid Vulkan library. Tried looking for library names $(join(libnames, ", ")) with search directories $(join([libextrapaths; Libdl.DL_LOAD_PATH], ", ")).
+Please configure the `JULIA_VULKAN_LIBNAME` and/or `JULIA_VULKAN_SEARCH_PATH` environment variables to specify extra paths, or add search paths by appending them to Lidbl.DL_LOAD_PATH before loading VulkanCore.
+""")
 
 using CEnum
 

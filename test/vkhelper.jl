@@ -96,21 +96,12 @@ Return `true` when all of the `required_layers` are supported.
 """
 function check_layers(required_layers::Vector{<:AbstractString})
     supported = get_supported_layers()
-    @info "available layers:"
+    isempty(supported) ? @warn("no layers found") : @info("available layers:")
     for x in supported
         @info "  $(x.name): $(x.description)($(x.spec_ver)) -- implementation version: $(x.impl_ver)"
     end
-    names = [layer.name for layer in supported]
-    if all(x->x in names, required_layers)  
-        return true
-    else
-        @error "not all required layers are supported."
-        @error "required layers:"
-        for layer in required_layers
-            @error "  $layer"
-        end
-        return false
-    end
+    names = getproperty.(supported, :name)
+    all(in(names), required_layers)
 end
 
 # instance
