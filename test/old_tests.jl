@@ -8,16 +8,13 @@ const api = VulkanCore.vk
 convert_vk_back(::Type{UInt32}, version::VersionNumber) = (version.major << 22) + (version.minor << 12) + version.patch
 convert_vk(::Type{VersionNumber}, version::UInt32) = VersionNumber(UInt32(version) >> 22, (UInt32(version) >> 12) & 0x3ff, UInt32(version) & 0xfff)
 
-err = VkResult(0)
-count = Ref{Cuint}(0)
+count = Ref{Cuint}()
 # Scan layers
-err = api.vkEnumerateInstanceLayerProperties(count, C_NULL)
-@assert err == api.VK_SUCCESS
-global_layer_properties = Vector{api.VkLayerProperties}(undef, count[])
-err = api.vkEnumerateInstanceLayerProperties(count, global_layer_properties)
-@assert err == api.VK_SUCCESS
+@test vkEnumerateInstanceLayerProperties(count, C_NULL) == VK_SUCCESS
+global_layer_properties = Vector{VkLayerProperties}(undef, count[])
+@test vkEnumerateInstanceLayerProperties(count, global_layer_properties) == VK_SUCCESS
 
-function Base.show(io::IO, lp::api.VkLayerProperties)
+function Base.show(io::IO, lp::VkLayerProperties)
 	println(io, "Layer Properties: ")
 	println(io, "    Layer Name: ", String(filter(x->x!=0, UInt8[lp.layerName...])))
 	println(io, "    Spec Version: ", convert_vk(VersionNumber, lp.specVersion))
@@ -47,19 +44,16 @@ inst_info = Ref(VkInstanceCreateInfo(VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
 									 0,
 									 C_NULL))
 
-instance = Ref{VkInstance}(C_NULL)
+instance = Ref{VkInstance}()
 
-err = vkCreateInstance(inst_info, C_NULL, instance)
-@test err == VK_SUCCESS
+@test vkCreateInstance(inst_info, C_NULL, instance) == VK_SUCCESS
 println(instance)
 
-gpu_count = Ref{Cuint}(0)
-err = vkEnumeratePhysicalDevices(instance[], gpu_count, C_NULL)
-@test err == VK_SUCCESS
+gpu_count = Ref{Cuint}()
+@test vkEnumeratePhysicalDevices(instance[], gpu_count, C_NULL) == VK_SUCCESS
 devices = Array{VkPhysicalDevice}(undef, gpu_count[])
 
-err = vkEnumeratePhysicalDevices(instance[], gpu_count, devices)
-@test err == VK_SUCCESS
+@test vkEnumeratePhysicalDevices(instance[], gpu_count, devices) == VK_SUCCESS
 
 deviceprops = Ref{VkPhysicalDeviceProperties}()
 device = first(devices)
@@ -99,7 +93,7 @@ end
 
 println(deviceprops[])
 
-queue_count = Ref{Cuint}(0)
+queue_count = Ref{Cuint}()
 vkGetPhysicalDeviceQueueFamilyProperties(device, queue_count, C_NULL)
 queueprops = Array{VkQueueFamilyProperties}(undef, queue_count[])
 println(queue_count[])
