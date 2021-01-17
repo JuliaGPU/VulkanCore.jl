@@ -16,6 +16,4 @@ end
 	end
 end
 
-@static if get(ENV, "JULIA_GITHUB_ACTIONS_CI", "OFF") == "OFF"
-	include("old_tests.jl")
-end
+include("old_tests.jl")
