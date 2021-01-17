@@ -4,7 +4,7 @@
 	old_vk_icd_filenames = get(ENV, "VK_ICD_FILENAMES", nothing)
 	libdir = dirname(SwiftShader_jll.libvulkan)
 	ENV["VK_ICD_FILENAMES"] = join(unique(filter(!isnothing, [old_vk_icd_filenames, joinpath(libdir, "vk_swiftshader_icd.json")])), sep)
-	ENV["DL_LOAD_PATH"] = join([get(ENV, "LD_LIBRARY_PATH", []); libdir], ':')
+	ENV["DL_LOAD_PATH"] = join([get(ENV, "DL_LOAD_PATH", []); libdir], ':')
 end
 
 using VulkanCore
