@@ -21,9 +21,8 @@ function Base.show(io::IO, lp::VkLayerProperties)
 	println(io, "    Implementation Version: ", convert_vk(VersionNumber, lp.implementationVersion))
 	println(io, "    description: ", String(filter(x->x!=0, UInt8[lp.description...])))
 end
-for elem in global_layer_properties
-	println(elem)
-end
+
+println.(global_layer_properties)
 
 appname = "vulkaninfo"
 
@@ -38,7 +37,8 @@ app_info = Ref(VkApplicationInfo(VK_STRUCTURE_TYPE_APPLICATION_INFO,
 inst_info = Ref(VkInstanceCreateInfo(VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
 								     C_NULL,
 									 UInt32(0),
-									 Base.unsafe_convert(Ptr{VkApplicationInfo}, app_info),
+									#  Base.unsafe_convert(Ptr{VkApplicationInfo}, app_info),
+									 C_NULL,
 									 0,
 									 C_NULL,
 									 0,
