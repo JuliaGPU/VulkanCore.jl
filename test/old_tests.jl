@@ -62,7 +62,8 @@ err = vkEnumeratePhysicalDevices(instance[], gpu_count, devices)
 @test err == VK_SUCCESS
 
 deviceprops = Ref{VkPhysicalDeviceProperties}()
-vkGetPhysicalDeviceProperties(devices[], deviceprops)
+device = first(devices)
+vkGetPhysicalDeviceProperties(device, deviceprops)
 
 
 function Base.show(io::IO, pdsp::VkPhysicalDeviceSparseProperties)
@@ -99,18 +100,18 @@ end
 println(deviceprops[])
 
 queue_count = Ref{Cuint}(0)
-vkGetPhysicalDeviceQueueFamilyProperties(devices[], queue_count, C_NULL)
+vkGetPhysicalDeviceQueueFamilyProperties(device, queue_count, C_NULL)
 queueprops = Array{VkQueueFamilyProperties}(undef, queue_count[])
 println(queue_count[])
-vkGetPhysicalDeviceQueueFamilyProperties(devices[], queue_count, queueprops)
+vkGetPhysicalDeviceQueueFamilyProperties(device, queue_count, queueprops)
 println(queueprops)
 
 memprops = Ref{VkPhysicalDeviceMemoryProperties}()
-vkGetPhysicalDeviceMemoryProperties(devices[], memprops)
+vkGetPhysicalDeviceMemoryProperties(device, memprops)
 
 println(memprops[])
 devicefeatures = Ref{VkPhysicalDeviceFeatures}()
-vkGetPhysicalDeviceFeatures(devices[], devicefeatures)
+vkGetPhysicalDeviceFeatures(device, devicefeatures)
 
 function Base.show(io::IO, df::VkPhysicalDeviceFeatures)
 	println(io, "Physical device features: ")
