@@ -2,15 +2,10 @@ module LibVulkan
 
 import Libdl
 
-@static if Sys.iswindows()
-    const libvulkan = "vulkan-1.dll" 
-elseif Sys.isapple()
-    const libvulkan = "libvulkan.dylib"
-elseif Sys.islinux()
-    const libvulkan = "libvulkan.so.1"
-else
-    const libvulkan = "libvulkan"
-end
+const libnames = ["vulkan-1", "libvulkan", "libvulkan.so.1"]
+const libvulkan = Libdl.find_library(libnames)
+
+!isempty(libvulkan) || error("Failed to retrieve a valid Vulkan library. Tried: $(join(libnames, ", "))")
 
 using CEnum
 
