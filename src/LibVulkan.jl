@@ -12,19 +12,6 @@ else
     const libvulkan = "libvulkan"
 end
 
-libvulkan_handle = C_NULL
-
-function __init__()
-    libname = get(ENV, "JULIA_VULKAN_SDK_LIBNAME", "")
-    locations = [get(ENV, "JULIA_VULKAN_SDK_SEARCH_PATH", "")]
-    if isempty(libname)
-        libname = Libdl.find_library(["libvulkan", "vulkan", "vulkan-1", "libvulkan.so.1"], locations)
-    end
-    @assert libname != "" "cannot detect Vulkan SDK."
-    global libvulkan_handle = Libdl.dlopen(libname)
-    @assert libvulkan_handle != C_NULL "cannot dlopen libvulkan."
-end
-
 using CEnum
 
 const Ctm = Base.Libc.TmStruct
