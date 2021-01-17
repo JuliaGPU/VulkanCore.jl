@@ -28,7 +28,7 @@ for elem in global_layer_properties
 	println(elem)
 end
 
-appname = b"vulkaninfo"
+appname = "vulkaninfo"
 
 app_info = Ref(VkApplicationInfo(VK_STRUCTURE_TYPE_APPLICATION_INFO,
 								 C_NULL,
@@ -36,7 +36,7 @@ app_info = Ref(VkApplicationInfo(VK_STRUCTURE_TYPE_APPLICATION_INFO,
 								 1,
 								 pointer(appname),
 								 1,
-								 convert_vk_back(UInt32, v"1.1")))
+								 convert_vk_back(UInt32, v"1.2")))
 
 inst_info = Ref(VkInstanceCreateInfo(VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
 								     C_NULL,
