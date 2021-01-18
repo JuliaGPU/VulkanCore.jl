@@ -2,7 +2,7 @@ module LibVulkan
 
 import Libdl
 
-const libnames = ["vulkan-1", "vulkan", "libvulkan", "libvulkan.so.1", "libvk_swiftshader"]
+const libnames = ["vulkan-1", "vulkan", "libvulkan", "libvulkan.so.1"]
 const libextrapaths = []
 const libvulkan = Ref{String}("")
 

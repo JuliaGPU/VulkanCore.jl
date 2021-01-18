@@ -5,6 +5,7 @@ on:
 env:
   JuliaVersion: 1.6.0-beta1
   JULIA_GITHUB_ACTIONS_CI: ON
+  JULIA_VULKAN_LIBNAME: "libvk_swiftshader"
 jobs:
   ubuntu-latest-x64:
     runs-on: ubuntu-latest
