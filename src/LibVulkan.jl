@@ -2,7 +2,9 @@ module LibVulkan
 
 import Libdl
 
-@static if Sys.iswindows()
+@static if !isempty(get(ENV, "JULIA_VULKAN_LIBNAME", ""))
+    const libvulkan = ENV["JULIA_VULKAN_LIBNAME"]
+elseif Sys.iswindows()
     const libvulkan = "vulkan-1.dll" 
 elseif Sys.isapple()
     const libvulkan = "libvulkan.dylib"
@@ -12,17 +14,17 @@ else
     const libvulkan = "libvulkan"
 end
 
-libvulkan_handle = C_NULL
+const libvulkan_handle = Ref{Ptr{Cvoid}}(0)
 
 function __init__()
-    libname = get(ENV, "JULIA_VULKAN_SDK_LIBNAME", "")
-    locations = [get(ENV, "JULIA_VULKAN_SDK_SEARCH_PATH", "")]
+    libname = Libdl.find_library(libvulkan)
     if isempty(libname)
-        libname = Libdl.find_library(["libvulkan", "vulkan", "vulkan-1", "libvulkan.so.1"], locations)
+            error("""
+            Failed to retrieve a valid Vulkan library called '$libvulkan'.
+            If you configure the `JULIA_VULKAN_LIBNAME` environment variable before precompiling VulkanCore, it will be used instead of '$libvulkan'. You may also manually add search paths by appending them to Lidbl.DL_LOAD_PATH, but note that this may have repercussions beyond this package.
+            """)
     end
-    @assert libname != "" "cannot detect Vulkan SDK."
-    global libvulkan_handle = Libdl.dlopen(libname)
-    @assert libvulkan_handle != C_NULL "cannot dlopen libvulkan."
+    libvulkan_handle[] = Libdl.dlopen(libname)
 end
 
 using CEnum
