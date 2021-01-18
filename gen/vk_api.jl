@@ -3,3473 +3,3472 @@
 
 
 function vkCreateInstance(pCreateInfo, pAllocator, pInstance)
-    ccall((:vkCreateInstance, libvulkan), VkResult, (Ptr{VkInstanceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkInstance}), pCreateInfo, pAllocator, pInstance)
+    ccall((:vkCreateInstance, libvulkan[]), VkResult, (Ptr{VkInstanceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkInstance}), pCreateInfo, pAllocator, pInstance)
 end
 
 function vkDestroyInstance(instance, pAllocator)
-    ccall((:vkDestroyInstance, libvulkan), Cvoid, (VkInstance, Ptr{VkAllocationCallbacks}), instance, pAllocator)
+    ccall((:vkDestroyInstance, libvulkan[]), Cvoid, (VkInstance, Ptr{VkAllocationCallbacks}), instance, pAllocator)
 end
 
 function vkEnumeratePhysicalDevices(instance, pPhysicalDeviceCount, pPhysicalDevices)
-    ccall((:vkEnumeratePhysicalDevices, libvulkan), VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDevice}), instance, pPhysicalDeviceCount, pPhysicalDevices)
+    ccall((:vkEnumeratePhysicalDevices, libvulkan[]), VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDevice}), instance, pPhysicalDeviceCount, pPhysicalDevices)
 end
 
 function vkGetPhysicalDeviceFeatures(physicalDevice, pFeatures)
-    ccall((:vkGetPhysicalDeviceFeatures, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures}), physicalDevice, pFeatures)
+    ccall((:vkGetPhysicalDeviceFeatures, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures}), physicalDevice, pFeatures)
 end
 
 function vkGetPhysicalDeviceFormatProperties(physicalDevice, format, pFormatProperties)
-    ccall((:vkGetPhysicalDeviceFormatProperties, libvulkan), Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties}), physicalDevice, format, pFormatProperties)
+    ccall((:vkGetPhysicalDeviceFormatProperties, libvulkan[]), Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties}), physicalDevice, format, pFormatProperties)
 end
 
 function vkGetPhysicalDeviceImageFormatProperties(physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties)
-    ccall((:vkGetPhysicalDeviceImageFormatProperties, libvulkan), VkResult, (VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlags, VkImageCreateFlags, Ptr{VkImageFormatProperties}), physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties)
+    ccall((:vkGetPhysicalDeviceImageFormatProperties, libvulkan[]), VkResult, (VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlags, VkImageCreateFlags, Ptr{VkImageFormatProperties}), physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties)
 end
 
 function vkGetPhysicalDeviceProperties(physicalDevice, pProperties)
-    ccall((:vkGetPhysicalDeviceProperties, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties}), physicalDevice, pProperties)
+    ccall((:vkGetPhysicalDeviceProperties, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties}), physicalDevice, pProperties)
 end
 
 function vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
-    ccall((:vkGetPhysicalDeviceQueueFamilyProperties, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
+    ccall((:vkGetPhysicalDeviceQueueFamilyProperties, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
 end
 
 function vkGetPhysicalDeviceMemoryProperties(physicalDevice, pMemoryProperties)
-    ccall((:vkGetPhysicalDeviceMemoryProperties, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties}), physicalDevice, pMemoryProperties)
+    ccall((:vkGetPhysicalDeviceMemoryProperties, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties}), physicalDevice, pMemoryProperties)
 end
 
 function vkGetInstanceProcAddr(instance, pName)
-    ccall((:vkGetInstanceProcAddr, libvulkan), PFN_vkVoidFunction, (VkInstance, Cstring), instance, pName)
+    ccall((:vkGetInstanceProcAddr, libvulkan[]), PFN_vkVoidFunction, (VkInstance, Cstring), instance, pName)
 end
 
 function vkGetDeviceProcAddr(device, pName)
-    ccall((:vkGetDeviceProcAddr, libvulkan), PFN_vkVoidFunction, (VkDevice, Cstring), device, pName)
+    ccall((:vkGetDeviceProcAddr, libvulkan[]), PFN_vkVoidFunction, (VkDevice, Cstring), device, pName)
 end
 
 function vkCreateDevice(physicalDevice, pCreateInfo, pAllocator, pDevice)
-    ccall((:vkCreateDevice, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkDeviceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDevice}), physicalDevice, pCreateInfo, pAllocator, pDevice)
+    ccall((:vkCreateDevice, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{VkDeviceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDevice}), physicalDevice, pCreateInfo, pAllocator, pDevice)
 end
 
 function vkDestroyDevice(device, pAllocator)
-    ccall((:vkDestroyDevice, libvulkan), Cvoid, (VkDevice, Ptr{VkAllocationCallbacks}), device, pAllocator)
+    ccall((:vkDestroyDevice, libvulkan[]), Cvoid, (VkDevice, Ptr{VkAllocationCallbacks}), device, pAllocator)
 end
 
 function vkEnumerateInstanceExtensionProperties(pLayerName, pPropertyCount, pProperties)
-    ccall((:vkEnumerateInstanceExtensionProperties, libvulkan), VkResult, (Cstring, Ptr{UInt32}, Ptr{VkExtensionProperties}), pLayerName, pPropertyCount, pProperties)
+    ccall((:vkEnumerateInstanceExtensionProperties, libvulkan[]), VkResult, (Cstring, Ptr{UInt32}, Ptr{VkExtensionProperties}), pLayerName, pPropertyCount, pProperties)
 end
 
 function vkEnumerateDeviceExtensionProperties(physicalDevice, pLayerName, pPropertyCount, pProperties)
-    ccall((:vkEnumerateDeviceExtensionProperties, libvulkan), VkResult, (VkPhysicalDevice, Cstring, Ptr{UInt32}, Ptr{VkExtensionProperties}), physicalDevice, pLayerName, pPropertyCount, pProperties)
+    ccall((:vkEnumerateDeviceExtensionProperties, libvulkan[]), VkResult, (VkPhysicalDevice, Cstring, Ptr{UInt32}, Ptr{VkExtensionProperties}), physicalDevice, pLayerName, pPropertyCount, pProperties)
 end
 
 function vkEnumerateInstanceLayerProperties(pPropertyCount, pProperties)
-    ccall((:vkEnumerateInstanceLayerProperties, libvulkan), VkResult, (Ptr{UInt32}, Ptr{VkLayerProperties}), pPropertyCount, pProperties)
+    ccall((:vkEnumerateInstanceLayerProperties, libvulkan[]), VkResult, (Ptr{UInt32}, Ptr{VkLayerProperties}), pPropertyCount, pProperties)
 end
 
 function vkEnumerateDeviceLayerProperties(physicalDevice, pPropertyCount, pProperties)
-    ccall((:vkEnumerateDeviceLayerProperties, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkLayerProperties}), physicalDevice, pPropertyCount, pProperties)
+    ccall((:vkEnumerateDeviceLayerProperties, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkLayerProperties}), physicalDevice, pPropertyCount, pProperties)
 end
 
 function vkGetDeviceQueue(device, queueFamilyIndex, queueIndex, pQueue)
-    ccall((:vkGetDeviceQueue, libvulkan), Cvoid, (VkDevice, UInt32, UInt32, Ptr{VkQueue}), device, queueFamilyIndex, queueIndex, pQueue)
+    ccall((:vkGetDeviceQueue, libvulkan[]), Cvoid, (VkDevice, UInt32, UInt32, Ptr{VkQueue}), device, queueFamilyIndex, queueIndex, pQueue)
 end
 
 function vkQueueSubmit(queue, submitCount, pSubmits, fence)
-    ccall((:vkQueueSubmit, libvulkan), VkResult, (VkQueue, UInt32, Ptr{VkSubmitInfo}, VkFence), queue, submitCount, pSubmits, fence)
+    ccall((:vkQueueSubmit, libvulkan[]), VkResult, (VkQueue, UInt32, Ptr{VkSubmitInfo}, VkFence), queue, submitCount, pSubmits, fence)
 end
 
 function vkQueueWaitIdle(queue)
-    ccall((:vkQueueWaitIdle, libvulkan), VkResult, (VkQueue,), queue)
+    ccall((:vkQueueWaitIdle, libvulkan[]), VkResult, (VkQueue,), queue)
 end
 
 function vkDeviceWaitIdle(device)
-    ccall((:vkDeviceWaitIdle, libvulkan), VkResult, (VkDevice,), device)
+    ccall((:vkDeviceWaitIdle, libvulkan[]), VkResult, (VkDevice,), device)
 end
 
 function vkAllocateMemory(device, pAllocateInfo, pAllocator, pMemory)
-    ccall((:vkAllocateMemory, libvulkan), VkResult, (VkDevice, Ptr{VkMemoryAllocateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDeviceMemory}), device, pAllocateInfo, pAllocator, pMemory)
+    ccall((:vkAllocateMemory, libvulkan[]), VkResult, (VkDevice, Ptr{VkMemoryAllocateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDeviceMemory}), device, pAllocateInfo, pAllocator, pMemory)
 end
 
 function vkFreeMemory(device, memory, pAllocator)
-    ccall((:vkFreeMemory, libvulkan), Cvoid, (VkDevice, VkDeviceMemory, Ptr{VkAllocationCallbacks}), device, memory, pAllocator)
+    ccall((:vkFreeMemory, libvulkan[]), Cvoid, (VkDevice, VkDeviceMemory, Ptr{VkAllocationCallbacks}), device, memory, pAllocator)
 end
 
 function vkMapMemory(device, memory, offset, size, flags, ppData)
-    ccall((:vkMapMemory, libvulkan), VkResult, (VkDevice, VkDeviceMemory, VkDeviceSize, VkDeviceSize, VkMemoryMapFlags, Ptr{Ptr{Cvoid}}), device, memory, offset, size, flags, ppData)
+    ccall((:vkMapMemory, libvulkan[]), VkResult, (VkDevice, VkDeviceMemory, VkDeviceSize, VkDeviceSize, VkMemoryMapFlags, Ptr{Ptr{Cvoid}}), device, memory, offset, size, flags, ppData)
 end
 
 function vkUnmapMemory(device, memory)
-    ccall((:vkUnmapMemory, libvulkan), Cvoid, (VkDevice, VkDeviceMemory), device, memory)
+    ccall((:vkUnmapMemory, libvulkan[]), Cvoid, (VkDevice, VkDeviceMemory), device, memory)
 end
 
 function vkFlushMappedMemoryRanges(device, memoryRangeCount, pMemoryRanges)
-    ccall((:vkFlushMappedMemoryRanges, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkMappedMemoryRange}), device, memoryRangeCount, pMemoryRanges)
+    ccall((:vkFlushMappedMemoryRanges, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkMappedMemoryRange}), device, memoryRangeCount, pMemoryRanges)
 end
 
 function vkInvalidateMappedMemoryRanges(device, memoryRangeCount, pMemoryRanges)
-    ccall((:vkInvalidateMappedMemoryRanges, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkMappedMemoryRange}), device, memoryRangeCount, pMemoryRanges)
+    ccall((:vkInvalidateMappedMemoryRanges, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkMappedMemoryRange}), device, memoryRangeCount, pMemoryRanges)
 end
 
 function vkGetDeviceMemoryCommitment(device, memory, pCommittedMemoryInBytes)
-    ccall((:vkGetDeviceMemoryCommitment, libvulkan), Cvoid, (VkDevice, VkDeviceMemory, Ptr{VkDeviceSize}), device, memory, pCommittedMemoryInBytes)
+    ccall((:vkGetDeviceMemoryCommitment, libvulkan[]), Cvoid, (VkDevice, VkDeviceMemory, Ptr{VkDeviceSize}), device, memory, pCommittedMemoryInBytes)
 end
 
 function vkBindBufferMemory(device, buffer, memory, memoryOffset)
-    ccall((:vkBindBufferMemory, libvulkan), VkResult, (VkDevice, VkBuffer, VkDeviceMemory, VkDeviceSize), device, buffer, memory, memoryOffset)
+    ccall((:vkBindBufferMemory, libvulkan[]), VkResult, (VkDevice, VkBuffer, VkDeviceMemory, VkDeviceSize), device, buffer, memory, memoryOffset)
 end
 
 function vkBindImageMemory(device, image, memory, memoryOffset)
-    ccall((:vkBindImageMemory, libvulkan), VkResult, (VkDevice, VkImage, VkDeviceMemory, VkDeviceSize), device, image, memory, memoryOffset)
+    ccall((:vkBindImageMemory, libvulkan[]), VkResult, (VkDevice, VkImage, VkDeviceMemory, VkDeviceSize), device, image, memory, memoryOffset)
 end
 
 function vkGetBufferMemoryRequirements(device, buffer, pMemoryRequirements)
-    ccall((:vkGetBufferMemoryRequirements, libvulkan), Cvoid, (VkDevice, VkBuffer, Ptr{VkMemoryRequirements}), device, buffer, pMemoryRequirements)
+    ccall((:vkGetBufferMemoryRequirements, libvulkan[]), Cvoid, (VkDevice, VkBuffer, Ptr{VkMemoryRequirements}), device, buffer, pMemoryRequirements)
 end
 
 function vkGetImageMemoryRequirements(device, image, pMemoryRequirements)
-    ccall((:vkGetImageMemoryRequirements, libvulkan), Cvoid, (VkDevice, VkImage, Ptr{VkMemoryRequirements}), device, image, pMemoryRequirements)
+    ccall((:vkGetImageMemoryRequirements, libvulkan[]), Cvoid, (VkDevice, VkImage, Ptr{VkMemoryRequirements}), device, image, pMemoryRequirements)
 end
 
 function vkGetImageSparseMemoryRequirements(device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
-    ccall((:vkGetImageSparseMemoryRequirements, libvulkan), Cvoid, (VkDevice, VkImage, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements}), device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
+    ccall((:vkGetImageSparseMemoryRequirements, libvulkan[]), Cvoid, (VkDevice, VkImage, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements}), device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
 end
 
 function vkGetPhysicalDeviceSparseImageFormatProperties(physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties)
-    ccall((:vkGetPhysicalDeviceSparseImageFormatProperties, libvulkan), Cvoid, (VkPhysicalDevice, VkFormat, VkImageType, VkSampleCountFlagBits, VkImageUsageFlags, VkImageTiling, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties}), physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceSparseImageFormatProperties, libvulkan[]), Cvoid, (VkPhysicalDevice, VkFormat, VkImageType, VkSampleCountFlagBits, VkImageUsageFlags, VkImageTiling, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties}), physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties)
 end
 
 function vkQueueBindSparse(queue, bindInfoCount, pBindInfo, fence)
-    ccall((:vkQueueBindSparse, libvulkan), VkResult, (VkQueue, UInt32, Ptr{VkBindSparseInfo}, VkFence), queue, bindInfoCount, pBindInfo, fence)
+    ccall((:vkQueueBindSparse, libvulkan[]), VkResult, (VkQueue, UInt32, Ptr{VkBindSparseInfo}, VkFence), queue, bindInfoCount, pBindInfo, fence)
 end
 
 function vkCreateFence(device, pCreateInfo, pAllocator, pFence)
-    ccall((:vkCreateFence, libvulkan), VkResult, (VkDevice, Ptr{VkFenceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, pCreateInfo, pAllocator, pFence)
+    ccall((:vkCreateFence, libvulkan[]), VkResult, (VkDevice, Ptr{VkFenceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, pCreateInfo, pAllocator, pFence)
 end
 
 function vkDestroyFence(device, fence, pAllocator)
-    ccall((:vkDestroyFence, libvulkan), Cvoid, (VkDevice, VkFence, Ptr{VkAllocationCallbacks}), device, fence, pAllocator)
+    ccall((:vkDestroyFence, libvulkan[]), Cvoid, (VkDevice, VkFence, Ptr{VkAllocationCallbacks}), device, fence, pAllocator)
 end
 
 function vkResetFences(device, fenceCount, pFences)
-    ccall((:vkResetFences, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkFence}), device, fenceCount, pFences)
+    ccall((:vkResetFences, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkFence}), device, fenceCount, pFences)
 end
 
 function vkGetFenceStatus(device, fence)
-    ccall((:vkGetFenceStatus, libvulkan), VkResult, (VkDevice, VkFence), device, fence)
+    ccall((:vkGetFenceStatus, libvulkan[]), VkResult, (VkDevice, VkFence), device, fence)
 end
 
 function vkWaitForFences(device, fenceCount, pFences, waitAll, timeout)
-    ccall((:vkWaitForFences, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkFence}, VkBool32, UInt64), device, fenceCount, pFences, waitAll, timeout)
+    ccall((:vkWaitForFences, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkFence}, VkBool32, UInt64), device, fenceCount, pFences, waitAll, timeout)
 end
 
 function vkCreateSemaphore(device, pCreateInfo, pAllocator, pSemaphore)
-    ccall((:vkCreateSemaphore, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSemaphore}), device, pCreateInfo, pAllocator, pSemaphore)
+    ccall((:vkCreateSemaphore, libvulkan[]), VkResult, (VkDevice, Ptr{VkSemaphoreCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSemaphore}), device, pCreateInfo, pAllocator, pSemaphore)
 end
 
 function vkDestroySemaphore(device, semaphore, pAllocator)
-    ccall((:vkDestroySemaphore, libvulkan), Cvoid, (VkDevice, VkSemaphore, Ptr{VkAllocationCallbacks}), device, semaphore, pAllocator)
+    ccall((:vkDestroySemaphore, libvulkan[]), Cvoid, (VkDevice, VkSemaphore, Ptr{VkAllocationCallbacks}), device, semaphore, pAllocator)
 end
 
 function vkCreateEvent(device, pCreateInfo, pAllocator, pEvent)
-    ccall((:vkCreateEvent, libvulkan), VkResult, (VkDevice, Ptr{VkEventCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkEvent}), device, pCreateInfo, pAllocator, pEvent)
+    ccall((:vkCreateEvent, libvulkan[]), VkResult, (VkDevice, Ptr{VkEventCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkEvent}), device, pCreateInfo, pAllocator, pEvent)
 end
 
 function vkDestroyEvent(device, event, pAllocator)
-    ccall((:vkDestroyEvent, libvulkan), Cvoid, (VkDevice, VkEvent, Ptr{VkAllocationCallbacks}), device, event, pAllocator)
+    ccall((:vkDestroyEvent, libvulkan[]), Cvoid, (VkDevice, VkEvent, Ptr{VkAllocationCallbacks}), device, event, pAllocator)
 end
 
 function vkGetEventStatus(device, event)
-    ccall((:vkGetEventStatus, libvulkan), VkResult, (VkDevice, VkEvent), device, event)
+    ccall((:vkGetEventStatus, libvulkan[]), VkResult, (VkDevice, VkEvent), device, event)
 end
 
 function vkSetEvent(device, event)
-    ccall((:vkSetEvent, libvulkan), VkResult, (VkDevice, VkEvent), device, event)
+    ccall((:vkSetEvent, libvulkan[]), VkResult, (VkDevice, VkEvent), device, event)
 end
 
 function vkResetEvent(device, event)
-    ccall((:vkResetEvent, libvulkan), VkResult, (VkDevice, VkEvent), device, event)
+    ccall((:vkResetEvent, libvulkan[]), VkResult, (VkDevice, VkEvent), device, event)
 end
 
 function vkCreateQueryPool(device, pCreateInfo, pAllocator, pQueryPool)
-    ccall((:vkCreateQueryPool, libvulkan), VkResult, (VkDevice, Ptr{VkQueryPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkQueryPool}), device, pCreateInfo, pAllocator, pQueryPool)
+    ccall((:vkCreateQueryPool, libvulkan[]), VkResult, (VkDevice, Ptr{VkQueryPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkQueryPool}), device, pCreateInfo, pAllocator, pQueryPool)
 end
 
 function vkDestroyQueryPool(device, queryPool, pAllocator)
-    ccall((:vkDestroyQueryPool, libvulkan), Cvoid, (VkDevice, VkQueryPool, Ptr{VkAllocationCallbacks}), device, queryPool, pAllocator)
+    ccall((:vkDestroyQueryPool, libvulkan[]), Cvoid, (VkDevice, VkQueryPool, Ptr{VkAllocationCallbacks}), device, queryPool, pAllocator)
 end
 
 function vkGetQueryPoolResults(device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags)
-    ccall((:vkGetQueryPoolResults, libvulkan), VkResult, (VkDevice, VkQueryPool, UInt32, UInt32, Csize_t, Ptr{Cvoid}, VkDeviceSize, VkQueryResultFlags), device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags)
+    ccall((:vkGetQueryPoolResults, libvulkan[]), VkResult, (VkDevice, VkQueryPool, UInt32, UInt32, Csize_t, Ptr{Cvoid}, VkDeviceSize, VkQueryResultFlags), device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags)
 end
 
 function vkCreateBuffer(device, pCreateInfo, pAllocator, pBuffer)
-    ccall((:vkCreateBuffer, libvulkan), VkResult, (VkDevice, Ptr{VkBufferCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkBuffer}), device, pCreateInfo, pAllocator, pBuffer)
+    ccall((:vkCreateBuffer, libvulkan[]), VkResult, (VkDevice, Ptr{VkBufferCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkBuffer}), device, pCreateInfo, pAllocator, pBuffer)
 end
 
 function vkDestroyBuffer(device, buffer, pAllocator)
-    ccall((:vkDestroyBuffer, libvulkan), Cvoid, (VkDevice, VkBuffer, Ptr{VkAllocationCallbacks}), device, buffer, pAllocator)
+    ccall((:vkDestroyBuffer, libvulkan[]), Cvoid, (VkDevice, VkBuffer, Ptr{VkAllocationCallbacks}), device, buffer, pAllocator)
 end
 
 function vkCreateBufferView(device, pCreateInfo, pAllocator, pView)
-    ccall((:vkCreateBufferView, libvulkan), VkResult, (VkDevice, Ptr{VkBufferViewCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkBufferView}), device, pCreateInfo, pAllocator, pView)
+    ccall((:vkCreateBufferView, libvulkan[]), VkResult, (VkDevice, Ptr{VkBufferViewCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkBufferView}), device, pCreateInfo, pAllocator, pView)
 end
 
 function vkDestroyBufferView(device, bufferView, pAllocator)
-    ccall((:vkDestroyBufferView, libvulkan), Cvoid, (VkDevice, VkBufferView, Ptr{VkAllocationCallbacks}), device, bufferView, pAllocator)
+    ccall((:vkDestroyBufferView, libvulkan[]), Cvoid, (VkDevice, VkBufferView, Ptr{VkAllocationCallbacks}), device, bufferView, pAllocator)
 end
 
 function vkCreateImage(device, pCreateInfo, pAllocator, pImage)
-    ccall((:vkCreateImage, libvulkan), VkResult, (VkDevice, Ptr{VkImageCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkImage}), device, pCreateInfo, pAllocator, pImage)
+    ccall((:vkCreateImage, libvulkan[]), VkResult, (VkDevice, Ptr{VkImageCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkImage}), device, pCreateInfo, pAllocator, pImage)
 end
 
 function vkDestroyImage(device, image, pAllocator)
-    ccall((:vkDestroyImage, libvulkan), Cvoid, (VkDevice, VkImage, Ptr{VkAllocationCallbacks}), device, image, pAllocator)
+    ccall((:vkDestroyImage, libvulkan[]), Cvoid, (VkDevice, VkImage, Ptr{VkAllocationCallbacks}), device, image, pAllocator)
 end
 
 function vkGetImageSubresourceLayout(device, image, pSubresource, pLayout)
-    ccall((:vkGetImageSubresourceLayout, libvulkan), Cvoid, (VkDevice, VkImage, Ptr{VkImageSubresource}, Ptr{VkSubresourceLayout}), device, image, pSubresource, pLayout)
+    ccall((:vkGetImageSubresourceLayout, libvulkan[]), Cvoid, (VkDevice, VkImage, Ptr{VkImageSubresource}, Ptr{VkSubresourceLayout}), device, image, pSubresource, pLayout)
 end
 
 function vkCreateImageView(device, pCreateInfo, pAllocator, pView)
-    ccall((:vkCreateImageView, libvulkan), VkResult, (VkDevice, Ptr{VkImageViewCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkImageView}), device, pCreateInfo, pAllocator, pView)
+    ccall((:vkCreateImageView, libvulkan[]), VkResult, (VkDevice, Ptr{VkImageViewCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkImageView}), device, pCreateInfo, pAllocator, pView)
 end
 
 function vkDestroyImageView(device, imageView, pAllocator)
-    ccall((:vkDestroyImageView, libvulkan), Cvoid, (VkDevice, VkImageView, Ptr{VkAllocationCallbacks}), device, imageView, pAllocator)
+    ccall((:vkDestroyImageView, libvulkan[]), Cvoid, (VkDevice, VkImageView, Ptr{VkAllocationCallbacks}), device, imageView, pAllocator)
 end
 
 function vkCreateShaderModule(device, pCreateInfo, pAllocator, pShaderModule)
-    ccall((:vkCreateShaderModule, libvulkan), VkResult, (VkDevice, Ptr{VkShaderModuleCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkShaderModule}), device, pCreateInfo, pAllocator, pShaderModule)
+    ccall((:vkCreateShaderModule, libvulkan[]), VkResult, (VkDevice, Ptr{VkShaderModuleCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkShaderModule}), device, pCreateInfo, pAllocator, pShaderModule)
 end
 
 function vkDestroyShaderModule(device, shaderModule, pAllocator)
-    ccall((:vkDestroyShaderModule, libvulkan), Cvoid, (VkDevice, VkShaderModule, Ptr{VkAllocationCallbacks}), device, shaderModule, pAllocator)
+    ccall((:vkDestroyShaderModule, libvulkan[]), Cvoid, (VkDevice, VkShaderModule, Ptr{VkAllocationCallbacks}), device, shaderModule, pAllocator)
 end
 
 function vkCreatePipelineCache(device, pCreateInfo, pAllocator, pPipelineCache)
-    ccall((:vkCreatePipelineCache, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineCacheCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipelineCache}), device, pCreateInfo, pAllocator, pPipelineCache)
+    ccall((:vkCreatePipelineCache, libvulkan[]), VkResult, (VkDevice, Ptr{VkPipelineCacheCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipelineCache}), device, pCreateInfo, pAllocator, pPipelineCache)
 end
 
 function vkDestroyPipelineCache(device, pipelineCache, pAllocator)
-    ccall((:vkDestroyPipelineCache, libvulkan), Cvoid, (VkDevice, VkPipelineCache, Ptr{VkAllocationCallbacks}), device, pipelineCache, pAllocator)
+    ccall((:vkDestroyPipelineCache, libvulkan[]), Cvoid, (VkDevice, VkPipelineCache, Ptr{VkAllocationCallbacks}), device, pipelineCache, pAllocator)
 end
 
 function vkGetPipelineCacheData(device, pipelineCache, pDataSize, pData)
-    ccall((:vkGetPipelineCacheData, libvulkan), VkResult, (VkDevice, VkPipelineCache, Ptr{Csize_t}, Ptr{Cvoid}), device, pipelineCache, pDataSize, pData)
+    ccall((:vkGetPipelineCacheData, libvulkan[]), VkResult, (VkDevice, VkPipelineCache, Ptr{Csize_t}, Ptr{Cvoid}), device, pipelineCache, pDataSize, pData)
 end
 
 function vkMergePipelineCaches(device, dstCache, srcCacheCount, pSrcCaches)
-    ccall((:vkMergePipelineCaches, libvulkan), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkPipelineCache}), device, dstCache, srcCacheCount, pSrcCaches)
+    ccall((:vkMergePipelineCaches, libvulkan[]), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkPipelineCache}), device, dstCache, srcCacheCount, pSrcCaches)
 end
 
 function vkCreateGraphicsPipelines(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
-    ccall((:vkCreateGraphicsPipelines, libvulkan), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkGraphicsPipelineCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+    ccall((:vkCreateGraphicsPipelines, libvulkan[]), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkGraphicsPipelineCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
 end
 
 function vkCreateComputePipelines(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
-    ccall((:vkCreateComputePipelines, libvulkan), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkComputePipelineCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+    ccall((:vkCreateComputePipelines, libvulkan[]), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkComputePipelineCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
 end
 
 function vkDestroyPipeline(device, pipeline, pAllocator)
-    ccall((:vkDestroyPipeline, libvulkan), Cvoid, (VkDevice, VkPipeline, Ptr{VkAllocationCallbacks}), device, pipeline, pAllocator)
+    ccall((:vkDestroyPipeline, libvulkan[]), Cvoid, (VkDevice, VkPipeline, Ptr{VkAllocationCallbacks}), device, pipeline, pAllocator)
 end
 
 function vkCreatePipelineLayout(device, pCreateInfo, pAllocator, pPipelineLayout)
-    ccall((:vkCreatePipelineLayout, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineLayoutCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipelineLayout}), device, pCreateInfo, pAllocator, pPipelineLayout)
+    ccall((:vkCreatePipelineLayout, libvulkan[]), VkResult, (VkDevice, Ptr{VkPipelineLayoutCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipelineLayout}), device, pCreateInfo, pAllocator, pPipelineLayout)
 end
 
 function vkDestroyPipelineLayout(device, pipelineLayout, pAllocator)
-    ccall((:vkDestroyPipelineLayout, libvulkan), Cvoid, (VkDevice, VkPipelineLayout, Ptr{VkAllocationCallbacks}), device, pipelineLayout, pAllocator)
+    ccall((:vkDestroyPipelineLayout, libvulkan[]), Cvoid, (VkDevice, VkPipelineLayout, Ptr{VkAllocationCallbacks}), device, pipelineLayout, pAllocator)
 end
 
 function vkCreateSampler(device, pCreateInfo, pAllocator, pSampler)
-    ccall((:vkCreateSampler, libvulkan), VkResult, (VkDevice, Ptr{VkSamplerCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSampler}), device, pCreateInfo, pAllocator, pSampler)
+    ccall((:vkCreateSampler, libvulkan[]), VkResult, (VkDevice, Ptr{VkSamplerCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSampler}), device, pCreateInfo, pAllocator, pSampler)
 end
 
 function vkDestroySampler(device, sampler, pAllocator)
-    ccall((:vkDestroySampler, libvulkan), Cvoid, (VkDevice, VkSampler, Ptr{VkAllocationCallbacks}), device, sampler, pAllocator)
+    ccall((:vkDestroySampler, libvulkan[]), Cvoid, (VkDevice, VkSampler, Ptr{VkAllocationCallbacks}), device, sampler, pAllocator)
 end
 
 function vkCreateDescriptorSetLayout(device, pCreateInfo, pAllocator, pSetLayout)
-    ccall((:vkCreateDescriptorSetLayout, libvulkan), VkResult, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorSetLayout}), device, pCreateInfo, pAllocator, pSetLayout)
+    ccall((:vkCreateDescriptorSetLayout, libvulkan[]), VkResult, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorSetLayout}), device, pCreateInfo, pAllocator, pSetLayout)
 end
 
 function vkDestroyDescriptorSetLayout(device, descriptorSetLayout, pAllocator)
-    ccall((:vkDestroyDescriptorSetLayout, libvulkan), Cvoid, (VkDevice, VkDescriptorSetLayout, Ptr{VkAllocationCallbacks}), device, descriptorSetLayout, pAllocator)
+    ccall((:vkDestroyDescriptorSetLayout, libvulkan[]), Cvoid, (VkDevice, VkDescriptorSetLayout, Ptr{VkAllocationCallbacks}), device, descriptorSetLayout, pAllocator)
 end
 
 function vkCreateDescriptorPool(device, pCreateInfo, pAllocator, pDescriptorPool)
-    ccall((:vkCreateDescriptorPool, libvulkan), VkResult, (VkDevice, Ptr{VkDescriptorPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorPool}), device, pCreateInfo, pAllocator, pDescriptorPool)
+    ccall((:vkCreateDescriptorPool, libvulkan[]), VkResult, (VkDevice, Ptr{VkDescriptorPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorPool}), device, pCreateInfo, pAllocator, pDescriptorPool)
 end
 
 function vkDestroyDescriptorPool(device, descriptorPool, pAllocator)
-    ccall((:vkDestroyDescriptorPool, libvulkan), Cvoid, (VkDevice, VkDescriptorPool, Ptr{VkAllocationCallbacks}), device, descriptorPool, pAllocator)
+    ccall((:vkDestroyDescriptorPool, libvulkan[]), Cvoid, (VkDevice, VkDescriptorPool, Ptr{VkAllocationCallbacks}), device, descriptorPool, pAllocator)
 end
 
 function vkResetDescriptorPool(device, descriptorPool, flags)
-    ccall((:vkResetDescriptorPool, libvulkan), VkResult, (VkDevice, VkDescriptorPool, VkDescriptorPoolResetFlags), device, descriptorPool, flags)
+    ccall((:vkResetDescriptorPool, libvulkan[]), VkResult, (VkDevice, VkDescriptorPool, VkDescriptorPoolResetFlags), device, descriptorPool, flags)
 end
 
 function vkAllocateDescriptorSets(device, pAllocateInfo, pDescriptorSets)
-    ccall((:vkAllocateDescriptorSets, libvulkan), VkResult, (VkDevice, Ptr{VkDescriptorSetAllocateInfo}, Ptr{VkDescriptorSet}), device, pAllocateInfo, pDescriptorSets)
+    ccall((:vkAllocateDescriptorSets, libvulkan[]), VkResult, (VkDevice, Ptr{VkDescriptorSetAllocateInfo}, Ptr{VkDescriptorSet}), device, pAllocateInfo, pDescriptorSets)
 end
 
 function vkFreeDescriptorSets(device, descriptorPool, descriptorSetCount, pDescriptorSets)
-    ccall((:vkFreeDescriptorSets, libvulkan), VkResult, (VkDevice, VkDescriptorPool, UInt32, Ptr{VkDescriptorSet}), device, descriptorPool, descriptorSetCount, pDescriptorSets)
+    ccall((:vkFreeDescriptorSets, libvulkan[]), VkResult, (VkDevice, VkDescriptorPool, UInt32, Ptr{VkDescriptorSet}), device, descriptorPool, descriptorSetCount, pDescriptorSets)
 end
 
 function vkUpdateDescriptorSets(device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies)
-    ccall((:vkUpdateDescriptorSets, libvulkan), Cvoid, (VkDevice, UInt32, Ptr{VkWriteDescriptorSet}, UInt32, Ptr{VkCopyDescriptorSet}), device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies)
+    ccall((:vkUpdateDescriptorSets, libvulkan[]), Cvoid, (VkDevice, UInt32, Ptr{VkWriteDescriptorSet}, UInt32, Ptr{VkCopyDescriptorSet}), device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies)
 end
 
 function vkCreateFramebuffer(device, pCreateInfo, pAllocator, pFramebuffer)
-    ccall((:vkCreateFramebuffer, libvulkan), VkResult, (VkDevice, Ptr{VkFramebufferCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkFramebuffer}), device, pCreateInfo, pAllocator, pFramebuffer)
+    ccall((:vkCreateFramebuffer, libvulkan[]), VkResult, (VkDevice, Ptr{VkFramebufferCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkFramebuffer}), device, pCreateInfo, pAllocator, pFramebuffer)
 end
 
 function vkDestroyFramebuffer(device, framebuffer, pAllocator)
-    ccall((:vkDestroyFramebuffer, libvulkan), Cvoid, (VkDevice, VkFramebuffer, Ptr{VkAllocationCallbacks}), device, framebuffer, pAllocator)
+    ccall((:vkDestroyFramebuffer, libvulkan[]), Cvoid, (VkDevice, VkFramebuffer, Ptr{VkAllocationCallbacks}), device, framebuffer, pAllocator)
 end
 
 function vkCreateRenderPass(device, pCreateInfo, pAllocator, pRenderPass)
-    ccall((:vkCreateRenderPass, libvulkan), VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
+    ccall((:vkCreateRenderPass, libvulkan[]), VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
 end
 
 function vkDestroyRenderPass(device, renderPass, pAllocator)
-    ccall((:vkDestroyRenderPass, libvulkan), Cvoid, (VkDevice, VkRenderPass, Ptr{VkAllocationCallbacks}), device, renderPass, pAllocator)
+    ccall((:vkDestroyRenderPass, libvulkan[]), Cvoid, (VkDevice, VkRenderPass, Ptr{VkAllocationCallbacks}), device, renderPass, pAllocator)
 end
 
 function vkGetRenderAreaGranularity(device, renderPass, pGranularity)
-    ccall((:vkGetRenderAreaGranularity, libvulkan), Cvoid, (VkDevice, VkRenderPass, Ptr{VkExtent2D}), device, renderPass, pGranularity)
+    ccall((:vkGetRenderAreaGranularity, libvulkan[]), Cvoid, (VkDevice, VkRenderPass, Ptr{VkExtent2D}), device, renderPass, pGranularity)
 end
 
 function vkCreateCommandPool(device, pCreateInfo, pAllocator, pCommandPool)
-    ccall((:vkCreateCommandPool, libvulkan), VkResult, (VkDevice, Ptr{VkCommandPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkCommandPool}), device, pCreateInfo, pAllocator, pCommandPool)
+    ccall((:vkCreateCommandPool, libvulkan[]), VkResult, (VkDevice, Ptr{VkCommandPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkCommandPool}), device, pCreateInfo, pAllocator, pCommandPool)
 end
 
 function vkDestroyCommandPool(device, commandPool, pAllocator)
-    ccall((:vkDestroyCommandPool, libvulkan), Cvoid, (VkDevice, VkCommandPool, Ptr{VkAllocationCallbacks}), device, commandPool, pAllocator)
+    ccall((:vkDestroyCommandPool, libvulkan[]), Cvoid, (VkDevice, VkCommandPool, Ptr{VkAllocationCallbacks}), device, commandPool, pAllocator)
 end
 
 function vkResetCommandPool(device, commandPool, flags)
-    ccall((:vkResetCommandPool, libvulkan), VkResult, (VkDevice, VkCommandPool, VkCommandPoolResetFlags), device, commandPool, flags)
+    ccall((:vkResetCommandPool, libvulkan[]), VkResult, (VkDevice, VkCommandPool, VkCommandPoolResetFlags), device, commandPool, flags)
 end
 
 function vkAllocateCommandBuffers(device, pAllocateInfo, pCommandBuffers)
-    ccall((:vkAllocateCommandBuffers, libvulkan), VkResult, (VkDevice, Ptr{VkCommandBufferAllocateInfo}, Ptr{VkCommandBuffer}), device, pAllocateInfo, pCommandBuffers)
+    ccall((:vkAllocateCommandBuffers, libvulkan[]), VkResult, (VkDevice, Ptr{VkCommandBufferAllocateInfo}, Ptr{VkCommandBuffer}), device, pAllocateInfo, pCommandBuffers)
 end
 
 function vkFreeCommandBuffers(device, commandPool, commandBufferCount, pCommandBuffers)
-    ccall((:vkFreeCommandBuffers, libvulkan), Cvoid, (VkDevice, VkCommandPool, UInt32, Ptr{VkCommandBuffer}), device, commandPool, commandBufferCount, pCommandBuffers)
+    ccall((:vkFreeCommandBuffers, libvulkan[]), Cvoid, (VkDevice, VkCommandPool, UInt32, Ptr{VkCommandBuffer}), device, commandPool, commandBufferCount, pCommandBuffers)
 end
 
 function vkBeginCommandBuffer(commandBuffer, pBeginInfo)
-    ccall((:vkBeginCommandBuffer, libvulkan), VkResult, (VkCommandBuffer, Ptr{VkCommandBufferBeginInfo}), commandBuffer, pBeginInfo)
+    ccall((:vkBeginCommandBuffer, libvulkan[]), VkResult, (VkCommandBuffer, Ptr{VkCommandBufferBeginInfo}), commandBuffer, pBeginInfo)
 end
 
 function vkEndCommandBuffer(commandBuffer)
-    ccall((:vkEndCommandBuffer, libvulkan), VkResult, (VkCommandBuffer,), commandBuffer)
+    ccall((:vkEndCommandBuffer, libvulkan[]), VkResult, (VkCommandBuffer,), commandBuffer)
 end
 
 function vkResetCommandBuffer(commandBuffer, flags)
-    ccall((:vkResetCommandBuffer, libvulkan), VkResult, (VkCommandBuffer, VkCommandBufferResetFlags), commandBuffer, flags)
+    ccall((:vkResetCommandBuffer, libvulkan[]), VkResult, (VkCommandBuffer, VkCommandBufferResetFlags), commandBuffer, flags)
 end
 
 function vkCmdBindPipeline(commandBuffer, pipelineBindPoint, pipeline)
-    ccall((:vkCmdBindPipeline, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipeline), commandBuffer, pipelineBindPoint, pipeline)
+    ccall((:vkCmdBindPipeline, libvulkan[]), Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipeline), commandBuffer, pipelineBindPoint, pipeline)
 end
 
 function vkCmdSetViewport(commandBuffer, firstViewport, viewportCount, pViewports)
-    ccall((:vkCmdSetViewport, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkViewport}), commandBuffer, firstViewport, viewportCount, pViewports)
+    ccall((:vkCmdSetViewport, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkViewport}), commandBuffer, firstViewport, viewportCount, pViewports)
 end
 
 function vkCmdSetScissor(commandBuffer, firstScissor, scissorCount, pScissors)
-    ccall((:vkCmdSetScissor, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstScissor, scissorCount, pScissors)
+    ccall((:vkCmdSetScissor, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstScissor, scissorCount, pScissors)
 end
 
 function vkCmdSetLineWidth(commandBuffer, lineWidth)
-    ccall((:vkCmdSetLineWidth, libvulkan), Cvoid, (VkCommandBuffer, Cfloat), commandBuffer, lineWidth)
+    ccall((:vkCmdSetLineWidth, libvulkan[]), Cvoid, (VkCommandBuffer, Cfloat), commandBuffer, lineWidth)
 end
 
 function vkCmdSetDepthBias(commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor)
-    ccall((:vkCmdSetDepthBias, libvulkan), Cvoid, (VkCommandBuffer, Cfloat, Cfloat, Cfloat), commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor)
+    ccall((:vkCmdSetDepthBias, libvulkan[]), Cvoid, (VkCommandBuffer, Cfloat, Cfloat, Cfloat), commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor)
 end
 
 function vkCmdSetBlendConstants(commandBuffer, blendConstants)
-    ccall((:vkCmdSetBlendConstants, libvulkan), Cvoid, (VkCommandBuffer, Ptr{Cfloat}), commandBuffer, blendConstants)
+    ccall((:vkCmdSetBlendConstants, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{Cfloat}), commandBuffer, blendConstants)
 end
 
 function vkCmdSetDepthBounds(commandBuffer, minDepthBounds, maxDepthBounds)
-    ccall((:vkCmdSetDepthBounds, libvulkan), Cvoid, (VkCommandBuffer, Cfloat, Cfloat), commandBuffer, minDepthBounds, maxDepthBounds)
+    ccall((:vkCmdSetDepthBounds, libvulkan[]), Cvoid, (VkCommandBuffer, Cfloat, Cfloat), commandBuffer, minDepthBounds, maxDepthBounds)
 end
 
 function vkCmdSetStencilCompareMask(commandBuffer, faceMask, compareMask)
-    ccall((:vkCmdSetStencilCompareMask, libvulkan), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, compareMask)
+    ccall((:vkCmdSetStencilCompareMask, libvulkan[]), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, compareMask)
 end
 
 function vkCmdSetStencilWriteMask(commandBuffer, faceMask, writeMask)
-    ccall((:vkCmdSetStencilWriteMask, libvulkan), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, writeMask)
+    ccall((:vkCmdSetStencilWriteMask, libvulkan[]), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, writeMask)
 end
 
 function vkCmdSetStencilReference(commandBuffer, faceMask, reference)
-    ccall((:vkCmdSetStencilReference, libvulkan), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, reference)
+    ccall((:vkCmdSetStencilReference, libvulkan[]), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, reference)
 end
 
 function vkCmdBindDescriptorSets(commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets)
-    ccall((:vkCmdBindDescriptorSets, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, UInt32, UInt32, Ptr{VkDescriptorSet}, UInt32, Ptr{UInt32}), commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets)
+    ccall((:vkCmdBindDescriptorSets, libvulkan[]), Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, UInt32, UInt32, Ptr{VkDescriptorSet}, UInt32, Ptr{UInt32}), commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets)
 end
 
 function vkCmdBindIndexBuffer(commandBuffer, buffer, offset, indexType)
-    ccall((:vkCmdBindIndexBuffer, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkIndexType), commandBuffer, buffer, offset, indexType)
+    ccall((:vkCmdBindIndexBuffer, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkIndexType), commandBuffer, buffer, offset, indexType)
 end
 
 function vkCmdBindVertexBuffers(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets)
-    ccall((:vkCmdBindVertexBuffers, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets)
+    ccall((:vkCmdBindVertexBuffers, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets)
 end
 
 function vkCmdDraw(commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance)
-    ccall((:vkCmdDraw, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32), commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance)
+    ccall((:vkCmdDraw, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32), commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance)
 end
 
 function vkCmdDrawIndexed(commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance)
-    ccall((:vkCmdDrawIndexed, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, Int32, UInt32), commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance)
+    ccall((:vkCmdDrawIndexed, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, Int32, UInt32), commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance)
 end
 
 function vkCmdDrawIndirect(commandBuffer, buffer, offset, drawCount, stride)
-    ccall((:vkCmdDrawIndirect, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
+    ccall((:vkCmdDrawIndirect, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
 end
 
 function vkCmdDrawIndexedIndirect(commandBuffer, buffer, offset, drawCount, stride)
-    ccall((:vkCmdDrawIndexedIndirect, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
+    ccall((:vkCmdDrawIndexedIndirect, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
 end
 
 function vkCmdDispatch(commandBuffer, groupCountX, groupCountY, groupCountZ)
-    ccall((:vkCmdDispatch, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32), commandBuffer, groupCountX, groupCountY, groupCountZ)
+    ccall((:vkCmdDispatch, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32), commandBuffer, groupCountX, groupCountY, groupCountZ)
 end
 
 function vkCmdDispatchIndirect(commandBuffer, buffer, offset)
-    ccall((:vkCmdDispatchIndirect, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize), commandBuffer, buffer, offset)
+    ccall((:vkCmdDispatchIndirect, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize), commandBuffer, buffer, offset)
 end
 
 function vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions)
-    ccall((:vkCmdCopyBuffer, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkBuffer, UInt32, Ptr{VkBufferCopy}), commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions)
+    ccall((:vkCmdCopyBuffer, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkBuffer, UInt32, Ptr{VkBufferCopy}), commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions)
 end
 
 function vkCmdCopyImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions)
-    ccall((:vkCmdCopyImage, libvulkan), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageCopy}), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions)
+    ccall((:vkCmdCopyImage, libvulkan[]), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageCopy}), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions)
 end
 
 function vkCmdBlitImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter)
-    ccall((:vkCmdBlitImage, libvulkan), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageBlit}, VkFilter), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter)
+    ccall((:vkCmdBlitImage, libvulkan[]), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageBlit}, VkFilter), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter)
 end
 
 function vkCmdCopyBufferToImage(commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions)
-    ccall((:vkCmdCopyBufferToImage, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, UInt32, Ptr{VkBufferImageCopy}), commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions)
+    ccall((:vkCmdCopyBufferToImage, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, UInt32, Ptr{VkBufferImageCopy}), commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions)
 end
 
 function vkCmdCopyImageToBuffer(commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions)
-    ccall((:vkCmdCopyImageToBuffer, libvulkan), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkBuffer, UInt32, Ptr{VkBufferImageCopy}), commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions)
+    ccall((:vkCmdCopyImageToBuffer, libvulkan[]), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkBuffer, UInt32, Ptr{VkBufferImageCopy}), commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions)
 end
 
 function vkCmdUpdateBuffer(commandBuffer, dstBuffer, dstOffset, dataSize, pData)
-    ccall((:vkCmdUpdateBuffer, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkDeviceSize, Ptr{Cvoid}), commandBuffer, dstBuffer, dstOffset, dataSize, pData)
+    ccall((:vkCmdUpdateBuffer, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkDeviceSize, Ptr{Cvoid}), commandBuffer, dstBuffer, dstOffset, dataSize, pData)
 end
 
 function vkCmdFillBuffer(commandBuffer, dstBuffer, dstOffset, size, data)
-    ccall((:vkCmdFillBuffer, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkDeviceSize, UInt32), commandBuffer, dstBuffer, dstOffset, size, data)
+    ccall((:vkCmdFillBuffer, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkDeviceSize, UInt32), commandBuffer, dstBuffer, dstOffset, size, data)
 end
 
 function vkCmdClearColorImage(commandBuffer, image, imageLayout, pColor, rangeCount, pRanges)
-    ccall((:vkCmdClearColorImage, libvulkan), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, Ptr{VkClearColorValue}, UInt32, Ptr{VkImageSubresourceRange}), commandBuffer, image, imageLayout, pColor, rangeCount, pRanges)
+    ccall((:vkCmdClearColorImage, libvulkan[]), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, Ptr{VkClearColorValue}, UInt32, Ptr{VkImageSubresourceRange}), commandBuffer, image, imageLayout, pColor, rangeCount, pRanges)
 end
 
 function vkCmdClearDepthStencilImage(commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges)
-    ccall((:vkCmdClearDepthStencilImage, libvulkan), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, Ptr{VkClearDepthStencilValue}, UInt32, Ptr{VkImageSubresourceRange}), commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges)
+    ccall((:vkCmdClearDepthStencilImage, libvulkan[]), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, Ptr{VkClearDepthStencilValue}, UInt32, Ptr{VkImageSubresourceRange}), commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges)
 end
 
 function vkCmdClearAttachments(commandBuffer, attachmentCount, pAttachments, rectCount, pRects)
-    ccall((:vkCmdClearAttachments, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkClearAttachment}, UInt32, Ptr{VkClearRect}), commandBuffer, attachmentCount, pAttachments, rectCount, pRects)
+    ccall((:vkCmdClearAttachments, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkClearAttachment}, UInt32, Ptr{VkClearRect}), commandBuffer, attachmentCount, pAttachments, rectCount, pRects)
 end
 
 function vkCmdResolveImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions)
-    ccall((:vkCmdResolveImage, libvulkan), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageResolve}), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions)
+    ccall((:vkCmdResolveImage, libvulkan[]), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageResolve}), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions)
 end
 
 function vkCmdSetEvent(commandBuffer, event, stageMask)
-    ccall((:vkCmdSetEvent, libvulkan), Cvoid, (VkCommandBuffer, VkEvent, VkPipelineStageFlags), commandBuffer, event, stageMask)
+    ccall((:vkCmdSetEvent, libvulkan[]), Cvoid, (VkCommandBuffer, VkEvent, VkPipelineStageFlags), commandBuffer, event, stageMask)
 end
 
 function vkCmdResetEvent(commandBuffer, event, stageMask)
-    ccall((:vkCmdResetEvent, libvulkan), Cvoid, (VkCommandBuffer, VkEvent, VkPipelineStageFlags), commandBuffer, event, stageMask)
+    ccall((:vkCmdResetEvent, libvulkan[]), Cvoid, (VkCommandBuffer, VkEvent, VkPipelineStageFlags), commandBuffer, event, stageMask)
 end
 
 function vkCmdWaitEvents(commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
-    ccall((:vkCmdWaitEvents, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkEvent}, VkPipelineStageFlags, VkPipelineStageFlags, UInt32, Ptr{VkMemoryBarrier}, UInt32, Ptr{VkBufferMemoryBarrier}, UInt32, Ptr{VkImageMemoryBarrier}), commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
+    ccall((:vkCmdWaitEvents, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkEvent}, VkPipelineStageFlags, VkPipelineStageFlags, UInt32, Ptr{VkMemoryBarrier}, UInt32, Ptr{VkBufferMemoryBarrier}, UInt32, Ptr{VkImageMemoryBarrier}), commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
 end
 
 function vkCmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
-    ccall((:vkCmdPipelineBarrier, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineStageFlags, VkPipelineStageFlags, VkDependencyFlags, UInt32, Ptr{VkMemoryBarrier}, UInt32, Ptr{VkBufferMemoryBarrier}, UInt32, Ptr{VkImageMemoryBarrier}), commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
+    ccall((:vkCmdPipelineBarrier, libvulkan[]), Cvoid, (VkCommandBuffer, VkPipelineStageFlags, VkPipelineStageFlags, VkDependencyFlags, UInt32, Ptr{VkMemoryBarrier}, UInt32, Ptr{VkBufferMemoryBarrier}, UInt32, Ptr{VkImageMemoryBarrier}), commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
 end
 
 function vkCmdBeginQuery(commandBuffer, queryPool, query, flags)
-    ccall((:vkCmdBeginQuery, libvulkan), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, VkQueryControlFlags), commandBuffer, queryPool, query, flags)
+    ccall((:vkCmdBeginQuery, libvulkan[]), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, VkQueryControlFlags), commandBuffer, queryPool, query, flags)
 end
 
 function vkCmdEndQuery(commandBuffer, queryPool, query)
-    ccall((:vkCmdEndQuery, libvulkan), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32), commandBuffer, queryPool, query)
+    ccall((:vkCmdEndQuery, libvulkan[]), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32), commandBuffer, queryPool, query)
 end
 
 function vkCmdResetQueryPool(commandBuffer, queryPool, firstQuery, queryCount)
-    ccall((:vkCmdResetQueryPool, libvulkan), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32), commandBuffer, queryPool, firstQuery, queryCount)
+    ccall((:vkCmdResetQueryPool, libvulkan[]), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32), commandBuffer, queryPool, firstQuery, queryCount)
 end
 
 function vkCmdWriteTimestamp(commandBuffer, pipelineStage, queryPool, query)
-    ccall((:vkCmdWriteTimestamp, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineStageFlagBits, VkQueryPool, UInt32), commandBuffer, pipelineStage, queryPool, query)
+    ccall((:vkCmdWriteTimestamp, libvulkan[]), Cvoid, (VkCommandBuffer, VkPipelineStageFlagBits, VkQueryPool, UInt32), commandBuffer, pipelineStage, queryPool, query)
 end
 
 function vkCmdCopyQueryPoolResults(commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags)
-    ccall((:vkCmdCopyQueryPoolResults, libvulkan), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32, VkBuffer, VkDeviceSize, VkDeviceSize, VkQueryResultFlags), commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags)
+    ccall((:vkCmdCopyQueryPoolResults, libvulkan[]), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32, VkBuffer, VkDeviceSize, VkDeviceSize, VkQueryResultFlags), commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags)
 end
 
 function vkCmdPushConstants(commandBuffer, layout, stageFlags, offset, size, pValues)
-    ccall((:vkCmdPushConstants, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineLayout, VkShaderStageFlags, UInt32, UInt32, Ptr{Cvoid}), commandBuffer, layout, stageFlags, offset, size, pValues)
+    ccall((:vkCmdPushConstants, libvulkan[]), Cvoid, (VkCommandBuffer, VkPipelineLayout, VkShaderStageFlags, UInt32, UInt32, Ptr{Cvoid}), commandBuffer, layout, stageFlags, offset, size, pValues)
 end
 
 function vkCmdBeginRenderPass(commandBuffer, pRenderPassBegin, contents)
-    ccall((:vkCmdBeginRenderPass, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, VkSubpassContents), commandBuffer, pRenderPassBegin, contents)
+    ccall((:vkCmdBeginRenderPass, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, VkSubpassContents), commandBuffer, pRenderPassBegin, contents)
 end
 
 function vkCmdNextSubpass(commandBuffer, contents)
-    ccall((:vkCmdNextSubpass, libvulkan), Cvoid, (VkCommandBuffer, VkSubpassContents), commandBuffer, contents)
+    ccall((:vkCmdNextSubpass, libvulkan[]), Cvoid, (VkCommandBuffer, VkSubpassContents), commandBuffer, contents)
 end
 
 function vkCmdEndRenderPass(commandBuffer)
-    ccall((:vkCmdEndRenderPass, libvulkan), Cvoid, (VkCommandBuffer,), commandBuffer)
+    ccall((:vkCmdEndRenderPass, libvulkan[]), Cvoid, (VkCommandBuffer,), commandBuffer)
 end
 
 function vkCmdExecuteCommands(commandBuffer, commandBufferCount, pCommandBuffers)
-    ccall((:vkCmdExecuteCommands, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkCommandBuffer}), commandBuffer, commandBufferCount, pCommandBuffers)
+    ccall((:vkCmdExecuteCommands, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkCommandBuffer}), commandBuffer, commandBufferCount, pCommandBuffers)
 end
 
 function vkEnumerateInstanceVersion(pApiVersion)
-    ccall((:vkEnumerateInstanceVersion, libvulkan), VkResult, (Ptr{UInt32},), pApiVersion)
+    ccall((:vkEnumerateInstanceVersion, libvulkan[]), VkResult, (Ptr{UInt32},), pApiVersion)
 end
 
 function vkBindBufferMemory2(device, bindInfoCount, pBindInfos)
-    ccall((:vkBindBufferMemory2, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindBufferMemoryInfo}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindBufferMemory2, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkBindBufferMemoryInfo}), device, bindInfoCount, pBindInfos)
 end
 
 function vkBindImageMemory2(device, bindInfoCount, pBindInfos)
-    ccall((:vkBindImageMemory2, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindImageMemoryInfo}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindImageMemory2, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkBindImageMemoryInfo}), device, bindInfoCount, pBindInfos)
 end
 
 function vkGetDeviceGroupPeerMemoryFeatures(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
-    ccall((:vkGetDeviceGroupPeerMemoryFeatures, libvulkan), Cvoid, (VkDevice, UInt32, UInt32, UInt32, Ptr{VkPeerMemoryFeatureFlags}), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
+    ccall((:vkGetDeviceGroupPeerMemoryFeatures, libvulkan[]), Cvoid, (VkDevice, UInt32, UInt32, UInt32, Ptr{VkPeerMemoryFeatureFlags}), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
 end
 
 function vkCmdSetDeviceMask(commandBuffer, deviceMask)
-    ccall((:vkCmdSetDeviceMask, libvulkan), Cvoid, (VkCommandBuffer, UInt32), commandBuffer, deviceMask)
+    ccall((:vkCmdSetDeviceMask, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32), commandBuffer, deviceMask)
 end
 
 function vkCmdDispatchBase(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
-    ccall((:vkCmdDispatchBase, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
+    ccall((:vkCmdDispatchBase, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
 end
 
 function vkEnumeratePhysicalDeviceGroups(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
-    ccall((:vkEnumeratePhysicalDeviceGroups, libvulkan), VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDeviceGroupProperties}), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
+    ccall((:vkEnumeratePhysicalDeviceGroups, libvulkan[]), VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDeviceGroupProperties}), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
 end
 
 function vkGetImageMemoryRequirements2(device, pInfo, pMemoryRequirements)
-    ccall((:vkGetImageMemoryRequirements2, libvulkan), Cvoid, (VkDevice, Ptr{VkImageMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetImageMemoryRequirements2, libvulkan[]), Cvoid, (VkDevice, Ptr{VkImageMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
 end
 
 function vkGetBufferMemoryRequirements2(device, pInfo, pMemoryRequirements)
-    ccall((:vkGetBufferMemoryRequirements2, libvulkan), Cvoid, (VkDevice, Ptr{VkBufferMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetBufferMemoryRequirements2, libvulkan[]), Cvoid, (VkDevice, Ptr{VkBufferMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
 end
 
 function vkGetImageSparseMemoryRequirements2(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
-    ccall((:vkGetImageSparseMemoryRequirements2, libvulkan), Cvoid, (VkDevice, Ptr{VkImageSparseMemoryRequirementsInfo2}, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements2}), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
+    ccall((:vkGetImageSparseMemoryRequirements2, libvulkan[]), Cvoid, (VkDevice, Ptr{VkImageSparseMemoryRequirementsInfo2}, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements2}), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
 end
 
 function vkGetPhysicalDeviceFeatures2(physicalDevice, pFeatures)
-    ccall((:vkGetPhysicalDeviceFeatures2, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures2}), physicalDevice, pFeatures)
+    ccall((:vkGetPhysicalDeviceFeatures2, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures2}), physicalDevice, pFeatures)
 end
 
 function vkGetPhysicalDeviceProperties2(physicalDevice, pProperties)
-    ccall((:vkGetPhysicalDeviceProperties2, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties2}), physicalDevice, pProperties)
+    ccall((:vkGetPhysicalDeviceProperties2, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties2}), physicalDevice, pProperties)
 end
 
 function vkGetPhysicalDeviceFormatProperties2(physicalDevice, format, pFormatProperties)
-    ccall((:vkGetPhysicalDeviceFormatProperties2, libvulkan), Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties2}), physicalDevice, format, pFormatProperties)
+    ccall((:vkGetPhysicalDeviceFormatProperties2, libvulkan[]), Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties2}), physicalDevice, format, pFormatProperties)
 end
 
 function vkGetPhysicalDeviceImageFormatProperties2(physicalDevice, pImageFormatInfo, pImageFormatProperties)
-    ccall((:vkGetPhysicalDeviceImageFormatProperties2, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceImageFormatInfo2}, Ptr{VkImageFormatProperties2}), physicalDevice, pImageFormatInfo, pImageFormatProperties)
+    ccall((:vkGetPhysicalDeviceImageFormatProperties2, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceImageFormatInfo2}, Ptr{VkImageFormatProperties2}), physicalDevice, pImageFormatInfo, pImageFormatProperties)
 end
 
 function vkGetPhysicalDeviceQueueFamilyProperties2(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
-    ccall((:vkGetPhysicalDeviceQueueFamilyProperties2, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties2}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
+    ccall((:vkGetPhysicalDeviceQueueFamilyProperties2, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties2}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
 end
 
 function vkGetPhysicalDeviceMemoryProperties2(physicalDevice, pMemoryProperties)
-    ccall((:vkGetPhysicalDeviceMemoryProperties2, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties2}), physicalDevice, pMemoryProperties)
+    ccall((:vkGetPhysicalDeviceMemoryProperties2, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties2}), physicalDevice, pMemoryProperties)
 end
 
 function vkGetPhysicalDeviceSparseImageFormatProperties2(physicalDevice, pFormatInfo, pPropertyCount, pProperties)
-    ccall((:vkGetPhysicalDeviceSparseImageFormatProperties2, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSparseImageFormatInfo2}, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties2}), physicalDevice, pFormatInfo, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceSparseImageFormatProperties2, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSparseImageFormatInfo2}, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties2}), physicalDevice, pFormatInfo, pPropertyCount, pProperties)
 end
 
 function vkTrimCommandPool(device, commandPool, flags)
-    ccall((:vkTrimCommandPool, libvulkan), Cvoid, (VkDevice, VkCommandPool, VkCommandPoolTrimFlags), device, commandPool, flags)
+    ccall((:vkTrimCommandPool, libvulkan[]), Cvoid, (VkDevice, VkCommandPool, VkCommandPoolTrimFlags), device, commandPool, flags)
 end
 
 function vkGetDeviceQueue2(device, pQueueInfo, pQueue)
-    ccall((:vkGetDeviceQueue2, libvulkan), Cvoid, (VkDevice, Ptr{VkDeviceQueueInfo2}, Ptr{VkQueue}), device, pQueueInfo, pQueue)
+    ccall((:vkGetDeviceQueue2, libvulkan[]), Cvoid, (VkDevice, Ptr{VkDeviceQueueInfo2}, Ptr{VkQueue}), device, pQueueInfo, pQueue)
 end
 
 function vkCreateSamplerYcbcrConversion(device, pCreateInfo, pAllocator, pYcbcrConversion)
-    ccall((:vkCreateSamplerYcbcrConversion, libvulkan), VkResult, (VkDevice, Ptr{VkSamplerYcbcrConversionCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSamplerYcbcrConversion}), device, pCreateInfo, pAllocator, pYcbcrConversion)
+    ccall((:vkCreateSamplerYcbcrConversion, libvulkan[]), VkResult, (VkDevice, Ptr{VkSamplerYcbcrConversionCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSamplerYcbcrConversion}), device, pCreateInfo, pAllocator, pYcbcrConversion)
 end
 
 function vkDestroySamplerYcbcrConversion(device, ycbcrConversion, pAllocator)
-    ccall((:vkDestroySamplerYcbcrConversion, libvulkan), Cvoid, (VkDevice, VkSamplerYcbcrConversion, Ptr{VkAllocationCallbacks}), device, ycbcrConversion, pAllocator)
+    ccall((:vkDestroySamplerYcbcrConversion, libvulkan[]), Cvoid, (VkDevice, VkSamplerYcbcrConversion, Ptr{VkAllocationCallbacks}), device, ycbcrConversion, pAllocator)
 end
 
 function vkCreateDescriptorUpdateTemplate(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
-    ccall((:vkCreateDescriptorUpdateTemplate, libvulkan), VkResult, (VkDevice, Ptr{VkDescriptorUpdateTemplateCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorUpdateTemplate}), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
+    ccall((:vkCreateDescriptorUpdateTemplate, libvulkan[]), VkResult, (VkDevice, Ptr{VkDescriptorUpdateTemplateCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorUpdateTemplate}), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
 end
 
 function vkDestroyDescriptorUpdateTemplate(device, descriptorUpdateTemplate, pAllocator)
-    ccall((:vkDestroyDescriptorUpdateTemplate, libvulkan), Cvoid, (VkDevice, VkDescriptorUpdateTemplate, Ptr{VkAllocationCallbacks}), device, descriptorUpdateTemplate, pAllocator)
+    ccall((:vkDestroyDescriptorUpdateTemplate, libvulkan[]), Cvoid, (VkDevice, VkDescriptorUpdateTemplate, Ptr{VkAllocationCallbacks}), device, descriptorUpdateTemplate, pAllocator)
 end
 
 function vkUpdateDescriptorSetWithTemplate(device, descriptorSet, descriptorUpdateTemplate, pData)
-    ccall((:vkUpdateDescriptorSetWithTemplate, libvulkan), Cvoid, (VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, Ptr{Cvoid}), device, descriptorSet, descriptorUpdateTemplate, pData)
+    ccall((:vkUpdateDescriptorSetWithTemplate, libvulkan[]), Cvoid, (VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, Ptr{Cvoid}), device, descriptorSet, descriptorUpdateTemplate, pData)
 end
 
 function vkGetPhysicalDeviceExternalBufferProperties(physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
-    ccall((:vkGetPhysicalDeviceExternalBufferProperties, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalBufferInfo}, Ptr{VkExternalBufferProperties}), physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
+    ccall((:vkGetPhysicalDeviceExternalBufferProperties, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalBufferInfo}, Ptr{VkExternalBufferProperties}), physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
 end
 
 function vkGetPhysicalDeviceExternalFenceProperties(physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
-    ccall((:vkGetPhysicalDeviceExternalFenceProperties, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalFenceInfo}, Ptr{VkExternalFenceProperties}), physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
+    ccall((:vkGetPhysicalDeviceExternalFenceProperties, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalFenceInfo}, Ptr{VkExternalFenceProperties}), physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
 end
 
 function vkGetPhysicalDeviceExternalSemaphoreProperties(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
-    ccall((:vkGetPhysicalDeviceExternalSemaphoreProperties, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalSemaphoreInfo}, Ptr{VkExternalSemaphoreProperties}), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
+    ccall((:vkGetPhysicalDeviceExternalSemaphoreProperties, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalSemaphoreInfo}, Ptr{VkExternalSemaphoreProperties}), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
 end
 
 function vkGetDescriptorSetLayoutSupport(device, pCreateInfo, pSupport)
-    ccall((:vkGetDescriptorSetLayoutSupport, libvulkan), Cvoid, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkDescriptorSetLayoutSupport}), device, pCreateInfo, pSupport)
+    ccall((:vkGetDescriptorSetLayoutSupport, libvulkan[]), Cvoid, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkDescriptorSetLayoutSupport}), device, pCreateInfo, pSupport)
 end
 
 function vkCmdDrawIndirectCount(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
-    ccall((:vkCmdDrawIndirectCount, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawIndirectCount, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkCmdDrawIndexedIndirectCount(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
-    ccall((:vkCmdDrawIndexedIndirectCount, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawIndexedIndirectCount, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkCreateRenderPass2(device, pCreateInfo, pAllocator, pRenderPass)
-    ccall((:vkCreateRenderPass2, libvulkan), VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo2}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
+    ccall((:vkCreateRenderPass2, libvulkan[]), VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo2}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
 end
 
 function vkCmdBeginRenderPass2(commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
-    ccall((:vkCmdBeginRenderPass2, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, Ptr{VkSubpassBeginInfo}), commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
+    ccall((:vkCmdBeginRenderPass2, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, Ptr{VkSubpassBeginInfo}), commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
 end
 
 function vkCmdNextSubpass2(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo)
-    ccall((:vkCmdNextSubpass2, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkSubpassBeginInfo}, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassBeginInfo, pSubpassEndInfo)
+    ccall((:vkCmdNextSubpass2, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkSubpassBeginInfo}, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassBeginInfo, pSubpassEndInfo)
 end
 
 function vkCmdEndRenderPass2(commandBuffer, pSubpassEndInfo)
-    ccall((:vkCmdEndRenderPass2, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassEndInfo)
+    ccall((:vkCmdEndRenderPass2, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassEndInfo)
 end
 
 function vkResetQueryPool(device, queryPool, firstQuery, queryCount)
-    ccall((:vkResetQueryPool, libvulkan), Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
+    ccall((:vkResetQueryPool, libvulkan[]), Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
 end
 
 function vkGetSemaphoreCounterValue(device, semaphore, pValue)
-    ccall((:vkGetSemaphoreCounterValue, libvulkan), VkResult, (VkDevice, VkSemaphore, Ptr{UInt64}), device, semaphore, pValue)
+    ccall((:vkGetSemaphoreCounterValue, libvulkan[]), VkResult, (VkDevice, VkSemaphore, Ptr{UInt64}), device, semaphore, pValue)
 end
 
 function vkWaitSemaphores(device, pWaitInfo, timeout)
-    ccall((:vkWaitSemaphores, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreWaitInfo}, UInt64), device, pWaitInfo, timeout)
+    ccall((:vkWaitSemaphores, libvulkan[]), VkResult, (VkDevice, Ptr{VkSemaphoreWaitInfo}, UInt64), device, pWaitInfo, timeout)
 end
 
 function vkSignalSemaphore(device, pSignalInfo)
-    ccall((:vkSignalSemaphore, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreSignalInfo}), device, pSignalInfo)
+    ccall((:vkSignalSemaphore, libvulkan[]), VkResult, (VkDevice, Ptr{VkSemaphoreSignalInfo}), device, pSignalInfo)
 end
 
 function vkGetBufferDeviceAddress(device, pInfo)
-    ccall((:vkGetBufferDeviceAddress, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+    ccall((:vkGetBufferDeviceAddress, libvulkan[]), VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
 end
 
 function vkGetBufferOpaqueCaptureAddress(device, pInfo)
-    ccall((:vkGetBufferOpaqueCaptureAddress, libvulkan), UInt64, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+    ccall((:vkGetBufferOpaqueCaptureAddress, libvulkan[]), UInt64, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
 end
 
 function vkGetDeviceMemoryOpaqueCaptureAddress(device, pInfo)
-    ccall((:vkGetDeviceMemoryOpaqueCaptureAddress, libvulkan), UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
+    ccall((:vkGetDeviceMemoryOpaqueCaptureAddress, libvulkan[]), UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
 end
 
 function vkDestroySurfaceKHR(instance, surface, pAllocator)
-    ccall((:vkDestroySurfaceKHR, libvulkan), Cvoid, (VkInstance, VkSurfaceKHR, Ptr{VkAllocationCallbacks}), instance, surface, pAllocator)
+    ccall((:vkDestroySurfaceKHR, libvulkan[]), Cvoid, (VkInstance, VkSurfaceKHR, Ptr{VkAllocationCallbacks}), instance, surface, pAllocator)
 end
 
 function vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, queueFamilyIndex, surface, pSupported)
-    ccall((:vkGetPhysicalDeviceSurfaceSupportKHR, libvulkan), VkResult, (VkPhysicalDevice, UInt32, VkSurfaceKHR, Ptr{VkBool32}), physicalDevice, queueFamilyIndex, surface, pSupported)
+    ccall((:vkGetPhysicalDeviceSurfaceSupportKHR, libvulkan[]), VkResult, (VkPhysicalDevice, UInt32, VkSurfaceKHR, Ptr{VkBool32}), physicalDevice, queueFamilyIndex, surface, pSupported)
 end
 
 function vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, surface, pSurfaceCapabilities)
-    ccall((:vkGetPhysicalDeviceSurfaceCapabilitiesKHR, libvulkan), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{VkSurfaceCapabilitiesKHR}), physicalDevice, surface, pSurfaceCapabilities)
+    ccall((:vkGetPhysicalDeviceSurfaceCapabilitiesKHR, libvulkan[]), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{VkSurfaceCapabilitiesKHR}), physicalDevice, surface, pSurfaceCapabilities)
 end
 
 function vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats)
-    ccall((:vkGetPhysicalDeviceSurfaceFormatsKHR, libvulkan), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkSurfaceFormatKHR}), physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats)
+    ccall((:vkGetPhysicalDeviceSurfaceFormatsKHR, libvulkan[]), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkSurfaceFormatKHR}), physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats)
 end
 
 function vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, pPresentModeCount, pPresentModes)
-    ccall((:vkGetPhysicalDeviceSurfacePresentModesKHR, libvulkan), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, surface, pPresentModeCount, pPresentModes)
+    ccall((:vkGetPhysicalDeviceSurfacePresentModesKHR, libvulkan[]), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, surface, pPresentModeCount, pPresentModes)
 end
 
 function vkCreateSwapchainKHR(device, pCreateInfo, pAllocator, pSwapchain)
-    ccall((:vkCreateSwapchainKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSwapchainCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSwapchainKHR}), device, pCreateInfo, pAllocator, pSwapchain)
+    ccall((:vkCreateSwapchainKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkSwapchainCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSwapchainKHR}), device, pCreateInfo, pAllocator, pSwapchain)
 end
 
 function vkDestroySwapchainKHR(device, swapchain, pAllocator)
-    ccall((:vkDestroySwapchainKHR, libvulkan), Cvoid, (VkDevice, VkSwapchainKHR, Ptr{VkAllocationCallbacks}), device, swapchain, pAllocator)
+    ccall((:vkDestroySwapchainKHR, libvulkan[]), Cvoid, (VkDevice, VkSwapchainKHR, Ptr{VkAllocationCallbacks}), device, swapchain, pAllocator)
 end
 
 function vkGetSwapchainImagesKHR(device, swapchain, pSwapchainImageCount, pSwapchainImages)
-    ccall((:vkGetSwapchainImagesKHR, libvulkan), VkResult, (VkDevice, VkSwapchainKHR, Ptr{UInt32}, Ptr{VkImage}), device, swapchain, pSwapchainImageCount, pSwapchainImages)
+    ccall((:vkGetSwapchainImagesKHR, libvulkan[]), VkResult, (VkDevice, VkSwapchainKHR, Ptr{UInt32}, Ptr{VkImage}), device, swapchain, pSwapchainImageCount, pSwapchainImages)
 end
 
 function vkAcquireNextImageKHR(device, swapchain, timeout, semaphore, fence, pImageIndex)
-    ccall((:vkAcquireNextImageKHR, libvulkan), VkResult, (VkDevice, VkSwapchainKHR, UInt64, VkSemaphore, VkFence, Ptr{UInt32}), device, swapchain, timeout, semaphore, fence, pImageIndex)
+    ccall((:vkAcquireNextImageKHR, libvulkan[]), VkResult, (VkDevice, VkSwapchainKHR, UInt64, VkSemaphore, VkFence, Ptr{UInt32}), device, swapchain, timeout, semaphore, fence, pImageIndex)
 end
 
 function vkQueuePresentKHR(queue, pPresentInfo)
-    ccall((:vkQueuePresentKHR, libvulkan), VkResult, (VkQueue, Ptr{VkPresentInfoKHR}), queue, pPresentInfo)
+    ccall((:vkQueuePresentKHR, libvulkan[]), VkResult, (VkQueue, Ptr{VkPresentInfoKHR}), queue, pPresentInfo)
 end
 
 function vkGetDeviceGroupPresentCapabilitiesKHR(device, pDeviceGroupPresentCapabilities)
-    ccall((:vkGetDeviceGroupPresentCapabilitiesKHR, libvulkan), VkResult, (VkDevice, Ptr{VkDeviceGroupPresentCapabilitiesKHR}), device, pDeviceGroupPresentCapabilities)
+    ccall((:vkGetDeviceGroupPresentCapabilitiesKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkDeviceGroupPresentCapabilitiesKHR}), device, pDeviceGroupPresentCapabilities)
 end
 
 function vkGetDeviceGroupSurfacePresentModesKHR(device, surface, pModes)
-    ccall((:vkGetDeviceGroupSurfacePresentModesKHR, libvulkan), VkResult, (VkDevice, VkSurfaceKHR, Ptr{VkDeviceGroupPresentModeFlagsKHR}), device, surface, pModes)
+    ccall((:vkGetDeviceGroupSurfacePresentModesKHR, libvulkan[]), VkResult, (VkDevice, VkSurfaceKHR, Ptr{VkDeviceGroupPresentModeFlagsKHR}), device, surface, pModes)
 end
 
 function vkGetPhysicalDevicePresentRectanglesKHR(physicalDevice, surface, pRectCount, pRects)
-    ccall((:vkGetPhysicalDevicePresentRectanglesKHR, libvulkan), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkRect2D}), physicalDevice, surface, pRectCount, pRects)
+    ccall((:vkGetPhysicalDevicePresentRectanglesKHR, libvulkan[]), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkRect2D}), physicalDevice, surface, pRectCount, pRects)
 end
 
 function vkAcquireNextImage2KHR(device, pAcquireInfo, pImageIndex)
-    ccall((:vkAcquireNextImage2KHR, libvulkan), VkResult, (VkDevice, Ptr{VkAcquireNextImageInfoKHR}, Ptr{UInt32}), device, pAcquireInfo, pImageIndex)
+    ccall((:vkAcquireNextImage2KHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkAcquireNextImageInfoKHR}, Ptr{UInt32}), device, pAcquireInfo, pImageIndex)
 end
 
 function vkGetPhysicalDeviceDisplayPropertiesKHR(physicalDevice, pPropertyCount, pProperties)
-    ccall((:vkGetPhysicalDeviceDisplayPropertiesKHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPropertiesKHR}), physicalDevice, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceDisplayPropertiesKHR, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPropertiesKHR}), physicalDevice, pPropertyCount, pProperties)
 end
 
 function vkGetPhysicalDeviceDisplayPlanePropertiesKHR(physicalDevice, pPropertyCount, pProperties)
-    ccall((:vkGetPhysicalDeviceDisplayPlanePropertiesKHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPlanePropertiesKHR}), physicalDevice, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceDisplayPlanePropertiesKHR, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPlanePropertiesKHR}), physicalDevice, pPropertyCount, pProperties)
 end
 
 function vkGetDisplayPlaneSupportedDisplaysKHR(physicalDevice, planeIndex, pDisplayCount, pDisplays)
-    ccall((:vkGetDisplayPlaneSupportedDisplaysKHR, libvulkan), VkResult, (VkPhysicalDevice, UInt32, Ptr{UInt32}, Ptr{VkDisplayKHR}), physicalDevice, planeIndex, pDisplayCount, pDisplays)
+    ccall((:vkGetDisplayPlaneSupportedDisplaysKHR, libvulkan[]), VkResult, (VkPhysicalDevice, UInt32, Ptr{UInt32}, Ptr{VkDisplayKHR}), physicalDevice, planeIndex, pDisplayCount, pDisplays)
 end
 
 function vkGetDisplayModePropertiesKHR(physicalDevice, display, pPropertyCount, pProperties)
-    ccall((:vkGetDisplayModePropertiesKHR, libvulkan), VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{UInt32}, Ptr{VkDisplayModePropertiesKHR}), physicalDevice, display, pPropertyCount, pProperties)
+    ccall((:vkGetDisplayModePropertiesKHR, libvulkan[]), VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{UInt32}, Ptr{VkDisplayModePropertiesKHR}), physicalDevice, display, pPropertyCount, pProperties)
 end
 
 function vkCreateDisplayModeKHR(physicalDevice, display, pCreateInfo, pAllocator, pMode)
-    ccall((:vkCreateDisplayModeKHR, libvulkan), VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{VkDisplayModeCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkDisplayModeKHR}), physicalDevice, display, pCreateInfo, pAllocator, pMode)
+    ccall((:vkCreateDisplayModeKHR, libvulkan[]), VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{VkDisplayModeCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkDisplayModeKHR}), physicalDevice, display, pCreateInfo, pAllocator, pMode)
 end
 
 function vkGetDisplayPlaneCapabilitiesKHR(physicalDevice, mode, planeIndex, pCapabilities)
-    ccall((:vkGetDisplayPlaneCapabilitiesKHR, libvulkan), VkResult, (VkPhysicalDevice, VkDisplayModeKHR, UInt32, Ptr{VkDisplayPlaneCapabilitiesKHR}), physicalDevice, mode, planeIndex, pCapabilities)
+    ccall((:vkGetDisplayPlaneCapabilitiesKHR, libvulkan[]), VkResult, (VkPhysicalDevice, VkDisplayModeKHR, UInt32, Ptr{VkDisplayPlaneCapabilitiesKHR}), physicalDevice, mode, planeIndex, pCapabilities)
 end
 
 function vkCreateDisplayPlaneSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateDisplayPlaneSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkDisplaySurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateDisplayPlaneSurfaceKHR, libvulkan[]), VkResult, (VkInstance, Ptr{VkDisplaySurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateSharedSwapchainsKHR(device, swapchainCount, pCreateInfos, pAllocator, pSwapchains)
-    ccall((:vkCreateSharedSwapchainsKHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkSwapchainCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSwapchainKHR}), device, swapchainCount, pCreateInfos, pAllocator, pSwapchains)
+    ccall((:vkCreateSharedSwapchainsKHR, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkSwapchainCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSwapchainKHR}), device, swapchainCount, pCreateInfos, pAllocator, pSwapchains)
 end
 
 function vkGetPhysicalDeviceFeatures2KHR(physicalDevice, pFeatures)
-    ccall((:vkGetPhysicalDeviceFeatures2KHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures2}), physicalDevice, pFeatures)
+    ccall((:vkGetPhysicalDeviceFeatures2KHR, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures2}), physicalDevice, pFeatures)
 end
 
 function vkGetPhysicalDeviceProperties2KHR(physicalDevice, pProperties)
-    ccall((:vkGetPhysicalDeviceProperties2KHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties2}), physicalDevice, pProperties)
+    ccall((:vkGetPhysicalDeviceProperties2KHR, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties2}), physicalDevice, pProperties)
 end
 
 function vkGetPhysicalDeviceFormatProperties2KHR(physicalDevice, format, pFormatProperties)
-    ccall((:vkGetPhysicalDeviceFormatProperties2KHR, libvulkan), Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties2}), physicalDevice, format, pFormatProperties)
+    ccall((:vkGetPhysicalDeviceFormatProperties2KHR, libvulkan[]), Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties2}), physicalDevice, format, pFormatProperties)
 end
 
 function vkGetPhysicalDeviceImageFormatProperties2KHR(physicalDevice, pImageFormatInfo, pImageFormatProperties)
-    ccall((:vkGetPhysicalDeviceImageFormatProperties2KHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceImageFormatInfo2}, Ptr{VkImageFormatProperties2}), physicalDevice, pImageFormatInfo, pImageFormatProperties)
+    ccall((:vkGetPhysicalDeviceImageFormatProperties2KHR, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceImageFormatInfo2}, Ptr{VkImageFormatProperties2}), physicalDevice, pImageFormatInfo, pImageFormatProperties)
 end
 
 function vkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
-    ccall((:vkGetPhysicalDeviceQueueFamilyProperties2KHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties2}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
+    ccall((:vkGetPhysicalDeviceQueueFamilyProperties2KHR, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties2}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
 end
 
 function vkGetPhysicalDeviceMemoryProperties2KHR(physicalDevice, pMemoryProperties)
-    ccall((:vkGetPhysicalDeviceMemoryProperties2KHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties2}), physicalDevice, pMemoryProperties)
+    ccall((:vkGetPhysicalDeviceMemoryProperties2KHR, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties2}), physicalDevice, pMemoryProperties)
 end
 
 function vkGetPhysicalDeviceSparseImageFormatProperties2KHR(physicalDevice, pFormatInfo, pPropertyCount, pProperties)
-    ccall((:vkGetPhysicalDeviceSparseImageFormatProperties2KHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSparseImageFormatInfo2}, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties2}), physicalDevice, pFormatInfo, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceSparseImageFormatProperties2KHR, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSparseImageFormatInfo2}, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties2}), physicalDevice, pFormatInfo, pPropertyCount, pProperties)
 end
 
 function vkGetDeviceGroupPeerMemoryFeaturesKHR(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
-    ccall((:vkGetDeviceGroupPeerMemoryFeaturesKHR, libvulkan), Cvoid, (VkDevice, UInt32, UInt32, UInt32, Ptr{VkPeerMemoryFeatureFlags}), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
+    ccall((:vkGetDeviceGroupPeerMemoryFeaturesKHR, libvulkan[]), Cvoid, (VkDevice, UInt32, UInt32, UInt32, Ptr{VkPeerMemoryFeatureFlags}), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
 end
 
 function vkCmdSetDeviceMaskKHR(commandBuffer, deviceMask)
-    ccall((:vkCmdSetDeviceMaskKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32), commandBuffer, deviceMask)
+    ccall((:vkCmdSetDeviceMaskKHR, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32), commandBuffer, deviceMask)
 end
 
 function vkCmdDispatchBaseKHR(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
-    ccall((:vkCmdDispatchBaseKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
+    ccall((:vkCmdDispatchBaseKHR, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
 end
 
 function vkTrimCommandPoolKHR(device, commandPool, flags)
-    ccall((:vkTrimCommandPoolKHR, libvulkan), Cvoid, (VkDevice, VkCommandPool, VkCommandPoolTrimFlags), device, commandPool, flags)
+    ccall((:vkTrimCommandPoolKHR, libvulkan[]), Cvoid, (VkDevice, VkCommandPool, VkCommandPoolTrimFlags), device, commandPool, flags)
 end
 
 function vkEnumeratePhysicalDeviceGroupsKHR(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
-    ccall((:vkEnumeratePhysicalDeviceGroupsKHR, libvulkan), VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDeviceGroupProperties}), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
+    ccall((:vkEnumeratePhysicalDeviceGroupsKHR, libvulkan[]), VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDeviceGroupProperties}), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
 end
 
 function vkGetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
-    ccall((:vkGetPhysicalDeviceExternalBufferPropertiesKHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalBufferInfo}, Ptr{VkExternalBufferProperties}), physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
+    ccall((:vkGetPhysicalDeviceExternalBufferPropertiesKHR, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalBufferInfo}, Ptr{VkExternalBufferProperties}), physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
 end
 
 function vkGetMemoryFdKHR(device, pGetFdInfo, pFd)
-    ccall((:vkGetMemoryFdKHR, libvulkan), VkResult, (VkDevice, Ptr{VkMemoryGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
+    ccall((:vkGetMemoryFdKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkMemoryGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
 end
 
 function vkGetMemoryFdPropertiesKHR(device, handleType, fd, pMemoryFdProperties)
-    ccall((:vkGetMemoryFdPropertiesKHR, libvulkan), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryFdPropertiesKHR}), device, handleType, fd, pMemoryFdProperties)
+    ccall((:vkGetMemoryFdPropertiesKHR, libvulkan[]), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryFdPropertiesKHR}), device, handleType, fd, pMemoryFdProperties)
 end
 
 function vkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
-    ccall((:vkGetPhysicalDeviceExternalSemaphorePropertiesKHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalSemaphoreInfo}, Ptr{VkExternalSemaphoreProperties}), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
+    ccall((:vkGetPhysicalDeviceExternalSemaphorePropertiesKHR, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalSemaphoreInfo}, Ptr{VkExternalSemaphoreProperties}), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
 end
 
 function vkImportSemaphoreFdKHR(device, pImportSemaphoreFdInfo)
-    ccall((:vkImportSemaphoreFdKHR, libvulkan), VkResult, (VkDevice, Ptr{VkImportSemaphoreFdInfoKHR}), device, pImportSemaphoreFdInfo)
+    ccall((:vkImportSemaphoreFdKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkImportSemaphoreFdInfoKHR}), device, pImportSemaphoreFdInfo)
 end
 
 function vkGetSemaphoreFdKHR(device, pGetFdInfo, pFd)
-    ccall((:vkGetSemaphoreFdKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
+    ccall((:vkGetSemaphoreFdKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkSemaphoreGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
 end
 
 function vkCmdPushDescriptorSetKHR(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites)
-    ccall((:vkCmdPushDescriptorSetKHR, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, UInt32, UInt32, Ptr{VkWriteDescriptorSet}), commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites)
+    ccall((:vkCmdPushDescriptorSetKHR, libvulkan[]), Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, UInt32, UInt32, Ptr{VkWriteDescriptorSet}), commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites)
 end
 
 function vkCmdPushDescriptorSetWithTemplateKHR(commandBuffer, descriptorUpdateTemplate, layout, set, pData)
-    ccall((:vkCmdPushDescriptorSetWithTemplateKHR, libvulkan), Cvoid, (VkCommandBuffer, VkDescriptorUpdateTemplate, VkPipelineLayout, UInt32, Ptr{Cvoid}), commandBuffer, descriptorUpdateTemplate, layout, set, pData)
+    ccall((:vkCmdPushDescriptorSetWithTemplateKHR, libvulkan[]), Cvoid, (VkCommandBuffer, VkDescriptorUpdateTemplate, VkPipelineLayout, UInt32, Ptr{Cvoid}), commandBuffer, descriptorUpdateTemplate, layout, set, pData)
 end
 
 function vkCreateDescriptorUpdateTemplateKHR(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
-    ccall((:vkCreateDescriptorUpdateTemplateKHR, libvulkan), VkResult, (VkDevice, Ptr{VkDescriptorUpdateTemplateCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorUpdateTemplate}), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
+    ccall((:vkCreateDescriptorUpdateTemplateKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkDescriptorUpdateTemplateCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorUpdateTemplate}), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
 end
 
 function vkDestroyDescriptorUpdateTemplateKHR(device, descriptorUpdateTemplate, pAllocator)
-    ccall((:vkDestroyDescriptorUpdateTemplateKHR, libvulkan), Cvoid, (VkDevice, VkDescriptorUpdateTemplate, Ptr{VkAllocationCallbacks}), device, descriptorUpdateTemplate, pAllocator)
+    ccall((:vkDestroyDescriptorUpdateTemplateKHR, libvulkan[]), Cvoid, (VkDevice, VkDescriptorUpdateTemplate, Ptr{VkAllocationCallbacks}), device, descriptorUpdateTemplate, pAllocator)
 end
 
 function vkUpdateDescriptorSetWithTemplateKHR(device, descriptorSet, descriptorUpdateTemplate, pData)
-    ccall((:vkUpdateDescriptorSetWithTemplateKHR, libvulkan), Cvoid, (VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, Ptr{Cvoid}), device, descriptorSet, descriptorUpdateTemplate, pData)
+    ccall((:vkUpdateDescriptorSetWithTemplateKHR, libvulkan[]), Cvoid, (VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, Ptr{Cvoid}), device, descriptorSet, descriptorUpdateTemplate, pData)
 end
 
 function vkCreateRenderPass2KHR(device, pCreateInfo, pAllocator, pRenderPass)
-    ccall((:vkCreateRenderPass2KHR, libvulkan), VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo2}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
+    ccall((:vkCreateRenderPass2KHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo2}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
 end
 
 function vkCmdBeginRenderPass2KHR(commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
-    ccall((:vkCmdBeginRenderPass2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, Ptr{VkSubpassBeginInfo}), commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
+    ccall((:vkCmdBeginRenderPass2KHR, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, Ptr{VkSubpassBeginInfo}), commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
 end
 
 function vkCmdNextSubpass2KHR(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo)
-    ccall((:vkCmdNextSubpass2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkSubpassBeginInfo}, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassBeginInfo, pSubpassEndInfo)
+    ccall((:vkCmdNextSubpass2KHR, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkSubpassBeginInfo}, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassBeginInfo, pSubpassEndInfo)
 end
 
 function vkCmdEndRenderPass2KHR(commandBuffer, pSubpassEndInfo)
-    ccall((:vkCmdEndRenderPass2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassEndInfo)
+    ccall((:vkCmdEndRenderPass2KHR, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassEndInfo)
 end
 
 function vkGetSwapchainStatusKHR(device, swapchain)
-    ccall((:vkGetSwapchainStatusKHR, libvulkan), VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
+    ccall((:vkGetSwapchainStatusKHR, libvulkan[]), VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
 end
 
 function vkGetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
-    ccall((:vkGetPhysicalDeviceExternalFencePropertiesKHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalFenceInfo}, Ptr{VkExternalFenceProperties}), physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
+    ccall((:vkGetPhysicalDeviceExternalFencePropertiesKHR, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalFenceInfo}, Ptr{VkExternalFenceProperties}), physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
 end
 
 function vkImportFenceFdKHR(device, pImportFenceFdInfo)
-    ccall((:vkImportFenceFdKHR, libvulkan), VkResult, (VkDevice, Ptr{VkImportFenceFdInfoKHR}), device, pImportFenceFdInfo)
+    ccall((:vkImportFenceFdKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkImportFenceFdInfoKHR}), device, pImportFenceFdInfo)
 end
 
 function vkGetFenceFdKHR(device, pGetFdInfo, pFd)
-    ccall((:vkGetFenceFdKHR, libvulkan), VkResult, (VkDevice, Ptr{VkFenceGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
+    ccall((:vkGetFenceFdKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkFenceGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
 end
 
 function vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR(physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions)
-    ccall((:vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR, libvulkan), VkResult, (VkPhysicalDevice, UInt32, Ptr{UInt32}, Ptr{VkPerformanceCounterKHR}, Ptr{VkPerformanceCounterDescriptionKHR}), physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions)
+    ccall((:vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR, libvulkan[]), VkResult, (VkPhysicalDevice, UInt32, Ptr{UInt32}, Ptr{VkPerformanceCounterKHR}, Ptr{VkPerformanceCounterDescriptionKHR}), physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions)
 end
 
 function vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR(physicalDevice, pPerformanceQueryCreateInfo, pNumPasses)
-    ccall((:vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkQueryPoolPerformanceCreateInfoKHR}, Ptr{UInt32}), physicalDevice, pPerformanceQueryCreateInfo, pNumPasses)
+    ccall((:vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR, libvulkan[]), Cvoid, (VkPhysicalDevice, Ptr{VkQueryPoolPerformanceCreateInfoKHR}, Ptr{UInt32}), physicalDevice, pPerformanceQueryCreateInfo, pNumPasses)
 end
 
 function vkAcquireProfilingLockKHR(device, pInfo)
-    ccall((:vkAcquireProfilingLockKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAcquireProfilingLockInfoKHR}), device, pInfo)
+    ccall((:vkAcquireProfilingLockKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkAcquireProfilingLockInfoKHR}), device, pInfo)
 end
 
 function vkReleaseProfilingLockKHR(device)
-    ccall((:vkReleaseProfilingLockKHR, libvulkan), Cvoid, (VkDevice,), device)
+    ccall((:vkReleaseProfilingLockKHR, libvulkan[]), Cvoid, (VkDevice,), device)
 end
 
 function vkGetPhysicalDeviceSurfaceCapabilities2KHR(physicalDevice, pSurfaceInfo, pSurfaceCapabilities)
-    ccall((:vkGetPhysicalDeviceSurfaceCapabilities2KHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{VkSurfaceCapabilities2KHR}), physicalDevice, pSurfaceInfo, pSurfaceCapabilities)
+    ccall((:vkGetPhysicalDeviceSurfaceCapabilities2KHR, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{VkSurfaceCapabilities2KHR}), physicalDevice, pSurfaceInfo, pSurfaceCapabilities)
 end
 
 function vkGetPhysicalDeviceSurfaceFormats2KHR(physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats)
-    ccall((:vkGetPhysicalDeviceSurfaceFormats2KHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{UInt32}, Ptr{VkSurfaceFormat2KHR}), physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats)
+    ccall((:vkGetPhysicalDeviceSurfaceFormats2KHR, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{UInt32}, Ptr{VkSurfaceFormat2KHR}), physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats)
 end
 
 function vkGetPhysicalDeviceDisplayProperties2KHR(physicalDevice, pPropertyCount, pProperties)
-    ccall((:vkGetPhysicalDeviceDisplayProperties2KHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayProperties2KHR}), physicalDevice, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceDisplayProperties2KHR, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayProperties2KHR}), physicalDevice, pPropertyCount, pProperties)
 end
 
 function vkGetPhysicalDeviceDisplayPlaneProperties2KHR(physicalDevice, pPropertyCount, pProperties)
-    ccall((:vkGetPhysicalDeviceDisplayPlaneProperties2KHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPlaneProperties2KHR}), physicalDevice, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceDisplayPlaneProperties2KHR, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPlaneProperties2KHR}), physicalDevice, pPropertyCount, pProperties)
 end
 
 function vkGetDisplayModeProperties2KHR(physicalDevice, display, pPropertyCount, pProperties)
-    ccall((:vkGetDisplayModeProperties2KHR, libvulkan), VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{UInt32}, Ptr{VkDisplayModeProperties2KHR}), physicalDevice, display, pPropertyCount, pProperties)
+    ccall((:vkGetDisplayModeProperties2KHR, libvulkan[]), VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{UInt32}, Ptr{VkDisplayModeProperties2KHR}), physicalDevice, display, pPropertyCount, pProperties)
 end
 
 function vkGetDisplayPlaneCapabilities2KHR(physicalDevice, pDisplayPlaneInfo, pCapabilities)
-    ccall((:vkGetDisplayPlaneCapabilities2KHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkDisplayPlaneInfo2KHR}, Ptr{VkDisplayPlaneCapabilities2KHR}), physicalDevice, pDisplayPlaneInfo, pCapabilities)
+    ccall((:vkGetDisplayPlaneCapabilities2KHR, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{VkDisplayPlaneInfo2KHR}, Ptr{VkDisplayPlaneCapabilities2KHR}), physicalDevice, pDisplayPlaneInfo, pCapabilities)
 end
 
 function vkGetImageMemoryRequirements2KHR(device, pInfo, pMemoryRequirements)
-    ccall((:vkGetImageMemoryRequirements2KHR, libvulkan), Cvoid, (VkDevice, Ptr{VkImageMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetImageMemoryRequirements2KHR, libvulkan[]), Cvoid, (VkDevice, Ptr{VkImageMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
 end
 
 function vkGetBufferMemoryRequirements2KHR(device, pInfo, pMemoryRequirements)
-    ccall((:vkGetBufferMemoryRequirements2KHR, libvulkan), Cvoid, (VkDevice, Ptr{VkBufferMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetBufferMemoryRequirements2KHR, libvulkan[]), Cvoid, (VkDevice, Ptr{VkBufferMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
 end
 
 function vkGetImageSparseMemoryRequirements2KHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
-    ccall((:vkGetImageSparseMemoryRequirements2KHR, libvulkan), Cvoid, (VkDevice, Ptr{VkImageSparseMemoryRequirementsInfo2}, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements2}), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
+    ccall((:vkGetImageSparseMemoryRequirements2KHR, libvulkan[]), Cvoid, (VkDevice, Ptr{VkImageSparseMemoryRequirementsInfo2}, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements2}), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
 end
 
 function vkCreateSamplerYcbcrConversionKHR(device, pCreateInfo, pAllocator, pYcbcrConversion)
-    ccall((:vkCreateSamplerYcbcrConversionKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSamplerYcbcrConversionCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSamplerYcbcrConversion}), device, pCreateInfo, pAllocator, pYcbcrConversion)
+    ccall((:vkCreateSamplerYcbcrConversionKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkSamplerYcbcrConversionCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSamplerYcbcrConversion}), device, pCreateInfo, pAllocator, pYcbcrConversion)
 end
 
 function vkDestroySamplerYcbcrConversionKHR(device, ycbcrConversion, pAllocator)
-    ccall((:vkDestroySamplerYcbcrConversionKHR, libvulkan), Cvoid, (VkDevice, VkSamplerYcbcrConversion, Ptr{VkAllocationCallbacks}), device, ycbcrConversion, pAllocator)
+    ccall((:vkDestroySamplerYcbcrConversionKHR, libvulkan[]), Cvoid, (VkDevice, VkSamplerYcbcrConversion, Ptr{VkAllocationCallbacks}), device, ycbcrConversion, pAllocator)
 end
 
 function vkBindBufferMemory2KHR(device, bindInfoCount, pBindInfos)
-    ccall((:vkBindBufferMemory2KHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindBufferMemoryInfo}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindBufferMemory2KHR, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkBindBufferMemoryInfo}), device, bindInfoCount, pBindInfos)
 end
 
 function vkBindImageMemory2KHR(device, bindInfoCount, pBindInfos)
-    ccall((:vkBindImageMemory2KHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindImageMemoryInfo}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindImageMemory2KHR, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkBindImageMemoryInfo}), device, bindInfoCount, pBindInfos)
 end
 
 function vkGetDescriptorSetLayoutSupportKHR(device, pCreateInfo, pSupport)
-    ccall((:vkGetDescriptorSetLayoutSupportKHR, libvulkan), Cvoid, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkDescriptorSetLayoutSupport}), device, pCreateInfo, pSupport)
+    ccall((:vkGetDescriptorSetLayoutSupportKHR, libvulkan[]), Cvoid, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkDescriptorSetLayoutSupport}), device, pCreateInfo, pSupport)
 end
 
 function vkCmdDrawIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
-    ccall((:vkCmdDrawIndirectCountKHR, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawIndirectCountKHR, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkCmdDrawIndexedIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
-    ccall((:vkCmdDrawIndexedIndirectCountKHR, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawIndexedIndirectCountKHR, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkGetSemaphoreCounterValueKHR(device, semaphore, pValue)
-    ccall((:vkGetSemaphoreCounterValueKHR, libvulkan), VkResult, (VkDevice, VkSemaphore, Ptr{UInt64}), device, semaphore, pValue)
+    ccall((:vkGetSemaphoreCounterValueKHR, libvulkan[]), VkResult, (VkDevice, VkSemaphore, Ptr{UInt64}), device, semaphore, pValue)
 end
 
 function vkWaitSemaphoresKHR(device, pWaitInfo, timeout)
-    ccall((:vkWaitSemaphoresKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreWaitInfo}, UInt64), device, pWaitInfo, timeout)
+    ccall((:vkWaitSemaphoresKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkSemaphoreWaitInfo}, UInt64), device, pWaitInfo, timeout)
 end
 
 function vkSignalSemaphoreKHR(device, pSignalInfo)
-    ccall((:vkSignalSemaphoreKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreSignalInfo}), device, pSignalInfo)
+    ccall((:vkSignalSemaphoreKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkSemaphoreSignalInfo}), device, pSignalInfo)
 end
 
 function vkGetBufferDeviceAddressKHR(device, pInfo)
-    ccall((:vkGetBufferDeviceAddressKHR, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+    ccall((:vkGetBufferDeviceAddressKHR, libvulkan[]), VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
 end
 
 function vkGetBufferOpaqueCaptureAddressKHR(device, pInfo)
-    ccall((:vkGetBufferOpaqueCaptureAddressKHR, libvulkan), UInt64, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+    ccall((:vkGetBufferOpaqueCaptureAddressKHR, libvulkan[]), UInt64, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
 end
 
 function vkGetDeviceMemoryOpaqueCaptureAddressKHR(device, pInfo)
-    ccall((:vkGetDeviceMemoryOpaqueCaptureAddressKHR, libvulkan), UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
+    ccall((:vkGetDeviceMemoryOpaqueCaptureAddressKHR, libvulkan[]), UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
 end
 
 function vkGetPipelineExecutablePropertiesKHR(device, pPipelineInfo, pExecutableCount, pProperties)
-    ccall((:vkGetPipelineExecutablePropertiesKHR, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutablePropertiesKHR}), device, pPipelineInfo, pExecutableCount, pProperties)
+    ccall((:vkGetPipelineExecutablePropertiesKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkPipelineInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutablePropertiesKHR}), device, pPipelineInfo, pExecutableCount, pProperties)
 end
 
 function vkGetPipelineExecutableStatisticsKHR(device, pExecutableInfo, pStatisticCount, pStatistics)
-    ccall((:vkGetPipelineExecutableStatisticsKHR, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableStatisticKHR}), device, pExecutableInfo, pStatisticCount, pStatistics)
+    ccall((:vkGetPipelineExecutableStatisticsKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableStatisticKHR}), device, pExecutableInfo, pStatisticCount, pStatistics)
 end
 
 function vkGetPipelineExecutableInternalRepresentationsKHR(device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations)
-    ccall((:vkGetPipelineExecutableInternalRepresentationsKHR, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableInternalRepresentationKHR}), device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations)
+    ccall((:vkGetPipelineExecutableInternalRepresentationsKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableInternalRepresentationKHR}), device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations)
 end
 
 function vkCreateDebugReportCallbackEXT(instance, pCreateInfo, pAllocator, pCallback)
-    ccall((:vkCreateDebugReportCallbackEXT, libvulkan), VkResult, (VkInstance, Ptr{VkDebugReportCallbackCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkDebugReportCallbackEXT}), instance, pCreateInfo, pAllocator, pCallback)
+    ccall((:vkCreateDebugReportCallbackEXT, libvulkan[]), VkResult, (VkInstance, Ptr{VkDebugReportCallbackCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkDebugReportCallbackEXT}), instance, pCreateInfo, pAllocator, pCallback)
 end
 
 function vkDestroyDebugReportCallbackEXT(instance, callback, pAllocator)
-    ccall((:vkDestroyDebugReportCallbackEXT, libvulkan), Cvoid, (VkInstance, VkDebugReportCallbackEXT, Ptr{VkAllocationCallbacks}), instance, callback, pAllocator)
+    ccall((:vkDestroyDebugReportCallbackEXT, libvulkan[]), Cvoid, (VkInstance, VkDebugReportCallbackEXT, Ptr{VkAllocationCallbacks}), instance, callback, pAllocator)
 end
 
 function vkDebugReportMessageEXT(instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage)
-    ccall((:vkDebugReportMessageEXT, libvulkan), Cvoid, (VkInstance, VkDebugReportFlagsEXT, VkDebugReportObjectTypeEXT, UInt64, Csize_t, Int32, Cstring, Cstring), instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage)
+    ccall((:vkDebugReportMessageEXT, libvulkan[]), Cvoid, (VkInstance, VkDebugReportFlagsEXT, VkDebugReportObjectTypeEXT, UInt64, Csize_t, Int32, Cstring, Cstring), instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage)
 end
 
 function vkDebugMarkerSetObjectTagEXT(device, pTagInfo)
-    ccall((:vkDebugMarkerSetObjectTagEXT, libvulkan), VkResult, (VkDevice, Ptr{VkDebugMarkerObjectTagInfoEXT}), device, pTagInfo)
+    ccall((:vkDebugMarkerSetObjectTagEXT, libvulkan[]), VkResult, (VkDevice, Ptr{VkDebugMarkerObjectTagInfoEXT}), device, pTagInfo)
 end
 
 function vkDebugMarkerSetObjectNameEXT(device, pNameInfo)
-    ccall((:vkDebugMarkerSetObjectNameEXT, libvulkan), VkResult, (VkDevice, Ptr{VkDebugMarkerObjectNameInfoEXT}), device, pNameInfo)
+    ccall((:vkDebugMarkerSetObjectNameEXT, libvulkan[]), VkResult, (VkDevice, Ptr{VkDebugMarkerObjectNameInfoEXT}), device, pNameInfo)
 end
 
 function vkCmdDebugMarkerBeginEXT(commandBuffer, pMarkerInfo)
-    ccall((:vkCmdDebugMarkerBeginEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkDebugMarkerMarkerInfoEXT}), commandBuffer, pMarkerInfo)
+    ccall((:vkCmdDebugMarkerBeginEXT, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkDebugMarkerMarkerInfoEXT}), commandBuffer, pMarkerInfo)
 end
 
 function vkCmdDebugMarkerEndEXT(commandBuffer)
-    ccall((:vkCmdDebugMarkerEndEXT, libvulkan), Cvoid, (VkCommandBuffer,), commandBuffer)
+    ccall((:vkCmdDebugMarkerEndEXT, libvulkan[]), Cvoid, (VkCommandBuffer,), commandBuffer)
 end
 
 function vkCmdDebugMarkerInsertEXT(commandBuffer, pMarkerInfo)
-    ccall((:vkCmdDebugMarkerInsertEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkDebugMarkerMarkerInfoEXT}), commandBuffer, pMarkerInfo)
+    ccall((:vkCmdDebugMarkerInsertEXT, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkDebugMarkerMarkerInfoEXT}), commandBuffer, pMarkerInfo)
 end
 
 function vkCmdBindTransformFeedbackBuffersEXT(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes)
-    ccall((:vkCmdBindTransformFeedbackBuffersEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes)
+    ccall((:vkCmdBindTransformFeedbackBuffersEXT, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes)
 end
 
 function vkCmdBeginTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets)
-    ccall((:vkCmdBeginTransformFeedbackEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets)
+    ccall((:vkCmdBeginTransformFeedbackEXT, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets)
 end
 
 function vkCmdEndTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets)
-    ccall((:vkCmdEndTransformFeedbackEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets)
+    ccall((:vkCmdEndTransformFeedbackEXT, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets)
 end
 
 function vkCmdBeginQueryIndexedEXT(commandBuffer, queryPool, query, flags, index)
-    ccall((:vkCmdBeginQueryIndexedEXT, libvulkan), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, VkQueryControlFlags, UInt32), commandBuffer, queryPool, query, flags, index)
+    ccall((:vkCmdBeginQueryIndexedEXT, libvulkan[]), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, VkQueryControlFlags, UInt32), commandBuffer, queryPool, query, flags, index)
 end
 
 function vkCmdEndQueryIndexedEXT(commandBuffer, queryPool, query, index)
-    ccall((:vkCmdEndQueryIndexedEXT, libvulkan), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32), commandBuffer, queryPool, query, index)
+    ccall((:vkCmdEndQueryIndexedEXT, libvulkan[]), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32), commandBuffer, queryPool, query, index)
 end
 
 function vkCmdDrawIndirectByteCountEXT(commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride)
-    ccall((:vkCmdDrawIndirectByteCountEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride)
+    ccall((:vkCmdDrawIndirectByteCountEXT, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride)
 end
 
 function vkGetImageViewHandleNVX(device, pInfo)
-    ccall((:vkGetImageViewHandleNVX, libvulkan), UInt32, (VkDevice, Ptr{VkImageViewHandleInfoNVX}), device, pInfo)
+    ccall((:vkGetImageViewHandleNVX, libvulkan[]), UInt32, (VkDevice, Ptr{VkImageViewHandleInfoNVX}), device, pInfo)
 end
 
 function vkGetImageViewAddressNVX(device, imageView, pProperties)
-    ccall((:vkGetImageViewAddressNVX, libvulkan), VkResult, (VkDevice, VkImageView, Ptr{VkImageViewAddressPropertiesNVX}), device, imageView, pProperties)
+    ccall((:vkGetImageViewAddressNVX, libvulkan[]), VkResult, (VkDevice, VkImageView, Ptr{VkImageViewAddressPropertiesNVX}), device, imageView, pProperties)
 end
 
 function vkCmdDrawIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
-    ccall((:vkCmdDrawIndirectCountAMD, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawIndirectCountAMD, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkCmdDrawIndexedIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
-    ccall((:vkCmdDrawIndexedIndirectCountAMD, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawIndexedIndirectCountAMD, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkGetShaderInfoAMD(device, pipeline, shaderStage, infoType, pInfoSize, pInfo)
-    ccall((:vkGetShaderInfoAMD, libvulkan), VkResult, (VkDevice, VkPipeline, VkShaderStageFlagBits, VkShaderInfoTypeAMD, Ptr{Csize_t}, Ptr{Cvoid}), device, pipeline, shaderStage, infoType, pInfoSize, pInfo)
+    ccall((:vkGetShaderInfoAMD, libvulkan[]), VkResult, (VkDevice, VkPipeline, VkShaderStageFlagBits, VkShaderInfoTypeAMD, Ptr{Csize_t}, Ptr{Cvoid}), device, pipeline, shaderStage, infoType, pInfoSize, pInfo)
 end
 
 function vkGetPhysicalDeviceExternalImageFormatPropertiesNV(physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties)
-    ccall((:vkGetPhysicalDeviceExternalImageFormatPropertiesNV, libvulkan), VkResult, (VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlags, VkImageCreateFlags, VkExternalMemoryHandleTypeFlagsNV, Ptr{VkExternalImageFormatPropertiesNV}), physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties)
+    ccall((:vkGetPhysicalDeviceExternalImageFormatPropertiesNV, libvulkan[]), VkResult, (VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlags, VkImageCreateFlags, VkExternalMemoryHandleTypeFlagsNV, Ptr{VkExternalImageFormatPropertiesNV}), physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties)
 end
 
 function vkCmdBeginConditionalRenderingEXT(commandBuffer, pConditionalRenderingBegin)
-    ccall((:vkCmdBeginConditionalRenderingEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkConditionalRenderingBeginInfoEXT}), commandBuffer, pConditionalRenderingBegin)
+    ccall((:vkCmdBeginConditionalRenderingEXT, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkConditionalRenderingBeginInfoEXT}), commandBuffer, pConditionalRenderingBegin)
 end
 
 function vkCmdEndConditionalRenderingEXT(commandBuffer)
-    ccall((:vkCmdEndConditionalRenderingEXT, libvulkan), Cvoid, (VkCommandBuffer,), commandBuffer)
+    ccall((:vkCmdEndConditionalRenderingEXT, libvulkan[]), Cvoid, (VkCommandBuffer,), commandBuffer)
 end
 
 function vkCmdSetViewportWScalingNV(commandBuffer, firstViewport, viewportCount, pViewportWScalings)
-    ccall((:vkCmdSetViewportWScalingNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkViewportWScalingNV}), commandBuffer, firstViewport, viewportCount, pViewportWScalings)
+    ccall((:vkCmdSetViewportWScalingNV, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkViewportWScalingNV}), commandBuffer, firstViewport, viewportCount, pViewportWScalings)
 end
 
 function vkReleaseDisplayEXT(physicalDevice, display)
-    ccall((:vkReleaseDisplayEXT, libvulkan), VkResult, (VkPhysicalDevice, VkDisplayKHR), physicalDevice, display)
+    ccall((:vkReleaseDisplayEXT, libvulkan[]), VkResult, (VkPhysicalDevice, VkDisplayKHR), physicalDevice, display)
 end
 
 function vkGetPhysicalDeviceSurfaceCapabilities2EXT(physicalDevice, surface, pSurfaceCapabilities)
-    ccall((:vkGetPhysicalDeviceSurfaceCapabilities2EXT, libvulkan), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{VkSurfaceCapabilities2EXT}), physicalDevice, surface, pSurfaceCapabilities)
+    ccall((:vkGetPhysicalDeviceSurfaceCapabilities2EXT, libvulkan[]), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{VkSurfaceCapabilities2EXT}), physicalDevice, surface, pSurfaceCapabilities)
 end
 
 function vkDisplayPowerControlEXT(device, display, pDisplayPowerInfo)
-    ccall((:vkDisplayPowerControlEXT, libvulkan), VkResult, (VkDevice, VkDisplayKHR, Ptr{VkDisplayPowerInfoEXT}), device, display, pDisplayPowerInfo)
+    ccall((:vkDisplayPowerControlEXT, libvulkan[]), VkResult, (VkDevice, VkDisplayKHR, Ptr{VkDisplayPowerInfoEXT}), device, display, pDisplayPowerInfo)
 end
 
 function vkRegisterDeviceEventEXT(device, pDeviceEventInfo, pAllocator, pFence)
-    ccall((:vkRegisterDeviceEventEXT, libvulkan), VkResult, (VkDevice, Ptr{VkDeviceEventInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, pDeviceEventInfo, pAllocator, pFence)
+    ccall((:vkRegisterDeviceEventEXT, libvulkan[]), VkResult, (VkDevice, Ptr{VkDeviceEventInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, pDeviceEventInfo, pAllocator, pFence)
 end
 
 function vkRegisterDisplayEventEXT(device, display, pDisplayEventInfo, pAllocator, pFence)
-    ccall((:vkRegisterDisplayEventEXT, libvulkan), VkResult, (VkDevice, VkDisplayKHR, Ptr{VkDisplayEventInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, display, pDisplayEventInfo, pAllocator, pFence)
+    ccall((:vkRegisterDisplayEventEXT, libvulkan[]), VkResult, (VkDevice, VkDisplayKHR, Ptr{VkDisplayEventInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, display, pDisplayEventInfo, pAllocator, pFence)
 end
 
 function vkGetSwapchainCounterEXT(device, swapchain, counter, pCounterValue)
-    ccall((:vkGetSwapchainCounterEXT, libvulkan), VkResult, (VkDevice, VkSwapchainKHR, VkSurfaceCounterFlagBitsEXT, Ptr{UInt64}), device, swapchain, counter, pCounterValue)
+    ccall((:vkGetSwapchainCounterEXT, libvulkan[]), VkResult, (VkDevice, VkSwapchainKHR, VkSurfaceCounterFlagBitsEXT, Ptr{UInt64}), device, swapchain, counter, pCounterValue)
 end
 
 function vkGetRefreshCycleDurationGOOGLE(device, swapchain, pDisplayTimingProperties)
-    ccall((:vkGetRefreshCycleDurationGOOGLE, libvulkan), VkResult, (VkDevice, VkSwapchainKHR, Ptr{VkRefreshCycleDurationGOOGLE}), device, swapchain, pDisplayTimingProperties)
+    ccall((:vkGetRefreshCycleDurationGOOGLE, libvulkan[]), VkResult, (VkDevice, VkSwapchainKHR, Ptr{VkRefreshCycleDurationGOOGLE}), device, swapchain, pDisplayTimingProperties)
 end
 
 function vkGetPastPresentationTimingGOOGLE(device, swapchain, pPresentationTimingCount, pPresentationTimings)
-    ccall((:vkGetPastPresentationTimingGOOGLE, libvulkan), VkResult, (VkDevice, VkSwapchainKHR, Ptr{UInt32}, Ptr{VkPastPresentationTimingGOOGLE}), device, swapchain, pPresentationTimingCount, pPresentationTimings)
+    ccall((:vkGetPastPresentationTimingGOOGLE, libvulkan[]), VkResult, (VkDevice, VkSwapchainKHR, Ptr{UInt32}, Ptr{VkPastPresentationTimingGOOGLE}), device, swapchain, pPresentationTimingCount, pPresentationTimings)
 end
 
 function vkCmdSetDiscardRectangleEXT(commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles)
-    ccall((:vkCmdSetDiscardRectangleEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles)
+    ccall((:vkCmdSetDiscardRectangleEXT, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles)
 end
 
 function vkSetHdrMetadataEXT(device, swapchainCount, pSwapchains, pMetadata)
-    ccall((:vkSetHdrMetadataEXT, libvulkan), Cvoid, (VkDevice, UInt32, Ptr{VkSwapchainKHR}, Ptr{VkHdrMetadataEXT}), device, swapchainCount, pSwapchains, pMetadata)
+    ccall((:vkSetHdrMetadataEXT, libvulkan[]), Cvoid, (VkDevice, UInt32, Ptr{VkSwapchainKHR}, Ptr{VkHdrMetadataEXT}), device, swapchainCount, pSwapchains, pMetadata)
 end
 
 function vkSetDebugUtilsObjectNameEXT(device, pNameInfo)
-    ccall((:vkSetDebugUtilsObjectNameEXT, libvulkan), VkResult, (VkDevice, Ptr{VkDebugUtilsObjectNameInfoEXT}), device, pNameInfo)
+    ccall((:vkSetDebugUtilsObjectNameEXT, libvulkan[]), VkResult, (VkDevice, Ptr{VkDebugUtilsObjectNameInfoEXT}), device, pNameInfo)
 end
 
 function vkSetDebugUtilsObjectTagEXT(device, pTagInfo)
-    ccall((:vkSetDebugUtilsObjectTagEXT, libvulkan), VkResult, (VkDevice, Ptr{VkDebugUtilsObjectTagInfoEXT}), device, pTagInfo)
+    ccall((:vkSetDebugUtilsObjectTagEXT, libvulkan[]), VkResult, (VkDevice, Ptr{VkDebugUtilsObjectTagInfoEXT}), device, pTagInfo)
 end
 
 function vkQueueBeginDebugUtilsLabelEXT(queue, pLabelInfo)
-    ccall((:vkQueueBeginDebugUtilsLabelEXT, libvulkan), Cvoid, (VkQueue, Ptr{VkDebugUtilsLabelEXT}), queue, pLabelInfo)
+    ccall((:vkQueueBeginDebugUtilsLabelEXT, libvulkan[]), Cvoid, (VkQueue, Ptr{VkDebugUtilsLabelEXT}), queue, pLabelInfo)
 end
 
 function vkQueueEndDebugUtilsLabelEXT(queue)
-    ccall((:vkQueueEndDebugUtilsLabelEXT, libvulkan), Cvoid, (VkQueue,), queue)
+    ccall((:vkQueueEndDebugUtilsLabelEXT, libvulkan[]), Cvoid, (VkQueue,), queue)
 end
 
 function vkQueueInsertDebugUtilsLabelEXT(queue, pLabelInfo)
-    ccall((:vkQueueInsertDebugUtilsLabelEXT, libvulkan), Cvoid, (VkQueue, Ptr{VkDebugUtilsLabelEXT}), queue, pLabelInfo)
+    ccall((:vkQueueInsertDebugUtilsLabelEXT, libvulkan[]), Cvoid, (VkQueue, Ptr{VkDebugUtilsLabelEXT}), queue, pLabelInfo)
 end
 
 function vkCmdBeginDebugUtilsLabelEXT(commandBuffer, pLabelInfo)
-    ccall((:vkCmdBeginDebugUtilsLabelEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkDebugUtilsLabelEXT}), commandBuffer, pLabelInfo)
+    ccall((:vkCmdBeginDebugUtilsLabelEXT, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkDebugUtilsLabelEXT}), commandBuffer, pLabelInfo)
 end
 
 function vkCmdEndDebugUtilsLabelEXT(commandBuffer)
-    ccall((:vkCmdEndDebugUtilsLabelEXT, libvulkan), Cvoid, (VkCommandBuffer,), commandBuffer)
+    ccall((:vkCmdEndDebugUtilsLabelEXT, libvulkan[]), Cvoid, (VkCommandBuffer,), commandBuffer)
 end
 
 function vkCmdInsertDebugUtilsLabelEXT(commandBuffer, pLabelInfo)
-    ccall((:vkCmdInsertDebugUtilsLabelEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkDebugUtilsLabelEXT}), commandBuffer, pLabelInfo)
+    ccall((:vkCmdInsertDebugUtilsLabelEXT, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkDebugUtilsLabelEXT}), commandBuffer, pLabelInfo)
 end
 
 function vkCreateDebugUtilsMessengerEXT(instance, pCreateInfo, pAllocator, pMessenger)
-    ccall((:vkCreateDebugUtilsMessengerEXT, libvulkan), VkResult, (VkInstance, Ptr{VkDebugUtilsMessengerCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkDebugUtilsMessengerEXT}), instance, pCreateInfo, pAllocator, pMessenger)
+    ccall((:vkCreateDebugUtilsMessengerEXT, libvulkan[]), VkResult, (VkInstance, Ptr{VkDebugUtilsMessengerCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkDebugUtilsMessengerEXT}), instance, pCreateInfo, pAllocator, pMessenger)
 end
 
 function vkDestroyDebugUtilsMessengerEXT(instance, messenger, pAllocator)
-    ccall((:vkDestroyDebugUtilsMessengerEXT, libvulkan), Cvoid, (VkInstance, VkDebugUtilsMessengerEXT, Ptr{VkAllocationCallbacks}), instance, messenger, pAllocator)
+    ccall((:vkDestroyDebugUtilsMessengerEXT, libvulkan[]), Cvoid, (VkInstance, VkDebugUtilsMessengerEXT, Ptr{VkAllocationCallbacks}), instance, messenger, pAllocator)
 end
 
 function vkSubmitDebugUtilsMessageEXT(instance, messageSeverity, messageTypes, pCallbackData)
-    ccall((:vkSubmitDebugUtilsMessageEXT, libvulkan), Cvoid, (VkInstance, VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagsEXT, Ptr{VkDebugUtilsMessengerCallbackDataEXT}), instance, messageSeverity, messageTypes, pCallbackData)
+    ccall((:vkSubmitDebugUtilsMessageEXT, libvulkan[]), Cvoid, (VkInstance, VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagsEXT, Ptr{VkDebugUtilsMessengerCallbackDataEXT}), instance, messageSeverity, messageTypes, pCallbackData)
 end
 
 function vkCmdSetSampleLocationsEXT(commandBuffer, pSampleLocationsInfo)
-    ccall((:vkCmdSetSampleLocationsEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkSampleLocationsInfoEXT}), commandBuffer, pSampleLocationsInfo)
+    ccall((:vkCmdSetSampleLocationsEXT, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkSampleLocationsInfoEXT}), commandBuffer, pSampleLocationsInfo)
 end
 
 function vkGetPhysicalDeviceMultisamplePropertiesEXT(physicalDevice, samples, pMultisampleProperties)
-    ccall((:vkGetPhysicalDeviceMultisamplePropertiesEXT, libvulkan), Cvoid, (VkPhysicalDevice, VkSampleCountFlagBits, Ptr{VkMultisamplePropertiesEXT}), physicalDevice, samples, pMultisampleProperties)
+    ccall((:vkGetPhysicalDeviceMultisamplePropertiesEXT, libvulkan[]), Cvoid, (VkPhysicalDevice, VkSampleCountFlagBits, Ptr{VkMultisamplePropertiesEXT}), physicalDevice, samples, pMultisampleProperties)
 end
 
 function vkGetImageDrmFormatModifierPropertiesEXT(device, image, pProperties)
-    ccall((:vkGetImageDrmFormatModifierPropertiesEXT, libvulkan), VkResult, (VkDevice, VkImage, Ptr{VkImageDrmFormatModifierPropertiesEXT}), device, image, pProperties)
+    ccall((:vkGetImageDrmFormatModifierPropertiesEXT, libvulkan[]), VkResult, (VkDevice, VkImage, Ptr{VkImageDrmFormatModifierPropertiesEXT}), device, image, pProperties)
 end
 
 function vkCreateValidationCacheEXT(device, pCreateInfo, pAllocator, pValidationCache)
-    ccall((:vkCreateValidationCacheEXT, libvulkan), VkResult, (VkDevice, Ptr{VkValidationCacheCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkValidationCacheEXT}), device, pCreateInfo, pAllocator, pValidationCache)
+    ccall((:vkCreateValidationCacheEXT, libvulkan[]), VkResult, (VkDevice, Ptr{VkValidationCacheCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkValidationCacheEXT}), device, pCreateInfo, pAllocator, pValidationCache)
 end
 
 function vkDestroyValidationCacheEXT(device, validationCache, pAllocator)
-    ccall((:vkDestroyValidationCacheEXT, libvulkan), Cvoid, (VkDevice, VkValidationCacheEXT, Ptr{VkAllocationCallbacks}), device, validationCache, pAllocator)
+    ccall((:vkDestroyValidationCacheEXT, libvulkan[]), Cvoid, (VkDevice, VkValidationCacheEXT, Ptr{VkAllocationCallbacks}), device, validationCache, pAllocator)
 end
 
 function vkMergeValidationCachesEXT(device, dstCache, srcCacheCount, pSrcCaches)
-    ccall((:vkMergeValidationCachesEXT, libvulkan), VkResult, (VkDevice, VkValidationCacheEXT, UInt32, Ptr{VkValidationCacheEXT}), device, dstCache, srcCacheCount, pSrcCaches)
+    ccall((:vkMergeValidationCachesEXT, libvulkan[]), VkResult, (VkDevice, VkValidationCacheEXT, UInt32, Ptr{VkValidationCacheEXT}), device, dstCache, srcCacheCount, pSrcCaches)
 end
 
 function vkGetValidationCacheDataEXT(device, validationCache, pDataSize, pData)
-    ccall((:vkGetValidationCacheDataEXT, libvulkan), VkResult, (VkDevice, VkValidationCacheEXT, Ptr{Csize_t}, Ptr{Cvoid}), device, validationCache, pDataSize, pData)
+    ccall((:vkGetValidationCacheDataEXT, libvulkan[]), VkResult, (VkDevice, VkValidationCacheEXT, Ptr{Csize_t}, Ptr{Cvoid}), device, validationCache, pDataSize, pData)
 end
 
 function vkCmdBindShadingRateImageNV(commandBuffer, imageView, imageLayout)
-    ccall((:vkCmdBindShadingRateImageNV, libvulkan), Cvoid, (VkCommandBuffer, VkImageView, VkImageLayout), commandBuffer, imageView, imageLayout)
+    ccall((:vkCmdBindShadingRateImageNV, libvulkan[]), Cvoid, (VkCommandBuffer, VkImageView, VkImageLayout), commandBuffer, imageView, imageLayout)
 end
 
 function vkCmdSetViewportShadingRatePaletteNV(commandBuffer, firstViewport, viewportCount, pShadingRatePalettes)
-    ccall((:vkCmdSetViewportShadingRatePaletteNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkShadingRatePaletteNV}), commandBuffer, firstViewport, viewportCount, pShadingRatePalettes)
+    ccall((:vkCmdSetViewportShadingRatePaletteNV, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkShadingRatePaletteNV}), commandBuffer, firstViewport, viewportCount, pShadingRatePalettes)
 end
 
 function vkCmdSetCoarseSampleOrderNV(commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders)
-    ccall((:vkCmdSetCoarseSampleOrderNV, libvulkan), Cvoid, (VkCommandBuffer, VkCoarseSampleOrderTypeNV, UInt32, Ptr{VkCoarseSampleOrderCustomNV}), commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders)
+    ccall((:vkCmdSetCoarseSampleOrderNV, libvulkan[]), Cvoid, (VkCommandBuffer, VkCoarseSampleOrderTypeNV, UInt32, Ptr{VkCoarseSampleOrderCustomNV}), commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders)
 end
 
 function vkCreateAccelerationStructureNV(device, pCreateInfo, pAllocator, pAccelerationStructure)
-    ccall((:vkCreateAccelerationStructureNV, libvulkan), VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureNV}), device, pCreateInfo, pAllocator, pAccelerationStructure)
+    ccall((:vkCreateAccelerationStructureNV, libvulkan[]), VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureNV}), device, pCreateInfo, pAllocator, pAccelerationStructure)
 end
 
 function vkDestroyAccelerationStructureKHR(device, accelerationStructure, pAllocator)
-    ccall((:vkDestroyAccelerationStructureKHR, libvulkan), Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
+    ccall((:vkDestroyAccelerationStructureKHR, libvulkan[]), Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
 end
 
 function vkDestroyAccelerationStructureNV(device, accelerationStructure, pAllocator)
-    ccall((:vkDestroyAccelerationStructureNV, libvulkan), Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
+    ccall((:vkDestroyAccelerationStructureNV, libvulkan[]), Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
 end
 
 function vkGetAccelerationStructureMemoryRequirementsNV(device, pInfo, pMemoryRequirements)
-    ccall((:vkGetAccelerationStructureMemoryRequirementsNV, libvulkan), Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoNV}, Ptr{VkMemoryRequirements2KHR}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetAccelerationStructureMemoryRequirementsNV, libvulkan[]), Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoNV}, Ptr{VkMemoryRequirements2KHR}), device, pInfo, pMemoryRequirements)
 end
 
 function vkBindAccelerationStructureMemoryKHR(device, bindInfoCount, pBindInfos)
-    ccall((:vkBindAccelerationStructureMemoryKHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindAccelerationStructureMemoryKHR, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
 end
 
 function vkBindAccelerationStructureMemoryNV(device, bindInfoCount, pBindInfos)
-    ccall((:vkBindAccelerationStructureMemoryNV, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindAccelerationStructureMemoryNV, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
 end
 
 function vkCmdBuildAccelerationStructureNV(commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset)
-    ccall((:vkCmdBuildAccelerationStructureNV, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureInfoNV}, VkBuffer, VkDeviceSize, VkBool32, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkBuffer, VkDeviceSize), commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset)
+    ccall((:vkCmdBuildAccelerationStructureNV, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureInfoNV}, VkBuffer, VkDeviceSize, VkBool32, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkBuffer, VkDeviceSize), commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset)
 end
 
 function vkCmdCopyAccelerationStructureNV(commandBuffer, dst, src, mode)
-    ccall((:vkCmdCopyAccelerationStructureNV, libvulkan), Cvoid, (VkCommandBuffer, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkCopyAccelerationStructureModeKHR), commandBuffer, dst, src, mode)
+    ccall((:vkCmdCopyAccelerationStructureNV, libvulkan[]), Cvoid, (VkCommandBuffer, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkCopyAccelerationStructureModeKHR), commandBuffer, dst, src, mode)
 end
 
 function vkCmdTraceRaysNV(commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth)
-    ccall((:vkCmdTraceRaysNV, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, UInt32, UInt32, UInt32), commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth)
+    ccall((:vkCmdTraceRaysNV, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, UInt32, UInt32, UInt32), commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth)
 end
 
 function vkCreateRayTracingPipelinesNV(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
-    ccall((:vkCreateRayTracingPipelinesNV, libvulkan), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+    ccall((:vkCreateRayTracingPipelinesNV, libvulkan[]), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
 end
 
 function vkGetRayTracingShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData)
-    ccall((:vkGetRayTracingShaderGroupHandlesKHR, libvulkan), VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
+    ccall((:vkGetRayTracingShaderGroupHandlesKHR, libvulkan[]), VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
 end
 
 function vkGetRayTracingShaderGroupHandlesNV(device, pipeline, firstGroup, groupCount, dataSize, pData)
-    ccall((:vkGetRayTracingShaderGroupHandlesNV, libvulkan), VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
+    ccall((:vkGetRayTracingShaderGroupHandlesNV, libvulkan[]), VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
 end
 
 function vkGetAccelerationStructureHandleNV(device, accelerationStructure, dataSize, pData)
-    ccall((:vkGetAccelerationStructureHandleNV, libvulkan), VkResult, (VkDevice, VkAccelerationStructureKHR, Csize_t, Ptr{Cvoid}), device, accelerationStructure, dataSize, pData)
+    ccall((:vkGetAccelerationStructureHandleNV, libvulkan[]), VkResult, (VkDevice, VkAccelerationStructureKHR, Csize_t, Ptr{Cvoid}), device, accelerationStructure, dataSize, pData)
 end
 
 function vkCmdWriteAccelerationStructuresPropertiesKHR(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
-    ccall((:vkCmdWriteAccelerationStructuresPropertiesKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+    ccall((:vkCmdWriteAccelerationStructuresPropertiesKHR, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
 end
 
 function vkCmdWriteAccelerationStructuresPropertiesNV(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
-    ccall((:vkCmdWriteAccelerationStructuresPropertiesNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+    ccall((:vkCmdWriteAccelerationStructuresPropertiesNV, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
 end
 
 function vkCompileDeferredNV(device, pipeline, shader)
-    ccall((:vkCompileDeferredNV, libvulkan), VkResult, (VkDevice, VkPipeline, UInt32), device, pipeline, shader)
+    ccall((:vkCompileDeferredNV, libvulkan[]), VkResult, (VkDevice, VkPipeline, UInt32), device, pipeline, shader)
 end
 
 function vkGetMemoryHostPointerPropertiesEXT(device, handleType, pHostPointer, pMemoryHostPointerProperties)
-    ccall((:vkGetMemoryHostPointerPropertiesEXT, libvulkan), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Ptr{Cvoid}, Ptr{VkMemoryHostPointerPropertiesEXT}), device, handleType, pHostPointer, pMemoryHostPointerProperties)
+    ccall((:vkGetMemoryHostPointerPropertiesEXT, libvulkan[]), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Ptr{Cvoid}, Ptr{VkMemoryHostPointerPropertiesEXT}), device, handleType, pHostPointer, pMemoryHostPointerProperties)
 end
 
 function vkCmdWriteBufferMarkerAMD(commandBuffer, pipelineStage, dstBuffer, dstOffset, marker)
-    ccall((:vkCmdWriteBufferMarkerAMD, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineStageFlagBits, VkBuffer, VkDeviceSize, UInt32), commandBuffer, pipelineStage, dstBuffer, dstOffset, marker)
+    ccall((:vkCmdWriteBufferMarkerAMD, libvulkan[]), Cvoid, (VkCommandBuffer, VkPipelineStageFlagBits, VkBuffer, VkDeviceSize, UInt32), commandBuffer, pipelineStage, dstBuffer, dstOffset, marker)
 end
 
 function vkGetPhysicalDeviceCalibrateableTimeDomainsEXT(physicalDevice, pTimeDomainCount, pTimeDomains)
-    ccall((:vkGetPhysicalDeviceCalibrateableTimeDomainsEXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkTimeDomainEXT}), physicalDevice, pTimeDomainCount, pTimeDomains)
+    ccall((:vkGetPhysicalDeviceCalibrateableTimeDomainsEXT, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkTimeDomainEXT}), physicalDevice, pTimeDomainCount, pTimeDomains)
 end
 
 function vkGetCalibratedTimestampsEXT(device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation)
-    ccall((:vkGetCalibratedTimestampsEXT, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkCalibratedTimestampInfoEXT}, Ptr{UInt64}, Ptr{UInt64}), device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation)
+    ccall((:vkGetCalibratedTimestampsEXT, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkCalibratedTimestampInfoEXT}, Ptr{UInt64}, Ptr{UInt64}), device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation)
 end
 
 function vkCmdDrawMeshTasksNV(commandBuffer, taskCount, firstTask)
-    ccall((:vkCmdDrawMeshTasksNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32), commandBuffer, taskCount, firstTask)
+    ccall((:vkCmdDrawMeshTasksNV, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32), commandBuffer, taskCount, firstTask)
 end
 
 function vkCmdDrawMeshTasksIndirectNV(commandBuffer, buffer, offset, drawCount, stride)
-    ccall((:vkCmdDrawMeshTasksIndirectNV, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
+    ccall((:vkCmdDrawMeshTasksIndirectNV, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
 end
 
 function vkCmdDrawMeshTasksIndirectCountNV(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
-    ccall((:vkCmdDrawMeshTasksIndirectCountNV, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawMeshTasksIndirectCountNV, libvulkan[]), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkCmdSetExclusiveScissorNV(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors)
-    ccall((:vkCmdSetExclusiveScissorNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors)
+    ccall((:vkCmdSetExclusiveScissorNV, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors)
 end
 
 function vkCmdSetCheckpointNV(commandBuffer, pCheckpointMarker)
-    ccall((:vkCmdSetCheckpointNV, libvulkan), Cvoid, (VkCommandBuffer, Ptr{Cvoid}), commandBuffer, pCheckpointMarker)
+    ccall((:vkCmdSetCheckpointNV, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{Cvoid}), commandBuffer, pCheckpointMarker)
 end
 
 function vkGetQueueCheckpointDataNV(queue, pCheckpointDataCount, pCheckpointData)
-    ccall((:vkGetQueueCheckpointDataNV, libvulkan), Cvoid, (VkQueue, Ptr{UInt32}, Ptr{VkCheckpointDataNV}), queue, pCheckpointDataCount, pCheckpointData)
+    ccall((:vkGetQueueCheckpointDataNV, libvulkan[]), Cvoid, (VkQueue, Ptr{UInt32}, Ptr{VkCheckpointDataNV}), queue, pCheckpointDataCount, pCheckpointData)
 end
 
 function vkInitializePerformanceApiINTEL(device, pInitializeInfo)
-    ccall((:vkInitializePerformanceApiINTEL, libvulkan), VkResult, (VkDevice, Ptr{VkInitializePerformanceApiInfoINTEL}), device, pInitializeInfo)
+    ccall((:vkInitializePerformanceApiINTEL, libvulkan[]), VkResult, (VkDevice, Ptr{VkInitializePerformanceApiInfoINTEL}), device, pInitializeInfo)
 end
 
 function vkUninitializePerformanceApiINTEL(device)
-    ccall((:vkUninitializePerformanceApiINTEL, libvulkan), Cvoid, (VkDevice,), device)
+    ccall((:vkUninitializePerformanceApiINTEL, libvulkan[]), Cvoid, (VkDevice,), device)
 end
 
 function vkCmdSetPerformanceMarkerINTEL(commandBuffer, pMarkerInfo)
-    ccall((:vkCmdSetPerformanceMarkerINTEL, libvulkan), VkResult, (VkCommandBuffer, Ptr{VkPerformanceMarkerInfoINTEL}), commandBuffer, pMarkerInfo)
+    ccall((:vkCmdSetPerformanceMarkerINTEL, libvulkan[]), VkResult, (VkCommandBuffer, Ptr{VkPerformanceMarkerInfoINTEL}), commandBuffer, pMarkerInfo)
 end
 
 function vkCmdSetPerformanceStreamMarkerINTEL(commandBuffer, pMarkerInfo)
-    ccall((:vkCmdSetPerformanceStreamMarkerINTEL, libvulkan), VkResult, (VkCommandBuffer, Ptr{VkPerformanceStreamMarkerInfoINTEL}), commandBuffer, pMarkerInfo)
+    ccall((:vkCmdSetPerformanceStreamMarkerINTEL, libvulkan[]), VkResult, (VkCommandBuffer, Ptr{VkPerformanceStreamMarkerInfoINTEL}), commandBuffer, pMarkerInfo)
 end
 
 function vkCmdSetPerformanceOverrideINTEL(commandBuffer, pOverrideInfo)
-    ccall((:vkCmdSetPerformanceOverrideINTEL, libvulkan), VkResult, (VkCommandBuffer, Ptr{VkPerformanceOverrideInfoINTEL}), commandBuffer, pOverrideInfo)
+    ccall((:vkCmdSetPerformanceOverrideINTEL, libvulkan[]), VkResult, (VkCommandBuffer, Ptr{VkPerformanceOverrideInfoINTEL}), commandBuffer, pOverrideInfo)
 end
 
 function vkAcquirePerformanceConfigurationINTEL(device, pAcquireInfo, pConfiguration)
-    ccall((:vkAcquirePerformanceConfigurationINTEL, libvulkan), VkResult, (VkDevice, Ptr{VkPerformanceConfigurationAcquireInfoINTEL}, Ptr{VkPerformanceConfigurationINTEL}), device, pAcquireInfo, pConfiguration)
+    ccall((:vkAcquirePerformanceConfigurationINTEL, libvulkan[]), VkResult, (VkDevice, Ptr{VkPerformanceConfigurationAcquireInfoINTEL}, Ptr{VkPerformanceConfigurationINTEL}), device, pAcquireInfo, pConfiguration)
 end
 
 function vkReleasePerformanceConfigurationINTEL(device, configuration)
-    ccall((:vkReleasePerformanceConfigurationINTEL, libvulkan), VkResult, (VkDevice, VkPerformanceConfigurationINTEL), device, configuration)
+    ccall((:vkReleasePerformanceConfigurationINTEL, libvulkan[]), VkResult, (VkDevice, VkPerformanceConfigurationINTEL), device, configuration)
 end
 
 function vkQueueSetPerformanceConfigurationINTEL(queue, configuration)
-    ccall((:vkQueueSetPerformanceConfigurationINTEL, libvulkan), VkResult, (VkQueue, VkPerformanceConfigurationINTEL), queue, configuration)
+    ccall((:vkQueueSetPerformanceConfigurationINTEL, libvulkan[]), VkResult, (VkQueue, VkPerformanceConfigurationINTEL), queue, configuration)
 end
 
 function vkGetPerformanceParameterINTEL(device, parameter, pValue)
-    ccall((:vkGetPerformanceParameterINTEL, libvulkan), VkResult, (VkDevice, VkPerformanceParameterTypeINTEL, Ptr{VkPerformanceValueINTEL}), device, parameter, pValue)
+    ccall((:vkGetPerformanceParameterINTEL, libvulkan[]), VkResult, (VkDevice, VkPerformanceParameterTypeINTEL, Ptr{VkPerformanceValueINTEL}), device, parameter, pValue)
 end
 
 function vkSetLocalDimmingAMD(device, swapChain, localDimmingEnable)
-    ccall((:vkSetLocalDimmingAMD, libvulkan), Cvoid, (VkDevice, VkSwapchainKHR, VkBool32), device, swapChain, localDimmingEnable)
+    ccall((:vkSetLocalDimmingAMD, libvulkan[]), Cvoid, (VkDevice, VkSwapchainKHR, VkBool32), device, swapChain, localDimmingEnable)
 end
 
 function vkGetBufferDeviceAddressEXT(device, pInfo)
-    ccall((:vkGetBufferDeviceAddressEXT, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+    ccall((:vkGetBufferDeviceAddressEXT, libvulkan[]), VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
 end
 
 function vkGetPhysicalDeviceToolPropertiesEXT(physicalDevice, pToolCount, pToolProperties)
-    ccall((:vkGetPhysicalDeviceToolPropertiesEXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkPhysicalDeviceToolPropertiesEXT}), physicalDevice, pToolCount, pToolProperties)
+    ccall((:vkGetPhysicalDeviceToolPropertiesEXT, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkPhysicalDeviceToolPropertiesEXT}), physicalDevice, pToolCount, pToolProperties)
 end
 
 function vkGetPhysicalDeviceCooperativeMatrixPropertiesNV(physicalDevice, pPropertyCount, pProperties)
-    ccall((:vkGetPhysicalDeviceCooperativeMatrixPropertiesNV, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkCooperativeMatrixPropertiesNV}), physicalDevice, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceCooperativeMatrixPropertiesNV, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkCooperativeMatrixPropertiesNV}), physicalDevice, pPropertyCount, pProperties)
 end
 
 function vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV(physicalDevice, pCombinationCount, pCombinations)
-    ccall((:vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkFramebufferMixedSamplesCombinationNV}), physicalDevice, pCombinationCount, pCombinations)
+    ccall((:vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkFramebufferMixedSamplesCombinationNV}), physicalDevice, pCombinationCount, pCombinations)
 end
 
 function vkCreateHeadlessSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateHeadlessSurfaceEXT, libvulkan), VkResult, (VkInstance, Ptr{VkHeadlessSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateHeadlessSurfaceEXT, libvulkan[]), VkResult, (VkInstance, Ptr{VkHeadlessSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCmdSetLineStippleEXT(commandBuffer, lineStippleFactor, lineStipplePattern)
-    ccall((:vkCmdSetLineStippleEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt16), commandBuffer, lineStippleFactor, lineStipplePattern)
+    ccall((:vkCmdSetLineStippleEXT, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt16), commandBuffer, lineStippleFactor, lineStipplePattern)
 end
 
 function vkResetQueryPoolEXT(device, queryPool, firstQuery, queryCount)
-    ccall((:vkResetQueryPoolEXT, libvulkan), Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
+    ccall((:vkResetQueryPoolEXT, libvulkan[]), Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
 end
 
 function vkCmdSetCullModeEXT(commandBuffer, cullMode)
-    ccall((:vkCmdSetCullModeEXT, libvulkan), Cvoid, (VkCommandBuffer, VkCullModeFlags), commandBuffer, cullMode)
+    ccall((:vkCmdSetCullModeEXT, libvulkan[]), Cvoid, (VkCommandBuffer, VkCullModeFlags), commandBuffer, cullMode)
 end
 
 function vkCmdSetFrontFaceEXT(commandBuffer, frontFace)
-    ccall((:vkCmdSetFrontFaceEXT, libvulkan), Cvoid, (VkCommandBuffer, VkFrontFace), commandBuffer, frontFace)
+    ccall((:vkCmdSetFrontFaceEXT, libvulkan[]), Cvoid, (VkCommandBuffer, VkFrontFace), commandBuffer, frontFace)
 end
 
 function vkCmdSetPrimitiveTopologyEXT(commandBuffer, primitiveTopology)
-    ccall((:vkCmdSetPrimitiveTopologyEXT, libvulkan), Cvoid, (VkCommandBuffer, VkPrimitiveTopology), commandBuffer, primitiveTopology)
+    ccall((:vkCmdSetPrimitiveTopologyEXT, libvulkan[]), Cvoid, (VkCommandBuffer, VkPrimitiveTopology), commandBuffer, primitiveTopology)
 end
 
 function vkCmdSetViewportWithCountEXT(commandBuffer, viewportCount, pViewports)
-    ccall((:vkCmdSetViewportWithCountEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkViewport}), commandBuffer, viewportCount, pViewports)
+    ccall((:vkCmdSetViewportWithCountEXT, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkViewport}), commandBuffer, viewportCount, pViewports)
 end
 
 function vkCmdSetScissorWithCountEXT(commandBuffer, scissorCount, pScissors)
-    ccall((:vkCmdSetScissorWithCountEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkRect2D}), commandBuffer, scissorCount, pScissors)
+    ccall((:vkCmdSetScissorWithCountEXT, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkRect2D}), commandBuffer, scissorCount, pScissors)
 end
 
 function vkCmdBindVertexBuffers2EXT(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides)
-    ccall((:vkCmdBindVertexBuffers2EXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides)
+    ccall((:vkCmdBindVertexBuffers2EXT, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides)
 end
 
 function vkCmdSetDepthTestEnableEXT(commandBuffer, depthTestEnable)
-    ccall((:vkCmdSetDepthTestEnableEXT, libvulkan), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthTestEnable)
+    ccall((:vkCmdSetDepthTestEnableEXT, libvulkan[]), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthTestEnable)
 end
 
 function vkCmdSetDepthWriteEnableEXT(commandBuffer, depthWriteEnable)
-    ccall((:vkCmdSetDepthWriteEnableEXT, libvulkan), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthWriteEnable)
+    ccall((:vkCmdSetDepthWriteEnableEXT, libvulkan[]), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthWriteEnable)
 end
 
 function vkCmdSetDepthCompareOpEXT(commandBuffer, depthCompareOp)
-    ccall((:vkCmdSetDepthCompareOpEXT, libvulkan), Cvoid, (VkCommandBuffer, VkCompareOp), commandBuffer, depthCompareOp)
+    ccall((:vkCmdSetDepthCompareOpEXT, libvulkan[]), Cvoid, (VkCommandBuffer, VkCompareOp), commandBuffer, depthCompareOp)
 end
 
 function vkCmdSetDepthBoundsTestEnableEXT(commandBuffer, depthBoundsTestEnable)
-    ccall((:vkCmdSetDepthBoundsTestEnableEXT, libvulkan), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthBoundsTestEnable)
+    ccall((:vkCmdSetDepthBoundsTestEnableEXT, libvulkan[]), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthBoundsTestEnable)
 end
 
 function vkCmdSetStencilTestEnableEXT(commandBuffer, stencilTestEnable)
-    ccall((:vkCmdSetStencilTestEnableEXT, libvulkan), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, stencilTestEnable)
+    ccall((:vkCmdSetStencilTestEnableEXT, libvulkan[]), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, stencilTestEnable)
 end
 
 function vkCmdSetStencilOpEXT(commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp)
-    ccall((:vkCmdSetStencilOpEXT, libvulkan), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, VkStencilOp, VkStencilOp, VkStencilOp, VkCompareOp), commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp)
+    ccall((:vkCmdSetStencilOpEXT, libvulkan[]), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, VkStencilOp, VkStencilOp, VkStencilOp, VkCompareOp), commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp)
 end
 
 function vkGetGeneratedCommandsMemoryRequirementsNV(device, pInfo, pMemoryRequirements)
-    ccall((:vkGetGeneratedCommandsMemoryRequirementsNV, libvulkan), Cvoid, (VkDevice, Ptr{VkGeneratedCommandsMemoryRequirementsInfoNV}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetGeneratedCommandsMemoryRequirementsNV, libvulkan[]), Cvoid, (VkDevice, Ptr{VkGeneratedCommandsMemoryRequirementsInfoNV}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
 end
 
 function vkCmdPreprocessGeneratedCommandsNV(commandBuffer, pGeneratedCommandsInfo)
-    ccall((:vkCmdPreprocessGeneratedCommandsNV, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkGeneratedCommandsInfoNV}), commandBuffer, pGeneratedCommandsInfo)
+    ccall((:vkCmdPreprocessGeneratedCommandsNV, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkGeneratedCommandsInfoNV}), commandBuffer, pGeneratedCommandsInfo)
 end
 
 function vkCmdExecuteGeneratedCommandsNV(commandBuffer, isPreprocessed, pGeneratedCommandsInfo)
-    ccall((:vkCmdExecuteGeneratedCommandsNV, libvulkan), Cvoid, (VkCommandBuffer, VkBool32, Ptr{VkGeneratedCommandsInfoNV}), commandBuffer, isPreprocessed, pGeneratedCommandsInfo)
+    ccall((:vkCmdExecuteGeneratedCommandsNV, libvulkan[]), Cvoid, (VkCommandBuffer, VkBool32, Ptr{VkGeneratedCommandsInfoNV}), commandBuffer, isPreprocessed, pGeneratedCommandsInfo)
 end
 
 function vkCmdBindPipelineShaderGroupNV(commandBuffer, pipelineBindPoint, pipeline, groupIndex)
-    ccall((:vkCmdBindPipelineShaderGroupNV, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipeline, UInt32), commandBuffer, pipelineBindPoint, pipeline, groupIndex)
+    ccall((:vkCmdBindPipelineShaderGroupNV, libvulkan[]), Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipeline, UInt32), commandBuffer, pipelineBindPoint, pipeline, groupIndex)
 end
 
 function vkCreateIndirectCommandsLayoutNV(device, pCreateInfo, pAllocator, pIndirectCommandsLayout)
-    ccall((:vkCreateIndirectCommandsLayoutNV, libvulkan), VkResult, (VkDevice, Ptr{VkIndirectCommandsLayoutCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkIndirectCommandsLayoutNV}), device, pCreateInfo, pAllocator, pIndirectCommandsLayout)
+    ccall((:vkCreateIndirectCommandsLayoutNV, libvulkan[]), VkResult, (VkDevice, Ptr{VkIndirectCommandsLayoutCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkIndirectCommandsLayoutNV}), device, pCreateInfo, pAllocator, pIndirectCommandsLayout)
 end
 
 function vkDestroyIndirectCommandsLayoutNV(device, indirectCommandsLayout, pAllocator)
-    ccall((:vkDestroyIndirectCommandsLayoutNV, libvulkan), Cvoid, (VkDevice, VkIndirectCommandsLayoutNV, Ptr{VkAllocationCallbacks}), device, indirectCommandsLayout, pAllocator)
+    ccall((:vkDestroyIndirectCommandsLayoutNV, libvulkan[]), Cvoid, (VkDevice, VkIndirectCommandsLayoutNV, Ptr{VkAllocationCallbacks}), device, indirectCommandsLayout, pAllocator)
 end
 
 function vkCreatePrivateDataSlotEXT(device, pCreateInfo, pAllocator, pPrivateDataSlot)
-    ccall((:vkCreatePrivateDataSlotEXT, libvulkan), VkResult, (VkDevice, Ptr{VkPrivateDataSlotCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkPrivateDataSlotEXT}), device, pCreateInfo, pAllocator, pPrivateDataSlot)
+    ccall((:vkCreatePrivateDataSlotEXT, libvulkan[]), VkResult, (VkDevice, Ptr{VkPrivateDataSlotCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkPrivateDataSlotEXT}), device, pCreateInfo, pAllocator, pPrivateDataSlot)
 end
 
 function vkDestroyPrivateDataSlotEXT(device, privateDataSlot, pAllocator)
-    ccall((:vkDestroyPrivateDataSlotEXT, libvulkan), Cvoid, (VkDevice, VkPrivateDataSlotEXT, Ptr{VkAllocationCallbacks}), device, privateDataSlot, pAllocator)
+    ccall((:vkDestroyPrivateDataSlotEXT, libvulkan[]), Cvoid, (VkDevice, VkPrivateDataSlotEXT, Ptr{VkAllocationCallbacks}), device, privateDataSlot, pAllocator)
 end
 
 function vkSetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, data)
-    ccall((:vkSetPrivateDataEXT, libvulkan), VkResult, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, UInt64), device, objectType, objectHandle, privateDataSlot, data)
+    ccall((:vkSetPrivateDataEXT, libvulkan[]), VkResult, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, UInt64), device, objectType, objectHandle, privateDataSlot, data)
 end
 
 function vkGetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, pData)
-    ccall((:vkGetPrivateDataEXT, libvulkan), Cvoid, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, Ptr{UInt64}), device, objectType, objectHandle, privateDataSlot, pData)
+    ccall((:vkGetPrivateDataEXT, libvulkan[]), Cvoid, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, Ptr{UInt64}), device, objectType, objectHandle, privateDataSlot, pData)
 end
 
 function vkCreateAndroidSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateAndroidSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkAndroidSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateAndroidSurfaceKHR, libvulkan[]), VkResult, (VkInstance, Ptr{VkAndroidSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkGetAndroidHardwareBufferPropertiesANDROID(device, buffer, pProperties)
-    ccall((:vkGetAndroidHardwareBufferPropertiesANDROID, libvulkan), VkResult, (VkDevice, Ptr{AHardwareBuffer}, Ptr{VkAndroidHardwareBufferPropertiesANDROID}), device, buffer, pProperties)
+    ccall((:vkGetAndroidHardwareBufferPropertiesANDROID, libvulkan[]), VkResult, (VkDevice, Ptr{AHardwareBuffer}, Ptr{VkAndroidHardwareBufferPropertiesANDROID}), device, buffer, pProperties)
 end
 
 function vkGetMemoryAndroidHardwareBufferANDROID(device, pInfo, pBuffer)
-    ccall((:vkGetMemoryAndroidHardwareBufferANDROID, libvulkan), VkResult, (VkDevice, Ptr{VkMemoryGetAndroidHardwareBufferInfoANDROID}, Ptr{Ptr{AHardwareBuffer}}), device, pInfo, pBuffer)
+    ccall((:vkGetMemoryAndroidHardwareBufferANDROID, libvulkan[]), VkResult, (VkDevice, Ptr{VkMemoryGetAndroidHardwareBufferInfoANDROID}, Ptr{Ptr{AHardwareBuffer}}), device, pInfo, pBuffer)
 end
 
 function vkCreateImagePipeSurfaceFUCHSIA(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateImagePipeSurfaceFUCHSIA, libvulkan), VkResult, (VkInstance, Ptr{VkImagePipeSurfaceCreateInfoFUCHSIA}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateImagePipeSurfaceFUCHSIA, libvulkan[]), VkResult, (VkInstance, Ptr{VkImagePipeSurfaceCreateInfoFUCHSIA}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateIOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateIOSSurfaceMVK, libvulkan), VkResult, (VkInstance, Ptr{VkIOSSurfaceCreateInfoMVK}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateIOSSurfaceMVK, libvulkan[]), VkResult, (VkInstance, Ptr{VkIOSSurfaceCreateInfoMVK}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateMacOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateMacOSSurfaceMVK, libvulkan), VkResult, (VkInstance, Ptr{VkMacOSSurfaceCreateInfoMVK}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateMacOSSurfaceMVK, libvulkan[]), VkResult, (VkInstance, Ptr{VkMacOSSurfaceCreateInfoMVK}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateMetalSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateMetalSurfaceEXT, libvulkan), VkResult, (VkInstance, Ptr{VkMetalSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateMetalSurfaceEXT, libvulkan[]), VkResult, (VkInstance, Ptr{VkMetalSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateViSurfaceNN(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateViSurfaceNN, libvulkan), VkResult, (VkInstance, Ptr{VkViSurfaceCreateInfoNN}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateViSurfaceNN, libvulkan[]), VkResult, (VkInstance, Ptr{VkViSurfaceCreateInfoNN}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateWaylandSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateWaylandSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkWaylandSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateWaylandSurfaceKHR, libvulkan[]), VkResult, (VkInstance, Ptr{VkWaylandSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkGetPhysicalDeviceWaylandPresentationSupportKHR(physicalDevice, queueFamilyIndex, display)
-    ccall((:vkGetPhysicalDeviceWaylandPresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{wl_display}), physicalDevice, queueFamilyIndex, display)
+    ccall((:vkGetPhysicalDeviceWaylandPresentationSupportKHR, libvulkan[]), VkBool32, (VkPhysicalDevice, UInt32, Ptr{wl_display}), physicalDevice, queueFamilyIndex, display)
 end
 
 function vkCreateWin32SurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateWin32SurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkWin32SurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateWin32SurfaceKHR, libvulkan[]), VkResult, (VkInstance, Ptr{VkWin32SurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkGetPhysicalDeviceWin32PresentationSupportKHR(physicalDevice, queueFamilyIndex)
-    ccall((:vkGetPhysicalDeviceWin32PresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32), physicalDevice, queueFamilyIndex)
+    ccall((:vkGetPhysicalDeviceWin32PresentationSupportKHR, libvulkan[]), VkBool32, (VkPhysicalDevice, UInt32), physicalDevice, queueFamilyIndex)
 end
 
 function vkGetMemoryWin32HandleKHR(device, pGetWin32HandleInfo, pHandle)
-    ccall((:vkGetMemoryWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkMemoryGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
+    ccall((:vkGetMemoryWin32HandleKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkMemoryGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
 end
 
 function vkGetMemoryWin32HandlePropertiesKHR(device, handleType, handle, pMemoryWin32HandleProperties)
-    ccall((:vkGetMemoryWin32HandlePropertiesKHR, libvulkan), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryWin32HandlePropertiesKHR}), device, handleType, handle, pMemoryWin32HandleProperties)
+    ccall((:vkGetMemoryWin32HandlePropertiesKHR, libvulkan[]), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryWin32HandlePropertiesKHR}), device, handleType, handle, pMemoryWin32HandleProperties)
 end
 
 function vkImportSemaphoreWin32HandleKHR(device, pImportSemaphoreWin32HandleInfo)
-    ccall((:vkImportSemaphoreWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkImportSemaphoreWin32HandleInfoKHR}), device, pImportSemaphoreWin32HandleInfo)
+    ccall((:vkImportSemaphoreWin32HandleKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkImportSemaphoreWin32HandleInfoKHR}), device, pImportSemaphoreWin32HandleInfo)
 end
 
 function vkGetSemaphoreWin32HandleKHR(device, pGetWin32HandleInfo, pHandle)
-    ccall((:vkGetSemaphoreWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
+    ccall((:vkGetSemaphoreWin32HandleKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkSemaphoreGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
 end
 
 function vkImportFenceWin32HandleKHR(device, pImportFenceWin32HandleInfo)
-    ccall((:vkImportFenceWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkImportFenceWin32HandleInfoKHR}), device, pImportFenceWin32HandleInfo)
+    ccall((:vkImportFenceWin32HandleKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkImportFenceWin32HandleInfoKHR}), device, pImportFenceWin32HandleInfo)
 end
 
 function vkGetFenceWin32HandleKHR(device, pGetWin32HandleInfo, pHandle)
-    ccall((:vkGetFenceWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkFenceGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
+    ccall((:vkGetFenceWin32HandleKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkFenceGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
 end
 
 function vkGetMemoryWin32HandleNV(device, memory, handleType, pHandle)
-    ccall((:vkGetMemoryWin32HandleNV, libvulkan), VkResult, (VkDevice, VkDeviceMemory, VkExternalMemoryHandleTypeFlagsNV, Ptr{Cint}), device, memory, handleType, pHandle)
+    ccall((:vkGetMemoryWin32HandleNV, libvulkan[]), VkResult, (VkDevice, VkDeviceMemory, VkExternalMemoryHandleTypeFlagsNV, Ptr{Cint}), device, memory, handleType, pHandle)
 end
 
 function vkGetPhysicalDeviceSurfacePresentModes2EXT(physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes)
-    ccall((:vkGetPhysicalDeviceSurfacePresentModes2EXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes)
+    ccall((:vkGetPhysicalDeviceSurfacePresentModes2EXT, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes)
 end
 
 function vkAcquireFullScreenExclusiveModeEXT(device, swapchain)
-    ccall((:vkAcquireFullScreenExclusiveModeEXT, libvulkan), VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
+    ccall((:vkAcquireFullScreenExclusiveModeEXT, libvulkan[]), VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
 end
 
 function vkReleaseFullScreenExclusiveModeEXT(device, swapchain)
-    ccall((:vkReleaseFullScreenExclusiveModeEXT, libvulkan), VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
+    ccall((:vkReleaseFullScreenExclusiveModeEXT, libvulkan[]), VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
 end
 
 function vkGetDeviceGroupSurfacePresentModes2EXT(device, pSurfaceInfo, pModes)
-    ccall((:vkGetDeviceGroupSurfacePresentModes2EXT, libvulkan), VkResult, (VkDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{VkDeviceGroupPresentModeFlagsKHR}), device, pSurfaceInfo, pModes)
+    ccall((:vkGetDeviceGroupSurfacePresentModes2EXT, libvulkan[]), VkResult, (VkDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{VkDeviceGroupPresentModeFlagsKHR}), device, pSurfaceInfo, pModes)
 end
 
 function vkCreateXcbSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateXcbSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkXcbSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateXcbSurfaceKHR, libvulkan[]), VkResult, (VkInstance, Ptr{VkXcbSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkGetPhysicalDeviceXcbPresentationSupportKHR(physicalDevice, queueFamilyIndex, connection, visual_id)
-    ccall((:vkGetPhysicalDeviceXcbPresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{xcb_connection_t}, xcb_visualid_t), physicalDevice, queueFamilyIndex, connection, visual_id)
+    ccall((:vkGetPhysicalDeviceXcbPresentationSupportKHR, libvulkan[]), VkBool32, (VkPhysicalDevice, UInt32, Ptr{xcb_connection_t}, xcb_visualid_t), physicalDevice, queueFamilyIndex, connection, visual_id)
 end
 
 function vkCreateXlibSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateXlibSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkXlibSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateXlibSurfaceKHR, libvulkan[]), VkResult, (VkInstance, Ptr{VkXlibSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkGetPhysicalDeviceXlibPresentationSupportKHR(physicalDevice, queueFamilyIndex, dpy, visualID)
-    ccall((:vkGetPhysicalDeviceXlibPresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{Display}, VisualID), physicalDevice, queueFamilyIndex, dpy, visualID)
+    ccall((:vkGetPhysicalDeviceXlibPresentationSupportKHR, libvulkan[]), VkBool32, (VkPhysicalDevice, UInt32, Ptr{Display}, VisualID), physicalDevice, queueFamilyIndex, dpy, visualID)
 end
 
 function vkCreateDirectFBSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateDirectFBSurfaceEXT, libvulkan), VkResult, (VkInstance, Ptr{VkDirectFBSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateDirectFBSurfaceEXT, libvulkan[]), VkResult, (VkInstance, Ptr{VkDirectFBSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkGetPhysicalDeviceDirectFBPresentationSupportEXT(physicalDevice, queueFamilyIndex, dfb)
-    ccall((:vkGetPhysicalDeviceDirectFBPresentationSupportEXT, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{Cint}), physicalDevice, queueFamilyIndex, dfb)
+    ccall((:vkGetPhysicalDeviceDirectFBPresentationSupportEXT, libvulkan[]), VkBool32, (VkPhysicalDevice, UInt32, Ptr{Cint}), physicalDevice, queueFamilyIndex, dfb)
 end
 
 function vkAcquireXlibDisplayEXT(physicalDevice, dpy, display)
-    ccall((:vkAcquireXlibDisplayEXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{Display}, VkDisplayKHR), physicalDevice, dpy, display)
+    ccall((:vkAcquireXlibDisplayEXT, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{Display}, VkDisplayKHR), physicalDevice, dpy, display)
 end
 
 function vkGetRandROutputDisplayEXT(physicalDevice, dpy, rrOutput, pDisplay)
-    ccall((:vkGetRandROutputDisplayEXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{Display}, RROutput, Ptr{VkDisplayKHR}), physicalDevice, dpy, rrOutput, pDisplay)
+    ccall((:vkGetRandROutputDisplayEXT, libvulkan[]), VkResult, (VkPhysicalDevice, Ptr{Display}, RROutput, Ptr{VkDisplayKHR}), physicalDevice, dpy, rrOutput, pDisplay)
 end
 
 function vkCreateStreamDescriptorSurfaceGGP(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateStreamDescriptorSurfaceGGP, libvulkan), VkResult, (VkInstance, Ptr{VkStreamDescriptorSurfaceCreateInfoGGP}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateStreamDescriptorSurfaceGGP, libvulkan[]), VkResult, (VkInstance, Ptr{VkStreamDescriptorSurfaceCreateInfoGGP}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateDeferredOperationKHR(device, pAllocator, pDeferredOperation)
-    ccall((:vkCreateDeferredOperationKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAllocationCallbacks}, Ptr{VkDeferredOperationKHR}), device, pAllocator, pDeferredOperation)
+    ccall((:vkCreateDeferredOperationKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkAllocationCallbacks}, Ptr{VkDeferredOperationKHR}), device, pAllocator, pDeferredOperation)
 end
 
 function vkDestroyDeferredOperationKHR(device, operation, pAllocator)
-    ccall((:vkDestroyDeferredOperationKHR, libvulkan), Cvoid, (VkDevice, VkDeferredOperationKHR, Ptr{VkAllocationCallbacks}), device, operation, pAllocator)
+    ccall((:vkDestroyDeferredOperationKHR, libvulkan[]), Cvoid, (VkDevice, VkDeferredOperationKHR, Ptr{VkAllocationCallbacks}), device, operation, pAllocator)
 end
 
 function vkGetDeferredOperationMaxConcurrencyKHR(device, operation)
-    ccall((:vkGetDeferredOperationMaxConcurrencyKHR, libvulkan), UInt32, (VkDevice, VkDeferredOperationKHR), device, operation)
+    ccall((:vkGetDeferredOperationMaxConcurrencyKHR, libvulkan[]), UInt32, (VkDevice, VkDeferredOperationKHR), device, operation)
 end
 
 function vkGetDeferredOperationResultKHR(device, operation)
-    ccall((:vkGetDeferredOperationResultKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+    ccall((:vkGetDeferredOperationResultKHR, libvulkan[]), VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
 end
 
 function vkDeferredOperationJoinKHR(device, operation)
-    ccall((:vkDeferredOperationJoinKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+    ccall((:vkDeferredOperationJoinKHR, libvulkan[]), VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
 end
 
 function vkCreateAccelerationStructureKHR(device, pCreateInfo, pAllocator, pAccelerationStructure)
-    ccall((:vkCreateAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureKHR}), device, pCreateInfo, pAllocator, pAccelerationStructure)
+    ccall((:vkCreateAccelerationStructureKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureKHR}), device, pCreateInfo, pAllocator, pAccelerationStructure)
 end
 
 function vkGetAccelerationStructureMemoryRequirementsKHR(device, pInfo, pMemoryRequirements)
-    ccall((:vkGetAccelerationStructureMemoryRequirementsKHR, libvulkan), Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoKHR}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetAccelerationStructureMemoryRequirementsKHR, libvulkan[]), Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoKHR}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
 end
 
 function vkCmdBuildAccelerationStructureKHR(commandBuffer, infoCount, pInfos, ppOffsetInfos)
-    ccall((:vkCmdBuildAccelerationStructureKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), commandBuffer, infoCount, pInfos, ppOffsetInfos)
+    ccall((:vkCmdBuildAccelerationStructureKHR, libvulkan[]), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), commandBuffer, infoCount, pInfos, ppOffsetInfos)
 end
 
 function vkCmdBuildAccelerationStructureIndirectKHR(commandBuffer, pInfo, indirectBuffer, indirectOffset, indirectStride)
-    ccall((:vkCmdBuildAccelerationStructureIndirectKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, VkBuffer, VkDeviceSize, UInt32), commandBuffer, pInfo, indirectBuffer, indirectOffset, indirectStride)
+    ccall((:vkCmdBuildAccelerationStructureIndirectKHR, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, VkBuffer, VkDeviceSize, UInt32), commandBuffer, pInfo, indirectBuffer, indirectOffset, indirectStride)
 end
 
 function vkBuildAccelerationStructureKHR(device, infoCount, pInfos, ppOffsetInfos)
-    ccall((:vkBuildAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), device, infoCount, pInfos, ppOffsetInfos)
+    ccall((:vkBuildAccelerationStructureKHR, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), device, infoCount, pInfos, ppOffsetInfos)
 end
 
 function vkCopyAccelerationStructureKHR(device, pInfo)
-    ccall((:vkCopyAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureInfoKHR}), device, pInfo)
+    ccall((:vkCopyAccelerationStructureKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureInfoKHR}), device, pInfo)
 end
 
 function vkCopyAccelerationStructureToMemoryKHR(device, pInfo)
-    ccall((:vkCopyAccelerationStructureToMemoryKHR, libvulkan), VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), device, pInfo)
+    ccall((:vkCopyAccelerationStructureToMemoryKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), device, pInfo)
 end
 
 function vkCopyMemoryToAccelerationStructureKHR(device, pInfo)
-    ccall((:vkCopyMemoryToAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), device, pInfo)
+    ccall((:vkCopyMemoryToAccelerationStructureKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), device, pInfo)
 end
 
 function vkWriteAccelerationStructuresPropertiesKHR(device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride)
-    ccall((:vkWriteAccelerationStructuresPropertiesKHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, Csize_t, Ptr{Cvoid}, Csize_t), device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride)
+    ccall((:vkWriteAccelerationStructuresPropertiesKHR, libvulkan[]), VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, Csize_t, Ptr{Cvoid}, Csize_t), device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride)
 end
 
 function vkCmdCopyAccelerationStructureKHR(commandBuffer, pInfo)
-    ccall((:vkCmdCopyAccelerationStructureKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureInfoKHR}), commandBuffer, pInfo)
+    ccall((:vkCmdCopyAccelerationStructureKHR, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureInfoKHR}), commandBuffer, pInfo)
 end
 
 function vkCmdCopyAccelerationStructureToMemoryKHR(commandBuffer, pInfo)
-    ccall((:vkCmdCopyAccelerationStructureToMemoryKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), commandBuffer, pInfo)
+    ccall((:vkCmdCopyAccelerationStructureToMemoryKHR, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), commandBuffer, pInfo)
 end
 
 function vkCmdCopyMemoryToAccelerationStructureKHR(commandBuffer, pInfo)
-    ccall((:vkCmdCopyMemoryToAccelerationStructureKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), commandBuffer, pInfo)
+    ccall((:vkCmdCopyMemoryToAccelerationStructureKHR, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), commandBuffer, pInfo)
 end
 
 function vkCmdTraceRaysKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth)
-    ccall((:vkCmdTraceRaysKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, UInt32, UInt32, UInt32), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth)
+    ccall((:vkCmdTraceRaysKHR, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, UInt32, UInt32, UInt32), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth)
 end
 
 function vkCreateRayTracingPipelinesKHR(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
-    ccall((:vkCreateRayTracingPipelinesKHR, libvulkan), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+    ccall((:vkCreateRayTracingPipelinesKHR, libvulkan[]), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
 end
 
 function vkGetAccelerationStructureDeviceAddressKHR(device, pInfo)
-    ccall((:vkGetAccelerationStructureDeviceAddressKHR, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkAccelerationStructureDeviceAddressInfoKHR}), device, pInfo)
+    ccall((:vkGetAccelerationStructureDeviceAddressKHR, libvulkan[]), VkDeviceAddress, (VkDevice, Ptr{VkAccelerationStructureDeviceAddressInfoKHR}), device, pInfo)
 end
 
 function vkGetRayTracingCaptureReplayShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData)
-    ccall((:vkGetRayTracingCaptureReplayShaderGroupHandlesKHR, libvulkan), VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
+    ccall((:vkGetRayTracingCaptureReplayShaderGroupHandlesKHR, libvulkan[]), VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
 end
 
 function vkCmdTraceRaysIndirectKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, buffer, offset)
-    ccall((:vkCmdTraceRaysIndirectKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, VkBuffer, VkDeviceSize), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, buffer, offset)
+    ccall((:vkCmdTraceRaysIndirectKHR, libvulkan[]), Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, VkBuffer, VkDeviceSize), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, buffer, offset)
 end
 
 function vkGetDeviceAccelerationStructureCompatibilityKHR(device, version)
-    ccall((:vkGetDeviceAccelerationStructureCompatibilityKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAccelerationStructureVersionKHR}), device, version)
+    ccall((:vkGetDeviceAccelerationStructureCompatibilityKHR, libvulkan[]), VkResult, (VkDevice, Ptr{VkAccelerationStructureVersionKHR}), device, version)
 end
-
 function vkCreateInstance(pCreateInfo, pAllocator, pInstance, fun_ptr)
-    ccall(fun_ptr, VkResult, (Ptr{VkInstanceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkInstance}), pCreateInfo, pAllocator, pInstance)
+    ccall((:vkCreateInstance, libvulkan), VkResult, (Ptr{VkInstanceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkInstance}), pCreateInfo, pAllocator, pInstance)
 end
 
 function vkDestroyInstance(instance, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkInstance, Ptr{VkAllocationCallbacks}), instance, pAllocator)
+    ccall((:vkDestroyInstance, libvulkan), Cvoid, (VkInstance, Ptr{VkAllocationCallbacks}), instance, pAllocator)
 end
 
 function vkEnumeratePhysicalDevices(instance, pPhysicalDeviceCount, pPhysicalDevices, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDevice}), instance, pPhysicalDeviceCount, pPhysicalDevices)
+    ccall((:vkEnumeratePhysicalDevices, libvulkan), VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDevice}), instance, pPhysicalDeviceCount, pPhysicalDevices)
 end
 
 function vkGetPhysicalDeviceFeatures(physicalDevice, pFeatures, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures}), physicalDevice, pFeatures)
+    ccall((:vkGetPhysicalDeviceFeatures, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures}), physicalDevice, pFeatures)
 end
 
 function vkGetPhysicalDeviceFormatProperties(physicalDevice, format, pFormatProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties}), physicalDevice, format, pFormatProperties)
+    ccall((:vkGetPhysicalDeviceFormatProperties, libvulkan), Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties}), physicalDevice, format, pFormatProperties)
 end
 
 function vkGetPhysicalDeviceImageFormatProperties(physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlags, VkImageCreateFlags, Ptr{VkImageFormatProperties}), physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties)
+    ccall((:vkGetPhysicalDeviceImageFormatProperties, libvulkan), VkResult, (VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlags, VkImageCreateFlags, Ptr{VkImageFormatProperties}), physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties)
 end
 
 function vkGetPhysicalDeviceProperties(physicalDevice, pProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties}), physicalDevice, pProperties)
+    ccall((:vkGetPhysicalDeviceProperties, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties}), physicalDevice, pProperties)
 end
 
 function vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
+    ccall((:vkGetPhysicalDeviceQueueFamilyProperties, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
 end
 
 function vkGetPhysicalDeviceMemoryProperties(physicalDevice, pMemoryProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties}), physicalDevice, pMemoryProperties)
+    ccall((:vkGetPhysicalDeviceMemoryProperties, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties}), physicalDevice, pMemoryProperties)
 end
 
 function vkGetInstanceProcAddr(instance, pName, fun_ptr)
-    ccall(fun_ptr, PFN_vkVoidFunction, (VkInstance, Cstring), instance, pName)
+    ccall((:vkGetInstanceProcAddr, libvulkan), PFN_vkVoidFunction, (VkInstance, Cstring), instance, pName)
 end
 
 function vkGetDeviceProcAddr(device, pName, fun_ptr)
-    ccall(fun_ptr, PFN_vkVoidFunction, (VkDevice, Cstring), device, pName)
+    ccall((:vkGetDeviceProcAddr, libvulkan), PFN_vkVoidFunction, (VkDevice, Cstring), device, pName)
 end
 
 function vkCreateDevice(physicalDevice, pCreateInfo, pAllocator, pDevice, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkDeviceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDevice}), physicalDevice, pCreateInfo, pAllocator, pDevice)
+    ccall((:vkCreateDevice, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkDeviceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDevice}), physicalDevice, pCreateInfo, pAllocator, pDevice)
 end
 
 function vkDestroyDevice(device, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkAllocationCallbacks}), device, pAllocator)
+    ccall((:vkDestroyDevice, libvulkan), Cvoid, (VkDevice, Ptr{VkAllocationCallbacks}), device, pAllocator)
 end
 
 function vkEnumerateInstanceExtensionProperties(pLayerName, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (Cstring, Ptr{UInt32}, Ptr{VkExtensionProperties}), pLayerName, pPropertyCount, pProperties)
+    ccall((:vkEnumerateInstanceExtensionProperties, libvulkan), VkResult, (Cstring, Ptr{UInt32}, Ptr{VkExtensionProperties}), pLayerName, pPropertyCount, pProperties)
 end
 
 function vkEnumerateDeviceExtensionProperties(physicalDevice, pLayerName, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Cstring, Ptr{UInt32}, Ptr{VkExtensionProperties}), physicalDevice, pLayerName, pPropertyCount, pProperties)
+    ccall((:vkEnumerateDeviceExtensionProperties, libvulkan), VkResult, (VkPhysicalDevice, Cstring, Ptr{UInt32}, Ptr{VkExtensionProperties}), physicalDevice, pLayerName, pPropertyCount, pProperties)
 end
 
 function vkEnumerateInstanceLayerProperties(pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (Ptr{UInt32}, Ptr{VkLayerProperties}), pPropertyCount, pProperties)
+    ccall((:vkEnumerateInstanceLayerProperties, libvulkan), VkResult, (Ptr{UInt32}, Ptr{VkLayerProperties}), pPropertyCount, pProperties)
 end
 
 function vkEnumerateDeviceLayerProperties(physicalDevice, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkLayerProperties}), physicalDevice, pPropertyCount, pProperties)
+    ccall((:vkEnumerateDeviceLayerProperties, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkLayerProperties}), physicalDevice, pPropertyCount, pProperties)
 end
 
 function vkGetDeviceQueue(device, queueFamilyIndex, queueIndex, pQueue, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, UInt32, UInt32, Ptr{VkQueue}), device, queueFamilyIndex, queueIndex, pQueue)
+    ccall((:vkGetDeviceQueue, libvulkan), Cvoid, (VkDevice, UInt32, UInt32, Ptr{VkQueue}), device, queueFamilyIndex, queueIndex, pQueue)
 end
 
 function vkQueueSubmit(queue, submitCount, pSubmits, fence, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkQueue, UInt32, Ptr{VkSubmitInfo}, VkFence), queue, submitCount, pSubmits, fence)
+    ccall((:vkQueueSubmit, libvulkan), VkResult, (VkQueue, UInt32, Ptr{VkSubmitInfo}, VkFence), queue, submitCount, pSubmits, fence)
 end
 
 function vkQueueWaitIdle(queue, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkQueue,), queue)
+    ccall((:vkQueueWaitIdle, libvulkan), VkResult, (VkQueue,), queue)
 end
 
 function vkDeviceWaitIdle(device, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice,), device)
+    ccall((:vkDeviceWaitIdle, libvulkan), VkResult, (VkDevice,), device)
 end
 
 function vkAllocateMemory(device, pAllocateInfo, pAllocator, pMemory, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkMemoryAllocateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDeviceMemory}), device, pAllocateInfo, pAllocator, pMemory)
+    ccall((:vkAllocateMemory, libvulkan), VkResult, (VkDevice, Ptr{VkMemoryAllocateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDeviceMemory}), device, pAllocateInfo, pAllocator, pMemory)
 end
 
 function vkFreeMemory(device, memory, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkDeviceMemory, Ptr{VkAllocationCallbacks}), device, memory, pAllocator)
+    ccall((:vkFreeMemory, libvulkan), Cvoid, (VkDevice, VkDeviceMemory, Ptr{VkAllocationCallbacks}), device, memory, pAllocator)
 end
 
 function vkMapMemory(device, memory, offset, size, flags, ppData, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkDeviceMemory, VkDeviceSize, VkDeviceSize, VkMemoryMapFlags, Ptr{Ptr{Cvoid}}), device, memory, offset, size, flags, ppData)
+    ccall((:vkMapMemory, libvulkan), VkResult, (VkDevice, VkDeviceMemory, VkDeviceSize, VkDeviceSize, VkMemoryMapFlags, Ptr{Ptr{Cvoid}}), device, memory, offset, size, flags, ppData)
 end
 
 function vkUnmapMemory(device, memory, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkDeviceMemory), device, memory)
+    ccall((:vkUnmapMemory, libvulkan), Cvoid, (VkDevice, VkDeviceMemory), device, memory)
 end
 
 function vkFlushMappedMemoryRanges(device, memoryRangeCount, pMemoryRanges, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkMappedMemoryRange}), device, memoryRangeCount, pMemoryRanges)
+    ccall((:vkFlushMappedMemoryRanges, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkMappedMemoryRange}), device, memoryRangeCount, pMemoryRanges)
 end
 
 function vkInvalidateMappedMemoryRanges(device, memoryRangeCount, pMemoryRanges, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkMappedMemoryRange}), device, memoryRangeCount, pMemoryRanges)
+    ccall((:vkInvalidateMappedMemoryRanges, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkMappedMemoryRange}), device, memoryRangeCount, pMemoryRanges)
 end
 
 function vkGetDeviceMemoryCommitment(device, memory, pCommittedMemoryInBytes, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkDeviceMemory, Ptr{VkDeviceSize}), device, memory, pCommittedMemoryInBytes)
+    ccall((:vkGetDeviceMemoryCommitment, libvulkan), Cvoid, (VkDevice, VkDeviceMemory, Ptr{VkDeviceSize}), device, memory, pCommittedMemoryInBytes)
 end
 
 function vkBindBufferMemory(device, buffer, memory, memoryOffset, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkBuffer, VkDeviceMemory, VkDeviceSize), device, buffer, memory, memoryOffset)
+    ccall((:vkBindBufferMemory, libvulkan), VkResult, (VkDevice, VkBuffer, VkDeviceMemory, VkDeviceSize), device, buffer, memory, memoryOffset)
 end
 
 function vkBindImageMemory(device, image, memory, memoryOffset, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkImage, VkDeviceMemory, VkDeviceSize), device, image, memory, memoryOffset)
+    ccall((:vkBindImageMemory, libvulkan), VkResult, (VkDevice, VkImage, VkDeviceMemory, VkDeviceSize), device, image, memory, memoryOffset)
 end
 
 function vkGetBufferMemoryRequirements(device, buffer, pMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkBuffer, Ptr{VkMemoryRequirements}), device, buffer, pMemoryRequirements)
+    ccall((:vkGetBufferMemoryRequirements, libvulkan), Cvoid, (VkDevice, VkBuffer, Ptr{VkMemoryRequirements}), device, buffer, pMemoryRequirements)
 end
 
 function vkGetImageMemoryRequirements(device, image, pMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkImage, Ptr{VkMemoryRequirements}), device, image, pMemoryRequirements)
+    ccall((:vkGetImageMemoryRequirements, libvulkan), Cvoid, (VkDevice, VkImage, Ptr{VkMemoryRequirements}), device, image, pMemoryRequirements)
 end
 
 function vkGetImageSparseMemoryRequirements(device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkImage, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements}), device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
+    ccall((:vkGetImageSparseMemoryRequirements, libvulkan), Cvoid, (VkDevice, VkImage, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements}), device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
 end
 
 function vkGetPhysicalDeviceSparseImageFormatProperties(physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, VkFormat, VkImageType, VkSampleCountFlagBits, VkImageUsageFlags, VkImageTiling, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties}), physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceSparseImageFormatProperties, libvulkan), Cvoid, (VkPhysicalDevice, VkFormat, VkImageType, VkSampleCountFlagBits, VkImageUsageFlags, VkImageTiling, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties}), physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties)
 end
 
 function vkQueueBindSparse(queue, bindInfoCount, pBindInfo, fence, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkQueue, UInt32, Ptr{VkBindSparseInfo}, VkFence), queue, bindInfoCount, pBindInfo, fence)
+    ccall((:vkQueueBindSparse, libvulkan), VkResult, (VkQueue, UInt32, Ptr{VkBindSparseInfo}, VkFence), queue, bindInfoCount, pBindInfo, fence)
 end
 
 function vkCreateFence(device, pCreateInfo, pAllocator, pFence, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkFenceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, pCreateInfo, pAllocator, pFence)
+    ccall((:vkCreateFence, libvulkan), VkResult, (VkDevice, Ptr{VkFenceCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, pCreateInfo, pAllocator, pFence)
 end
 
 function vkDestroyFence(device, fence, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkFence, Ptr{VkAllocationCallbacks}), device, fence, pAllocator)
+    ccall((:vkDestroyFence, libvulkan), Cvoid, (VkDevice, VkFence, Ptr{VkAllocationCallbacks}), device, fence, pAllocator)
 end
 
 function vkResetFences(device, fenceCount, pFences, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkFence}), device, fenceCount, pFences)
+    ccall((:vkResetFences, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkFence}), device, fenceCount, pFences)
 end
 
 function vkGetFenceStatus(device, fence, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkFence), device, fence)
+    ccall((:vkGetFenceStatus, libvulkan), VkResult, (VkDevice, VkFence), device, fence)
 end
 
 function vkWaitForFences(device, fenceCount, pFences, waitAll, timeout, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkFence}, VkBool32, UInt64), device, fenceCount, pFences, waitAll, timeout)
+    ccall((:vkWaitForFences, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkFence}, VkBool32, UInt64), device, fenceCount, pFences, waitAll, timeout)
 end
 
 function vkCreateSemaphore(device, pCreateInfo, pAllocator, pSemaphore, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSemaphore}), device, pCreateInfo, pAllocator, pSemaphore)
+    ccall((:vkCreateSemaphore, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSemaphore}), device, pCreateInfo, pAllocator, pSemaphore)
 end
 
 function vkDestroySemaphore(device, semaphore, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkSemaphore, Ptr{VkAllocationCallbacks}), device, semaphore, pAllocator)
+    ccall((:vkDestroySemaphore, libvulkan), Cvoid, (VkDevice, VkSemaphore, Ptr{VkAllocationCallbacks}), device, semaphore, pAllocator)
 end
 
 function vkCreateEvent(device, pCreateInfo, pAllocator, pEvent, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkEventCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkEvent}), device, pCreateInfo, pAllocator, pEvent)
+    ccall((:vkCreateEvent, libvulkan), VkResult, (VkDevice, Ptr{VkEventCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkEvent}), device, pCreateInfo, pAllocator, pEvent)
 end
 
 function vkDestroyEvent(device, event, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkEvent, Ptr{VkAllocationCallbacks}), device, event, pAllocator)
+    ccall((:vkDestroyEvent, libvulkan), Cvoid, (VkDevice, VkEvent, Ptr{VkAllocationCallbacks}), device, event, pAllocator)
 end
 
 function vkGetEventStatus(device, event, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkEvent), device, event)
+    ccall((:vkGetEventStatus, libvulkan), VkResult, (VkDevice, VkEvent), device, event)
 end
 
 function vkSetEvent(device, event, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkEvent), device, event)
+    ccall((:vkSetEvent, libvulkan), VkResult, (VkDevice, VkEvent), device, event)
 end
 
 function vkResetEvent(device, event, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkEvent), device, event)
+    ccall((:vkResetEvent, libvulkan), VkResult, (VkDevice, VkEvent), device, event)
 end
 
 function vkCreateQueryPool(device, pCreateInfo, pAllocator, pQueryPool, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkQueryPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkQueryPool}), device, pCreateInfo, pAllocator, pQueryPool)
+    ccall((:vkCreateQueryPool, libvulkan), VkResult, (VkDevice, Ptr{VkQueryPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkQueryPool}), device, pCreateInfo, pAllocator, pQueryPool)
 end
 
 function vkDestroyQueryPool(device, queryPool, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkQueryPool, Ptr{VkAllocationCallbacks}), device, queryPool, pAllocator)
+    ccall((:vkDestroyQueryPool, libvulkan), Cvoid, (VkDevice, VkQueryPool, Ptr{VkAllocationCallbacks}), device, queryPool, pAllocator)
 end
 
 function vkGetQueryPoolResults(device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkQueryPool, UInt32, UInt32, Csize_t, Ptr{Cvoid}, VkDeviceSize, VkQueryResultFlags), device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags)
+    ccall((:vkGetQueryPoolResults, libvulkan), VkResult, (VkDevice, VkQueryPool, UInt32, UInt32, Csize_t, Ptr{Cvoid}, VkDeviceSize, VkQueryResultFlags), device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags)
 end
 
 function vkCreateBuffer(device, pCreateInfo, pAllocator, pBuffer, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkBufferCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkBuffer}), device, pCreateInfo, pAllocator, pBuffer)
+    ccall((:vkCreateBuffer, libvulkan), VkResult, (VkDevice, Ptr{VkBufferCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkBuffer}), device, pCreateInfo, pAllocator, pBuffer)
 end
 
 function vkDestroyBuffer(device, buffer, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkBuffer, Ptr{VkAllocationCallbacks}), device, buffer, pAllocator)
+    ccall((:vkDestroyBuffer, libvulkan), Cvoid, (VkDevice, VkBuffer, Ptr{VkAllocationCallbacks}), device, buffer, pAllocator)
 end
 
 function vkCreateBufferView(device, pCreateInfo, pAllocator, pView, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkBufferViewCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkBufferView}), device, pCreateInfo, pAllocator, pView)
+    ccall((:vkCreateBufferView, libvulkan), VkResult, (VkDevice, Ptr{VkBufferViewCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkBufferView}), device, pCreateInfo, pAllocator, pView)
 end
 
 function vkDestroyBufferView(device, bufferView, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkBufferView, Ptr{VkAllocationCallbacks}), device, bufferView, pAllocator)
+    ccall((:vkDestroyBufferView, libvulkan), Cvoid, (VkDevice, VkBufferView, Ptr{VkAllocationCallbacks}), device, bufferView, pAllocator)
 end
 
 function vkCreateImage(device, pCreateInfo, pAllocator, pImage, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImageCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkImage}), device, pCreateInfo, pAllocator, pImage)
+    ccall((:vkCreateImage, libvulkan), VkResult, (VkDevice, Ptr{VkImageCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkImage}), device, pCreateInfo, pAllocator, pImage)
 end
 
 function vkDestroyImage(device, image, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkImage, Ptr{VkAllocationCallbacks}), device, image, pAllocator)
+    ccall((:vkDestroyImage, libvulkan), Cvoid, (VkDevice, VkImage, Ptr{VkAllocationCallbacks}), device, image, pAllocator)
 end
 
 function vkGetImageSubresourceLayout(device, image, pSubresource, pLayout, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkImage, Ptr{VkImageSubresource}, Ptr{VkSubresourceLayout}), device, image, pSubresource, pLayout)
+    ccall((:vkGetImageSubresourceLayout, libvulkan), Cvoid, (VkDevice, VkImage, Ptr{VkImageSubresource}, Ptr{VkSubresourceLayout}), device, image, pSubresource, pLayout)
 end
 
 function vkCreateImageView(device, pCreateInfo, pAllocator, pView, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImageViewCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkImageView}), device, pCreateInfo, pAllocator, pView)
+    ccall((:vkCreateImageView, libvulkan), VkResult, (VkDevice, Ptr{VkImageViewCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkImageView}), device, pCreateInfo, pAllocator, pView)
 end
 
 function vkDestroyImageView(device, imageView, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkImageView, Ptr{VkAllocationCallbacks}), device, imageView, pAllocator)
+    ccall((:vkDestroyImageView, libvulkan), Cvoid, (VkDevice, VkImageView, Ptr{VkAllocationCallbacks}), device, imageView, pAllocator)
 end
 
 function vkCreateShaderModule(device, pCreateInfo, pAllocator, pShaderModule, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkShaderModuleCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkShaderModule}), device, pCreateInfo, pAllocator, pShaderModule)
+    ccall((:vkCreateShaderModule, libvulkan), VkResult, (VkDevice, Ptr{VkShaderModuleCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkShaderModule}), device, pCreateInfo, pAllocator, pShaderModule)
 end
 
 function vkDestroyShaderModule(device, shaderModule, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkShaderModule, Ptr{VkAllocationCallbacks}), device, shaderModule, pAllocator)
+    ccall((:vkDestroyShaderModule, libvulkan), Cvoid, (VkDevice, VkShaderModule, Ptr{VkAllocationCallbacks}), device, shaderModule, pAllocator)
 end
 
 function vkCreatePipelineCache(device, pCreateInfo, pAllocator, pPipelineCache, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPipelineCacheCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipelineCache}), device, pCreateInfo, pAllocator, pPipelineCache)
+    ccall((:vkCreatePipelineCache, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineCacheCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipelineCache}), device, pCreateInfo, pAllocator, pPipelineCache)
 end
 
 function vkDestroyPipelineCache(device, pipelineCache, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkPipelineCache, Ptr{VkAllocationCallbacks}), device, pipelineCache, pAllocator)
+    ccall((:vkDestroyPipelineCache, libvulkan), Cvoid, (VkDevice, VkPipelineCache, Ptr{VkAllocationCallbacks}), device, pipelineCache, pAllocator)
 end
 
 function vkGetPipelineCacheData(device, pipelineCache, pDataSize, pData, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, Ptr{Csize_t}, Ptr{Cvoid}), device, pipelineCache, pDataSize, pData)
+    ccall((:vkGetPipelineCacheData, libvulkan), VkResult, (VkDevice, VkPipelineCache, Ptr{Csize_t}, Ptr{Cvoid}), device, pipelineCache, pDataSize, pData)
 end
 
 function vkMergePipelineCaches(device, dstCache, srcCacheCount, pSrcCaches, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkPipelineCache}), device, dstCache, srcCacheCount, pSrcCaches)
+    ccall((:vkMergePipelineCaches, libvulkan), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkPipelineCache}), device, dstCache, srcCacheCount, pSrcCaches)
 end
 
 function vkCreateGraphicsPipelines(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkGraphicsPipelineCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+    ccall((:vkCreateGraphicsPipelines, libvulkan), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkGraphicsPipelineCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
 end
 
 function vkCreateComputePipelines(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkComputePipelineCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+    ccall((:vkCreateComputePipelines, libvulkan), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkComputePipelineCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
 end
 
 function vkDestroyPipeline(device, pipeline, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkPipeline, Ptr{VkAllocationCallbacks}), device, pipeline, pAllocator)
+    ccall((:vkDestroyPipeline, libvulkan), Cvoid, (VkDevice, VkPipeline, Ptr{VkAllocationCallbacks}), device, pipeline, pAllocator)
 end
 
 function vkCreatePipelineLayout(device, pCreateInfo, pAllocator, pPipelineLayout, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPipelineLayoutCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipelineLayout}), device, pCreateInfo, pAllocator, pPipelineLayout)
+    ccall((:vkCreatePipelineLayout, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineLayoutCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkPipelineLayout}), device, pCreateInfo, pAllocator, pPipelineLayout)
 end
 
 function vkDestroyPipelineLayout(device, pipelineLayout, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkPipelineLayout, Ptr{VkAllocationCallbacks}), device, pipelineLayout, pAllocator)
+    ccall((:vkDestroyPipelineLayout, libvulkan), Cvoid, (VkDevice, VkPipelineLayout, Ptr{VkAllocationCallbacks}), device, pipelineLayout, pAllocator)
 end
 
 function vkCreateSampler(device, pCreateInfo, pAllocator, pSampler, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSamplerCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSampler}), device, pCreateInfo, pAllocator, pSampler)
+    ccall((:vkCreateSampler, libvulkan), VkResult, (VkDevice, Ptr{VkSamplerCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSampler}), device, pCreateInfo, pAllocator, pSampler)
 end
 
 function vkDestroySampler(device, sampler, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkSampler, Ptr{VkAllocationCallbacks}), device, sampler, pAllocator)
+    ccall((:vkDestroySampler, libvulkan), Cvoid, (VkDevice, VkSampler, Ptr{VkAllocationCallbacks}), device, sampler, pAllocator)
 end
 
 function vkCreateDescriptorSetLayout(device, pCreateInfo, pAllocator, pSetLayout, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorSetLayout}), device, pCreateInfo, pAllocator, pSetLayout)
+    ccall((:vkCreateDescriptorSetLayout, libvulkan), VkResult, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorSetLayout}), device, pCreateInfo, pAllocator, pSetLayout)
 end
 
 function vkDestroyDescriptorSetLayout(device, descriptorSetLayout, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkDescriptorSetLayout, Ptr{VkAllocationCallbacks}), device, descriptorSetLayout, pAllocator)
+    ccall((:vkDestroyDescriptorSetLayout, libvulkan), Cvoid, (VkDevice, VkDescriptorSetLayout, Ptr{VkAllocationCallbacks}), device, descriptorSetLayout, pAllocator)
 end
 
 function vkCreateDescriptorPool(device, pCreateInfo, pAllocator, pDescriptorPool, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDescriptorPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorPool}), device, pCreateInfo, pAllocator, pDescriptorPool)
+    ccall((:vkCreateDescriptorPool, libvulkan), VkResult, (VkDevice, Ptr{VkDescriptorPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorPool}), device, pCreateInfo, pAllocator, pDescriptorPool)
 end
 
 function vkDestroyDescriptorPool(device, descriptorPool, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkDescriptorPool, Ptr{VkAllocationCallbacks}), device, descriptorPool, pAllocator)
+    ccall((:vkDestroyDescriptorPool, libvulkan), Cvoid, (VkDevice, VkDescriptorPool, Ptr{VkAllocationCallbacks}), device, descriptorPool, pAllocator)
 end
 
 function vkResetDescriptorPool(device, descriptorPool, flags, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkDescriptorPool, VkDescriptorPoolResetFlags), device, descriptorPool, flags)
+    ccall((:vkResetDescriptorPool, libvulkan), VkResult, (VkDevice, VkDescriptorPool, VkDescriptorPoolResetFlags), device, descriptorPool, flags)
 end
 
 function vkAllocateDescriptorSets(device, pAllocateInfo, pDescriptorSets, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDescriptorSetAllocateInfo}, Ptr{VkDescriptorSet}), device, pAllocateInfo, pDescriptorSets)
+    ccall((:vkAllocateDescriptorSets, libvulkan), VkResult, (VkDevice, Ptr{VkDescriptorSetAllocateInfo}, Ptr{VkDescriptorSet}), device, pAllocateInfo, pDescriptorSets)
 end
 
 function vkFreeDescriptorSets(device, descriptorPool, descriptorSetCount, pDescriptorSets, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkDescriptorPool, UInt32, Ptr{VkDescriptorSet}), device, descriptorPool, descriptorSetCount, pDescriptorSets)
+    ccall((:vkFreeDescriptorSets, libvulkan), VkResult, (VkDevice, VkDescriptorPool, UInt32, Ptr{VkDescriptorSet}), device, descriptorPool, descriptorSetCount, pDescriptorSets)
 end
 
 function vkUpdateDescriptorSets(device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, UInt32, Ptr{VkWriteDescriptorSet}, UInt32, Ptr{VkCopyDescriptorSet}), device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies)
+    ccall((:vkUpdateDescriptorSets, libvulkan), Cvoid, (VkDevice, UInt32, Ptr{VkWriteDescriptorSet}, UInt32, Ptr{VkCopyDescriptorSet}), device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies)
 end
 
 function vkCreateFramebuffer(device, pCreateInfo, pAllocator, pFramebuffer, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkFramebufferCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkFramebuffer}), device, pCreateInfo, pAllocator, pFramebuffer)
+    ccall((:vkCreateFramebuffer, libvulkan), VkResult, (VkDevice, Ptr{VkFramebufferCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkFramebuffer}), device, pCreateInfo, pAllocator, pFramebuffer)
 end
 
 function vkDestroyFramebuffer(device, framebuffer, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkFramebuffer, Ptr{VkAllocationCallbacks}), device, framebuffer, pAllocator)
+    ccall((:vkDestroyFramebuffer, libvulkan), Cvoid, (VkDevice, VkFramebuffer, Ptr{VkAllocationCallbacks}), device, framebuffer, pAllocator)
 end
 
 function vkCreateRenderPass(device, pCreateInfo, pAllocator, pRenderPass, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
+    ccall((:vkCreateRenderPass, libvulkan), VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
 end
 
 function vkDestroyRenderPass(device, renderPass, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkRenderPass, Ptr{VkAllocationCallbacks}), device, renderPass, pAllocator)
+    ccall((:vkDestroyRenderPass, libvulkan), Cvoid, (VkDevice, VkRenderPass, Ptr{VkAllocationCallbacks}), device, renderPass, pAllocator)
 end
 
 function vkGetRenderAreaGranularity(device, renderPass, pGranularity, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkRenderPass, Ptr{VkExtent2D}), device, renderPass, pGranularity)
+    ccall((:vkGetRenderAreaGranularity, libvulkan), Cvoid, (VkDevice, VkRenderPass, Ptr{VkExtent2D}), device, renderPass, pGranularity)
 end
 
 function vkCreateCommandPool(device, pCreateInfo, pAllocator, pCommandPool, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCommandPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkCommandPool}), device, pCreateInfo, pAllocator, pCommandPool)
+    ccall((:vkCreateCommandPool, libvulkan), VkResult, (VkDevice, Ptr{VkCommandPoolCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkCommandPool}), device, pCreateInfo, pAllocator, pCommandPool)
 end
 
 function vkDestroyCommandPool(device, commandPool, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkCommandPool, Ptr{VkAllocationCallbacks}), device, commandPool, pAllocator)
+    ccall((:vkDestroyCommandPool, libvulkan), Cvoid, (VkDevice, VkCommandPool, Ptr{VkAllocationCallbacks}), device, commandPool, pAllocator)
 end
 
 function vkResetCommandPool(device, commandPool, flags, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkCommandPool, VkCommandPoolResetFlags), device, commandPool, flags)
+    ccall((:vkResetCommandPool, libvulkan), VkResult, (VkDevice, VkCommandPool, VkCommandPoolResetFlags), device, commandPool, flags)
 end
 
 function vkAllocateCommandBuffers(device, pAllocateInfo, pCommandBuffers, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCommandBufferAllocateInfo}, Ptr{VkCommandBuffer}), device, pAllocateInfo, pCommandBuffers)
+    ccall((:vkAllocateCommandBuffers, libvulkan), VkResult, (VkDevice, Ptr{VkCommandBufferAllocateInfo}, Ptr{VkCommandBuffer}), device, pAllocateInfo, pCommandBuffers)
 end
 
 function vkFreeCommandBuffers(device, commandPool, commandBufferCount, pCommandBuffers, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkCommandPool, UInt32, Ptr{VkCommandBuffer}), device, commandPool, commandBufferCount, pCommandBuffers)
+    ccall((:vkFreeCommandBuffers, libvulkan), Cvoid, (VkDevice, VkCommandPool, UInt32, Ptr{VkCommandBuffer}), device, commandPool, commandBufferCount, pCommandBuffers)
 end
 
 function vkBeginCommandBuffer(commandBuffer, pBeginInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkCommandBuffer, Ptr{VkCommandBufferBeginInfo}), commandBuffer, pBeginInfo)
+    ccall((:vkBeginCommandBuffer, libvulkan), VkResult, (VkCommandBuffer, Ptr{VkCommandBufferBeginInfo}), commandBuffer, pBeginInfo)
 end
 
 function vkEndCommandBuffer(commandBuffer, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkCommandBuffer,), commandBuffer)
+    ccall((:vkEndCommandBuffer, libvulkan), VkResult, (VkCommandBuffer,), commandBuffer)
 end
 
 function vkResetCommandBuffer(commandBuffer, flags, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkCommandBuffer, VkCommandBufferResetFlags), commandBuffer, flags)
+    ccall((:vkResetCommandBuffer, libvulkan), VkResult, (VkCommandBuffer, VkCommandBufferResetFlags), commandBuffer, flags)
 end
 
 function vkCmdBindPipeline(commandBuffer, pipelineBindPoint, pipeline, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipeline), commandBuffer, pipelineBindPoint, pipeline)
+    ccall((:vkCmdBindPipeline, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipeline), commandBuffer, pipelineBindPoint, pipeline)
 end
 
 function vkCmdSetViewport(commandBuffer, firstViewport, viewportCount, pViewports, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkViewport}), commandBuffer, firstViewport, viewportCount, pViewports)
+    ccall((:vkCmdSetViewport, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkViewport}), commandBuffer, firstViewport, viewportCount, pViewports)
 end
 
 function vkCmdSetScissor(commandBuffer, firstScissor, scissorCount, pScissors, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstScissor, scissorCount, pScissors)
+    ccall((:vkCmdSetScissor, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstScissor, scissorCount, pScissors)
 end
 
 function vkCmdSetLineWidth(commandBuffer, lineWidth, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Cfloat), commandBuffer, lineWidth)
+    ccall((:vkCmdSetLineWidth, libvulkan), Cvoid, (VkCommandBuffer, Cfloat), commandBuffer, lineWidth)
 end
 
 function vkCmdSetDepthBias(commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Cfloat, Cfloat, Cfloat), commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor)
+    ccall((:vkCmdSetDepthBias, libvulkan), Cvoid, (VkCommandBuffer, Cfloat, Cfloat, Cfloat), commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor)
 end
 
 function vkCmdSetBlendConstants(commandBuffer, blendConstants, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{Cfloat}), commandBuffer, blendConstants)
+    ccall((:vkCmdSetBlendConstants, libvulkan), Cvoid, (VkCommandBuffer, Ptr{Cfloat}), commandBuffer, blendConstants)
 end
 
 function vkCmdSetDepthBounds(commandBuffer, minDepthBounds, maxDepthBounds, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Cfloat, Cfloat), commandBuffer, minDepthBounds, maxDepthBounds)
+    ccall((:vkCmdSetDepthBounds, libvulkan), Cvoid, (VkCommandBuffer, Cfloat, Cfloat), commandBuffer, minDepthBounds, maxDepthBounds)
 end
 
 function vkCmdSetStencilCompareMask(commandBuffer, faceMask, compareMask, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, compareMask)
+    ccall((:vkCmdSetStencilCompareMask, libvulkan), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, compareMask)
 end
 
 function vkCmdSetStencilWriteMask(commandBuffer, faceMask, writeMask, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, writeMask)
+    ccall((:vkCmdSetStencilWriteMask, libvulkan), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, writeMask)
 end
 
 function vkCmdSetStencilReference(commandBuffer, faceMask, reference, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, reference)
+    ccall((:vkCmdSetStencilReference, libvulkan), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, UInt32), commandBuffer, faceMask, reference)
 end
 
 function vkCmdBindDescriptorSets(commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, UInt32, UInt32, Ptr{VkDescriptorSet}, UInt32, Ptr{UInt32}), commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets)
+    ccall((:vkCmdBindDescriptorSets, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, UInt32, UInt32, Ptr{VkDescriptorSet}, UInt32, Ptr{UInt32}), commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets)
 end
 
 function vkCmdBindIndexBuffer(commandBuffer, buffer, offset, indexType, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkIndexType), commandBuffer, buffer, offset, indexType)
+    ccall((:vkCmdBindIndexBuffer, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkIndexType), commandBuffer, buffer, offset, indexType)
 end
 
 function vkCmdBindVertexBuffers(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets)
+    ccall((:vkCmdBindVertexBuffers, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets)
 end
 
 function vkCmdDraw(commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32), commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance)
+    ccall((:vkCmdDraw, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32), commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance)
 end
 
 function vkCmdDrawIndexed(commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, Int32, UInt32), commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance)
+    ccall((:vkCmdDrawIndexed, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, Int32, UInt32), commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance)
 end
 
 function vkCmdDrawIndirect(commandBuffer, buffer, offset, drawCount, stride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
+    ccall((:vkCmdDrawIndirect, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
 end
 
 function vkCmdDrawIndexedIndirect(commandBuffer, buffer, offset, drawCount, stride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
+    ccall((:vkCmdDrawIndexedIndirect, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
 end
 
 function vkCmdDispatch(commandBuffer, groupCountX, groupCountY, groupCountZ, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32), commandBuffer, groupCountX, groupCountY, groupCountZ)
+    ccall((:vkCmdDispatch, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32), commandBuffer, groupCountX, groupCountY, groupCountZ)
 end
 
 function vkCmdDispatchIndirect(commandBuffer, buffer, offset, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize), commandBuffer, buffer, offset)
+    ccall((:vkCmdDispatchIndirect, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize), commandBuffer, buffer, offset)
 end
 
 function vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkBuffer, UInt32, Ptr{VkBufferCopy}), commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions)
+    ccall((:vkCmdCopyBuffer, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkBuffer, UInt32, Ptr{VkBufferCopy}), commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions)
 end
 
 function vkCmdCopyImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageCopy}), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions)
+    ccall((:vkCmdCopyImage, libvulkan), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageCopy}), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions)
 end
 
 function vkCmdBlitImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageBlit}, VkFilter), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter)
+    ccall((:vkCmdBlitImage, libvulkan), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageBlit}, VkFilter), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter)
 end
 
 function vkCmdCopyBufferToImage(commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, UInt32, Ptr{VkBufferImageCopy}), commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions)
+    ccall((:vkCmdCopyBufferToImage, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, UInt32, Ptr{VkBufferImageCopy}), commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions)
 end
 
 function vkCmdCopyImageToBuffer(commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkBuffer, UInt32, Ptr{VkBufferImageCopy}), commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions)
+    ccall((:vkCmdCopyImageToBuffer, libvulkan), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkBuffer, UInt32, Ptr{VkBufferImageCopy}), commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions)
 end
 
 function vkCmdUpdateBuffer(commandBuffer, dstBuffer, dstOffset, dataSize, pData, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkDeviceSize, Ptr{Cvoid}), commandBuffer, dstBuffer, dstOffset, dataSize, pData)
+    ccall((:vkCmdUpdateBuffer, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkDeviceSize, Ptr{Cvoid}), commandBuffer, dstBuffer, dstOffset, dataSize, pData)
 end
 
 function vkCmdFillBuffer(commandBuffer, dstBuffer, dstOffset, size, data, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkDeviceSize, UInt32), commandBuffer, dstBuffer, dstOffset, size, data)
+    ccall((:vkCmdFillBuffer, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkDeviceSize, UInt32), commandBuffer, dstBuffer, dstOffset, size, data)
 end
 
 function vkCmdClearColorImage(commandBuffer, image, imageLayout, pColor, rangeCount, pRanges, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, Ptr{VkClearColorValue}, UInt32, Ptr{VkImageSubresourceRange}), commandBuffer, image, imageLayout, pColor, rangeCount, pRanges)
+    ccall((:vkCmdClearColorImage, libvulkan), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, Ptr{VkClearColorValue}, UInt32, Ptr{VkImageSubresourceRange}), commandBuffer, image, imageLayout, pColor, rangeCount, pRanges)
 end
 
 function vkCmdClearDepthStencilImage(commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, Ptr{VkClearDepthStencilValue}, UInt32, Ptr{VkImageSubresourceRange}), commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges)
+    ccall((:vkCmdClearDepthStencilImage, libvulkan), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, Ptr{VkClearDepthStencilValue}, UInt32, Ptr{VkImageSubresourceRange}), commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges)
 end
 
 function vkCmdClearAttachments(commandBuffer, attachmentCount, pAttachments, rectCount, pRects, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkClearAttachment}, UInt32, Ptr{VkClearRect}), commandBuffer, attachmentCount, pAttachments, rectCount, pRects)
+    ccall((:vkCmdClearAttachments, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkClearAttachment}, UInt32, Ptr{VkClearRect}), commandBuffer, attachmentCount, pAttachments, rectCount, pRects)
 end
 
 function vkCmdResolveImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageResolve}), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions)
+    ccall((:vkCmdResolveImage, libvulkan), Cvoid, (VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, UInt32, Ptr{VkImageResolve}), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions)
 end
 
 function vkCmdSetEvent(commandBuffer, event, stageMask, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkEvent, VkPipelineStageFlags), commandBuffer, event, stageMask)
+    ccall((:vkCmdSetEvent, libvulkan), Cvoid, (VkCommandBuffer, VkEvent, VkPipelineStageFlags), commandBuffer, event, stageMask)
 end
 
 function vkCmdResetEvent(commandBuffer, event, stageMask, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkEvent, VkPipelineStageFlags), commandBuffer, event, stageMask)
+    ccall((:vkCmdResetEvent, libvulkan), Cvoid, (VkCommandBuffer, VkEvent, VkPipelineStageFlags), commandBuffer, event, stageMask)
 end
 
 function vkCmdWaitEvents(commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkEvent}, VkPipelineStageFlags, VkPipelineStageFlags, UInt32, Ptr{VkMemoryBarrier}, UInt32, Ptr{VkBufferMemoryBarrier}, UInt32, Ptr{VkImageMemoryBarrier}), commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
+    ccall((:vkCmdWaitEvents, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkEvent}, VkPipelineStageFlags, VkPipelineStageFlags, UInt32, Ptr{VkMemoryBarrier}, UInt32, Ptr{VkBufferMemoryBarrier}, UInt32, Ptr{VkImageMemoryBarrier}), commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
 end
 
 function vkCmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineStageFlags, VkPipelineStageFlags, VkDependencyFlags, UInt32, Ptr{VkMemoryBarrier}, UInt32, Ptr{VkBufferMemoryBarrier}, UInt32, Ptr{VkImageMemoryBarrier}), commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
+    ccall((:vkCmdPipelineBarrier, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineStageFlags, VkPipelineStageFlags, VkDependencyFlags, UInt32, Ptr{VkMemoryBarrier}, UInt32, Ptr{VkBufferMemoryBarrier}, UInt32, Ptr{VkImageMemoryBarrier}), commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
 end
 
 function vkCmdBeginQuery(commandBuffer, queryPool, query, flags, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, VkQueryControlFlags), commandBuffer, queryPool, query, flags)
+    ccall((:vkCmdBeginQuery, libvulkan), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, VkQueryControlFlags), commandBuffer, queryPool, query, flags)
 end
 
 function vkCmdEndQuery(commandBuffer, queryPool, query, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkQueryPool, UInt32), commandBuffer, queryPool, query)
+    ccall((:vkCmdEndQuery, libvulkan), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32), commandBuffer, queryPool, query)
 end
 
 function vkCmdResetQueryPool(commandBuffer, queryPool, firstQuery, queryCount, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32), commandBuffer, queryPool, firstQuery, queryCount)
+    ccall((:vkCmdResetQueryPool, libvulkan), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32), commandBuffer, queryPool, firstQuery, queryCount)
 end
 
 function vkCmdWriteTimestamp(commandBuffer, pipelineStage, queryPool, query, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineStageFlagBits, VkQueryPool, UInt32), commandBuffer, pipelineStage, queryPool, query)
+    ccall((:vkCmdWriteTimestamp, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineStageFlagBits, VkQueryPool, UInt32), commandBuffer, pipelineStage, queryPool, query)
 end
 
 function vkCmdCopyQueryPoolResults(commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32, VkBuffer, VkDeviceSize, VkDeviceSize, VkQueryResultFlags), commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags)
+    ccall((:vkCmdCopyQueryPoolResults, libvulkan), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32, VkBuffer, VkDeviceSize, VkDeviceSize, VkQueryResultFlags), commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags)
 end
 
 function vkCmdPushConstants(commandBuffer, layout, stageFlags, offset, size, pValues, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineLayout, VkShaderStageFlags, UInt32, UInt32, Ptr{Cvoid}), commandBuffer, layout, stageFlags, offset, size, pValues)
+    ccall((:vkCmdPushConstants, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineLayout, VkShaderStageFlags, UInt32, UInt32, Ptr{Cvoid}), commandBuffer, layout, stageFlags, offset, size, pValues)
 end
 
 function vkCmdBeginRenderPass(commandBuffer, pRenderPassBegin, contents, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, VkSubpassContents), commandBuffer, pRenderPassBegin, contents)
+    ccall((:vkCmdBeginRenderPass, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, VkSubpassContents), commandBuffer, pRenderPassBegin, contents)
 end
 
 function vkCmdNextSubpass(commandBuffer, contents, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkSubpassContents), commandBuffer, contents)
+    ccall((:vkCmdNextSubpass, libvulkan), Cvoid, (VkCommandBuffer, VkSubpassContents), commandBuffer, contents)
 end
 
 function vkCmdEndRenderPass(commandBuffer, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer,), commandBuffer)
+    ccall((:vkCmdEndRenderPass, libvulkan), Cvoid, (VkCommandBuffer,), commandBuffer)
 end
 
 function vkCmdExecuteCommands(commandBuffer, commandBufferCount, pCommandBuffers, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkCommandBuffer}), commandBuffer, commandBufferCount, pCommandBuffers)
+    ccall((:vkCmdExecuteCommands, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkCommandBuffer}), commandBuffer, commandBufferCount, pCommandBuffers)
 end
 
 function vkEnumerateInstanceVersion(pApiVersion, fun_ptr)
-    ccall(fun_ptr, VkResult, (Ptr{UInt32},), pApiVersion)
+    ccall((:vkEnumerateInstanceVersion, libvulkan), VkResult, (Ptr{UInt32},), pApiVersion)
 end
 
 function vkBindBufferMemory2(device, bindInfoCount, pBindInfos, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindBufferMemoryInfo}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindBufferMemory2, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindBufferMemoryInfo}), device, bindInfoCount, pBindInfos)
 end
 
 function vkBindImageMemory2(device, bindInfoCount, pBindInfos, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindImageMemoryInfo}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindImageMemory2, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindImageMemoryInfo}), device, bindInfoCount, pBindInfos)
 end
 
 function vkGetDeviceGroupPeerMemoryFeatures(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, UInt32, UInt32, UInt32, Ptr{VkPeerMemoryFeatureFlags}), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
+    ccall((:vkGetDeviceGroupPeerMemoryFeatures, libvulkan), Cvoid, (VkDevice, UInt32, UInt32, UInt32, Ptr{VkPeerMemoryFeatureFlags}), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
 end
 
 function vkCmdSetDeviceMask(commandBuffer, deviceMask, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32), commandBuffer, deviceMask)
+    ccall((:vkCmdSetDeviceMask, libvulkan), Cvoid, (VkCommandBuffer, UInt32), commandBuffer, deviceMask)
 end
 
 function vkCmdDispatchBase(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
+    ccall((:vkCmdDispatchBase, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
 end
 
 function vkEnumeratePhysicalDeviceGroups(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDeviceGroupProperties}), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
+    ccall((:vkEnumeratePhysicalDeviceGroups, libvulkan), VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDeviceGroupProperties}), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
 end
 
 function vkGetImageMemoryRequirements2(device, pInfo, pMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkImageMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetImageMemoryRequirements2, libvulkan), Cvoid, (VkDevice, Ptr{VkImageMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
 end
 
 function vkGetBufferMemoryRequirements2(device, pInfo, pMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkBufferMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetBufferMemoryRequirements2, libvulkan), Cvoid, (VkDevice, Ptr{VkBufferMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
 end
 
 function vkGetImageSparseMemoryRequirements2(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkImageSparseMemoryRequirementsInfo2}, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements2}), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
+    ccall((:vkGetImageSparseMemoryRequirements2, libvulkan), Cvoid, (VkDevice, Ptr{VkImageSparseMemoryRequirementsInfo2}, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements2}), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
 end
 
 function vkGetPhysicalDeviceFeatures2(physicalDevice, pFeatures, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures2}), physicalDevice, pFeatures)
+    ccall((:vkGetPhysicalDeviceFeatures2, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures2}), physicalDevice, pFeatures)
 end
 
 function vkGetPhysicalDeviceProperties2(physicalDevice, pProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties2}), physicalDevice, pProperties)
+    ccall((:vkGetPhysicalDeviceProperties2, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties2}), physicalDevice, pProperties)
 end
 
 function vkGetPhysicalDeviceFormatProperties2(physicalDevice, format, pFormatProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties2}), physicalDevice, format, pFormatProperties)
+    ccall((:vkGetPhysicalDeviceFormatProperties2, libvulkan), Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties2}), physicalDevice, format, pFormatProperties)
 end
 
 function vkGetPhysicalDeviceImageFormatProperties2(physicalDevice, pImageFormatInfo, pImageFormatProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceImageFormatInfo2}, Ptr{VkImageFormatProperties2}), physicalDevice, pImageFormatInfo, pImageFormatProperties)
+    ccall((:vkGetPhysicalDeviceImageFormatProperties2, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceImageFormatInfo2}, Ptr{VkImageFormatProperties2}), physicalDevice, pImageFormatInfo, pImageFormatProperties)
 end
 
 function vkGetPhysicalDeviceQueueFamilyProperties2(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties2}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
+    ccall((:vkGetPhysicalDeviceQueueFamilyProperties2, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties2}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
 end
 
 function vkGetPhysicalDeviceMemoryProperties2(physicalDevice, pMemoryProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties2}), physicalDevice, pMemoryProperties)
+    ccall((:vkGetPhysicalDeviceMemoryProperties2, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties2}), physicalDevice, pMemoryProperties)
 end
 
 function vkGetPhysicalDeviceSparseImageFormatProperties2(physicalDevice, pFormatInfo, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSparseImageFormatInfo2}, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties2}), physicalDevice, pFormatInfo, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceSparseImageFormatProperties2, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSparseImageFormatInfo2}, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties2}), physicalDevice, pFormatInfo, pPropertyCount, pProperties)
 end
 
 function vkTrimCommandPool(device, commandPool, flags, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkCommandPool, VkCommandPoolTrimFlags), device, commandPool, flags)
+    ccall((:vkTrimCommandPool, libvulkan), Cvoid, (VkDevice, VkCommandPool, VkCommandPoolTrimFlags), device, commandPool, flags)
 end
 
 function vkGetDeviceQueue2(device, pQueueInfo, pQueue, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkDeviceQueueInfo2}, Ptr{VkQueue}), device, pQueueInfo, pQueue)
+    ccall((:vkGetDeviceQueue2, libvulkan), Cvoid, (VkDevice, Ptr{VkDeviceQueueInfo2}, Ptr{VkQueue}), device, pQueueInfo, pQueue)
 end
 
 function vkCreateSamplerYcbcrConversion(device, pCreateInfo, pAllocator, pYcbcrConversion, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSamplerYcbcrConversionCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSamplerYcbcrConversion}), device, pCreateInfo, pAllocator, pYcbcrConversion)
+    ccall((:vkCreateSamplerYcbcrConversion, libvulkan), VkResult, (VkDevice, Ptr{VkSamplerYcbcrConversionCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSamplerYcbcrConversion}), device, pCreateInfo, pAllocator, pYcbcrConversion)
 end
 
 function vkDestroySamplerYcbcrConversion(device, ycbcrConversion, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkSamplerYcbcrConversion, Ptr{VkAllocationCallbacks}), device, ycbcrConversion, pAllocator)
+    ccall((:vkDestroySamplerYcbcrConversion, libvulkan), Cvoid, (VkDevice, VkSamplerYcbcrConversion, Ptr{VkAllocationCallbacks}), device, ycbcrConversion, pAllocator)
 end
 
 function vkCreateDescriptorUpdateTemplate(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDescriptorUpdateTemplateCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorUpdateTemplate}), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
+    ccall((:vkCreateDescriptorUpdateTemplate, libvulkan), VkResult, (VkDevice, Ptr{VkDescriptorUpdateTemplateCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorUpdateTemplate}), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
 end
 
 function vkDestroyDescriptorUpdateTemplate(device, descriptorUpdateTemplate, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkDescriptorUpdateTemplate, Ptr{VkAllocationCallbacks}), device, descriptorUpdateTemplate, pAllocator)
+    ccall((:vkDestroyDescriptorUpdateTemplate, libvulkan), Cvoid, (VkDevice, VkDescriptorUpdateTemplate, Ptr{VkAllocationCallbacks}), device, descriptorUpdateTemplate, pAllocator)
 end
 
 function vkUpdateDescriptorSetWithTemplate(device, descriptorSet, descriptorUpdateTemplate, pData, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, Ptr{Cvoid}), device, descriptorSet, descriptorUpdateTemplate, pData)
+    ccall((:vkUpdateDescriptorSetWithTemplate, libvulkan), Cvoid, (VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, Ptr{Cvoid}), device, descriptorSet, descriptorUpdateTemplate, pData)
 end
 
 function vkGetPhysicalDeviceExternalBufferProperties(physicalDevice, pExternalBufferInfo, pExternalBufferProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalBufferInfo}, Ptr{VkExternalBufferProperties}), physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
+    ccall((:vkGetPhysicalDeviceExternalBufferProperties, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalBufferInfo}, Ptr{VkExternalBufferProperties}), physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
 end
 
 function vkGetPhysicalDeviceExternalFenceProperties(physicalDevice, pExternalFenceInfo, pExternalFenceProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalFenceInfo}, Ptr{VkExternalFenceProperties}), physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
+    ccall((:vkGetPhysicalDeviceExternalFenceProperties, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalFenceInfo}, Ptr{VkExternalFenceProperties}), physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
 end
 
 function vkGetPhysicalDeviceExternalSemaphoreProperties(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalSemaphoreInfo}, Ptr{VkExternalSemaphoreProperties}), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
+    ccall((:vkGetPhysicalDeviceExternalSemaphoreProperties, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalSemaphoreInfo}, Ptr{VkExternalSemaphoreProperties}), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
 end
 
 function vkGetDescriptorSetLayoutSupport(device, pCreateInfo, pSupport, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkDescriptorSetLayoutSupport}), device, pCreateInfo, pSupport)
+    ccall((:vkGetDescriptorSetLayoutSupport, libvulkan), Cvoid, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkDescriptorSetLayoutSupport}), device, pCreateInfo, pSupport)
 end
 
 function vkCmdDrawIndirectCount(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawIndirectCount, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkCmdDrawIndexedIndirectCount(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawIndexedIndirectCount, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkCreateRenderPass2(device, pCreateInfo, pAllocator, pRenderPass, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo2}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
+    ccall((:vkCreateRenderPass2, libvulkan), VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo2}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
 end
 
 function vkCmdBeginRenderPass2(commandBuffer, pRenderPassBegin, pSubpassBeginInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, Ptr{VkSubpassBeginInfo}), commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
+    ccall((:vkCmdBeginRenderPass2, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, Ptr{VkSubpassBeginInfo}), commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
 end
 
 function vkCmdNextSubpass2(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkSubpassBeginInfo}, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassBeginInfo, pSubpassEndInfo)
+    ccall((:vkCmdNextSubpass2, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkSubpassBeginInfo}, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassBeginInfo, pSubpassEndInfo)
 end
 
 function vkCmdEndRenderPass2(commandBuffer, pSubpassEndInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassEndInfo)
+    ccall((:vkCmdEndRenderPass2, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassEndInfo)
 end
 
 function vkResetQueryPool(device, queryPool, firstQuery, queryCount, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
+    ccall((:vkResetQueryPool, libvulkan), Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
 end
 
 function vkGetSemaphoreCounterValue(device, semaphore, pValue, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkSemaphore, Ptr{UInt64}), device, semaphore, pValue)
+    ccall((:vkGetSemaphoreCounterValue, libvulkan), VkResult, (VkDevice, VkSemaphore, Ptr{UInt64}), device, semaphore, pValue)
 end
 
 function vkWaitSemaphores(device, pWaitInfo, timeout, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreWaitInfo}, UInt64), device, pWaitInfo, timeout)
+    ccall((:vkWaitSemaphores, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreWaitInfo}, UInt64), device, pWaitInfo, timeout)
 end
 
 function vkSignalSemaphore(device, pSignalInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreSignalInfo}), device, pSignalInfo)
+    ccall((:vkSignalSemaphore, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreSignalInfo}), device, pSignalInfo)
 end
 
 function vkGetBufferDeviceAddress(device, pInfo, fun_ptr)
-    ccall(fun_ptr, VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+    ccall((:vkGetBufferDeviceAddress, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
 end
 
 function vkGetBufferOpaqueCaptureAddress(device, pInfo, fun_ptr)
-    ccall(fun_ptr, UInt64, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+    ccall((:vkGetBufferOpaqueCaptureAddress, libvulkan), UInt64, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
 end
 
 function vkGetDeviceMemoryOpaqueCaptureAddress(device, pInfo, fun_ptr)
-    ccall(fun_ptr, UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
+    ccall((:vkGetDeviceMemoryOpaqueCaptureAddress, libvulkan), UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
 end
 
 function vkDestroySurfaceKHR(instance, surface, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkInstance, VkSurfaceKHR, Ptr{VkAllocationCallbacks}), instance, surface, pAllocator)
+    ccall((:vkDestroySurfaceKHR, libvulkan), Cvoid, (VkInstance, VkSurfaceKHR, Ptr{VkAllocationCallbacks}), instance, surface, pAllocator)
 end
 
 function vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, queueFamilyIndex, surface, pSupported, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, UInt32, VkSurfaceKHR, Ptr{VkBool32}), physicalDevice, queueFamilyIndex, surface, pSupported)
+    ccall((:vkGetPhysicalDeviceSurfaceSupportKHR, libvulkan), VkResult, (VkPhysicalDevice, UInt32, VkSurfaceKHR, Ptr{VkBool32}), physicalDevice, queueFamilyIndex, surface, pSupported)
 end
 
 function vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, surface, pSurfaceCapabilities, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{VkSurfaceCapabilitiesKHR}), physicalDevice, surface, pSurfaceCapabilities)
+    ccall((:vkGetPhysicalDeviceSurfaceCapabilitiesKHR, libvulkan), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{VkSurfaceCapabilitiesKHR}), physicalDevice, surface, pSurfaceCapabilities)
 end
 
 function vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkSurfaceFormatKHR}), physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats)
+    ccall((:vkGetPhysicalDeviceSurfaceFormatsKHR, libvulkan), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkSurfaceFormatKHR}), physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats)
 end
 
 function vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, pPresentModeCount, pPresentModes, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, surface, pPresentModeCount, pPresentModes)
+    ccall((:vkGetPhysicalDeviceSurfacePresentModesKHR, libvulkan), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, surface, pPresentModeCount, pPresentModes)
 end
 
 function vkCreateSwapchainKHR(device, pCreateInfo, pAllocator, pSwapchain, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSwapchainCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSwapchainKHR}), device, pCreateInfo, pAllocator, pSwapchain)
+    ccall((:vkCreateSwapchainKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSwapchainCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSwapchainKHR}), device, pCreateInfo, pAllocator, pSwapchain)
 end
 
 function vkDestroySwapchainKHR(device, swapchain, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkSwapchainKHR, Ptr{VkAllocationCallbacks}), device, swapchain, pAllocator)
+    ccall((:vkDestroySwapchainKHR, libvulkan), Cvoid, (VkDevice, VkSwapchainKHR, Ptr{VkAllocationCallbacks}), device, swapchain, pAllocator)
 end
 
 function vkGetSwapchainImagesKHR(device, swapchain, pSwapchainImageCount, pSwapchainImages, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR, Ptr{UInt32}, Ptr{VkImage}), device, swapchain, pSwapchainImageCount, pSwapchainImages)
+    ccall((:vkGetSwapchainImagesKHR, libvulkan), VkResult, (VkDevice, VkSwapchainKHR, Ptr{UInt32}, Ptr{VkImage}), device, swapchain, pSwapchainImageCount, pSwapchainImages)
 end
 
 function vkAcquireNextImageKHR(device, swapchain, timeout, semaphore, fence, pImageIndex, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR, UInt64, VkSemaphore, VkFence, Ptr{UInt32}), device, swapchain, timeout, semaphore, fence, pImageIndex)
+    ccall((:vkAcquireNextImageKHR, libvulkan), VkResult, (VkDevice, VkSwapchainKHR, UInt64, VkSemaphore, VkFence, Ptr{UInt32}), device, swapchain, timeout, semaphore, fence, pImageIndex)
 end
 
 function vkQueuePresentKHR(queue, pPresentInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkQueue, Ptr{VkPresentInfoKHR}), queue, pPresentInfo)
+    ccall((:vkQueuePresentKHR, libvulkan), VkResult, (VkQueue, Ptr{VkPresentInfoKHR}), queue, pPresentInfo)
 end
 
 function vkGetDeviceGroupPresentCapabilitiesKHR(device, pDeviceGroupPresentCapabilities, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDeviceGroupPresentCapabilitiesKHR}), device, pDeviceGroupPresentCapabilities)
+    ccall((:vkGetDeviceGroupPresentCapabilitiesKHR, libvulkan), VkResult, (VkDevice, Ptr{VkDeviceGroupPresentCapabilitiesKHR}), device, pDeviceGroupPresentCapabilities)
 end
 
 function vkGetDeviceGroupSurfacePresentModesKHR(device, surface, pModes, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkSurfaceKHR, Ptr{VkDeviceGroupPresentModeFlagsKHR}), device, surface, pModes)
+    ccall((:vkGetDeviceGroupSurfacePresentModesKHR, libvulkan), VkResult, (VkDevice, VkSurfaceKHR, Ptr{VkDeviceGroupPresentModeFlagsKHR}), device, surface, pModes)
 end
 
 function vkGetPhysicalDevicePresentRectanglesKHR(physicalDevice, surface, pRectCount, pRects, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkRect2D}), physicalDevice, surface, pRectCount, pRects)
+    ccall((:vkGetPhysicalDevicePresentRectanglesKHR, libvulkan), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkRect2D}), physicalDevice, surface, pRectCount, pRects)
 end
 
 function vkAcquireNextImage2KHR(device, pAcquireInfo, pImageIndex, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAcquireNextImageInfoKHR}, Ptr{UInt32}), device, pAcquireInfo, pImageIndex)
+    ccall((:vkAcquireNextImage2KHR, libvulkan), VkResult, (VkDevice, Ptr{VkAcquireNextImageInfoKHR}, Ptr{UInt32}), device, pAcquireInfo, pImageIndex)
 end
 
 function vkGetPhysicalDeviceDisplayPropertiesKHR(physicalDevice, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPropertiesKHR}), physicalDevice, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceDisplayPropertiesKHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPropertiesKHR}), physicalDevice, pPropertyCount, pProperties)
 end
 
 function vkGetPhysicalDeviceDisplayPlanePropertiesKHR(physicalDevice, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPlanePropertiesKHR}), physicalDevice, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceDisplayPlanePropertiesKHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPlanePropertiesKHR}), physicalDevice, pPropertyCount, pProperties)
 end
 
 function vkGetDisplayPlaneSupportedDisplaysKHR(physicalDevice, planeIndex, pDisplayCount, pDisplays, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, UInt32, Ptr{UInt32}, Ptr{VkDisplayKHR}), physicalDevice, planeIndex, pDisplayCount, pDisplays)
+    ccall((:vkGetDisplayPlaneSupportedDisplaysKHR, libvulkan), VkResult, (VkPhysicalDevice, UInt32, Ptr{UInt32}, Ptr{VkDisplayKHR}), physicalDevice, planeIndex, pDisplayCount, pDisplays)
 end
 
 function vkGetDisplayModePropertiesKHR(physicalDevice, display, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{UInt32}, Ptr{VkDisplayModePropertiesKHR}), physicalDevice, display, pPropertyCount, pProperties)
+    ccall((:vkGetDisplayModePropertiesKHR, libvulkan), VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{UInt32}, Ptr{VkDisplayModePropertiesKHR}), physicalDevice, display, pPropertyCount, pProperties)
 end
 
 function vkCreateDisplayModeKHR(physicalDevice, display, pCreateInfo, pAllocator, pMode, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{VkDisplayModeCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkDisplayModeKHR}), physicalDevice, display, pCreateInfo, pAllocator, pMode)
+    ccall((:vkCreateDisplayModeKHR, libvulkan), VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{VkDisplayModeCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkDisplayModeKHR}), physicalDevice, display, pCreateInfo, pAllocator, pMode)
 end
 
 function vkGetDisplayPlaneCapabilitiesKHR(physicalDevice, mode, planeIndex, pCapabilities, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkDisplayModeKHR, UInt32, Ptr{VkDisplayPlaneCapabilitiesKHR}), physicalDevice, mode, planeIndex, pCapabilities)
+    ccall((:vkGetDisplayPlaneCapabilitiesKHR, libvulkan), VkResult, (VkPhysicalDevice, VkDisplayModeKHR, UInt32, Ptr{VkDisplayPlaneCapabilitiesKHR}), physicalDevice, mode, planeIndex, pCapabilities)
 end
 
 function vkCreateDisplayPlaneSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkDisplaySurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateDisplayPlaneSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkDisplaySurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateSharedSwapchainsKHR(device, swapchainCount, pCreateInfos, pAllocator, pSwapchains, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkSwapchainCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSwapchainKHR}), device, swapchainCount, pCreateInfos, pAllocator, pSwapchains)
+    ccall((:vkCreateSharedSwapchainsKHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkSwapchainCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSwapchainKHR}), device, swapchainCount, pCreateInfos, pAllocator, pSwapchains)
 end
 
 function vkGetPhysicalDeviceFeatures2KHR(physicalDevice, pFeatures, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures2}), physicalDevice, pFeatures)
+    ccall((:vkGetPhysicalDeviceFeatures2KHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceFeatures2}), physicalDevice, pFeatures)
 end
 
 function vkGetPhysicalDeviceProperties2KHR(physicalDevice, pProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties2}), physicalDevice, pProperties)
+    ccall((:vkGetPhysicalDeviceProperties2KHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceProperties2}), physicalDevice, pProperties)
 end
 
 function vkGetPhysicalDeviceFormatProperties2KHR(physicalDevice, format, pFormatProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties2}), physicalDevice, format, pFormatProperties)
+    ccall((:vkGetPhysicalDeviceFormatProperties2KHR, libvulkan), Cvoid, (VkPhysicalDevice, VkFormat, Ptr{VkFormatProperties2}), physicalDevice, format, pFormatProperties)
 end
 
 function vkGetPhysicalDeviceImageFormatProperties2KHR(physicalDevice, pImageFormatInfo, pImageFormatProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceImageFormatInfo2}, Ptr{VkImageFormatProperties2}), physicalDevice, pImageFormatInfo, pImageFormatProperties)
+    ccall((:vkGetPhysicalDeviceImageFormatProperties2KHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceImageFormatInfo2}, Ptr{VkImageFormatProperties2}), physicalDevice, pImageFormatInfo, pImageFormatProperties)
 end
 
 function vkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties2}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
+    ccall((:vkGetPhysicalDeviceQueueFamilyProperties2KHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkQueueFamilyProperties2}), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties)
 end
 
 function vkGetPhysicalDeviceMemoryProperties2KHR(physicalDevice, pMemoryProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties2}), physicalDevice, pMemoryProperties)
+    ccall((:vkGetPhysicalDeviceMemoryProperties2KHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceMemoryProperties2}), physicalDevice, pMemoryProperties)
 end
 
 function vkGetPhysicalDeviceSparseImageFormatProperties2KHR(physicalDevice, pFormatInfo, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSparseImageFormatInfo2}, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties2}), physicalDevice, pFormatInfo, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceSparseImageFormatProperties2KHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSparseImageFormatInfo2}, Ptr{UInt32}, Ptr{VkSparseImageFormatProperties2}), physicalDevice, pFormatInfo, pPropertyCount, pProperties)
 end
 
 function vkGetDeviceGroupPeerMemoryFeaturesKHR(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, UInt32, UInt32, UInt32, Ptr{VkPeerMemoryFeatureFlags}), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
+    ccall((:vkGetDeviceGroupPeerMemoryFeaturesKHR, libvulkan), Cvoid, (VkDevice, UInt32, UInt32, UInt32, Ptr{VkPeerMemoryFeatureFlags}), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures)
 end
 
 function vkCmdSetDeviceMaskKHR(commandBuffer, deviceMask, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32), commandBuffer, deviceMask)
+    ccall((:vkCmdSetDeviceMaskKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32), commandBuffer, deviceMask)
 end
 
 function vkCmdDispatchBaseKHR(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
+    ccall((:vkCmdDispatchBaseKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, UInt32, UInt32, UInt32, UInt32), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ)
 end
 
 function vkTrimCommandPoolKHR(device, commandPool, flags, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkCommandPool, VkCommandPoolTrimFlags), device, commandPool, flags)
+    ccall((:vkTrimCommandPoolKHR, libvulkan), Cvoid, (VkDevice, VkCommandPool, VkCommandPoolTrimFlags), device, commandPool, flags)
 end
 
 function vkEnumeratePhysicalDeviceGroupsKHR(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDeviceGroupProperties}), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
+    ccall((:vkEnumeratePhysicalDeviceGroupsKHR, libvulkan), VkResult, (VkInstance, Ptr{UInt32}, Ptr{VkPhysicalDeviceGroupProperties}), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties)
 end
 
 function vkGetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevice, pExternalBufferInfo, pExternalBufferProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalBufferInfo}, Ptr{VkExternalBufferProperties}), physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
+    ccall((:vkGetPhysicalDeviceExternalBufferPropertiesKHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalBufferInfo}, Ptr{VkExternalBufferProperties}), physicalDevice, pExternalBufferInfo, pExternalBufferProperties)
 end
 
 function vkGetMemoryFdKHR(device, pGetFdInfo, pFd, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkMemoryGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
+    ccall((:vkGetMemoryFdKHR, libvulkan), VkResult, (VkDevice, Ptr{VkMemoryGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
 end
 
 function vkGetMemoryFdPropertiesKHR(device, handleType, fd, pMemoryFdProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryFdPropertiesKHR}), device, handleType, fd, pMemoryFdProperties)
+    ccall((:vkGetMemoryFdPropertiesKHR, libvulkan), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryFdPropertiesKHR}), device, handleType, fd, pMemoryFdProperties)
 end
 
 function vkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalSemaphoreInfo}, Ptr{VkExternalSemaphoreProperties}), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
+    ccall((:vkGetPhysicalDeviceExternalSemaphorePropertiesKHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalSemaphoreInfo}, Ptr{VkExternalSemaphoreProperties}), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties)
 end
 
 function vkImportSemaphoreFdKHR(device, pImportSemaphoreFdInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImportSemaphoreFdInfoKHR}), device, pImportSemaphoreFdInfo)
+    ccall((:vkImportSemaphoreFdKHR, libvulkan), VkResult, (VkDevice, Ptr{VkImportSemaphoreFdInfoKHR}), device, pImportSemaphoreFdInfo)
 end
 
 function vkGetSemaphoreFdKHR(device, pGetFdInfo, pFd, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
+    ccall((:vkGetSemaphoreFdKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
 end
 
 function vkCmdPushDescriptorSetKHR(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, UInt32, UInt32, Ptr{VkWriteDescriptorSet}), commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites)
+    ccall((:vkCmdPushDescriptorSetKHR, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, UInt32, UInt32, Ptr{VkWriteDescriptorSet}), commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites)
 end
 
 function vkCmdPushDescriptorSetWithTemplateKHR(commandBuffer, descriptorUpdateTemplate, layout, set, pData, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkDescriptorUpdateTemplate, VkPipelineLayout, UInt32, Ptr{Cvoid}), commandBuffer, descriptorUpdateTemplate, layout, set, pData)
+    ccall((:vkCmdPushDescriptorSetWithTemplateKHR, libvulkan), Cvoid, (VkCommandBuffer, VkDescriptorUpdateTemplate, VkPipelineLayout, UInt32, Ptr{Cvoid}), commandBuffer, descriptorUpdateTemplate, layout, set, pData)
 end
 
 function vkCreateDescriptorUpdateTemplateKHR(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDescriptorUpdateTemplateCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorUpdateTemplate}), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
+    ccall((:vkCreateDescriptorUpdateTemplateKHR, libvulkan), VkResult, (VkDevice, Ptr{VkDescriptorUpdateTemplateCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkDescriptorUpdateTemplate}), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate)
 end
 
 function vkDestroyDescriptorUpdateTemplateKHR(device, descriptorUpdateTemplate, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkDescriptorUpdateTemplate, Ptr{VkAllocationCallbacks}), device, descriptorUpdateTemplate, pAllocator)
+    ccall((:vkDestroyDescriptorUpdateTemplateKHR, libvulkan), Cvoid, (VkDevice, VkDescriptorUpdateTemplate, Ptr{VkAllocationCallbacks}), device, descriptorUpdateTemplate, pAllocator)
 end
 
 function vkUpdateDescriptorSetWithTemplateKHR(device, descriptorSet, descriptorUpdateTemplate, pData, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, Ptr{Cvoid}), device, descriptorSet, descriptorUpdateTemplate, pData)
+    ccall((:vkUpdateDescriptorSetWithTemplateKHR, libvulkan), Cvoid, (VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, Ptr{Cvoid}), device, descriptorSet, descriptorUpdateTemplate, pData)
 end
 
 function vkCreateRenderPass2KHR(device, pCreateInfo, pAllocator, pRenderPass, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo2}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
+    ccall((:vkCreateRenderPass2KHR, libvulkan), VkResult, (VkDevice, Ptr{VkRenderPassCreateInfo2}, Ptr{VkAllocationCallbacks}, Ptr{VkRenderPass}), device, pCreateInfo, pAllocator, pRenderPass)
 end
 
 function vkCmdBeginRenderPass2KHR(commandBuffer, pRenderPassBegin, pSubpassBeginInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, Ptr{VkSubpassBeginInfo}), commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
+    ccall((:vkCmdBeginRenderPass2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkRenderPassBeginInfo}, Ptr{VkSubpassBeginInfo}), commandBuffer, pRenderPassBegin, pSubpassBeginInfo)
 end
 
 function vkCmdNextSubpass2KHR(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkSubpassBeginInfo}, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassBeginInfo, pSubpassEndInfo)
+    ccall((:vkCmdNextSubpass2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkSubpassBeginInfo}, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassBeginInfo, pSubpassEndInfo)
 end
 
 function vkCmdEndRenderPass2KHR(commandBuffer, pSubpassEndInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassEndInfo)
+    ccall((:vkCmdEndRenderPass2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassEndInfo)
 end
 
 function vkGetSwapchainStatusKHR(device, swapchain, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
+    ccall((:vkGetSwapchainStatusKHR, libvulkan), VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
 end
 
 function vkGetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice, pExternalFenceInfo, pExternalFenceProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalFenceInfo}, Ptr{VkExternalFenceProperties}), physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
+    ccall((:vkGetPhysicalDeviceExternalFencePropertiesKHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkPhysicalDeviceExternalFenceInfo}, Ptr{VkExternalFenceProperties}), physicalDevice, pExternalFenceInfo, pExternalFenceProperties)
 end
 
 function vkImportFenceFdKHR(device, pImportFenceFdInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImportFenceFdInfoKHR}), device, pImportFenceFdInfo)
+    ccall((:vkImportFenceFdKHR, libvulkan), VkResult, (VkDevice, Ptr{VkImportFenceFdInfoKHR}), device, pImportFenceFdInfo)
 end
 
 function vkGetFenceFdKHR(device, pGetFdInfo, pFd, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkFenceGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
+    ccall((:vkGetFenceFdKHR, libvulkan), VkResult, (VkDevice, Ptr{VkFenceGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
 end
 
 function vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR(physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, UInt32, Ptr{UInt32}, Ptr{VkPerformanceCounterKHR}, Ptr{VkPerformanceCounterDescriptionKHR}), physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions)
+    ccall((:vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR, libvulkan), VkResult, (VkPhysicalDevice, UInt32, Ptr{UInt32}, Ptr{VkPerformanceCounterKHR}, Ptr{VkPerformanceCounterDescriptionKHR}), physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions)
 end
 
 function vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR(physicalDevice, pPerformanceQueryCreateInfo, pNumPasses, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, Ptr{VkQueryPoolPerformanceCreateInfoKHR}, Ptr{UInt32}), physicalDevice, pPerformanceQueryCreateInfo, pNumPasses)
+    ccall((:vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR, libvulkan), Cvoid, (VkPhysicalDevice, Ptr{VkQueryPoolPerformanceCreateInfoKHR}, Ptr{UInt32}), physicalDevice, pPerformanceQueryCreateInfo, pNumPasses)
 end
 
 function vkAcquireProfilingLockKHR(device, pInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAcquireProfilingLockInfoKHR}), device, pInfo)
+    ccall((:vkAcquireProfilingLockKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAcquireProfilingLockInfoKHR}), device, pInfo)
 end
 
 function vkReleaseProfilingLockKHR(device, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice,), device)
+    ccall((:vkReleaseProfilingLockKHR, libvulkan), Cvoid, (VkDevice,), device)
 end
 
 function vkGetPhysicalDeviceSurfaceCapabilities2KHR(physicalDevice, pSurfaceInfo, pSurfaceCapabilities, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{VkSurfaceCapabilities2KHR}), physicalDevice, pSurfaceInfo, pSurfaceCapabilities)
+    ccall((:vkGetPhysicalDeviceSurfaceCapabilities2KHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{VkSurfaceCapabilities2KHR}), physicalDevice, pSurfaceInfo, pSurfaceCapabilities)
 end
 
 function vkGetPhysicalDeviceSurfaceFormats2KHR(physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{UInt32}, Ptr{VkSurfaceFormat2KHR}), physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats)
+    ccall((:vkGetPhysicalDeviceSurfaceFormats2KHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{UInt32}, Ptr{VkSurfaceFormat2KHR}), physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats)
 end
 
 function vkGetPhysicalDeviceDisplayProperties2KHR(physicalDevice, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayProperties2KHR}), physicalDevice, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceDisplayProperties2KHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayProperties2KHR}), physicalDevice, pPropertyCount, pProperties)
 end
 
 function vkGetPhysicalDeviceDisplayPlaneProperties2KHR(physicalDevice, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPlaneProperties2KHR}), physicalDevice, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceDisplayPlaneProperties2KHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkDisplayPlaneProperties2KHR}), physicalDevice, pPropertyCount, pProperties)
 end
 
 function vkGetDisplayModeProperties2KHR(physicalDevice, display, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{UInt32}, Ptr{VkDisplayModeProperties2KHR}), physicalDevice, display, pPropertyCount, pProperties)
+    ccall((:vkGetDisplayModeProperties2KHR, libvulkan), VkResult, (VkPhysicalDevice, VkDisplayKHR, Ptr{UInt32}, Ptr{VkDisplayModeProperties2KHR}), physicalDevice, display, pPropertyCount, pProperties)
 end
 
 function vkGetDisplayPlaneCapabilities2KHR(physicalDevice, pDisplayPlaneInfo, pCapabilities, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkDisplayPlaneInfo2KHR}, Ptr{VkDisplayPlaneCapabilities2KHR}), physicalDevice, pDisplayPlaneInfo, pCapabilities)
+    ccall((:vkGetDisplayPlaneCapabilities2KHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkDisplayPlaneInfo2KHR}, Ptr{VkDisplayPlaneCapabilities2KHR}), physicalDevice, pDisplayPlaneInfo, pCapabilities)
 end
 
 function vkGetImageMemoryRequirements2KHR(device, pInfo, pMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkImageMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetImageMemoryRequirements2KHR, libvulkan), Cvoid, (VkDevice, Ptr{VkImageMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
 end
 
 function vkGetBufferMemoryRequirements2KHR(device, pInfo, pMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkBufferMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetBufferMemoryRequirements2KHR, libvulkan), Cvoid, (VkDevice, Ptr{VkBufferMemoryRequirementsInfo2}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
 end
 
 function vkGetImageSparseMemoryRequirements2KHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkImageSparseMemoryRequirementsInfo2}, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements2}), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
+    ccall((:vkGetImageSparseMemoryRequirements2KHR, libvulkan), Cvoid, (VkDevice, Ptr{VkImageSparseMemoryRequirementsInfo2}, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements2}), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
 end
 
 function vkCreateSamplerYcbcrConversionKHR(device, pCreateInfo, pAllocator, pYcbcrConversion, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSamplerYcbcrConversionCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSamplerYcbcrConversion}), device, pCreateInfo, pAllocator, pYcbcrConversion)
+    ccall((:vkCreateSamplerYcbcrConversionKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSamplerYcbcrConversionCreateInfo}, Ptr{VkAllocationCallbacks}, Ptr{VkSamplerYcbcrConversion}), device, pCreateInfo, pAllocator, pYcbcrConversion)
 end
 
 function vkDestroySamplerYcbcrConversionKHR(device, ycbcrConversion, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkSamplerYcbcrConversion, Ptr{VkAllocationCallbacks}), device, ycbcrConversion, pAllocator)
+    ccall((:vkDestroySamplerYcbcrConversionKHR, libvulkan), Cvoid, (VkDevice, VkSamplerYcbcrConversion, Ptr{VkAllocationCallbacks}), device, ycbcrConversion, pAllocator)
 end
 
 function vkBindBufferMemory2KHR(device, bindInfoCount, pBindInfos, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindBufferMemoryInfo}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindBufferMemory2KHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindBufferMemoryInfo}), device, bindInfoCount, pBindInfos)
 end
 
 function vkBindImageMemory2KHR(device, bindInfoCount, pBindInfos, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindImageMemoryInfo}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindImageMemory2KHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindImageMemoryInfo}), device, bindInfoCount, pBindInfos)
 end
 
 function vkGetDescriptorSetLayoutSupportKHR(device, pCreateInfo, pSupport, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkDescriptorSetLayoutSupport}), device, pCreateInfo, pSupport)
+    ccall((:vkGetDescriptorSetLayoutSupportKHR, libvulkan), Cvoid, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkDescriptorSetLayoutSupport}), device, pCreateInfo, pSupport)
 end
 
 function vkCmdDrawIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawIndirectCountKHR, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkCmdDrawIndexedIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawIndexedIndirectCountKHR, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkGetSemaphoreCounterValueKHR(device, semaphore, pValue, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkSemaphore, Ptr{UInt64}), device, semaphore, pValue)
+    ccall((:vkGetSemaphoreCounterValueKHR, libvulkan), VkResult, (VkDevice, VkSemaphore, Ptr{UInt64}), device, semaphore, pValue)
 end
 
 function vkWaitSemaphoresKHR(device, pWaitInfo, timeout, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreWaitInfo}, UInt64), device, pWaitInfo, timeout)
+    ccall((:vkWaitSemaphoresKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreWaitInfo}, UInt64), device, pWaitInfo, timeout)
 end
 
 function vkSignalSemaphoreKHR(device, pSignalInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreSignalInfo}), device, pSignalInfo)
+    ccall((:vkSignalSemaphoreKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreSignalInfo}), device, pSignalInfo)
 end
 
 function vkGetBufferDeviceAddressKHR(device, pInfo, fun_ptr)
-    ccall(fun_ptr, VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+    ccall((:vkGetBufferDeviceAddressKHR, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
 end
 
 function vkGetBufferOpaqueCaptureAddressKHR(device, pInfo, fun_ptr)
-    ccall(fun_ptr, UInt64, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+    ccall((:vkGetBufferOpaqueCaptureAddressKHR, libvulkan), UInt64, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
 end
 
 function vkGetDeviceMemoryOpaqueCaptureAddressKHR(device, pInfo, fun_ptr)
-    ccall(fun_ptr, UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
+    ccall((:vkGetDeviceMemoryOpaqueCaptureAddressKHR, libvulkan), UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
 end
 
 function vkGetPipelineExecutablePropertiesKHR(device, pPipelineInfo, pExecutableCount, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPipelineInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutablePropertiesKHR}), device, pPipelineInfo, pExecutableCount, pProperties)
+    ccall((:vkGetPipelineExecutablePropertiesKHR, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutablePropertiesKHR}), device, pPipelineInfo, pExecutableCount, pProperties)
 end
 
 function vkGetPipelineExecutableStatisticsKHR(device, pExecutableInfo, pStatisticCount, pStatistics, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableStatisticKHR}), device, pExecutableInfo, pStatisticCount, pStatistics)
+    ccall((:vkGetPipelineExecutableStatisticsKHR, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableStatisticKHR}), device, pExecutableInfo, pStatisticCount, pStatistics)
 end
 
 function vkGetPipelineExecutableInternalRepresentationsKHR(device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableInternalRepresentationKHR}), device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations)
+    ccall((:vkGetPipelineExecutableInternalRepresentationsKHR, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableInternalRepresentationKHR}), device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations)
 end
 
 function vkCreateDebugReportCallbackEXT(instance, pCreateInfo, pAllocator, pCallback, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkDebugReportCallbackCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkDebugReportCallbackEXT}), instance, pCreateInfo, pAllocator, pCallback)
+    ccall((:vkCreateDebugReportCallbackEXT, libvulkan), VkResult, (VkInstance, Ptr{VkDebugReportCallbackCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkDebugReportCallbackEXT}), instance, pCreateInfo, pAllocator, pCallback)
 end
 
 function vkDestroyDebugReportCallbackEXT(instance, callback, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkInstance, VkDebugReportCallbackEXT, Ptr{VkAllocationCallbacks}), instance, callback, pAllocator)
+    ccall((:vkDestroyDebugReportCallbackEXT, libvulkan), Cvoid, (VkInstance, VkDebugReportCallbackEXT, Ptr{VkAllocationCallbacks}), instance, callback, pAllocator)
 end
 
 function vkDebugReportMessageEXT(instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkInstance, VkDebugReportFlagsEXT, VkDebugReportObjectTypeEXT, UInt64, Csize_t, Int32, Cstring, Cstring), instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage)
+    ccall((:vkDebugReportMessageEXT, libvulkan), Cvoid, (VkInstance, VkDebugReportFlagsEXT, VkDebugReportObjectTypeEXT, UInt64, Csize_t, Int32, Cstring, Cstring), instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage)
 end
 
 function vkDebugMarkerSetObjectTagEXT(device, pTagInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDebugMarkerObjectTagInfoEXT}), device, pTagInfo)
+    ccall((:vkDebugMarkerSetObjectTagEXT, libvulkan), VkResult, (VkDevice, Ptr{VkDebugMarkerObjectTagInfoEXT}), device, pTagInfo)
 end
 
 function vkDebugMarkerSetObjectNameEXT(device, pNameInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDebugMarkerObjectNameInfoEXT}), device, pNameInfo)
+    ccall((:vkDebugMarkerSetObjectNameEXT, libvulkan), VkResult, (VkDevice, Ptr{VkDebugMarkerObjectNameInfoEXT}), device, pNameInfo)
 end
 
 function vkCmdDebugMarkerBeginEXT(commandBuffer, pMarkerInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkDebugMarkerMarkerInfoEXT}), commandBuffer, pMarkerInfo)
+    ccall((:vkCmdDebugMarkerBeginEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkDebugMarkerMarkerInfoEXT}), commandBuffer, pMarkerInfo)
 end
 
 function vkCmdDebugMarkerEndEXT(commandBuffer, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer,), commandBuffer)
+    ccall((:vkCmdDebugMarkerEndEXT, libvulkan), Cvoid, (VkCommandBuffer,), commandBuffer)
 end
 
 function vkCmdDebugMarkerInsertEXT(commandBuffer, pMarkerInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkDebugMarkerMarkerInfoEXT}), commandBuffer, pMarkerInfo)
+    ccall((:vkCmdDebugMarkerInsertEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkDebugMarkerMarkerInfoEXT}), commandBuffer, pMarkerInfo)
 end
 
 function vkCmdBindTransformFeedbackBuffersEXT(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes)
+    ccall((:vkCmdBindTransformFeedbackBuffersEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes)
 end
 
 function vkCmdBeginTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets)
+    ccall((:vkCmdBeginTransformFeedbackEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets)
 end
 
 function vkCmdEndTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets)
+    ccall((:vkCmdEndTransformFeedbackEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}), commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets)
 end
 
 function vkCmdBeginQueryIndexedEXT(commandBuffer, queryPool, query, flags, index, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, VkQueryControlFlags, UInt32), commandBuffer, queryPool, query, flags, index)
+    ccall((:vkCmdBeginQueryIndexedEXT, libvulkan), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, VkQueryControlFlags, UInt32), commandBuffer, queryPool, query, flags, index)
 end
 
 function vkCmdEndQueryIndexedEXT(commandBuffer, queryPool, query, index, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32), commandBuffer, queryPool, query, index)
+    ccall((:vkCmdEndQueryIndexedEXT, libvulkan), Cvoid, (VkCommandBuffer, VkQueryPool, UInt32, UInt32), commandBuffer, queryPool, query, index)
 end
 
 function vkCmdDrawIndirectByteCountEXT(commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride)
+    ccall((:vkCmdDrawIndirectByteCountEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride)
 end
 
 function vkGetImageViewHandleNVX(device, pInfo, fun_ptr)
-    ccall(fun_ptr, UInt32, (VkDevice, Ptr{VkImageViewHandleInfoNVX}), device, pInfo)
+    ccall((:vkGetImageViewHandleNVX, libvulkan), UInt32, (VkDevice, Ptr{VkImageViewHandleInfoNVX}), device, pInfo)
 end
 
 function vkGetImageViewAddressNVX(device, imageView, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkImageView, Ptr{VkImageViewAddressPropertiesNVX}), device, imageView, pProperties)
+    ccall((:vkGetImageViewAddressNVX, libvulkan), VkResult, (VkDevice, VkImageView, Ptr{VkImageViewAddressPropertiesNVX}), device, imageView, pProperties)
 end
 
 function vkCmdDrawIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawIndirectCountAMD, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkCmdDrawIndexedIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawIndexedIndirectCountAMD, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkGetShaderInfoAMD(device, pipeline, shaderStage, infoType, pInfoSize, pInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipeline, VkShaderStageFlagBits, VkShaderInfoTypeAMD, Ptr{Csize_t}, Ptr{Cvoid}), device, pipeline, shaderStage, infoType, pInfoSize, pInfo)
+    ccall((:vkGetShaderInfoAMD, libvulkan), VkResult, (VkDevice, VkPipeline, VkShaderStageFlagBits, VkShaderInfoTypeAMD, Ptr{Csize_t}, Ptr{Cvoid}), device, pipeline, shaderStage, infoType, pInfoSize, pInfo)
 end
 
 function vkGetPhysicalDeviceExternalImageFormatPropertiesNV(physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlags, VkImageCreateFlags, VkExternalMemoryHandleTypeFlagsNV, Ptr{VkExternalImageFormatPropertiesNV}), physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties)
+    ccall((:vkGetPhysicalDeviceExternalImageFormatPropertiesNV, libvulkan), VkResult, (VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlags, VkImageCreateFlags, VkExternalMemoryHandleTypeFlagsNV, Ptr{VkExternalImageFormatPropertiesNV}), physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties)
 end
 
 function vkCmdBeginConditionalRenderingEXT(commandBuffer, pConditionalRenderingBegin, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkConditionalRenderingBeginInfoEXT}), commandBuffer, pConditionalRenderingBegin)
+    ccall((:vkCmdBeginConditionalRenderingEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkConditionalRenderingBeginInfoEXT}), commandBuffer, pConditionalRenderingBegin)
 end
 
 function vkCmdEndConditionalRenderingEXT(commandBuffer, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer,), commandBuffer)
+    ccall((:vkCmdEndConditionalRenderingEXT, libvulkan), Cvoid, (VkCommandBuffer,), commandBuffer)
 end
 
 function vkCmdSetViewportWScalingNV(commandBuffer, firstViewport, viewportCount, pViewportWScalings, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkViewportWScalingNV}), commandBuffer, firstViewport, viewportCount, pViewportWScalings)
+    ccall((:vkCmdSetViewportWScalingNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkViewportWScalingNV}), commandBuffer, firstViewport, viewportCount, pViewportWScalings)
 end
 
 function vkReleaseDisplayEXT(physicalDevice, display, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkDisplayKHR), physicalDevice, display)
+    ccall((:vkReleaseDisplayEXT, libvulkan), VkResult, (VkPhysicalDevice, VkDisplayKHR), physicalDevice, display)
 end
 
 function vkGetPhysicalDeviceSurfaceCapabilities2EXT(physicalDevice, surface, pSurfaceCapabilities, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{VkSurfaceCapabilities2EXT}), physicalDevice, surface, pSurfaceCapabilities)
+    ccall((:vkGetPhysicalDeviceSurfaceCapabilities2EXT, libvulkan), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{VkSurfaceCapabilities2EXT}), physicalDevice, surface, pSurfaceCapabilities)
 end
 
 function vkDisplayPowerControlEXT(device, display, pDisplayPowerInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkDisplayKHR, Ptr{VkDisplayPowerInfoEXT}), device, display, pDisplayPowerInfo)
+    ccall((:vkDisplayPowerControlEXT, libvulkan), VkResult, (VkDevice, VkDisplayKHR, Ptr{VkDisplayPowerInfoEXT}), device, display, pDisplayPowerInfo)
 end
 
 function vkRegisterDeviceEventEXT(device, pDeviceEventInfo, pAllocator, pFence, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDeviceEventInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, pDeviceEventInfo, pAllocator, pFence)
+    ccall((:vkRegisterDeviceEventEXT, libvulkan), VkResult, (VkDevice, Ptr{VkDeviceEventInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, pDeviceEventInfo, pAllocator, pFence)
 end
 
 function vkRegisterDisplayEventEXT(device, display, pDisplayEventInfo, pAllocator, pFence, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkDisplayKHR, Ptr{VkDisplayEventInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, display, pDisplayEventInfo, pAllocator, pFence)
+    ccall((:vkRegisterDisplayEventEXT, libvulkan), VkResult, (VkDevice, VkDisplayKHR, Ptr{VkDisplayEventInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkFence}), device, display, pDisplayEventInfo, pAllocator, pFence)
 end
 
 function vkGetSwapchainCounterEXT(device, swapchain, counter, pCounterValue, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR, VkSurfaceCounterFlagBitsEXT, Ptr{UInt64}), device, swapchain, counter, pCounterValue)
+    ccall((:vkGetSwapchainCounterEXT, libvulkan), VkResult, (VkDevice, VkSwapchainKHR, VkSurfaceCounterFlagBitsEXT, Ptr{UInt64}), device, swapchain, counter, pCounterValue)
 end
 
 function vkGetRefreshCycleDurationGOOGLE(device, swapchain, pDisplayTimingProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR, Ptr{VkRefreshCycleDurationGOOGLE}), device, swapchain, pDisplayTimingProperties)
+    ccall((:vkGetRefreshCycleDurationGOOGLE, libvulkan), VkResult, (VkDevice, VkSwapchainKHR, Ptr{VkRefreshCycleDurationGOOGLE}), device, swapchain, pDisplayTimingProperties)
 end
 
 function vkGetPastPresentationTimingGOOGLE(device, swapchain, pPresentationTimingCount, pPresentationTimings, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR, Ptr{UInt32}, Ptr{VkPastPresentationTimingGOOGLE}), device, swapchain, pPresentationTimingCount, pPresentationTimings)
+    ccall((:vkGetPastPresentationTimingGOOGLE, libvulkan), VkResult, (VkDevice, VkSwapchainKHR, Ptr{UInt32}, Ptr{VkPastPresentationTimingGOOGLE}), device, swapchain, pPresentationTimingCount, pPresentationTimings)
 end
 
 function vkCmdSetDiscardRectangleEXT(commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles)
+    ccall((:vkCmdSetDiscardRectangleEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles)
 end
 
 function vkSetHdrMetadataEXT(device, swapchainCount, pSwapchains, pMetadata, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, UInt32, Ptr{VkSwapchainKHR}, Ptr{VkHdrMetadataEXT}), device, swapchainCount, pSwapchains, pMetadata)
+    ccall((:vkSetHdrMetadataEXT, libvulkan), Cvoid, (VkDevice, UInt32, Ptr{VkSwapchainKHR}, Ptr{VkHdrMetadataEXT}), device, swapchainCount, pSwapchains, pMetadata)
 end
 
 function vkSetDebugUtilsObjectNameEXT(device, pNameInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDebugUtilsObjectNameInfoEXT}), device, pNameInfo)
+    ccall((:vkSetDebugUtilsObjectNameEXT, libvulkan), VkResult, (VkDevice, Ptr{VkDebugUtilsObjectNameInfoEXT}), device, pNameInfo)
 end
 
 function vkSetDebugUtilsObjectTagEXT(device, pTagInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkDebugUtilsObjectTagInfoEXT}), device, pTagInfo)
+    ccall((:vkSetDebugUtilsObjectTagEXT, libvulkan), VkResult, (VkDevice, Ptr{VkDebugUtilsObjectTagInfoEXT}), device, pTagInfo)
 end
 
 function vkQueueBeginDebugUtilsLabelEXT(queue, pLabelInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkQueue, Ptr{VkDebugUtilsLabelEXT}), queue, pLabelInfo)
+    ccall((:vkQueueBeginDebugUtilsLabelEXT, libvulkan), Cvoid, (VkQueue, Ptr{VkDebugUtilsLabelEXT}), queue, pLabelInfo)
 end
 
 function vkQueueEndDebugUtilsLabelEXT(queue, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkQueue,), queue)
+    ccall((:vkQueueEndDebugUtilsLabelEXT, libvulkan), Cvoid, (VkQueue,), queue)
 end
 
 function vkQueueInsertDebugUtilsLabelEXT(queue, pLabelInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkQueue, Ptr{VkDebugUtilsLabelEXT}), queue, pLabelInfo)
+    ccall((:vkQueueInsertDebugUtilsLabelEXT, libvulkan), Cvoid, (VkQueue, Ptr{VkDebugUtilsLabelEXT}), queue, pLabelInfo)
 end
 
 function vkCmdBeginDebugUtilsLabelEXT(commandBuffer, pLabelInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkDebugUtilsLabelEXT}), commandBuffer, pLabelInfo)
+    ccall((:vkCmdBeginDebugUtilsLabelEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkDebugUtilsLabelEXT}), commandBuffer, pLabelInfo)
 end
 
 function vkCmdEndDebugUtilsLabelEXT(commandBuffer, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer,), commandBuffer)
+    ccall((:vkCmdEndDebugUtilsLabelEXT, libvulkan), Cvoid, (VkCommandBuffer,), commandBuffer)
 end
 
 function vkCmdInsertDebugUtilsLabelEXT(commandBuffer, pLabelInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkDebugUtilsLabelEXT}), commandBuffer, pLabelInfo)
+    ccall((:vkCmdInsertDebugUtilsLabelEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkDebugUtilsLabelEXT}), commandBuffer, pLabelInfo)
 end
 
 function vkCreateDebugUtilsMessengerEXT(instance, pCreateInfo, pAllocator, pMessenger, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkDebugUtilsMessengerCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkDebugUtilsMessengerEXT}), instance, pCreateInfo, pAllocator, pMessenger)
+    ccall((:vkCreateDebugUtilsMessengerEXT, libvulkan), VkResult, (VkInstance, Ptr{VkDebugUtilsMessengerCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkDebugUtilsMessengerEXT}), instance, pCreateInfo, pAllocator, pMessenger)
 end
 
 function vkDestroyDebugUtilsMessengerEXT(instance, messenger, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkInstance, VkDebugUtilsMessengerEXT, Ptr{VkAllocationCallbacks}), instance, messenger, pAllocator)
+    ccall((:vkDestroyDebugUtilsMessengerEXT, libvulkan), Cvoid, (VkInstance, VkDebugUtilsMessengerEXT, Ptr{VkAllocationCallbacks}), instance, messenger, pAllocator)
 end
 
 function vkSubmitDebugUtilsMessageEXT(instance, messageSeverity, messageTypes, pCallbackData, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkInstance, VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagsEXT, Ptr{VkDebugUtilsMessengerCallbackDataEXT}), instance, messageSeverity, messageTypes, pCallbackData)
+    ccall((:vkSubmitDebugUtilsMessageEXT, libvulkan), Cvoid, (VkInstance, VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagsEXT, Ptr{VkDebugUtilsMessengerCallbackDataEXT}), instance, messageSeverity, messageTypes, pCallbackData)
 end
 
 function vkCmdSetSampleLocationsEXT(commandBuffer, pSampleLocationsInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkSampleLocationsInfoEXT}), commandBuffer, pSampleLocationsInfo)
+    ccall((:vkCmdSetSampleLocationsEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkSampleLocationsInfoEXT}), commandBuffer, pSampleLocationsInfo)
 end
 
 function vkGetPhysicalDeviceMultisamplePropertiesEXT(physicalDevice, samples, pMultisampleProperties, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkPhysicalDevice, VkSampleCountFlagBits, Ptr{VkMultisamplePropertiesEXT}), physicalDevice, samples, pMultisampleProperties)
+    ccall((:vkGetPhysicalDeviceMultisamplePropertiesEXT, libvulkan), Cvoid, (VkPhysicalDevice, VkSampleCountFlagBits, Ptr{VkMultisamplePropertiesEXT}), physicalDevice, samples, pMultisampleProperties)
 end
 
 function vkGetImageDrmFormatModifierPropertiesEXT(device, image, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkImage, Ptr{VkImageDrmFormatModifierPropertiesEXT}), device, image, pProperties)
+    ccall((:vkGetImageDrmFormatModifierPropertiesEXT, libvulkan), VkResult, (VkDevice, VkImage, Ptr{VkImageDrmFormatModifierPropertiesEXT}), device, image, pProperties)
 end
 
 function vkCreateValidationCacheEXT(device, pCreateInfo, pAllocator, pValidationCache, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkValidationCacheCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkValidationCacheEXT}), device, pCreateInfo, pAllocator, pValidationCache)
+    ccall((:vkCreateValidationCacheEXT, libvulkan), VkResult, (VkDevice, Ptr{VkValidationCacheCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkValidationCacheEXT}), device, pCreateInfo, pAllocator, pValidationCache)
 end
 
 function vkDestroyValidationCacheEXT(device, validationCache, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkValidationCacheEXT, Ptr{VkAllocationCallbacks}), device, validationCache, pAllocator)
+    ccall((:vkDestroyValidationCacheEXT, libvulkan), Cvoid, (VkDevice, VkValidationCacheEXT, Ptr{VkAllocationCallbacks}), device, validationCache, pAllocator)
 end
 
 function vkMergeValidationCachesEXT(device, dstCache, srcCacheCount, pSrcCaches, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkValidationCacheEXT, UInt32, Ptr{VkValidationCacheEXT}), device, dstCache, srcCacheCount, pSrcCaches)
+    ccall((:vkMergeValidationCachesEXT, libvulkan), VkResult, (VkDevice, VkValidationCacheEXT, UInt32, Ptr{VkValidationCacheEXT}), device, dstCache, srcCacheCount, pSrcCaches)
 end
 
 function vkGetValidationCacheDataEXT(device, validationCache, pDataSize, pData, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkValidationCacheEXT, Ptr{Csize_t}, Ptr{Cvoid}), device, validationCache, pDataSize, pData)
+    ccall((:vkGetValidationCacheDataEXT, libvulkan), VkResult, (VkDevice, VkValidationCacheEXT, Ptr{Csize_t}, Ptr{Cvoid}), device, validationCache, pDataSize, pData)
 end
 
 function vkCmdBindShadingRateImageNV(commandBuffer, imageView, imageLayout, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkImageView, VkImageLayout), commandBuffer, imageView, imageLayout)
+    ccall((:vkCmdBindShadingRateImageNV, libvulkan), Cvoid, (VkCommandBuffer, VkImageView, VkImageLayout), commandBuffer, imageView, imageLayout)
 end
 
 function vkCmdSetViewportShadingRatePaletteNV(commandBuffer, firstViewport, viewportCount, pShadingRatePalettes, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkShadingRatePaletteNV}), commandBuffer, firstViewport, viewportCount, pShadingRatePalettes)
+    ccall((:vkCmdSetViewportShadingRatePaletteNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkShadingRatePaletteNV}), commandBuffer, firstViewport, viewportCount, pShadingRatePalettes)
 end
 
 function vkCmdSetCoarseSampleOrderNV(commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkCoarseSampleOrderTypeNV, UInt32, Ptr{VkCoarseSampleOrderCustomNV}), commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders)
+    ccall((:vkCmdSetCoarseSampleOrderNV, libvulkan), Cvoid, (VkCommandBuffer, VkCoarseSampleOrderTypeNV, UInt32, Ptr{VkCoarseSampleOrderCustomNV}), commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders)
 end
 
 function vkCreateAccelerationStructureNV(device, pCreateInfo, pAllocator, pAccelerationStructure, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureNV}), device, pCreateInfo, pAllocator, pAccelerationStructure)
+    ccall((:vkCreateAccelerationStructureNV, libvulkan), VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureNV}), device, pCreateInfo, pAllocator, pAccelerationStructure)
 end
 
 function vkDestroyAccelerationStructureKHR(device, accelerationStructure, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
+    ccall((:vkDestroyAccelerationStructureKHR, libvulkan), Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
 end
 
 function vkDestroyAccelerationStructureNV(device, accelerationStructure, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
+    ccall((:vkDestroyAccelerationStructureNV, libvulkan), Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
 end
 
 function vkGetAccelerationStructureMemoryRequirementsNV(device, pInfo, pMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoNV}, Ptr{VkMemoryRequirements2KHR}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetAccelerationStructureMemoryRequirementsNV, libvulkan), Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoNV}, Ptr{VkMemoryRequirements2KHR}), device, pInfo, pMemoryRequirements)
 end
 
 function vkBindAccelerationStructureMemoryKHR(device, bindInfoCount, pBindInfos, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindAccelerationStructureMemoryKHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
 end
 
 function vkBindAccelerationStructureMemoryNV(device, bindInfoCount, pBindInfos, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindAccelerationStructureMemoryNV, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
 end
 
 function vkCmdBuildAccelerationStructureNV(commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureInfoNV}, VkBuffer, VkDeviceSize, VkBool32, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkBuffer, VkDeviceSize), commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset)
+    ccall((:vkCmdBuildAccelerationStructureNV, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureInfoNV}, VkBuffer, VkDeviceSize, VkBool32, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkBuffer, VkDeviceSize), commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset)
 end
 
 function vkCmdCopyAccelerationStructureNV(commandBuffer, dst, src, mode, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkCopyAccelerationStructureModeKHR), commandBuffer, dst, src, mode)
+    ccall((:vkCmdCopyAccelerationStructureNV, libvulkan), Cvoid, (VkCommandBuffer, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkCopyAccelerationStructureModeKHR), commandBuffer, dst, src, mode)
 end
 
 function vkCmdTraceRaysNV(commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, UInt32, UInt32, UInt32), commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth)
+    ccall((:vkCmdTraceRaysNV, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, VkBuffer, VkDeviceSize, VkDeviceSize, UInt32, UInt32, UInt32), commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth)
 end
 
 function vkCreateRayTracingPipelinesNV(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+    ccall((:vkCreateRayTracingPipelinesNV, libvulkan), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
 end
 
 function vkGetRayTracingShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
+    ccall((:vkGetRayTracingShaderGroupHandlesKHR, libvulkan), VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
 end
 
 function vkGetRayTracingShaderGroupHandlesNV(device, pipeline, firstGroup, groupCount, dataSize, pData, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
+    ccall((:vkGetRayTracingShaderGroupHandlesNV, libvulkan), VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
 end
 
 function vkGetAccelerationStructureHandleNV(device, accelerationStructure, dataSize, pData, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkAccelerationStructureKHR, Csize_t, Ptr{Cvoid}), device, accelerationStructure, dataSize, pData)
+    ccall((:vkGetAccelerationStructureHandleNV, libvulkan), VkResult, (VkDevice, VkAccelerationStructureKHR, Csize_t, Ptr{Cvoid}), device, accelerationStructure, dataSize, pData)
 end
 
 function vkCmdWriteAccelerationStructuresPropertiesKHR(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+    ccall((:vkCmdWriteAccelerationStructuresPropertiesKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
 end
 
 function vkCmdWriteAccelerationStructuresPropertiesNV(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+    ccall((:vkCmdWriteAccelerationStructuresPropertiesNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
 end
 
 function vkCompileDeferredNV(device, pipeline, shader, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipeline, UInt32), device, pipeline, shader)
+    ccall((:vkCompileDeferredNV, libvulkan), VkResult, (VkDevice, VkPipeline, UInt32), device, pipeline, shader)
 end
 
 function vkGetMemoryHostPointerPropertiesEXT(device, handleType, pHostPointer, pMemoryHostPointerProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Ptr{Cvoid}, Ptr{VkMemoryHostPointerPropertiesEXT}), device, handleType, pHostPointer, pMemoryHostPointerProperties)
+    ccall((:vkGetMemoryHostPointerPropertiesEXT, libvulkan), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Ptr{Cvoid}, Ptr{VkMemoryHostPointerPropertiesEXT}), device, handleType, pHostPointer, pMemoryHostPointerProperties)
 end
 
 function vkCmdWriteBufferMarkerAMD(commandBuffer, pipelineStage, dstBuffer, dstOffset, marker, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineStageFlagBits, VkBuffer, VkDeviceSize, UInt32), commandBuffer, pipelineStage, dstBuffer, dstOffset, marker)
+    ccall((:vkCmdWriteBufferMarkerAMD, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineStageFlagBits, VkBuffer, VkDeviceSize, UInt32), commandBuffer, pipelineStage, dstBuffer, dstOffset, marker)
 end
 
 function vkGetPhysicalDeviceCalibrateableTimeDomainsEXT(physicalDevice, pTimeDomainCount, pTimeDomains, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkTimeDomainEXT}), physicalDevice, pTimeDomainCount, pTimeDomains)
+    ccall((:vkGetPhysicalDeviceCalibrateableTimeDomainsEXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkTimeDomainEXT}), physicalDevice, pTimeDomainCount, pTimeDomains)
 end
 
 function vkGetCalibratedTimestampsEXT(device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkCalibratedTimestampInfoEXT}, Ptr{UInt64}, Ptr{UInt64}), device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation)
+    ccall((:vkGetCalibratedTimestampsEXT, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkCalibratedTimestampInfoEXT}, Ptr{UInt64}, Ptr{UInt64}), device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation)
 end
 
 function vkCmdDrawMeshTasksNV(commandBuffer, taskCount, firstTask, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32), commandBuffer, taskCount, firstTask)
+    ccall((:vkCmdDrawMeshTasksNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32), commandBuffer, taskCount, firstTask)
 end
 
 function vkCmdDrawMeshTasksIndirectNV(commandBuffer, buffer, offset, drawCount, stride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
+    ccall((:vkCmdDrawMeshTasksIndirectNV, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, drawCount, stride)
 end
 
 function vkCmdDrawMeshTasksIndirectCountNV(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
+    ccall((:vkCmdDrawMeshTasksIndirectCountNV, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
 function vkCmdSetExclusiveScissorNV(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors)
+    ccall((:vkCmdSetExclusiveScissorNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors)
 end
 
 function vkCmdSetCheckpointNV(commandBuffer, pCheckpointMarker, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{Cvoid}), commandBuffer, pCheckpointMarker)
+    ccall((:vkCmdSetCheckpointNV, libvulkan), Cvoid, (VkCommandBuffer, Ptr{Cvoid}), commandBuffer, pCheckpointMarker)
 end
 
 function vkGetQueueCheckpointDataNV(queue, pCheckpointDataCount, pCheckpointData, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkQueue, Ptr{UInt32}, Ptr{VkCheckpointDataNV}), queue, pCheckpointDataCount, pCheckpointData)
+    ccall((:vkGetQueueCheckpointDataNV, libvulkan), Cvoid, (VkQueue, Ptr{UInt32}, Ptr{VkCheckpointDataNV}), queue, pCheckpointDataCount, pCheckpointData)
 end
 
 function vkInitializePerformanceApiINTEL(device, pInitializeInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkInitializePerformanceApiInfoINTEL}), device, pInitializeInfo)
+    ccall((:vkInitializePerformanceApiINTEL, libvulkan), VkResult, (VkDevice, Ptr{VkInitializePerformanceApiInfoINTEL}), device, pInitializeInfo)
 end
 
 function vkUninitializePerformanceApiINTEL(device, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice,), device)
+    ccall((:vkUninitializePerformanceApiINTEL, libvulkan), Cvoid, (VkDevice,), device)
 end
 
 function vkCmdSetPerformanceMarkerINTEL(commandBuffer, pMarkerInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkCommandBuffer, Ptr{VkPerformanceMarkerInfoINTEL}), commandBuffer, pMarkerInfo)
+    ccall((:vkCmdSetPerformanceMarkerINTEL, libvulkan), VkResult, (VkCommandBuffer, Ptr{VkPerformanceMarkerInfoINTEL}), commandBuffer, pMarkerInfo)
 end
 
 function vkCmdSetPerformanceStreamMarkerINTEL(commandBuffer, pMarkerInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkCommandBuffer, Ptr{VkPerformanceStreamMarkerInfoINTEL}), commandBuffer, pMarkerInfo)
+    ccall((:vkCmdSetPerformanceStreamMarkerINTEL, libvulkan), VkResult, (VkCommandBuffer, Ptr{VkPerformanceStreamMarkerInfoINTEL}), commandBuffer, pMarkerInfo)
 end
 
 function vkCmdSetPerformanceOverrideINTEL(commandBuffer, pOverrideInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkCommandBuffer, Ptr{VkPerformanceOverrideInfoINTEL}), commandBuffer, pOverrideInfo)
+    ccall((:vkCmdSetPerformanceOverrideINTEL, libvulkan), VkResult, (VkCommandBuffer, Ptr{VkPerformanceOverrideInfoINTEL}), commandBuffer, pOverrideInfo)
 end
 
 function vkAcquirePerformanceConfigurationINTEL(device, pAcquireInfo, pConfiguration, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPerformanceConfigurationAcquireInfoINTEL}, Ptr{VkPerformanceConfigurationINTEL}), device, pAcquireInfo, pConfiguration)
+    ccall((:vkAcquirePerformanceConfigurationINTEL, libvulkan), VkResult, (VkDevice, Ptr{VkPerformanceConfigurationAcquireInfoINTEL}, Ptr{VkPerformanceConfigurationINTEL}), device, pAcquireInfo, pConfiguration)
 end
 
 function vkReleasePerformanceConfigurationINTEL(device, configuration, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPerformanceConfigurationINTEL), device, configuration)
+    ccall((:vkReleasePerformanceConfigurationINTEL, libvulkan), VkResult, (VkDevice, VkPerformanceConfigurationINTEL), device, configuration)
 end
 
 function vkQueueSetPerformanceConfigurationINTEL(queue, configuration, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkQueue, VkPerformanceConfigurationINTEL), queue, configuration)
+    ccall((:vkQueueSetPerformanceConfigurationINTEL, libvulkan), VkResult, (VkQueue, VkPerformanceConfigurationINTEL), queue, configuration)
 end
 
 function vkGetPerformanceParameterINTEL(device, parameter, pValue, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPerformanceParameterTypeINTEL, Ptr{VkPerformanceValueINTEL}), device, parameter, pValue)
+    ccall((:vkGetPerformanceParameterINTEL, libvulkan), VkResult, (VkDevice, VkPerformanceParameterTypeINTEL, Ptr{VkPerformanceValueINTEL}), device, parameter, pValue)
 end
 
 function vkSetLocalDimmingAMD(device, swapChain, localDimmingEnable, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkSwapchainKHR, VkBool32), device, swapChain, localDimmingEnable)
+    ccall((:vkSetLocalDimmingAMD, libvulkan), Cvoid, (VkDevice, VkSwapchainKHR, VkBool32), device, swapChain, localDimmingEnable)
 end
 
 function vkGetBufferDeviceAddressEXT(device, pInfo, fun_ptr)
-    ccall(fun_ptr, VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
+    ccall((:vkGetBufferDeviceAddressEXT, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
 end
 
 function vkGetPhysicalDeviceToolPropertiesEXT(physicalDevice, pToolCount, pToolProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkPhysicalDeviceToolPropertiesEXT}), physicalDevice, pToolCount, pToolProperties)
+    ccall((:vkGetPhysicalDeviceToolPropertiesEXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkPhysicalDeviceToolPropertiesEXT}), physicalDevice, pToolCount, pToolProperties)
 end
 
 function vkGetPhysicalDeviceCooperativeMatrixPropertiesNV(physicalDevice, pPropertyCount, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkCooperativeMatrixPropertiesNV}), physicalDevice, pPropertyCount, pProperties)
+    ccall((:vkGetPhysicalDeviceCooperativeMatrixPropertiesNV, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkCooperativeMatrixPropertiesNV}), physicalDevice, pPropertyCount, pProperties)
 end
 
 function vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV(physicalDevice, pCombinationCount, pCombinations, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkFramebufferMixedSamplesCombinationNV}), physicalDevice, pCombinationCount, pCombinations)
+    ccall((:vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkFramebufferMixedSamplesCombinationNV}), physicalDevice, pCombinationCount, pCombinations)
 end
 
 function vkCreateHeadlessSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkHeadlessSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateHeadlessSurfaceEXT, libvulkan), VkResult, (VkInstance, Ptr{VkHeadlessSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCmdSetLineStippleEXT(commandBuffer, lineStippleFactor, lineStipplePattern, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt16), commandBuffer, lineStippleFactor, lineStipplePattern)
+    ccall((:vkCmdSetLineStippleEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt16), commandBuffer, lineStippleFactor, lineStipplePattern)
 end
 
 function vkResetQueryPoolEXT(device, queryPool, firstQuery, queryCount, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
+    ccall((:vkResetQueryPoolEXT, libvulkan), Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
 end
 
 function vkCmdSetCullModeEXT(commandBuffer, cullMode, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkCullModeFlags), commandBuffer, cullMode)
+    ccall((:vkCmdSetCullModeEXT, libvulkan), Cvoid, (VkCommandBuffer, VkCullModeFlags), commandBuffer, cullMode)
 end
 
 function vkCmdSetFrontFaceEXT(commandBuffer, frontFace, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkFrontFace), commandBuffer, frontFace)
+    ccall((:vkCmdSetFrontFaceEXT, libvulkan), Cvoid, (VkCommandBuffer, VkFrontFace), commandBuffer, frontFace)
 end
 
 function vkCmdSetPrimitiveTopologyEXT(commandBuffer, primitiveTopology, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPrimitiveTopology), commandBuffer, primitiveTopology)
+    ccall((:vkCmdSetPrimitiveTopologyEXT, libvulkan), Cvoid, (VkCommandBuffer, VkPrimitiveTopology), commandBuffer, primitiveTopology)
 end
 
 function vkCmdSetViewportWithCountEXT(commandBuffer, viewportCount, pViewports, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkViewport}), commandBuffer, viewportCount, pViewports)
+    ccall((:vkCmdSetViewportWithCountEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkViewport}), commandBuffer, viewportCount, pViewports)
 end
 
 function vkCmdSetScissorWithCountEXT(commandBuffer, scissorCount, pScissors, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkRect2D}), commandBuffer, scissorCount, pScissors)
+    ccall((:vkCmdSetScissorWithCountEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkRect2D}), commandBuffer, scissorCount, pScissors)
 end
 
 function vkCmdBindVertexBuffers2EXT(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides)
+    ccall((:vkCmdBindVertexBuffers2EXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkBuffer}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}, Ptr{VkDeviceSize}), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides)
 end
 
 function vkCmdSetDepthTestEnableEXT(commandBuffer, depthTestEnable, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthTestEnable)
+    ccall((:vkCmdSetDepthTestEnableEXT, libvulkan), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthTestEnable)
 end
 
 function vkCmdSetDepthWriteEnableEXT(commandBuffer, depthWriteEnable, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthWriteEnable)
+    ccall((:vkCmdSetDepthWriteEnableEXT, libvulkan), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthWriteEnable)
 end
 
 function vkCmdSetDepthCompareOpEXT(commandBuffer, depthCompareOp, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkCompareOp), commandBuffer, depthCompareOp)
+    ccall((:vkCmdSetDepthCompareOpEXT, libvulkan), Cvoid, (VkCommandBuffer, VkCompareOp), commandBuffer, depthCompareOp)
 end
 
 function vkCmdSetDepthBoundsTestEnableEXT(commandBuffer, depthBoundsTestEnable, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthBoundsTestEnable)
+    ccall((:vkCmdSetDepthBoundsTestEnableEXT, libvulkan), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthBoundsTestEnable)
 end
 
 function vkCmdSetStencilTestEnableEXT(commandBuffer, stencilTestEnable, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, stencilTestEnable)
+    ccall((:vkCmdSetStencilTestEnableEXT, libvulkan), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, stencilTestEnable)
 end
 
 function vkCmdSetStencilOpEXT(commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkStencilFaceFlags, VkStencilOp, VkStencilOp, VkStencilOp, VkCompareOp), commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp)
+    ccall((:vkCmdSetStencilOpEXT, libvulkan), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, VkStencilOp, VkStencilOp, VkStencilOp, VkCompareOp), commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp)
 end
 
 function vkGetGeneratedCommandsMemoryRequirementsNV(device, pInfo, pMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkGeneratedCommandsMemoryRequirementsInfoNV}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetGeneratedCommandsMemoryRequirementsNV, libvulkan), Cvoid, (VkDevice, Ptr{VkGeneratedCommandsMemoryRequirementsInfoNV}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
 end
 
 function vkCmdPreprocessGeneratedCommandsNV(commandBuffer, pGeneratedCommandsInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkGeneratedCommandsInfoNV}), commandBuffer, pGeneratedCommandsInfo)
+    ccall((:vkCmdPreprocessGeneratedCommandsNV, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkGeneratedCommandsInfoNV}), commandBuffer, pGeneratedCommandsInfo)
 end
 
 function vkCmdExecuteGeneratedCommandsNV(commandBuffer, isPreprocessed, pGeneratedCommandsInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32, Ptr{VkGeneratedCommandsInfoNV}), commandBuffer, isPreprocessed, pGeneratedCommandsInfo)
+    ccall((:vkCmdExecuteGeneratedCommandsNV, libvulkan), Cvoid, (VkCommandBuffer, VkBool32, Ptr{VkGeneratedCommandsInfoNV}), commandBuffer, isPreprocessed, pGeneratedCommandsInfo)
 end
 
 function vkCmdBindPipelineShaderGroupNV(commandBuffer, pipelineBindPoint, pipeline, groupIndex, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipeline, UInt32), commandBuffer, pipelineBindPoint, pipeline, groupIndex)
+    ccall((:vkCmdBindPipelineShaderGroupNV, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineBindPoint, VkPipeline, UInt32), commandBuffer, pipelineBindPoint, pipeline, groupIndex)
 end
 
 function vkCreateIndirectCommandsLayoutNV(device, pCreateInfo, pAllocator, pIndirectCommandsLayout, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkIndirectCommandsLayoutCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkIndirectCommandsLayoutNV}), device, pCreateInfo, pAllocator, pIndirectCommandsLayout)
+    ccall((:vkCreateIndirectCommandsLayoutNV, libvulkan), VkResult, (VkDevice, Ptr{VkIndirectCommandsLayoutCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkIndirectCommandsLayoutNV}), device, pCreateInfo, pAllocator, pIndirectCommandsLayout)
 end
 
 function vkDestroyIndirectCommandsLayoutNV(device, indirectCommandsLayout, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkIndirectCommandsLayoutNV, Ptr{VkAllocationCallbacks}), device, indirectCommandsLayout, pAllocator)
+    ccall((:vkDestroyIndirectCommandsLayoutNV, libvulkan), Cvoid, (VkDevice, VkIndirectCommandsLayoutNV, Ptr{VkAllocationCallbacks}), device, indirectCommandsLayout, pAllocator)
 end
 
 function vkCreatePrivateDataSlotEXT(device, pCreateInfo, pAllocator, pPrivateDataSlot, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPrivateDataSlotCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkPrivateDataSlotEXT}), device, pCreateInfo, pAllocator, pPrivateDataSlot)
+    ccall((:vkCreatePrivateDataSlotEXT, libvulkan), VkResult, (VkDevice, Ptr{VkPrivateDataSlotCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkPrivateDataSlotEXT}), device, pCreateInfo, pAllocator, pPrivateDataSlot)
 end
 
 function vkDestroyPrivateDataSlotEXT(device, privateDataSlot, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkPrivateDataSlotEXT, Ptr{VkAllocationCallbacks}), device, privateDataSlot, pAllocator)
+    ccall((:vkDestroyPrivateDataSlotEXT, libvulkan), Cvoid, (VkDevice, VkPrivateDataSlotEXT, Ptr{VkAllocationCallbacks}), device, privateDataSlot, pAllocator)
 end
 
 function vkSetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, data, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, UInt64), device, objectType, objectHandle, privateDataSlot, data)
+    ccall((:vkSetPrivateDataEXT, libvulkan), VkResult, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, UInt64), device, objectType, objectHandle, privateDataSlot, data)
 end
 
 function vkGetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, pData, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, Ptr{UInt64}), device, objectType, objectHandle, privateDataSlot, pData)
+    ccall((:vkGetPrivateDataEXT, libvulkan), Cvoid, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, Ptr{UInt64}), device, objectType, objectHandle, privateDataSlot, pData)
 end
 
 function vkCreateAndroidSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkAndroidSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateAndroidSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkAndroidSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkGetAndroidHardwareBufferPropertiesANDROID(device, buffer, pProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{AHardwareBuffer}, Ptr{VkAndroidHardwareBufferPropertiesANDROID}), device, buffer, pProperties)
+    ccall((:vkGetAndroidHardwareBufferPropertiesANDROID, libvulkan), VkResult, (VkDevice, Ptr{AHardwareBuffer}, Ptr{VkAndroidHardwareBufferPropertiesANDROID}), device, buffer, pProperties)
 end
 
 function vkGetMemoryAndroidHardwareBufferANDROID(device, pInfo, pBuffer, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkMemoryGetAndroidHardwareBufferInfoANDROID}, Ptr{Ptr{AHardwareBuffer}}), device, pInfo, pBuffer)
+    ccall((:vkGetMemoryAndroidHardwareBufferANDROID, libvulkan), VkResult, (VkDevice, Ptr{VkMemoryGetAndroidHardwareBufferInfoANDROID}, Ptr{Ptr{AHardwareBuffer}}), device, pInfo, pBuffer)
 end
 
 function vkCreateImagePipeSurfaceFUCHSIA(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkImagePipeSurfaceCreateInfoFUCHSIA}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateImagePipeSurfaceFUCHSIA, libvulkan), VkResult, (VkInstance, Ptr{VkImagePipeSurfaceCreateInfoFUCHSIA}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateIOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkIOSSurfaceCreateInfoMVK}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateIOSSurfaceMVK, libvulkan), VkResult, (VkInstance, Ptr{VkIOSSurfaceCreateInfoMVK}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateMacOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkMacOSSurfaceCreateInfoMVK}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateMacOSSurfaceMVK, libvulkan), VkResult, (VkInstance, Ptr{VkMacOSSurfaceCreateInfoMVK}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateMetalSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkMetalSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateMetalSurfaceEXT, libvulkan), VkResult, (VkInstance, Ptr{VkMetalSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateViSurfaceNN(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkViSurfaceCreateInfoNN}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateViSurfaceNN, libvulkan), VkResult, (VkInstance, Ptr{VkViSurfaceCreateInfoNN}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateWaylandSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkWaylandSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateWaylandSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkWaylandSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkGetPhysicalDeviceWaylandPresentationSupportKHR(physicalDevice, queueFamilyIndex, display, fun_ptr)
-    ccall(fun_ptr, VkBool32, (VkPhysicalDevice, UInt32, Ptr{wl_display}), physicalDevice, queueFamilyIndex, display)
+    ccall((:vkGetPhysicalDeviceWaylandPresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{wl_display}), physicalDevice, queueFamilyIndex, display)
 end
 
 function vkCreateWin32SurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkWin32SurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateWin32SurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkWin32SurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkGetPhysicalDeviceWin32PresentationSupportKHR(physicalDevice, queueFamilyIndex, fun_ptr)
-    ccall(fun_ptr, VkBool32, (VkPhysicalDevice, UInt32), physicalDevice, queueFamilyIndex)
+    ccall((:vkGetPhysicalDeviceWin32PresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32), physicalDevice, queueFamilyIndex)
 end
 
 function vkGetMemoryWin32HandleKHR(device, pGetWin32HandleInfo, pHandle, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkMemoryGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
+    ccall((:vkGetMemoryWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkMemoryGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
 end
 
 function vkGetMemoryWin32HandlePropertiesKHR(device, handleType, handle, pMemoryWin32HandleProperties, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryWin32HandlePropertiesKHR}), device, handleType, handle, pMemoryWin32HandleProperties)
+    ccall((:vkGetMemoryWin32HandlePropertiesKHR, libvulkan), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryWin32HandlePropertiesKHR}), device, handleType, handle, pMemoryWin32HandleProperties)
 end
 
 function vkImportSemaphoreWin32HandleKHR(device, pImportSemaphoreWin32HandleInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImportSemaphoreWin32HandleInfoKHR}), device, pImportSemaphoreWin32HandleInfo)
+    ccall((:vkImportSemaphoreWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkImportSemaphoreWin32HandleInfoKHR}), device, pImportSemaphoreWin32HandleInfo)
 end
 
 function vkGetSemaphoreWin32HandleKHR(device, pGetWin32HandleInfo, pHandle, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
+    ccall((:vkGetSemaphoreWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
 end
 
 function vkImportFenceWin32HandleKHR(device, pImportFenceWin32HandleInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImportFenceWin32HandleInfoKHR}), device, pImportFenceWin32HandleInfo)
+    ccall((:vkImportFenceWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkImportFenceWin32HandleInfoKHR}), device, pImportFenceWin32HandleInfo)
 end
 
 function vkGetFenceWin32HandleKHR(device, pGetWin32HandleInfo, pHandle, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkFenceGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
+    ccall((:vkGetFenceWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkFenceGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
 end
 
 function vkGetMemoryWin32HandleNV(device, memory, handleType, pHandle, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkDeviceMemory, VkExternalMemoryHandleTypeFlagsNV, Ptr{Cint}), device, memory, handleType, pHandle)
+    ccall((:vkGetMemoryWin32HandleNV, libvulkan), VkResult, (VkDevice, VkDeviceMemory, VkExternalMemoryHandleTypeFlagsNV, Ptr{Cint}), device, memory, handleType, pHandle)
 end
 
 function vkGetPhysicalDeviceSurfacePresentModes2EXT(physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes)
+    ccall((:vkGetPhysicalDeviceSurfacePresentModes2EXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes)
 end
 
 function vkAcquireFullScreenExclusiveModeEXT(device, swapchain, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
+    ccall((:vkAcquireFullScreenExclusiveModeEXT, libvulkan), VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
 end
 
 function vkReleaseFullScreenExclusiveModeEXT(device, swapchain, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
+    ccall((:vkReleaseFullScreenExclusiveModeEXT, libvulkan), VkResult, (VkDevice, VkSwapchainKHR), device, swapchain)
 end
 
 function vkGetDeviceGroupSurfacePresentModes2EXT(device, pSurfaceInfo, pModes, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{VkDeviceGroupPresentModeFlagsKHR}), device, pSurfaceInfo, pModes)
+    ccall((:vkGetDeviceGroupSurfacePresentModes2EXT, libvulkan), VkResult, (VkDevice, Ptr{VkPhysicalDeviceSurfaceInfo2KHR}, Ptr{VkDeviceGroupPresentModeFlagsKHR}), device, pSurfaceInfo, pModes)
 end
 
 function vkCreateXcbSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkXcbSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateXcbSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkXcbSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkGetPhysicalDeviceXcbPresentationSupportKHR(physicalDevice, queueFamilyIndex, connection, visual_id, fun_ptr)
-    ccall(fun_ptr, VkBool32, (VkPhysicalDevice, UInt32, Ptr{xcb_connection_t}, xcb_visualid_t), physicalDevice, queueFamilyIndex, connection, visual_id)
+    ccall((:vkGetPhysicalDeviceXcbPresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{xcb_connection_t}, xcb_visualid_t), physicalDevice, queueFamilyIndex, connection, visual_id)
 end
 
 function vkCreateXlibSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkXlibSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateXlibSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkXlibSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkGetPhysicalDeviceXlibPresentationSupportKHR(physicalDevice, queueFamilyIndex, dpy, visualID, fun_ptr)
-    ccall(fun_ptr, VkBool32, (VkPhysicalDevice, UInt32, Ptr{Display}, VisualID), physicalDevice, queueFamilyIndex, dpy, visualID)
+    ccall((:vkGetPhysicalDeviceXlibPresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{Display}, VisualID), physicalDevice, queueFamilyIndex, dpy, visualID)
 end
 
 function vkCreateDirectFBSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkDirectFBSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateDirectFBSurfaceEXT, libvulkan), VkResult, (VkInstance, Ptr{VkDirectFBSurfaceCreateInfoEXT}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkGetPhysicalDeviceDirectFBPresentationSupportEXT(physicalDevice, queueFamilyIndex, dfb, fun_ptr)
-    ccall(fun_ptr, VkBool32, (VkPhysicalDevice, UInt32, Ptr{Cint}), physicalDevice, queueFamilyIndex, dfb)
+    ccall((:vkGetPhysicalDeviceDirectFBPresentationSupportEXT, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{Cint}), physicalDevice, queueFamilyIndex, dfb)
 end
 
 function vkAcquireXlibDisplayEXT(physicalDevice, dpy, display, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{Display}, VkDisplayKHR), physicalDevice, dpy, display)
+    ccall((:vkAcquireXlibDisplayEXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{Display}, VkDisplayKHR), physicalDevice, dpy, display)
 end
 
 function vkGetRandROutputDisplayEXT(physicalDevice, dpy, rrOutput, pDisplay, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{Display}, RROutput, Ptr{VkDisplayKHR}), physicalDevice, dpy, rrOutput, pDisplay)
+    ccall((:vkGetRandROutputDisplayEXT, libvulkan), VkResult, (VkPhysicalDevice, Ptr{Display}, RROutput, Ptr{VkDisplayKHR}), physicalDevice, dpy, rrOutput, pDisplay)
 end
 
 function vkCreateStreamDescriptorSurfaceGGP(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkStreamDescriptorSurfaceCreateInfoGGP}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateStreamDescriptorSurfaceGGP, libvulkan), VkResult, (VkInstance, Ptr{VkStreamDescriptorSurfaceCreateInfoGGP}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
 function vkCreateDeferredOperationKHR(device, pAllocator, pDeferredOperation, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAllocationCallbacks}, Ptr{VkDeferredOperationKHR}), device, pAllocator, pDeferredOperation)
+    ccall((:vkCreateDeferredOperationKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAllocationCallbacks}, Ptr{VkDeferredOperationKHR}), device, pAllocator, pDeferredOperation)
 end
 
 function vkDestroyDeferredOperationKHR(device, operation, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkDeferredOperationKHR, Ptr{VkAllocationCallbacks}), device, operation, pAllocator)
+    ccall((:vkDestroyDeferredOperationKHR, libvulkan), Cvoid, (VkDevice, VkDeferredOperationKHR, Ptr{VkAllocationCallbacks}), device, operation, pAllocator)
 end
 
 function vkGetDeferredOperationMaxConcurrencyKHR(device, operation, fun_ptr)
-    ccall(fun_ptr, UInt32, (VkDevice, VkDeferredOperationKHR), device, operation)
+    ccall((:vkGetDeferredOperationMaxConcurrencyKHR, libvulkan), UInt32, (VkDevice, VkDeferredOperationKHR), device, operation)
 end
 
 function vkGetDeferredOperationResultKHR(device, operation, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+    ccall((:vkGetDeferredOperationResultKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
 end
 
 function vkDeferredOperationJoinKHR(device, operation, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+    ccall((:vkDeferredOperationJoinKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
 end
 
 function vkCreateAccelerationStructureKHR(device, pCreateInfo, pAllocator, pAccelerationStructure, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureKHR}), device, pCreateInfo, pAllocator, pAccelerationStructure)
+    ccall((:vkCreateAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureKHR}), device, pCreateInfo, pAllocator, pAccelerationStructure)
 end
 
 function vkGetAccelerationStructureMemoryRequirementsKHR(device, pInfo, pMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoKHR}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+    ccall((:vkGetAccelerationStructureMemoryRequirementsKHR, libvulkan), Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoKHR}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
 end
 
 function vkCmdBuildAccelerationStructureKHR(commandBuffer, infoCount, pInfos, ppOffsetInfos, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), commandBuffer, infoCount, pInfos, ppOffsetInfos)
+    ccall((:vkCmdBuildAccelerationStructureKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), commandBuffer, infoCount, pInfos, ppOffsetInfos)
 end
 
 function vkCmdBuildAccelerationStructureIndirectKHR(commandBuffer, pInfo, indirectBuffer, indirectOffset, indirectStride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, VkBuffer, VkDeviceSize, UInt32), commandBuffer, pInfo, indirectBuffer, indirectOffset, indirectStride)
+    ccall((:vkCmdBuildAccelerationStructureIndirectKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, VkBuffer, VkDeviceSize, UInt32), commandBuffer, pInfo, indirectBuffer, indirectOffset, indirectStride)
 end
 
 function vkBuildAccelerationStructureKHR(device, infoCount, pInfos, ppOffsetInfos, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), device, infoCount, pInfos, ppOffsetInfos)
+    ccall((:vkBuildAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), device, infoCount, pInfos, ppOffsetInfos)
 end
 
 function vkCopyAccelerationStructureKHR(device, pInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureInfoKHR}), device, pInfo)
+    ccall((:vkCopyAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureInfoKHR}), device, pInfo)
 end
 
 function vkCopyAccelerationStructureToMemoryKHR(device, pInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), device, pInfo)
+    ccall((:vkCopyAccelerationStructureToMemoryKHR, libvulkan), VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), device, pInfo)
 end
 
 function vkCopyMemoryToAccelerationStructureKHR(device, pInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), device, pInfo)
+    ccall((:vkCopyMemoryToAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), device, pInfo)
 end
 
 function vkWriteAccelerationStructuresPropertiesKHR(device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, Csize_t, Ptr{Cvoid}, Csize_t), device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride)
+    ccall((:vkWriteAccelerationStructuresPropertiesKHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, Csize_t, Ptr{Cvoid}, Csize_t), device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride)
 end
 
 function vkCmdCopyAccelerationStructureKHR(commandBuffer, pInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureInfoKHR}), commandBuffer, pInfo)
+    ccall((:vkCmdCopyAccelerationStructureKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureInfoKHR}), commandBuffer, pInfo)
 end
 
 function vkCmdCopyAccelerationStructureToMemoryKHR(commandBuffer, pInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), commandBuffer, pInfo)
+    ccall((:vkCmdCopyAccelerationStructureToMemoryKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), commandBuffer, pInfo)
 end
 
 function vkCmdCopyMemoryToAccelerationStructureKHR(commandBuffer, pInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), commandBuffer, pInfo)
+    ccall((:vkCmdCopyMemoryToAccelerationStructureKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), commandBuffer, pInfo)
 end
 
 function vkCmdTraceRaysKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, UInt32, UInt32, UInt32), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth)
+    ccall((:vkCmdTraceRaysKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, UInt32, UInt32, UInt32), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth)
 end
 
 function vkCreateRayTracingPipelinesKHR(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+    ccall((:vkCreateRayTracingPipelinesKHR, libvulkan), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
 end
 
 function vkGetAccelerationStructureDeviceAddressKHR(device, pInfo, fun_ptr)
-    ccall(fun_ptr, VkDeviceAddress, (VkDevice, Ptr{VkAccelerationStructureDeviceAddressInfoKHR}), device, pInfo)
+    ccall((:vkGetAccelerationStructureDeviceAddressKHR, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkAccelerationStructureDeviceAddressInfoKHR}), device, pInfo)
 end
 
 function vkGetRayTracingCaptureReplayShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
+    ccall((:vkGetRayTracingCaptureReplayShaderGroupHandlesKHR, libvulkan), VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
 end
 
 function vkCmdTraceRaysIndirectKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, buffer, offset, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, VkBuffer, VkDeviceSize), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, buffer, offset)
+    ccall((:vkCmdTraceRaysIndirectKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, VkBuffer, VkDeviceSize), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, buffer, offset)
 end
 
 function vkGetDeviceAccelerationStructureCompatibilityKHR(device, version, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAccelerationStructureVersionKHR}), device, version)
+    ccall((:vkGetDeviceAccelerationStructureCompatibilityKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAccelerationStructureVersionKHR}), device, version)
 end

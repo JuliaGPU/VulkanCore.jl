@@ -42,6 +42,7 @@ output_file=api_file,
 run(wc)
 
 api_str = join(readlines(api_file), "\n")
+write(api_file, replace(api_str, "libvulkan" => "libvulkan[]"))
 
 # add an additional method which uses a function pointer for each API function
 wrapped_funcs = String[]
@@ -49,7 +50,7 @@ for func ∈ eachmatch(r"function (.*)\((.*)\)\n    (ccall.*)\nend", api_str)
     name, args, body = func.captures
     wrapped_func = """
     function $name($args, fun_ptr)
-        $(replace(body, "(:$name, libvulkan)" => "fun_ptr"))
+        $(replace(body, "(:$name, libvulkan[])" => "fun_ptr"))
     end
     """
     push!(wrapped_funcs, wrapped_func)

@@ -3,23 +3,28 @@ module LibVulkan
 import Libdl
 
 const libnames = ["vulkan-1", "vulkan", "libvulkan", "libvulkan.so.1", "libvk_swiftshader"]
-
 const libextrapaths = []
+const libvulkan = Ref{String}("")
 
-foreach([get(ENV, "JULIA_VULKAN_LIBNAME", ""), get(ENV, "JULIA_VULKAN_SDK_LIBNAME", "")]) do libname
-    !isempty(libname) && push!(libnames, libname)
+function __init__()
+    foreach([get(ENV, "JULIA_VULKAN_LIBNAME", ""), get(ENV, "JULIA_VULKAN_SDK_LIBNAME", "")]) do libname
+        !isempty(libname) && push!(libnames, libname)
+    end
+
+    foreach([get(ENV, "JULIA_VULKAN_SEARCH_PATH", ""), get(ENV, "JULIA_VULKAN_SDK_SEARCH_PATH", "")]) do search_path
+        !isempty(search_path) && push!(libextrapaths, search_path)
+    end
+
+    libvulkan[] = Libdl.find_library(libnames, libextrapaths)
+
+    if isempty(libvulkan[])
+        extra_search_msg = isempty([libextrapaths; Libdl.DL_LOAD_PATH]) ? "." : " with extra search directories $(join([libextrapaths; Libdl.DL_LOAD_PATH], ", "))"
+        error("""
+        Failed to retrieve a valid Vulkan library. Tried looking for library names $(join(libnames, ", "))$extra_search_msg
+        Please configure the `JULIA_VULKAN_LIBNAME` and/or `JULIA_VULKAN_SEARCH_PATH` environment variables to specify your configuration, or add search paths by appending them to Lidbl.DL_LOAD_PATH before loading VulkanCore.
+        """)
+    end
 end
-
-foreach([get(ENV, "JULIA_VULKAN_SEARCH_PATH", ""), get(ENV, "JULIA_VULKAN_SDK_SEARCH_PATH", "")]) do search_path
-    !isempty(search_path) && push!(libextrapaths, search_path)
-end
-
-const libvulkan = Libdl.find_library(libnames, libextrapaths)
-
-!isempty(libvulkan) || error("""
-Failed to retrieve a valid Vulkan library. Tried looking for library names $(join(libnames, ", ")) with search directories $(join([libextrapaths; Libdl.DL_LOAD_PATH], ", ")).
-Please configure the `JULIA_VULKAN_LIBNAME` and/or `JULIA_VULKAN_SEARCH_PATH` environment variables to specify extra paths, or add search paths by appending them to Lidbl.DL_LOAD_PATH before loading VulkanCore.
-""")
 
 using CEnum
 
