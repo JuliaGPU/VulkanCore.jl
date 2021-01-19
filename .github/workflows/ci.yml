@@ -81,7 +81,8 @@ jobs:
         arch: x64
     - uses: julia-actions/julia-buildpkg@latest
     - uses: julia-actions/julia-runtest@latest
-      prefix: julia -e 'using GLFW; run(`otool -l $(GLFW.GLFW_jll.libglfw_path)`)'
+      with:
+        prefix: julia -e 'using GLFW; run(`otool -l $(GLFW.GLFW_jll.libglfw_path)`)'
       env:
         DISPLAY: :99
     - uses: julia-actions/julia-uploadcodecov@latest
