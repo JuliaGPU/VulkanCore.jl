@@ -67,8 +67,6 @@ jobs:
         VULKAN_SDK=$GITHUB_WORKSPACE/../vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS
         echo VULKAN_SDK=$VULKAN_SDK >> $GITHUB_ENV
         echo DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:${DYLD_LIBRARY_PATH:-}" >> $GITHUB_ENV
-        echo LD_LIBRARY_PATH="$VULKAN_SDK/lib:${LD_LIBRARY_PATH:-}" >> $GITHUB_ENV
-        echo DYLD_FALLBACK_LIBRARY_PATH="$VULKAN_SDK/lib:${DYLD_FALLBACK_LIBRARY_PATH:-}" >> $GITHUB_ENV
         echo VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d >> $GITHUB_ENV
         echo VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json >> $GITHUB_ENV
     - name: Download & Extract Vulkan SDK
@@ -83,6 +81,7 @@ jobs:
         arch: x64
     - uses: julia-actions/julia-buildpkg@latest
     - uses: julia-actions/julia-runtest@latest
+      prefix: julia -e 'using GLFW; run(`otool -l $(GLFW.GLFW_jll.libglfw_path)`)'
       env:
         DISPLAY: :99
     - uses: julia-actions/julia-uploadcodecov@latest
