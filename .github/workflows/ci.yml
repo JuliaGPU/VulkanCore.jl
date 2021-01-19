@@ -78,8 +78,11 @@ jobs:
         cd /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
         rsync -K -a . $GITHUB_WORKSPACE/vulkansdk/
         cd $GITHUB_WORKSPACE/vulkansdk/
-        ls macOS
         ls macOS/lib
+        cd $VULKAN_SDK/lib
+        ls
+        readlink libvulkan.dylib
+        readlink libvulkan.1.dylib
         hdiutil detach /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
     - uses: julia-actions/setup-julia@v1
       with:
