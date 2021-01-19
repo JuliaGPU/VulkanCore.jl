@@ -61,7 +61,7 @@ jobs:
   macos-latest-x64:
     runs-on: macos-latest
     env:
-      VULKAN_SDK: $GITHUB_WORKSPACE/vulkansdk/macOS
+      VULKAN_SDK: /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS
       DISPLAY: :99
     steps:
     - uses: actions/checkout@v2
@@ -73,21 +73,9 @@ jobs:
         echo VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json >> $GITHUB_ENV
     - name: Download & Extract Vulkan SDK
       run: |
-        cd $GITHUB_WORKSPACE && mkdir downloads && mkdir vulkansdk
         wget --no-cookies -O $GITHUB_WORKSPACE/downloads/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg?u=
         hdiutil attach $GITHUB_WORKSPACE/downloads/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg
         cd /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
-        rsync -K -a . $GITHUB_WORKSPACE/vulkansdk/
-        cd $GITHUB_WORKSPACE/vulkansdk/
-        ls macOS
-        ls macOS/lib
-        echo $VULKAN_SDK
-        cd $VULKAN_SDK
-        pwd
-        ls lib
-        cd lib
-        readlink libvulkan.dylib
-        hdiutil detach /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
     - uses: julia-actions/setup-julia@v1
       with:
         version: ${{env.JuliaVersion}}
@@ -97,3 +85,5 @@ jobs:
     - uses: julia-actions/julia-uploadcodecov@latest
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    - name: Detach 
+      run: hdiutil detach /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
