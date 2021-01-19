@@ -5,9 +5,9 @@ import Libdl
 @static if !isempty(get(ENV, "JULIA_VULKAN_LIBNAME", ""))
     const libvulkan = ENV["JULIA_VULKAN_LIBNAME"]
 elseif Sys.iswindows()
-    const libvulkan = "vulkan-1.dll"
+    const libvulkan = "vulkan-1.dll" 
 elseif Sys.isapple()
-    const libvulkan = "libvulkan.1.dylib"
+    const libvulkan = "libvulkan.dylib"
 elseif Sys.islinux()
     const libvulkan = "libvulkan.so.1"
 else
@@ -26,6 +26,7 @@ function __init__()
     end
     libvulkan_handle[] = Libdl.dlopen(libname)
 end
+
 using CEnum
 
 const Ctm = Base.Libc.TmStruct
