@@ -3,9 +3,9 @@ module LibVulkan
 import Libdl
 
 @static if Sys.iswindows()
-    const libvulkan = "vulkan-1.dll" 
+    const libvulkan = "vulkan-1.dll"
 elseif Sys.isapple()
-    const libvulkan = "libvulkan.dylib"
+    const libvulkan = "libvulkan.1.dylib"
 elseif Sys.islinux()
     const libvulkan = "libvulkan.so.1"
 else
