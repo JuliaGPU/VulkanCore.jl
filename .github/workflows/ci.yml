@@ -64,7 +64,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Set Environment variables
       run: |
-        VULKAN_SDK=$GITHUB_WORKSPACE/../vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS
+        VULKAN_SDK=$GITHUB_WORKSPACE/vulkansdk/macOS
         echo VULKAN_SDK=$VULKAN_SDK >> $GITHUB_ENV
         echo PATH="$PATH:$VULKAN_SDK/bin" >> $GITHUB_ENV
         echo DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:${DYLD_LIBRARY_PATH:-}" >> $GITHUB_ENV
@@ -72,11 +72,14 @@ jobs:
         echo VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json >> $GITHUB_ENV
     - name: Download & Extract Vulkan SDK
       run: |
-        wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg?u=
-        hdiutil attach ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg
-        ls /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
+        cd $GITHUB_WORKSPACE && mkdir downloads && mkdir vulkansdk
+        wget --no-cookies -O $GITHUB_WORKSPACE/downloads/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg?u=
+        hdiutil attach $GITHUB_WORKSPACE/downloads/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg
         cd /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
-        rsync -K -a . $GITHUB_WORKSPACE/../
+        rsync -K -a . $GITHUB_WORKSPACE/vulkansdk/
+        cd $GITHUB_WORKSPACE/vulkansdk/
+        ls macOS
+        ls macOS/lib
         hdiutil detach /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
     - uses: julia-actions/setup-julia@v1
       with:
