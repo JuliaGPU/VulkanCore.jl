@@ -60,11 +60,13 @@ jobs:
 
   macos-latest-x64:
     runs-on: macos-latest
+    env:
+      VULKAN_SDK: $GITHUB_WORKSPACE/vulkansdk/macOS
+      DISPLAY: :99
     steps:
     - uses: actions/checkout@v2
     - name: Set Environment variables
       run: |
-        VULKAN_SDK=$GITHUB_WORKSPACE/vulkansdk/macOS
         echo VULKAN_SDK=$VULKAN_SDK >> $GITHUB_ENV
         echo PATH="$PATH:$VULKAN_SDK/bin" >> $GITHUB_ENV
         echo DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:${DYLD_LIBRARY_PATH:-}" >> $GITHUB_ENV
@@ -78,11 +80,9 @@ jobs:
         cd /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
         rsync -K -a . $GITHUB_WORKSPACE/vulkansdk/
         cd $GITHUB_WORKSPACE/vulkansdk/
-        ls macOS/lib
-        cd $VULKAN_SDK/lib
+        cd $VULKAN_SDK/lib && pwd
         ls
         readlink libvulkan.dylib
-        readlink libvulkan.1.dylib
         hdiutil detach /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
     - uses: julia-actions/setup-julia@v1
       with:
@@ -90,8 +90,6 @@ jobs:
         arch: x64
     - uses: julia-actions/julia-buildpkg@latest
     - uses: julia-actions/julia-runtest@latest
-      env:
-        DISPLAY: :99
     - uses: julia-actions/julia-uploadcodecov@latest
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
