@@ -5,7 +5,7 @@ import Libdl
 @static if !isempty(get(ENV, "JULIA_VULKAN_LIBNAME", ""))
     const libvulkan = ENV["JULIA_VULKAN_LIBNAME"]
 elseif Sys.iswindows()
-    const libvulkan = "vulkan-1.dll" 
+    const libvulkan = "vulkan-1.dll"
 elseif Sys.isapple()
     const libvulkan = "libvulkan.dylib"
 elseif Sys.islinux()
@@ -19,10 +19,13 @@ const libvulkan_handle = Ref{Ptr{Cvoid}}(0)
 function __init__()
     libname = Libdl.find_library(libvulkan)
     if isempty(libname)
-            error("""
-            Failed to retrieve a valid Vulkan library called '$libvulkan'.
-            If you configure the `JULIA_VULKAN_LIBNAME` environment variable before precompiling VulkanCore, it will be used instead of '$libvulkan'. You may also manually add search paths by appending them to Lidbl.DL_LOAD_PATH, but note that this may have repercussions beyond this package.
-            """)
+        error("""
+        Failed to retrieve a valid Vulkan library called '$libvulkan'.
+        If you configure the `JULIA_VULKAN_LIBNAME` environment variable before precompiling
+        VulkanCore, it will be used instead of '$libvulkan'. You may also manually add search
+        paths by appending them to Lidbl.DL_LOAD_PATH, but note that this may have repercussions
+        beyond this package.
+        """)
     end
     libvulkan_handle[] = Libdl.dlopen(libname)
 end
@@ -74,7 +77,7 @@ const GgpStreamDescriptor = UInt32
 const GgpFrameToken = UInt32
 
 # TODO: Clang.jl should support this kinda macros
-VK_MAKE_VERSION(major, minor, patch) = ( Cuint(major) << 22 ) | ( Cuint(minor) << 12 ) | patch
+VK_MAKE_VERSION(major, minor, patch) = (Cuint(major) << 22) | (Cuint(minor) << 12) | patch
 
 VK_VERSION_MAJOR(version) = Cuint(version) >> 22
 VK_VERSION_MINOR(version) = (Cuint(version) >> 12) & 0x3ff
@@ -90,10 +93,12 @@ include(joinpath(@__DIR__, "..", "gen", "vk_api.jl"))
 const VK_HEADER_VERSION_COMPLETE = VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION)
 
 # export everything
-foreach(names(@__MODULE__, all=true)) do s
-   if startswith(string(s), "VK_") || startswith(string(s), "Vk") || startswith(string(s), "vk")
-       @eval export $s
-   end
+foreach(names(@__MODULE__, all = true)) do s
+    if startswith(string(s), "VK_") ||
+       startswith(string(s), "Vk") ||
+       startswith(string(s), "vk")
+        @eval export $s
+    end
 end
 
 end # module

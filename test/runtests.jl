@@ -4,7 +4,11 @@ using Test
 using GLFW
 
 @static if get(ENV, "JULIA_GITHUB_ACTIONS_CI", "OFF") == "ON" && Sys.isapple()
-    run(`install_name_tool -add_rpath $(joinpath(ENV["VULKAN_SDK"], "lib", "libvulkan.dylib")) $(GLFW.GLFW_jll.libglfw_path)`)
+    libvk = joinpath(ENV["VULKAN_SDK"], "lib", "libvulkan.dylib")
+    ispath(libvk)
+    @show libvk
+    run(`install_name_tool -add_rpath $(libvk) $(GLFW.GLFW_jll.libglfw_path)`)
+    run(`otool -l $(GLFW.GLFW_jll.libglfw_path)`)
 end
 
 @testset "GLFW" begin
