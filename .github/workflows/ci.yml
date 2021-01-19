@@ -74,7 +74,7 @@ jobs:
       run: |
         wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg?u=
         hdiutil attach ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg
-        cp -r /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}} ../
+        cp -r /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}} $GITHUB_WORKSPACE/../
         hdiutil detach /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
     - uses: julia-actions/setup-julia@v1
       with:
