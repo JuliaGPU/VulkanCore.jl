@@ -62,13 +62,6 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set Environment variables
-      run: |
-        VULKAN_SDK=/Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS
-        echo PATH="$PATH:$VULKAN_SDK/bin" >> $GITHUB_ENV
-        echo DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:${DYLD_LIBRARY_PATH:-}" >> $GITHUB_ENV
-        echo VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d >> $GITHUB_ENV
-        echo VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json >> $GITHUB_ENV
     - name: Download & Extract Vulkan SDK
       run: |
         wget --no-cookies -O $GITHUB_WORKSPACE/../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg?u=
@@ -79,6 +72,11 @@ jobs:
         arch: x64
     - uses: julia-actions/julia-buildpkg@latest
     - uses: julia-actions/julia-runtest@latest
+      env:
+        DYLD_LIBRARY_PATH: "/Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS/lib"
+        VK_LAYER_PATH: "/Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS/share/vulkan/explicit_layer.d"
+        VK_ICD_FILENAMES: "/Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS/share/vulkan/icd.d/MoltenVK_icd.json"
+        DISPLAY: :99
     - uses: julia-actions/julia-uploadcodecov@latest
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
