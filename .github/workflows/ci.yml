@@ -67,7 +67,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: Set Environment variables
       run: |
-        echo VULKAN_SDK=$VULKAN_SDK >> $GITHUB_ENV
         echo PATH="$PATH:$VULKAN_SDK/bin" >> $GITHUB_ENV
         echo DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:${DYLD_LIBRARY_PATH:-}" >> $GITHUB_ENV
         echo VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d >> $GITHUB_ENV
@@ -82,8 +81,11 @@ jobs:
         cd $GITHUB_WORKSPACE/vulkansdk/
         ls macOS
         ls macOS/lib
-        cd $VULKAN_SDK/lib && pwd
-        ls
+        echo $VULKAN_SDK
+        cd $VULKAN_SDK
+        pwd
+        ls lib
+        cd lib
         readlink libvulkan.dylib
         hdiutil detach /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
     - uses: julia-actions/setup-julia@v1
