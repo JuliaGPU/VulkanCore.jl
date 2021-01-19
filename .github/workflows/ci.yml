@@ -80,6 +80,7 @@ jobs:
         cd /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
         rsync -K -a . $GITHUB_WORKSPACE/vulkansdk/
         cd $GITHUB_WORKSPACE/vulkansdk/
+        ls
         cd $VULKAN_SDK/lib && pwd
         ls
         readlink libvulkan.dylib
