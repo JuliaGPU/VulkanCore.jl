@@ -60,13 +60,11 @@ jobs:
 
   macos-latest-x64:
     runs-on: macos-latest
-    env:
-      VULKAN_SDK: /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS
-      DISPLAY: :99
     steps:
     - uses: actions/checkout@v2
     - name: Set Environment variables
       run: |
+        VULKAN_SDK=/Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS
         echo PATH="$PATH:$VULKAN_SDK/bin" >> $GITHUB_ENV
         echo DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:${DYLD_LIBRARY_PATH:-}" >> $GITHUB_ENV
         echo VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d >> $GITHUB_ENV
@@ -75,7 +73,6 @@ jobs:
       run: |
         wget --no-cookies -O $GITHUB_WORKSPACE/downloads/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg?u=
         hdiutil attach $GITHUB_WORKSPACE/downloads/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg
-        cd /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
     - uses: julia-actions/setup-julia@v1
       with:
         version: ${{env.JuliaVersion}}
@@ -85,5 +82,6 @@ jobs:
     - uses: julia-actions/julia-uploadcodecov@latest
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-    - name: Detach 
-      run: hdiutil detach /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
+    - name: Detach Volumes
+      run: | 
+        hdiutil detach /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
