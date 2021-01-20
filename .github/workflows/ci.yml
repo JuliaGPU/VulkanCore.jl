@@ -78,7 +78,7 @@ jobs:
       run: |
         wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg?u=
         hdiutil attach ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg
-        julia -e 'import Pkg; Pkg.add("GLFW"); using GLFW; print("\nLIBGLFWPATH=", GLFW.GLFW_jll.libglfw_path)' >> $GITHUB_ENV
+        julia -e 'import Pkg; Pkg.add("GLFW"); using GLFW; print(raw"LIBGLFWPATH=", GLFW.GLFW_jll.libglfw_path)' >> $GITHUB_ENV
     - name: Print INFO
       run: |
         echo $LIBGLFWPATH
