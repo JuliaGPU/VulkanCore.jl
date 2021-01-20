@@ -85,7 +85,7 @@ jobs:
         julia -e 'using GLFW; println("echo LIBGLFWPATH=", GLFW.GLFW_jll.libglfw_path)' >> $GITHUB_ENV
     - uses: julia-actions/julia-runtest@latest
       with:
-        prefix: install_name_tool -add_rpath ${{VULKAN_SDK}}/lib/libvulkan.dylib ${{LIBGLFWPATH}}
+        prefix: install_name_tool -add_rpath ${VULKAN_SDK}/lib/libvulkan.dylib ${LIBGLFWPATH}
       env:
         DISPLAY: :99
     - uses: julia-actions/julia-uploadcodecov@latest
