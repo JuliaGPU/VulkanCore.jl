@@ -81,6 +81,8 @@ jobs:
     - name: Extract GFLW PATH
       run: |
         julia -e 'import Pkg; Pkg.add("GLFW"); using GLFW; println("echo LIBGLFWPATH=", GLFW.GLFW_jll.libglfw_path)' >> $GITHUB_ENV
+        echo $LIBGLFWPATH
+        ls ${VULKAN_SDK}/lib/
     - uses: julia-actions/julia-runtest@latest
       with:
         prefix: install_name_tool -add_rpath ${VULKAN_SDK}/lib/libvulkan.dylib ${LIBGLFWPATH}
