@@ -81,7 +81,7 @@ jobs:
         julia -e 'import Pkg; Pkg.add("GLFW"); using GLFW; print(raw"LIBGLFWPATH=", GLFW.GLFW_jll.libglfw_path)' >> $GITHUB_ENV
     - name: Print INFO
       run: |
-        echo $LIBGLFWPATH
+        echo $25l25hLIBGLFWPATH
         ls ${VULKAN_SDK}/lib/libvulkan.1.2.148.dylib
     - uses: julia-actions/julia-runtest@latest
       with:
