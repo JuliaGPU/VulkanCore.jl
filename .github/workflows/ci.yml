@@ -82,7 +82,7 @@ jobs:
     - uses: julia-actions/julia-buildpkg@latest
     - uses: julia-actions/julia-runtest@latest
       with:
-        prefix: julia -e 'using GLFW; cm = @cmd("install_name_tool -add_rpath $(joinpath(ENV["VULKAN_SDK"], "lib", "libvulkan.dylib")) $(GLFW.GLFW_jll.libglfw_path)"); run(cm); cm = @cmd("otool -l $(GLFW.GLFW_jll.libglfw_path)"); run(cm);'
+        prefix: julia -e 'using GLFW; cm = @cmd("install_name_tool -add_rpath "*joinpath(ENV["VULKAN_SDK"], "lib", "libvulkan.dylib")*" "*GLFW.GLFW_jll.libglfw_path); run(cm);'
       env:
         DISPLAY: :99
     - uses: julia-actions/julia-uploadcodecov@latest
