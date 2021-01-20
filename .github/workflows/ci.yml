@@ -69,18 +69,17 @@ jobs:
         # echo DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:${DYLD_LIBRARY_PATH:-}" >> $GITHUB_ENV
         echo VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d >> $GITHUB_ENV
         echo VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json >> $GITHUB_ENV
-    - name: Download & Extract Vulkan SDK
-      run: |
-        wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg?u=
-        hdiutil attach ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg
     - uses: julia-actions/setup-julia@v1
       with:
         version: ${{env.JuliaVersion}}
         arch: x64
     - uses: julia-actions/julia-buildpkg@latest
-    - name: Extract GFLW PATH
+    - name: Download VulkanSDK and Extract GFLW PATH
       run: |
+        wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg?u=
+        hdiutil attach ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg
         julia -e 'import Pkg; Pkg.add("GLFW"); using GLFW; println("LIBGLFWPATH=", GLFW.GLFW_jll.libglfw_path)' >> $GITHUB_ENV
+      run: |
         echo $LIBGLFWPATH
         ls ${VULKAN_SDK}/lib/
     - uses: julia-actions/julia-runtest@latest
