@@ -80,9 +80,10 @@ jobs:
         version: ${{env.JuliaVersion}}
         arch: x64
     - uses: julia-actions/julia-buildpkg@latest
+    - run: inject_cmd = (julia -e 'using GLFW; cm = @cmd("install_name_tool -add_rpath "*joinpath(ENV["VULKAN_SDK"], "lib", "libvulkan.dylib")*" "*GLFW.GLFW_jll.libglfw_path); run(cm);')
     - uses: julia-actions/julia-runtest@latest
       with:
-        prefix: julia -e 'using GLFW; cm = @cmd("install_name_tool -add_rpath "*joinpath(ENV["VULKAN_SDK"], "lib", "libvulkan.dylib")*" "*GLFW.GLFW_jll.libglfw_path); run(cm);'
+        prefix: inject_cmd
       env:
         DISPLAY: :99
     - uses: julia-actions/julia-uploadcodecov@latest
