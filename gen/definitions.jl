@@ -15,8 +15,6 @@ struct wl_surface <: AbstractJuliaSIT end
 # Mir
 struct MirConnection <: AbstractJuliaSIT end
 struct MirSurface <: AbstractJuliaSIT end
-# Android
-struct ANativeWindow <: AbstractJuliaSIT end
 # Windows
 struct HINSTANCE <: AbstractJuliaSIT end
 struct HWND <: AbstractJuliaSIT end
@@ -46,7 +44,6 @@ add_definition(Dict(
     :wl_surface => wl_surface(),
     :MirConnection => MirConnection(),
     :MirSurface => MirSurface(),
-    :ANativeWindow => ANativeWindow(),
     :HINSTANCE => HINSTANCE(),
     :HWND => HWND(),
     :HMONITOR => HMONITOR(),
@@ -72,7 +69,6 @@ Generators.translate(::wl_display, options=Dict()) = :wl_display
 Generators.translate(::wl_surface, options=Dict()) = :wl_surface
 Generators.translate(::MirConnection, options=Dict()) = :MirConnection
 Generators.translate(::MirSurface, options=Dict()) = :MirSurface
-Generators.translate(::ANativeWindow, options=Dict()) = :ANativeWindow
 Generators.translate(::HINSTANCE, options=Dict()) = :HINSTANCE
 Generators.translate(::HWND, options=Dict()) = :HWND
 Generators.translate(::HMONITOR, options=Dict()) = :HMONITOR
