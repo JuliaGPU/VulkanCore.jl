@@ -9,3 +9,6 @@ export_symbol_prefixes = ["VK_", "Vk", "vk"]
 
 prologue_file_path = "./gen/prologue.jl"
 epilogue_file_path = ""
+
+[codegen]
+opaque_as_mutable_struct = false

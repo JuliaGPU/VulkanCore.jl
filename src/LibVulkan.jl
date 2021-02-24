@@ -89,103 +89,103 @@ const VkFlags = UInt32
 
 const VkSampleMask = UInt32
 
-mutable struct VkBuffer_T end
+const VkBuffer_T = Cvoid
 
 const VkBuffer = Ptr{VkBuffer_T}
 
-mutable struct VkImage_T end
+const VkImage_T = Cvoid
 
 const VkImage = Ptr{VkImage_T}
 
-mutable struct VkInstance_T end
+const VkInstance_T = Cvoid
 
 const VkInstance = Ptr{VkInstance_T}
 
-mutable struct VkPhysicalDevice_T end
+const VkPhysicalDevice_T = Cvoid
 
 const VkPhysicalDevice = Ptr{VkPhysicalDevice_T}
 
-mutable struct VkDevice_T end
+const VkDevice_T = Cvoid
 
 const VkDevice = Ptr{VkDevice_T}
 
-mutable struct VkQueue_T end
+const VkQueue_T = Cvoid
 
 const VkQueue = Ptr{VkQueue_T}
 
-mutable struct VkSemaphore_T end
+const VkSemaphore_T = Cvoid
 
 const VkSemaphore = Ptr{VkSemaphore_T}
 
-mutable struct VkCommandBuffer_T end
+const VkCommandBuffer_T = Cvoid
 
 const VkCommandBuffer = Ptr{VkCommandBuffer_T}
 
-mutable struct VkFence_T end
+const VkFence_T = Cvoid
 
 const VkFence = Ptr{VkFence_T}
 
-mutable struct VkDeviceMemory_T end
+const VkDeviceMemory_T = Cvoid
 
 const VkDeviceMemory = Ptr{VkDeviceMemory_T}
 
-mutable struct VkEvent_T end
+const VkEvent_T = Cvoid
 
 const VkEvent = Ptr{VkEvent_T}
 
-mutable struct VkQueryPool_T end
+const VkQueryPool_T = Cvoid
 
 const VkQueryPool = Ptr{VkQueryPool_T}
 
-mutable struct VkBufferView_T end
+const VkBufferView_T = Cvoid
 
 const VkBufferView = Ptr{VkBufferView_T}
 
-mutable struct VkImageView_T end
+const VkImageView_T = Cvoid
 
 const VkImageView = Ptr{VkImageView_T}
 
-mutable struct VkShaderModule_T end
+const VkShaderModule_T = Cvoid
 
 const VkShaderModule = Ptr{VkShaderModule_T}
 
-mutable struct VkPipelineCache_T end
+const VkPipelineCache_T = Cvoid
 
 const VkPipelineCache = Ptr{VkPipelineCache_T}
 
-mutable struct VkPipelineLayout_T end
+const VkPipelineLayout_T = Cvoid
 
 const VkPipelineLayout = Ptr{VkPipelineLayout_T}
 
-mutable struct VkPipeline_T end
+const VkPipeline_T = Cvoid
 
 const VkPipeline = Ptr{VkPipeline_T}
 
-mutable struct VkRenderPass_T end
+const VkRenderPass_T = Cvoid
 
 const VkRenderPass = Ptr{VkRenderPass_T}
 
-mutable struct VkDescriptorSetLayout_T end
+const VkDescriptorSetLayout_T = Cvoid
 
 const VkDescriptorSetLayout = Ptr{VkDescriptorSetLayout_T}
 
-mutable struct VkSampler_T end
+const VkSampler_T = Cvoid
 
 const VkSampler = Ptr{VkSampler_T}
 
-mutable struct VkDescriptorSet_T end
+const VkDescriptorSet_T = Cvoid
 
 const VkDescriptorSet = Ptr{VkDescriptorSet_T}
 
-mutable struct VkDescriptorPool_T end
+const VkDescriptorPool_T = Cvoid
 
 const VkDescriptorPool = Ptr{VkDescriptorPool_T}
 
-mutable struct VkFramebuffer_T end
+const VkFramebuffer_T = Cvoid
 
 const VkFramebuffer = Ptr{VkFramebuffer_T}
 
-mutable struct VkCommandPool_T end
+const VkCommandPool_T = Cvoid
 
 const VkCommandPool = Ptr{VkCommandPool_T}
 
@@ -4312,11 +4312,11 @@ function vkCmdExecuteCommands(commandBuffer, commandBufferCount, pCommandBuffers
     ccall((:vkCmdExecuteCommands, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkCommandBuffer}), commandBuffer, commandBufferCount, pCommandBuffers)
 end
 
-mutable struct VkSamplerYcbcrConversion_T end
+const VkSamplerYcbcrConversion_T = Cvoid
 
 const VkSamplerYcbcrConversion = Ptr{VkSamplerYcbcrConversion_T}
 
-mutable struct VkDescriptorUpdateTemplate_T end
+const VkDescriptorUpdateTemplate_T = Cvoid
 
 const VkDescriptorUpdateTemplate = Ptr{VkDescriptorUpdateTemplate_T}
 
@@ -5990,7 +5990,7 @@ function vkGetDeviceMemoryOpaqueCaptureAddress(device, pInfo)
     ccall((:vkGetDeviceMemoryOpaqueCaptureAddress, libvulkan), UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
 end
 
-mutable struct VkSurfaceKHR_T end
+const VkSurfaceKHR_T = Cvoid
 
 const VkSurfaceKHR = Ptr{VkSurfaceKHR_T}
 
@@ -6109,7 +6109,7 @@ function vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, pPre
     ccall((:vkGetPhysicalDeviceSurfacePresentModesKHR, libvulkan), VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, surface, pPresentModeCount, pPresentModes)
 end
 
-mutable struct VkSwapchainKHR_T end
+const VkSwapchainKHR_T = Cvoid
 
 const VkSwapchainKHR = Ptr{VkSwapchainKHR_T}
 
@@ -6280,11 +6280,11 @@ function vkAcquireNextImage2KHR(device, pAcquireInfo, pImageIndex)
     ccall((:vkAcquireNextImage2KHR, libvulkan), VkResult, (VkDevice, Ptr{VkAcquireNextImageInfoKHR}, Ptr{UInt32}), device, pAcquireInfo, pImageIndex)
 end
 
-mutable struct VkDisplayKHR_T end
+const VkDisplayKHR_T = Cvoid
 
 const VkDisplayKHR = Ptr{VkDisplayKHR_T}
 
-mutable struct VkDisplayModeKHR_T end
+const VkDisplayModeKHR_T = Cvoid
 
 const VkDisplayModeKHR = Ptr{VkDisplayModeKHR_T}
 
@@ -7495,7 +7495,7 @@ function vkGetPipelineExecutableInternalRepresentationsKHR(device, pExecutableIn
     ccall((:vkGetPipelineExecutableInternalRepresentationsKHR, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableInternalRepresentationKHR}), device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations)
 end
 
-mutable struct VkDebugReportCallbackEXT_T end
+const VkDebugReportCallbackEXT_T = Cvoid
 
 const VkDebugReportCallbackEXT = Ptr{VkDebugReportCallbackEXT_T}
 
@@ -8289,7 +8289,7 @@ function vkSetHdrMetadataEXT(device, swapchainCount, pSwapchains, pMetadata)
     ccall((:vkSetHdrMetadataEXT, libvulkan), Cvoid, (VkDevice, UInt32, Ptr{VkSwapchainKHR}, Ptr{VkHdrMetadataEXT}), device, swapchainCount, pSwapchains, pMetadata)
 end
 
-mutable struct VkDebugUtilsMessengerEXT_T end
+const VkDebugUtilsMessengerEXT_T = Cvoid
 
 const VkDebugUtilsMessengerEXT = Ptr{VkDebugUtilsMessengerEXT_T}
 
@@ -8692,7 +8692,7 @@ function vkGetImageDrmFormatModifierPropertiesEXT(device, image, pProperties)
     ccall((:vkGetImageDrmFormatModifierPropertiesEXT, libvulkan), VkResult, (VkDevice, VkImage, Ptr{VkImageDrmFormatModifierPropertiesEXT}), device, image, pProperties)
 end
 
-mutable struct VkValidationCacheEXT_T end
+const VkValidationCacheEXT_T = Cvoid
 
 const VkValidationCacheEXT = Ptr{VkValidationCacheEXT_T}
 
@@ -8860,7 +8860,7 @@ function vkCmdSetCoarseSampleOrderNV(commandBuffer, sampleOrderType, customSampl
     ccall((:vkCmdSetCoarseSampleOrderNV, libvulkan), Cvoid, (VkCommandBuffer, VkCoarseSampleOrderTypeNV, UInt32, Ptr{VkCoarseSampleOrderCustomNV}), commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders)
 end
 
-mutable struct VkAccelerationStructureKHR_T end
+const VkAccelerationStructureKHR_T = Cvoid
 
 const VkAccelerationStructureKHR = Ptr{VkAccelerationStructureKHR_T}
 
@@ -9570,7 +9570,7 @@ struct VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL
     shaderIntegerFunctions2::VkBool32
 end
 
-mutable struct VkPerformanceConfigurationINTEL_T end
+const VkPerformanceConfigurationINTEL_T = Cvoid
 
 const VkPerformanceConfigurationINTEL = Ptr{VkPerformanceConfigurationINTEL_T}
 
@@ -10241,7 +10241,7 @@ struct VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT
     shaderDemoteToHelperInvocation::VkBool32
 end
 
-mutable struct VkIndirectCommandsLayoutNV_T end
+const VkIndirectCommandsLayoutNV_T = Cvoid
 
 const VkIndirectCommandsLayoutNV = Ptr{VkIndirectCommandsLayoutNV_T}
 
@@ -10503,7 +10503,7 @@ struct VkPhysicalDeviceCustomBorderColorFeaturesEXT
     customBorderColorWithoutFormat::VkBool32
 end
 
-mutable struct VkPrivateDataSlotEXT_T end
+const VkPrivateDataSlotEXT_T = Cvoid
 
 const VkPrivateDataSlotEXT = Ptr{VkPrivateDataSlotEXT_T}
 
@@ -10618,7 +10618,7 @@ struct VkPhysicalDevice4444FormatsFeaturesEXT
     formatA4B4G4R4::VkBool32
 end
 
-mutable struct ANativeWindow end
+const ANativeWindow = Cvoid
 
 const VkAndroidSurfaceCreateFlagsKHR = VkFlags
 
@@ -10637,7 +10637,7 @@ function vkCreateAndroidSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
     ccall((:vkCreateAndroidSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkAndroidSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
-mutable struct AHardwareBuffer end
+const AHardwareBuffer = Cvoid
 
 struct VkAndroidHardwareBufferUsageANDROID
     sType::VkStructureType
@@ -11119,7 +11119,7 @@ end
 struct VkPresentFrameTokenGGP
 end
 
-mutable struct VkDeferredOperationKHR_T end
+const VkDeferredOperationKHR_T = Cvoid
 
 const VkDeferredOperationKHR = Ptr{VkDeferredOperationKHR_T}
 
