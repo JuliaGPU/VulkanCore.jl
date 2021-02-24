@@ -1,0 +1,11 @@
+[general]
+library_name = "libvulkan"
+
+output_file_path = "./src/LibVulkan.jl"
+
+module_name = "LibVulkan"
+
+export_symbol_prefixes = ["VK_", "Vk", "vk"]
+
+prologue_file_path = "./gen/prologue.jl"
+epilogue_file_path = ""
