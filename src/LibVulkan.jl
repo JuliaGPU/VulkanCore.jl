@@ -10702,6 +10702,10 @@ end
 const VkImagePipeSurfaceCreateFlagsFUCHSIA = VkFlags
 
 struct VkImagePipeSurfaceCreateInfoFUCHSIA
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkImagePipeSurfaceCreateFlagsFUCHSIA
+    imagePipeHandle::Cint
 end
 
 # C code: 
@@ -10811,6 +10815,11 @@ end
 const VkWin32SurfaceCreateFlagsKHR = VkFlags
 
 struct VkWin32SurfaceCreateInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkWin32SurfaceCreateFlagsKHR
+    hinstance::Cint
+    hwnd::Cint
 end
 
 # C code: 
@@ -10830,9 +10839,19 @@ function vkGetPhysicalDeviceWin32PresentationSupportKHR(physicalDevice, queueFam
 end
 
 struct VkImportMemoryWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    handleType::VkExternalMemoryHandleTypeFlagBits
+    handle::Cint
+    name::Cint
 end
 
 struct VkExportMemoryWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    pAttributes::Ptr{Cint}
+    dwAccess::Cint
+    name::Cint
 end
 
 struct VkMemoryWin32HandlePropertiesKHR
@@ -10877,9 +10896,21 @@ struct VkWin32KeyedMutexAcquireReleaseInfoKHR
 end
 
 struct VkImportSemaphoreWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    semaphore::VkSemaphore
+    flags::VkSemaphoreImportFlags
+    handleType::VkExternalSemaphoreHandleTypeFlagBits
+    handle::Cint
+    name::Cint
 end
 
 struct VkExportSemaphoreWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    pAttributes::Ptr{Cint}
+    dwAccess::Cint
+    name::Cint
 end
 
 struct VkD3D12FenceSubmitInfoKHR
@@ -10915,9 +10946,21 @@ function vkGetSemaphoreWin32HandleKHR(device, pGetWin32HandleInfo, pHandle)
 end
 
 struct VkImportFenceWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    fence::VkFence
+    flags::VkFenceImportFlags
+    handleType::VkExternalFenceHandleTypeFlagBits
+    handle::Cint
+    name::Cint
 end
 
 struct VkExportFenceWin32HandleInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    pAttributes::Ptr{Cint}
+    dwAccess::Cint
+    name::Cint
 end
 
 struct VkFenceGetWin32HandleInfoKHR
@@ -10944,9 +10987,17 @@ function vkGetFenceWin32HandleKHR(device, pGetWin32HandleInfo, pHandle)
 end
 
 struct VkImportMemoryWin32HandleInfoNV
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    handleType::VkExternalMemoryHandleTypeFlagsNV
+    handle::Cint
 end
 
 struct VkExportMemoryWin32HandleInfoNV
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    pAttributes::Ptr{Cint}
+    dwAccess::Cint
 end
 
 # C code: 
@@ -10990,6 +11041,9 @@ struct VkSurfaceCapabilitiesFullScreenExclusiveEXT
 end
 
 struct VkSurfaceFullScreenExclusiveWin32InfoEXT
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    hmonitor::Cint
 end
 
 # C code: 
@@ -11027,6 +11081,11 @@ end
 const VkXcbSurfaceCreateFlagsKHR = VkFlags
 
 struct VkXcbSurfaceCreateInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkXcbSurfaceCreateFlagsKHR
+    connection::Ptr{Cint}
+    window::Cint
 end
 
 # C code: 
@@ -11048,6 +11107,11 @@ end
 const VkXlibSurfaceCreateFlagsKHR = VkFlags
 
 struct VkXlibSurfaceCreateInfoKHR
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkXlibSurfaceCreateFlagsKHR
+    dpy::Ptr{Cint}
+    window::Cint
 end
 
 # C code: 
@@ -11069,6 +11133,11 @@ end
 const VkDirectFBSurfaceCreateFlagsEXT = VkFlags
 
 struct VkDirectFBSurfaceCreateInfoEXT
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkDirectFBSurfaceCreateFlagsEXT
+    dfb::Ptr{Cint}
+    surface::Ptr{Cint}
 end
 
 # C code: 
@@ -11106,6 +11175,10 @@ end
 const VkStreamDescriptorSurfaceCreateFlagsGGP = VkFlags
 
 struct VkStreamDescriptorSurfaceCreateInfoGGP
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    flags::VkStreamDescriptorSurfaceCreateFlagsGGP
+    streamDescriptor::Cint
 end
 
 # C code: 
@@ -11117,6 +11190,9 @@ function vkCreateStreamDescriptorSurfaceGGP(instance, pCreateInfo, pAllocator, p
 end
 
 struct VkPresentFrameTokenGGP
+    sType::VkStructureType
+    pNext::Ptr{Cvoid}
+    frameToken::Cint
 end
 
 const VkDeferredOperationKHR_T = Cvoid
