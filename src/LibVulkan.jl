@@ -2208,27 +2208,27 @@ struct VkMemoryBarrier
     dstAccessMask::VkAccessFlags
 end
 
-# C code: 
+# C code:
 # typedef void * ( VKAPI_PTR * PFN_vkAllocationFunction ) ( void * pUserData , size_t size , size_t alignment , VkSystemAllocationScope allocationScope )
 const PFN_vkAllocationFunction = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkFreeFunction ) ( void * pUserData , void * pMemory )
 const PFN_vkFreeFunction = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkInternalAllocationNotification ) ( void * pUserData , size_t size , VkInternalAllocationType allocationType , VkSystemAllocationScope allocationScope )
 const PFN_vkInternalAllocationNotification = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkInternalFreeNotification ) ( void * pUserData , size_t size , VkInternalAllocationType allocationType , VkSystemAllocationScope allocationScope )
 const PFN_vkInternalFreeNotification = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void * ( VKAPI_PTR * PFN_vkReallocationFunction ) ( void * pUserData , void * pOriginal , size_t size , size_t alignment , VkSystemAllocationScope allocationScope )
 const PFN_vkReallocationFunction = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkVoidFunction ) ( void )
 const PFN_vkVoidFunction = Ptr{Cvoid}
 
@@ -3162,6 +3162,23 @@ struct VkClearColorValue
     data::NTuple{16, UInt8}
 end
 
+function Base.getproperty(x::Ptr{VkClearColorValue}, f::Symbol)
+    f === :float32 && return Ptr{NTuple{4, Cfloat}}(x + 0)
+    f === :int32 && return Ptr{NTuple{4, Int32}}(x + 0)
+    f === :uint32 && return Ptr{NTuple{4, UInt32}}(x + 0)
+    return getfield(x, f)
+end
+
+function Base.getproperty(x::VkClearColorValue, f::Symbol)
+    r = Ref{VkClearColorValue}(x)
+    ptr = Base.unsafe_convert(VkClearColorValue, r)
+    GC.@preserve r unsafe_load(getproperty(ptr, f))
+end
+
+function Base.setproperty!(x::Ptr{VkClearColorValue}, f::Symbol, v)
+    unsafe_store!(getproperty(x, f), v)
+end
+
 struct VkClearDepthStencilValue
     depth::Cfloat
     stencil::UInt32
@@ -3169,6 +3186,22 @@ end
 
 struct VkClearValue
     data::NTuple{16, UInt8}
+end
+
+function Base.getproperty(x::Ptr{VkClearValue}, f::Symbol)
+    f === :color && return Ptr{VkClearColorValue}(x + 0)
+    f === :depthStencil && return Ptr{VkClearDepthStencilValue}(x + 0)
+    return getfield(x, f)
+end
+
+function Base.getproperty(x::VkClearValue, f::Symbol)
+    r = Ref{VkClearValue}(x)
+    ptr = Base.unsafe_convert(VkClearValue, r)
+    GC.@preserve r unsafe_load(getproperty(ptr, f))
+end
+
+function Base.setproperty!(x::Ptr{VkClearValue}, f::Symbol, v)
+    unsafe_store!(getproperty(x, f), v)
 end
 
 struct VkClearAttachment
@@ -3216,551 +3249,551 @@ struct VkRenderPassBeginInfo
     pClearValues::Ptr{VkClearValue}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateInstance ) ( const VkInstanceCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkInstance * pInstance )
 const PFN_vkCreateInstance = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyInstance ) ( VkInstance instance , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyInstance = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkEnumeratePhysicalDevices ) ( VkInstance instance , uint32_t * pPhysicalDeviceCount , VkPhysicalDevice * pPhysicalDevices )
 const PFN_vkEnumeratePhysicalDevices = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceFeatures ) ( VkPhysicalDevice physicalDevice , VkPhysicalDeviceFeatures * pFeatures )
 const PFN_vkGetPhysicalDeviceFeatures = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceFormatProperties ) ( VkPhysicalDevice physicalDevice , VkFormat format , VkFormatProperties * pFormatProperties )
 const PFN_vkGetPhysicalDeviceFormatProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceImageFormatProperties ) ( VkPhysicalDevice physicalDevice , VkFormat format , VkImageType type , VkImageTiling tiling , VkImageUsageFlags usage , VkImageCreateFlags flags , VkImageFormatProperties * pImageFormatProperties )
 const PFN_vkGetPhysicalDeviceImageFormatProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceProperties ) ( VkPhysicalDevice physicalDevice , VkPhysicalDeviceProperties * pProperties )
 const PFN_vkGetPhysicalDeviceProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceQueueFamilyProperties ) ( VkPhysicalDevice physicalDevice , uint32_t * pQueueFamilyPropertyCount , VkQueueFamilyProperties * pQueueFamilyProperties )
 const PFN_vkGetPhysicalDeviceQueueFamilyProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceMemoryProperties ) ( VkPhysicalDevice physicalDevice , VkPhysicalDeviceMemoryProperties * pMemoryProperties )
 const PFN_vkGetPhysicalDeviceMemoryProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef PFN_vkVoidFunction ( VKAPI_PTR * PFN_vkGetInstanceProcAddr ) ( VkInstance instance , const char * pName )
 const PFN_vkGetInstanceProcAddr = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef PFN_vkVoidFunction ( VKAPI_PTR * PFN_vkGetDeviceProcAddr ) ( VkDevice device , const char * pName )
 const PFN_vkGetDeviceProcAddr = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDevice ) ( VkPhysicalDevice physicalDevice , const VkDeviceCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkDevice * pDevice )
 const PFN_vkCreateDevice = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyDevice ) ( VkDevice device , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyDevice = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkEnumerateInstanceExtensionProperties ) ( const char * pLayerName , uint32_t * pPropertyCount , VkExtensionProperties * pProperties )
 const PFN_vkEnumerateInstanceExtensionProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkEnumerateDeviceExtensionProperties ) ( VkPhysicalDevice physicalDevice , const char * pLayerName , uint32_t * pPropertyCount , VkExtensionProperties * pProperties )
 const PFN_vkEnumerateDeviceExtensionProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkEnumerateInstanceLayerProperties ) ( uint32_t * pPropertyCount , VkLayerProperties * pProperties )
 const PFN_vkEnumerateInstanceLayerProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkEnumerateDeviceLayerProperties ) ( VkPhysicalDevice physicalDevice , uint32_t * pPropertyCount , VkLayerProperties * pProperties )
 const PFN_vkEnumerateDeviceLayerProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetDeviceQueue ) ( VkDevice device , uint32_t queueFamilyIndex , uint32_t queueIndex , VkQueue * pQueue )
 const PFN_vkGetDeviceQueue = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkQueueSubmit ) ( VkQueue queue , uint32_t submitCount , const VkSubmitInfo * pSubmits , VkFence fence )
 const PFN_vkQueueSubmit = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkQueueWaitIdle ) ( VkQueue queue )
 const PFN_vkQueueWaitIdle = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkDeviceWaitIdle ) ( VkDevice device )
 const PFN_vkDeviceWaitIdle = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkAllocateMemory ) ( VkDevice device , const VkMemoryAllocateInfo * pAllocateInfo , const VkAllocationCallbacks * pAllocator , VkDeviceMemory * pMemory )
 const PFN_vkAllocateMemory = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkFreeMemory ) ( VkDevice device , VkDeviceMemory memory , const VkAllocationCallbacks * pAllocator )
 const PFN_vkFreeMemory = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkMapMemory ) ( VkDevice device , VkDeviceMemory memory , VkDeviceSize offset , VkDeviceSize size , VkMemoryMapFlags flags , void * * ppData )
 const PFN_vkMapMemory = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkUnmapMemory ) ( VkDevice device , VkDeviceMemory memory )
 const PFN_vkUnmapMemory = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkFlushMappedMemoryRanges ) ( VkDevice device , uint32_t memoryRangeCount , const VkMappedMemoryRange * pMemoryRanges )
 const PFN_vkFlushMappedMemoryRanges = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkInvalidateMappedMemoryRanges ) ( VkDevice device , uint32_t memoryRangeCount , const VkMappedMemoryRange * pMemoryRanges )
 const PFN_vkInvalidateMappedMemoryRanges = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetDeviceMemoryCommitment ) ( VkDevice device , VkDeviceMemory memory , VkDeviceSize * pCommittedMemoryInBytes )
 const PFN_vkGetDeviceMemoryCommitment = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkBindBufferMemory ) ( VkDevice device , VkBuffer buffer , VkDeviceMemory memory , VkDeviceSize memoryOffset )
 const PFN_vkBindBufferMemory = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkBindImageMemory ) ( VkDevice device , VkImage image , VkDeviceMemory memory , VkDeviceSize memoryOffset )
 const PFN_vkBindImageMemory = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetBufferMemoryRequirements ) ( VkDevice device , VkBuffer buffer , VkMemoryRequirements * pMemoryRequirements )
 const PFN_vkGetBufferMemoryRequirements = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetImageMemoryRequirements ) ( VkDevice device , VkImage image , VkMemoryRequirements * pMemoryRequirements )
 const PFN_vkGetImageMemoryRequirements = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetImageSparseMemoryRequirements ) ( VkDevice device , VkImage image , uint32_t * pSparseMemoryRequirementCount , VkSparseImageMemoryRequirements * pSparseMemoryRequirements )
 const PFN_vkGetImageSparseMemoryRequirements = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceSparseImageFormatProperties ) ( VkPhysicalDevice physicalDevice , VkFormat format , VkImageType type , VkSampleCountFlagBits samples , VkImageUsageFlags usage , VkImageTiling tiling , uint32_t * pPropertyCount , VkSparseImageFormatProperties * pProperties )
 const PFN_vkGetPhysicalDeviceSparseImageFormatProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkQueueBindSparse ) ( VkQueue queue , uint32_t bindInfoCount , const VkBindSparseInfo * pBindInfo , VkFence fence )
 const PFN_vkQueueBindSparse = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateFence ) ( VkDevice device , const VkFenceCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkFence * pFence )
 const PFN_vkCreateFence = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyFence ) ( VkDevice device , VkFence fence , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyFence = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkResetFences ) ( VkDevice device , uint32_t fenceCount , const VkFence * pFences )
 const PFN_vkResetFences = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetFenceStatus ) ( VkDevice device , VkFence fence )
 const PFN_vkGetFenceStatus = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkWaitForFences ) ( VkDevice device , uint32_t fenceCount , const VkFence * pFences , VkBool32 waitAll , uint64_t timeout )
 const PFN_vkWaitForFences = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateSemaphore ) ( VkDevice device , const VkSemaphoreCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSemaphore * pSemaphore )
 const PFN_vkCreateSemaphore = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroySemaphore ) ( VkDevice device , VkSemaphore semaphore , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroySemaphore = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateEvent ) ( VkDevice device , const VkEventCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkEvent * pEvent )
 const PFN_vkCreateEvent = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyEvent ) ( VkDevice device , VkEvent event , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyEvent = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetEventStatus ) ( VkDevice device , VkEvent event )
 const PFN_vkGetEventStatus = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkSetEvent ) ( VkDevice device , VkEvent event )
 const PFN_vkSetEvent = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkResetEvent ) ( VkDevice device , VkEvent event )
 const PFN_vkResetEvent = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateQueryPool ) ( VkDevice device , const VkQueryPoolCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkQueryPool * pQueryPool )
 const PFN_vkCreateQueryPool = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyQueryPool ) ( VkDevice device , VkQueryPool queryPool , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyQueryPool = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetQueryPoolResults ) ( VkDevice device , VkQueryPool queryPool , uint32_t firstQuery , uint32_t queryCount , size_t dataSize , void * pData , VkDeviceSize stride , VkQueryResultFlags flags )
 const PFN_vkGetQueryPoolResults = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateBuffer ) ( VkDevice device , const VkBufferCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkBuffer * pBuffer )
 const PFN_vkCreateBuffer = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyBuffer ) ( VkDevice device , VkBuffer buffer , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyBuffer = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateBufferView ) ( VkDevice device , const VkBufferViewCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkBufferView * pView )
 const PFN_vkCreateBufferView = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyBufferView ) ( VkDevice device , VkBufferView bufferView , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyBufferView = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateImage ) ( VkDevice device , const VkImageCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkImage * pImage )
 const PFN_vkCreateImage = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyImage ) ( VkDevice device , VkImage image , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyImage = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetImageSubresourceLayout ) ( VkDevice device , VkImage image , const VkImageSubresource * pSubresource , VkSubresourceLayout * pLayout )
 const PFN_vkGetImageSubresourceLayout = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateImageView ) ( VkDevice device , const VkImageViewCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkImageView * pView )
 const PFN_vkCreateImageView = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyImageView ) ( VkDevice device , VkImageView imageView , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyImageView = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateShaderModule ) ( VkDevice device , const VkShaderModuleCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkShaderModule * pShaderModule )
 const PFN_vkCreateShaderModule = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyShaderModule ) ( VkDevice device , VkShaderModule shaderModule , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyShaderModule = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreatePipelineCache ) ( VkDevice device , const VkPipelineCacheCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkPipelineCache * pPipelineCache )
 const PFN_vkCreatePipelineCache = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyPipelineCache ) ( VkDevice device , VkPipelineCache pipelineCache , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyPipelineCache = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPipelineCacheData ) ( VkDevice device , VkPipelineCache pipelineCache , size_t * pDataSize , void * pData )
 const PFN_vkGetPipelineCacheData = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkMergePipelineCaches ) ( VkDevice device , VkPipelineCache dstCache , uint32_t srcCacheCount , const VkPipelineCache * pSrcCaches )
 const PFN_vkMergePipelineCaches = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateGraphicsPipelines ) ( VkDevice device , VkPipelineCache pipelineCache , uint32_t createInfoCount , const VkGraphicsPipelineCreateInfo * pCreateInfos , const VkAllocationCallbacks * pAllocator , VkPipeline * pPipelines )
 const PFN_vkCreateGraphicsPipelines = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateComputePipelines ) ( VkDevice device , VkPipelineCache pipelineCache , uint32_t createInfoCount , const VkComputePipelineCreateInfo * pCreateInfos , const VkAllocationCallbacks * pAllocator , VkPipeline * pPipelines )
 const PFN_vkCreateComputePipelines = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyPipeline ) ( VkDevice device , VkPipeline pipeline , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyPipeline = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreatePipelineLayout ) ( VkDevice device , const VkPipelineLayoutCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkPipelineLayout * pPipelineLayout )
 const PFN_vkCreatePipelineLayout = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyPipelineLayout ) ( VkDevice device , VkPipelineLayout pipelineLayout , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyPipelineLayout = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateSampler ) ( VkDevice device , const VkSamplerCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSampler * pSampler )
 const PFN_vkCreateSampler = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroySampler ) ( VkDevice device , VkSampler sampler , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroySampler = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDescriptorSetLayout ) ( VkDevice device , const VkDescriptorSetLayoutCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkDescriptorSetLayout * pSetLayout )
 const PFN_vkCreateDescriptorSetLayout = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyDescriptorSetLayout ) ( VkDevice device , VkDescriptorSetLayout descriptorSetLayout , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyDescriptorSetLayout = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDescriptorPool ) ( VkDevice device , const VkDescriptorPoolCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkDescriptorPool * pDescriptorPool )
 const PFN_vkCreateDescriptorPool = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyDescriptorPool ) ( VkDevice device , VkDescriptorPool descriptorPool , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyDescriptorPool = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkResetDescriptorPool ) ( VkDevice device , VkDescriptorPool descriptorPool , VkDescriptorPoolResetFlags flags )
 const PFN_vkResetDescriptorPool = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkAllocateDescriptorSets ) ( VkDevice device , const VkDescriptorSetAllocateInfo * pAllocateInfo , VkDescriptorSet * pDescriptorSets )
 const PFN_vkAllocateDescriptorSets = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkFreeDescriptorSets ) ( VkDevice device , VkDescriptorPool descriptorPool , uint32_t descriptorSetCount , const VkDescriptorSet * pDescriptorSets )
 const PFN_vkFreeDescriptorSets = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkUpdateDescriptorSets ) ( VkDevice device , uint32_t descriptorWriteCount , const VkWriteDescriptorSet * pDescriptorWrites , uint32_t descriptorCopyCount , const VkCopyDescriptorSet * pDescriptorCopies )
 const PFN_vkUpdateDescriptorSets = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateFramebuffer ) ( VkDevice device , const VkFramebufferCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkFramebuffer * pFramebuffer )
 const PFN_vkCreateFramebuffer = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyFramebuffer ) ( VkDevice device , VkFramebuffer framebuffer , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyFramebuffer = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateRenderPass ) ( VkDevice device , const VkRenderPassCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkRenderPass * pRenderPass )
 const PFN_vkCreateRenderPass = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyRenderPass ) ( VkDevice device , VkRenderPass renderPass , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyRenderPass = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetRenderAreaGranularity ) ( VkDevice device , VkRenderPass renderPass , VkExtent2D * pGranularity )
 const PFN_vkGetRenderAreaGranularity = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateCommandPool ) ( VkDevice device , const VkCommandPoolCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkCommandPool * pCommandPool )
 const PFN_vkCreateCommandPool = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyCommandPool ) ( VkDevice device , VkCommandPool commandPool , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyCommandPool = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkResetCommandPool ) ( VkDevice device , VkCommandPool commandPool , VkCommandPoolResetFlags flags )
 const PFN_vkResetCommandPool = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkAllocateCommandBuffers ) ( VkDevice device , const VkCommandBufferAllocateInfo * pAllocateInfo , VkCommandBuffer * pCommandBuffers )
 const PFN_vkAllocateCommandBuffers = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkFreeCommandBuffers ) ( VkDevice device , VkCommandPool commandPool , uint32_t commandBufferCount , const VkCommandBuffer * pCommandBuffers )
 const PFN_vkFreeCommandBuffers = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkBeginCommandBuffer ) ( VkCommandBuffer commandBuffer , const VkCommandBufferBeginInfo * pBeginInfo )
 const PFN_vkBeginCommandBuffer = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkEndCommandBuffer ) ( VkCommandBuffer commandBuffer )
 const PFN_vkEndCommandBuffer = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkResetCommandBuffer ) ( VkCommandBuffer commandBuffer , VkCommandBufferResetFlags flags )
 const PFN_vkResetCommandBuffer = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBindPipeline ) ( VkCommandBuffer commandBuffer , VkPipelineBindPoint pipelineBindPoint , VkPipeline pipeline )
 const PFN_vkCmdBindPipeline = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetViewport ) ( VkCommandBuffer commandBuffer , uint32_t firstViewport , uint32_t viewportCount , const VkViewport * pViewports )
 const PFN_vkCmdSetViewport = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetScissor ) ( VkCommandBuffer commandBuffer , uint32_t firstScissor , uint32_t scissorCount , const VkRect2D * pScissors )
 const PFN_vkCmdSetScissor = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetLineWidth ) ( VkCommandBuffer commandBuffer , float lineWidth )
 const PFN_vkCmdSetLineWidth = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetDepthBias ) ( VkCommandBuffer commandBuffer , float depthBiasConstantFactor , float depthBiasClamp , float depthBiasSlopeFactor )
 const PFN_vkCmdSetDepthBias = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetBlendConstants ) ( VkCommandBuffer commandBuffer , const float blendConstants [ 4 ] )
 const PFN_vkCmdSetBlendConstants = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetDepthBounds ) ( VkCommandBuffer commandBuffer , float minDepthBounds , float maxDepthBounds )
 const PFN_vkCmdSetDepthBounds = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetStencilCompareMask ) ( VkCommandBuffer commandBuffer , VkStencilFaceFlags faceMask , uint32_t compareMask )
 const PFN_vkCmdSetStencilCompareMask = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetStencilWriteMask ) ( VkCommandBuffer commandBuffer , VkStencilFaceFlags faceMask , uint32_t writeMask )
 const PFN_vkCmdSetStencilWriteMask = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetStencilReference ) ( VkCommandBuffer commandBuffer , VkStencilFaceFlags faceMask , uint32_t reference )
 const PFN_vkCmdSetStencilReference = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBindDescriptorSets ) ( VkCommandBuffer commandBuffer , VkPipelineBindPoint pipelineBindPoint , VkPipelineLayout layout , uint32_t firstSet , uint32_t descriptorSetCount , const VkDescriptorSet * pDescriptorSets , uint32_t dynamicOffsetCount , const uint32_t * pDynamicOffsets )
 const PFN_vkCmdBindDescriptorSets = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBindIndexBuffer ) ( VkCommandBuffer commandBuffer , VkBuffer buffer , VkDeviceSize offset , VkIndexType indexType )
 const PFN_vkCmdBindIndexBuffer = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBindVertexBuffers ) ( VkCommandBuffer commandBuffer , uint32_t firstBinding , uint32_t bindingCount , const VkBuffer * pBuffers , const VkDeviceSize * pOffsets )
 const PFN_vkCmdBindVertexBuffers = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDraw ) ( VkCommandBuffer commandBuffer , uint32_t vertexCount , uint32_t instanceCount , uint32_t firstVertex , uint32_t firstInstance )
 const PFN_vkCmdDraw = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawIndexed ) ( VkCommandBuffer commandBuffer , uint32_t indexCount , uint32_t instanceCount , uint32_t firstIndex , int32_t vertexOffset , uint32_t firstInstance )
 const PFN_vkCmdDrawIndexed = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawIndirect ) ( VkCommandBuffer commandBuffer , VkBuffer buffer , VkDeviceSize offset , uint32_t drawCount , uint32_t stride )
 const PFN_vkCmdDrawIndirect = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawIndexedIndirect ) ( VkCommandBuffer commandBuffer , VkBuffer buffer , VkDeviceSize offset , uint32_t drawCount , uint32_t stride )
 const PFN_vkCmdDrawIndexedIndirect = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDispatch ) ( VkCommandBuffer commandBuffer , uint32_t groupCountX , uint32_t groupCountY , uint32_t groupCountZ )
 const PFN_vkCmdDispatch = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDispatchIndirect ) ( VkCommandBuffer commandBuffer , VkBuffer buffer , VkDeviceSize offset )
 const PFN_vkCmdDispatchIndirect = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdCopyBuffer ) ( VkCommandBuffer commandBuffer , VkBuffer srcBuffer , VkBuffer dstBuffer , uint32_t regionCount , const VkBufferCopy * pRegions )
 const PFN_vkCmdCopyBuffer = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdCopyImage ) ( VkCommandBuffer commandBuffer , VkImage srcImage , VkImageLayout srcImageLayout , VkImage dstImage , VkImageLayout dstImageLayout , uint32_t regionCount , const VkImageCopy * pRegions )
 const PFN_vkCmdCopyImage = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBlitImage ) ( VkCommandBuffer commandBuffer , VkImage srcImage , VkImageLayout srcImageLayout , VkImage dstImage , VkImageLayout dstImageLayout , uint32_t regionCount , const VkImageBlit * pRegions , VkFilter filter )
 const PFN_vkCmdBlitImage = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdCopyBufferToImage ) ( VkCommandBuffer commandBuffer , VkBuffer srcBuffer , VkImage dstImage , VkImageLayout dstImageLayout , uint32_t regionCount , const VkBufferImageCopy * pRegions )
 const PFN_vkCmdCopyBufferToImage = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdCopyImageToBuffer ) ( VkCommandBuffer commandBuffer , VkImage srcImage , VkImageLayout srcImageLayout , VkBuffer dstBuffer , uint32_t regionCount , const VkBufferImageCopy * pRegions )
 const PFN_vkCmdCopyImageToBuffer = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdUpdateBuffer ) ( VkCommandBuffer commandBuffer , VkBuffer dstBuffer , VkDeviceSize dstOffset , VkDeviceSize dataSize , const void * pData )
 const PFN_vkCmdUpdateBuffer = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdFillBuffer ) ( VkCommandBuffer commandBuffer , VkBuffer dstBuffer , VkDeviceSize dstOffset , VkDeviceSize size , uint32_t data )
 const PFN_vkCmdFillBuffer = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdClearColorImage ) ( VkCommandBuffer commandBuffer , VkImage image , VkImageLayout imageLayout , const VkClearColorValue * pColor , uint32_t rangeCount , const VkImageSubresourceRange * pRanges )
 const PFN_vkCmdClearColorImage = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdClearDepthStencilImage ) ( VkCommandBuffer commandBuffer , VkImage image , VkImageLayout imageLayout , const VkClearDepthStencilValue * pDepthStencil , uint32_t rangeCount , const VkImageSubresourceRange * pRanges )
 const PFN_vkCmdClearDepthStencilImage = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdClearAttachments ) ( VkCommandBuffer commandBuffer , uint32_t attachmentCount , const VkClearAttachment * pAttachments , uint32_t rectCount , const VkClearRect * pRects )
 const PFN_vkCmdClearAttachments = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdResolveImage ) ( VkCommandBuffer commandBuffer , VkImage srcImage , VkImageLayout srcImageLayout , VkImage dstImage , VkImageLayout dstImageLayout , uint32_t regionCount , const VkImageResolve * pRegions )
 const PFN_vkCmdResolveImage = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetEvent ) ( VkCommandBuffer commandBuffer , VkEvent event , VkPipelineStageFlags stageMask )
 const PFN_vkCmdSetEvent = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdResetEvent ) ( VkCommandBuffer commandBuffer , VkEvent event , VkPipelineStageFlags stageMask )
 const PFN_vkCmdResetEvent = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdWaitEvents ) ( VkCommandBuffer commandBuffer , uint32_t eventCount , const VkEvent * pEvents , VkPipelineStageFlags srcStageMask , VkPipelineStageFlags dstStageMask , uint32_t memoryBarrierCount , const VkMemoryBarrier * pMemoryBarriers , uint32_t bufferMemoryBarrierCount , const VkBufferMemoryBarrier * pBufferMemoryBarriers , uint32_t imageMemoryBarrierCount , const VkImageMemoryBarrier * pImageMemoryBarriers )
 const PFN_vkCmdWaitEvents = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdPipelineBarrier ) ( VkCommandBuffer commandBuffer , VkPipelineStageFlags srcStageMask , VkPipelineStageFlags dstStageMask , VkDependencyFlags dependencyFlags , uint32_t memoryBarrierCount , const VkMemoryBarrier * pMemoryBarriers , uint32_t bufferMemoryBarrierCount , const VkBufferMemoryBarrier * pBufferMemoryBarriers , uint32_t imageMemoryBarrierCount , const VkImageMemoryBarrier * pImageMemoryBarriers )
 const PFN_vkCmdPipelineBarrier = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBeginQuery ) ( VkCommandBuffer commandBuffer , VkQueryPool queryPool , uint32_t query , VkQueryControlFlags flags )
 const PFN_vkCmdBeginQuery = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdEndQuery ) ( VkCommandBuffer commandBuffer , VkQueryPool queryPool , uint32_t query )
 const PFN_vkCmdEndQuery = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdResetQueryPool ) ( VkCommandBuffer commandBuffer , VkQueryPool queryPool , uint32_t firstQuery , uint32_t queryCount )
 const PFN_vkCmdResetQueryPool = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdWriteTimestamp ) ( VkCommandBuffer commandBuffer , VkPipelineStageFlagBits pipelineStage , VkQueryPool queryPool , uint32_t query )
 const PFN_vkCmdWriteTimestamp = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdCopyQueryPoolResults ) ( VkCommandBuffer commandBuffer , VkQueryPool queryPool , uint32_t firstQuery , uint32_t queryCount , VkBuffer dstBuffer , VkDeviceSize dstOffset , VkDeviceSize stride , VkQueryResultFlags flags )
 const PFN_vkCmdCopyQueryPoolResults = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdPushConstants ) ( VkCommandBuffer commandBuffer , VkPipelineLayout layout , VkShaderStageFlags stageFlags , uint32_t offset , uint32_t size , const void * pValues )
 const PFN_vkCmdPushConstants = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBeginRenderPass ) ( VkCommandBuffer commandBuffer , const VkRenderPassBeginInfo * pRenderPassBegin , VkSubpassContents contents )
 const PFN_vkCmdBeginRenderPass = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdNextSubpass ) ( VkCommandBuffer commandBuffer , VkSubpassContents contents )
 const PFN_vkCmdNextSubpass = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdEndRenderPass ) ( VkCommandBuffer commandBuffer )
 const PFN_vkCmdEndRenderPass = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdExecuteCommands ) ( VkCommandBuffer commandBuffer , uint32_t commandBufferCount , const VkCommandBuffer * pCommandBuffers )
 const PFN_vkCmdExecuteCommands = Ptr{Cvoid}
 
@@ -5009,115 +5042,115 @@ end
 
 const VkPhysicalDeviceShaderDrawParameterFeatures = VkPhysicalDeviceShaderDrawParametersFeatures
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkEnumerateInstanceVersion ) ( uint32_t * pApiVersion )
 const PFN_vkEnumerateInstanceVersion = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkBindBufferMemory2 ) ( VkDevice device , uint32_t bindInfoCount , const VkBindBufferMemoryInfo * pBindInfos )
 const PFN_vkBindBufferMemory2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkBindImageMemory2 ) ( VkDevice device , uint32_t bindInfoCount , const VkBindImageMemoryInfo * pBindInfos )
 const PFN_vkBindImageMemory2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetDeviceGroupPeerMemoryFeatures ) ( VkDevice device , uint32_t heapIndex , uint32_t localDeviceIndex , uint32_t remoteDeviceIndex , VkPeerMemoryFeatureFlags * pPeerMemoryFeatures )
 const PFN_vkGetDeviceGroupPeerMemoryFeatures = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetDeviceMask ) ( VkCommandBuffer commandBuffer , uint32_t deviceMask )
 const PFN_vkCmdSetDeviceMask = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDispatchBase ) ( VkCommandBuffer commandBuffer , uint32_t baseGroupX , uint32_t baseGroupY , uint32_t baseGroupZ , uint32_t groupCountX , uint32_t groupCountY , uint32_t groupCountZ )
 const PFN_vkCmdDispatchBase = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkEnumeratePhysicalDeviceGroups ) ( VkInstance instance , uint32_t * pPhysicalDeviceGroupCount , VkPhysicalDeviceGroupProperties * pPhysicalDeviceGroupProperties )
 const PFN_vkEnumeratePhysicalDeviceGroups = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetImageMemoryRequirements2 ) ( VkDevice device , const VkImageMemoryRequirementsInfo2 * pInfo , VkMemoryRequirements2 * pMemoryRequirements )
 const PFN_vkGetImageMemoryRequirements2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetBufferMemoryRequirements2 ) ( VkDevice device , const VkBufferMemoryRequirementsInfo2 * pInfo , VkMemoryRequirements2 * pMemoryRequirements )
 const PFN_vkGetBufferMemoryRequirements2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetImageSparseMemoryRequirements2 ) ( VkDevice device , const VkImageSparseMemoryRequirementsInfo2 * pInfo , uint32_t * pSparseMemoryRequirementCount , VkSparseImageMemoryRequirements2 * pSparseMemoryRequirements )
 const PFN_vkGetImageSparseMemoryRequirements2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceFeatures2 ) ( VkPhysicalDevice physicalDevice , VkPhysicalDeviceFeatures2 * pFeatures )
 const PFN_vkGetPhysicalDeviceFeatures2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceProperties2 ) ( VkPhysicalDevice physicalDevice , VkPhysicalDeviceProperties2 * pProperties )
 const PFN_vkGetPhysicalDeviceProperties2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceFormatProperties2 ) ( VkPhysicalDevice physicalDevice , VkFormat format , VkFormatProperties2 * pFormatProperties )
 const PFN_vkGetPhysicalDeviceFormatProperties2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceImageFormatProperties2 ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceImageFormatInfo2 * pImageFormatInfo , VkImageFormatProperties2 * pImageFormatProperties )
 const PFN_vkGetPhysicalDeviceImageFormatProperties2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceQueueFamilyProperties2 ) ( VkPhysicalDevice physicalDevice , uint32_t * pQueueFamilyPropertyCount , VkQueueFamilyProperties2 * pQueueFamilyProperties )
 const PFN_vkGetPhysicalDeviceQueueFamilyProperties2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceMemoryProperties2 ) ( VkPhysicalDevice physicalDevice , VkPhysicalDeviceMemoryProperties2 * pMemoryProperties )
 const PFN_vkGetPhysicalDeviceMemoryProperties2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceSparseImageFormatInfo2 * pFormatInfo , uint32_t * pPropertyCount , VkSparseImageFormatProperties2 * pProperties )
 const PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkTrimCommandPool ) ( VkDevice device , VkCommandPool commandPool , VkCommandPoolTrimFlags flags )
 const PFN_vkTrimCommandPool = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetDeviceQueue2 ) ( VkDevice device , const VkDeviceQueueInfo2 * pQueueInfo , VkQueue * pQueue )
 const PFN_vkGetDeviceQueue2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateSamplerYcbcrConversion ) ( VkDevice device , const VkSamplerYcbcrConversionCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSamplerYcbcrConversion * pYcbcrConversion )
 const PFN_vkCreateSamplerYcbcrConversion = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroySamplerYcbcrConversion ) ( VkDevice device , VkSamplerYcbcrConversion ycbcrConversion , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroySamplerYcbcrConversion = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDescriptorUpdateTemplate ) ( VkDevice device , const VkDescriptorUpdateTemplateCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkDescriptorUpdateTemplate * pDescriptorUpdateTemplate )
 const PFN_vkCreateDescriptorUpdateTemplate = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyDescriptorUpdateTemplate ) ( VkDevice device , VkDescriptorUpdateTemplate descriptorUpdateTemplate , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyDescriptorUpdateTemplate = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkUpdateDescriptorSetWithTemplate ) ( VkDevice device , VkDescriptorSet descriptorSet , VkDescriptorUpdateTemplate descriptorUpdateTemplate , const void * pData )
 const PFN_vkUpdateDescriptorSetWithTemplate = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceExternalBufferProperties ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceExternalBufferInfo * pExternalBufferInfo , VkExternalBufferProperties * pExternalBufferProperties )
 const PFN_vkGetPhysicalDeviceExternalBufferProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceExternalFenceProperties ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceExternalFenceInfo * pExternalFenceInfo , VkExternalFenceProperties * pExternalFenceProperties )
 const PFN_vkGetPhysicalDeviceExternalFenceProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceExternalSemaphoreProperties ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceExternalSemaphoreInfo * pExternalSemaphoreInfo , VkExternalSemaphoreProperties * pExternalSemaphoreProperties )
 const PFN_vkGetPhysicalDeviceExternalSemaphoreProperties = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetDescriptorSetLayoutSupport ) ( VkDevice device , const VkDescriptorSetLayoutCreateInfo * pCreateInfo , VkDescriptorSetLayoutSupport * pSupport )
 const PFN_vkGetDescriptorSetLayoutSupport = Ptr{Cvoid}
 
@@ -5886,55 +5919,55 @@ struct VkDeviceMemoryOpaqueCaptureAddressInfo
     memory::VkDeviceMemory
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawIndirectCount ) ( VkCommandBuffer commandBuffer , VkBuffer buffer , VkDeviceSize offset , VkBuffer countBuffer , VkDeviceSize countBufferOffset , uint32_t maxDrawCount , uint32_t stride )
 const PFN_vkCmdDrawIndirectCount = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawIndexedIndirectCount ) ( VkCommandBuffer commandBuffer , VkBuffer buffer , VkDeviceSize offset , VkBuffer countBuffer , VkDeviceSize countBufferOffset , uint32_t maxDrawCount , uint32_t stride )
 const PFN_vkCmdDrawIndexedIndirectCount = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateRenderPass2 ) ( VkDevice device , const VkRenderPassCreateInfo2 * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkRenderPass * pRenderPass )
 const PFN_vkCreateRenderPass2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBeginRenderPass2 ) ( VkCommandBuffer commandBuffer , const VkRenderPassBeginInfo * pRenderPassBegin , const VkSubpassBeginInfo * pSubpassBeginInfo )
 const PFN_vkCmdBeginRenderPass2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdNextSubpass2 ) ( VkCommandBuffer commandBuffer , const VkSubpassBeginInfo * pSubpassBeginInfo , const VkSubpassEndInfo * pSubpassEndInfo )
 const PFN_vkCmdNextSubpass2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdEndRenderPass2 ) ( VkCommandBuffer commandBuffer , const VkSubpassEndInfo * pSubpassEndInfo )
 const PFN_vkCmdEndRenderPass2 = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkResetQueryPool ) ( VkDevice device , VkQueryPool queryPool , uint32_t firstQuery , uint32_t queryCount )
 const PFN_vkResetQueryPool = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetSemaphoreCounterValue ) ( VkDevice device , VkSemaphore semaphore , uint64_t * pValue )
 const PFN_vkGetSemaphoreCounterValue = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkWaitSemaphores ) ( VkDevice device , const VkSemaphoreWaitInfo * pWaitInfo , uint64_t timeout )
 const PFN_vkWaitSemaphores = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkSignalSemaphore ) ( VkDevice device , const VkSemaphoreSignalInfo * pSignalInfo )
 const PFN_vkSignalSemaphore = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkDeviceAddress ( VKAPI_PTR * PFN_vkGetBufferDeviceAddress ) ( VkDevice device , const VkBufferDeviceAddressInfo * pInfo )
 const PFN_vkGetBufferDeviceAddress = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef uint64_t ( VKAPI_PTR * PFN_vkGetBufferOpaqueCaptureAddress ) ( VkDevice device , const VkBufferDeviceAddressInfo * pInfo )
 const PFN_vkGetBufferOpaqueCaptureAddress = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef uint64_t ( VKAPI_PTR * PFN_vkGetDeviceMemoryOpaqueCaptureAddress ) ( VkDevice device , const VkDeviceMemoryOpaqueCaptureAddressInfo * pInfo )
 const PFN_vkGetDeviceMemoryOpaqueCaptureAddress = Ptr{Cvoid}
 
@@ -6069,23 +6102,23 @@ struct VkSurfaceFormatKHR
     colorSpace::VkColorSpaceKHR
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroySurfaceKHR ) ( VkInstance instance , VkSurfaceKHR surface , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroySurfaceKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceSurfaceSupportKHR ) ( VkPhysicalDevice physicalDevice , uint32_t queueFamilyIndex , VkSurfaceKHR surface , VkBool32 * pSupported )
 const PFN_vkGetPhysicalDeviceSurfaceSupportKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR ) ( VkPhysicalDevice physicalDevice , VkSurfaceKHR surface , VkSurfaceCapabilitiesKHR * pSurfaceCapabilities )
 const PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceSurfaceFormatsKHR ) ( VkPhysicalDevice physicalDevice , VkSurfaceKHR surface , uint32_t * pSurfaceFormatCount , VkSurfaceFormatKHR * pSurfaceFormats )
 const PFN_vkGetPhysicalDeviceSurfaceFormatsKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceSurfacePresentModesKHR ) ( VkPhysicalDevice physicalDevice , VkSurfaceKHR surface , uint32_t * pPresentModeCount , VkPresentModeKHR * pPresentModes )
 const PFN_vkGetPhysicalDeviceSurfacePresentModesKHR = Ptr{Cvoid}
 
@@ -6208,39 +6241,39 @@ struct VkDeviceGroupSwapchainCreateInfoKHR
     modes::VkDeviceGroupPresentModeFlagsKHR
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateSwapchainKHR ) ( VkDevice device , const VkSwapchainCreateInfoKHR * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSwapchainKHR * pSwapchain )
 const PFN_vkCreateSwapchainKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroySwapchainKHR ) ( VkDevice device , VkSwapchainKHR swapchain , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroySwapchainKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetSwapchainImagesKHR ) ( VkDevice device , VkSwapchainKHR swapchain , uint32_t * pSwapchainImageCount , VkImage * pSwapchainImages )
 const PFN_vkGetSwapchainImagesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkAcquireNextImageKHR ) ( VkDevice device , VkSwapchainKHR swapchain , uint64_t timeout , VkSemaphore semaphore , VkFence fence , uint32_t * pImageIndex )
 const PFN_vkAcquireNextImageKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkQueuePresentKHR ) ( VkQueue queue , const VkPresentInfoKHR * pPresentInfo )
 const PFN_vkQueuePresentKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetDeviceGroupPresentCapabilitiesKHR ) ( VkDevice device , VkDeviceGroupPresentCapabilitiesKHR * pDeviceGroupPresentCapabilities )
 const PFN_vkGetDeviceGroupPresentCapabilitiesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetDeviceGroupSurfacePresentModesKHR ) ( VkDevice device , VkSurfaceKHR surface , VkDeviceGroupPresentModeFlagsKHR * pModes )
 const PFN_vkGetDeviceGroupSurfacePresentModesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDevicePresentRectanglesKHR ) ( VkPhysicalDevice physicalDevice , VkSurfaceKHR surface , uint32_t * pRectCount , VkRect2D * pRects )
 const PFN_vkGetPhysicalDevicePresentRectanglesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkAcquireNextImage2KHR ) ( VkDevice device , const VkAcquireNextImageInfoKHR * pAcquireInfo , uint32_t * pImageIndex )
 const PFN_vkAcquireNextImage2KHR = Ptr{Cvoid}
 
@@ -6359,31 +6392,31 @@ struct VkDisplaySurfaceCreateInfoKHR
     imageExtent::VkExtent2D
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceDisplayPropertiesKHR ) ( VkPhysicalDevice physicalDevice , uint32_t * pPropertyCount , VkDisplayPropertiesKHR * pProperties )
 const PFN_vkGetPhysicalDeviceDisplayPropertiesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR ) ( VkPhysicalDevice physicalDevice , uint32_t * pPropertyCount , VkDisplayPlanePropertiesKHR * pProperties )
 const PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetDisplayPlaneSupportedDisplaysKHR ) ( VkPhysicalDevice physicalDevice , uint32_t planeIndex , uint32_t * pDisplayCount , VkDisplayKHR * pDisplays )
 const PFN_vkGetDisplayPlaneSupportedDisplaysKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetDisplayModePropertiesKHR ) ( VkPhysicalDevice physicalDevice , VkDisplayKHR display , uint32_t * pPropertyCount , VkDisplayModePropertiesKHR * pProperties )
 const PFN_vkGetDisplayModePropertiesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDisplayModeKHR ) ( VkPhysicalDevice physicalDevice , VkDisplayKHR display , const VkDisplayModeCreateInfoKHR * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkDisplayModeKHR * pMode )
 const PFN_vkCreateDisplayModeKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetDisplayPlaneCapabilitiesKHR ) ( VkPhysicalDevice physicalDevice , VkDisplayModeKHR mode , uint32_t planeIndex , VkDisplayPlaneCapabilitiesKHR * pCapabilities )
 const PFN_vkGetDisplayPlaneCapabilitiesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDisplayPlaneSurfaceKHR ) ( VkInstance instance , const VkDisplaySurfaceCreateInfoKHR * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateDisplayPlaneSurfaceKHR = Ptr{Cvoid}
 
@@ -6423,7 +6456,7 @@ struct VkDisplayPresentInfoKHR
     persistent::VkBool32
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateSharedSwapchainsKHR ) ( VkDevice device , uint32_t swapchainCount , const VkSwapchainCreateInfoKHR * pCreateInfos , const VkAllocationCallbacks * pAllocator , VkSwapchainKHR * pSwapchains )
 const PFN_vkCreateSharedSwapchainsKHR = Ptr{Cvoid}
 
@@ -6455,31 +6488,31 @@ const VkSparseImageFormatProperties2KHR = VkSparseImageFormatProperties2
 
 const VkPhysicalDeviceSparseImageFormatInfo2KHR = VkPhysicalDeviceSparseImageFormatInfo2
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceFeatures2KHR ) ( VkPhysicalDevice physicalDevice , VkPhysicalDeviceFeatures2 * pFeatures )
 const PFN_vkGetPhysicalDeviceFeatures2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceProperties2KHR ) ( VkPhysicalDevice physicalDevice , VkPhysicalDeviceProperties2 * pProperties )
 const PFN_vkGetPhysicalDeviceProperties2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceFormatProperties2KHR ) ( VkPhysicalDevice physicalDevice , VkFormat format , VkFormatProperties2 * pFormatProperties )
 const PFN_vkGetPhysicalDeviceFormatProperties2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceImageFormatProperties2KHR ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceImageFormatInfo2 * pImageFormatInfo , VkImageFormatProperties2 * pImageFormatProperties )
 const PFN_vkGetPhysicalDeviceImageFormatProperties2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceQueueFamilyProperties2KHR ) ( VkPhysicalDevice physicalDevice , uint32_t * pQueueFamilyPropertyCount , VkQueueFamilyProperties2 * pQueueFamilyProperties )
 const PFN_vkGetPhysicalDeviceQueueFamilyProperties2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceMemoryProperties2KHR ) ( VkPhysicalDevice physicalDevice , VkPhysicalDeviceMemoryProperties2 * pMemoryProperties )
 const PFN_vkGetPhysicalDeviceMemoryProperties2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceSparseImageFormatInfo2 * pFormatInfo , uint32_t * pPropertyCount , VkSparseImageFormatProperties2 * pProperties )
 const PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR = Ptr{Cvoid}
 
@@ -6533,15 +6566,15 @@ const VkBindBufferMemoryDeviceGroupInfoKHR = VkBindBufferMemoryDeviceGroupInfo
 
 const VkBindImageMemoryDeviceGroupInfoKHR = VkBindImageMemoryDeviceGroupInfo
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR ) ( VkDevice device , uint32_t heapIndex , uint32_t localDeviceIndex , uint32_t remoteDeviceIndex , VkPeerMemoryFeatureFlags * pPeerMemoryFeatures )
 const PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetDeviceMaskKHR ) ( VkCommandBuffer commandBuffer , uint32_t deviceMask )
 const PFN_vkCmdSetDeviceMaskKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDispatchBaseKHR ) ( VkCommandBuffer commandBuffer , uint32_t baseGroupX , uint32_t baseGroupY , uint32_t baseGroupZ , uint32_t groupCountX , uint32_t groupCountY , uint32_t groupCountZ )
 const PFN_vkCmdDispatchBaseKHR = Ptr{Cvoid}
 
@@ -6559,7 +6592,7 @@ end
 
 const VkCommandPoolTrimFlagsKHR = VkCommandPoolTrimFlags
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkTrimCommandPoolKHR ) ( VkDevice device , VkCommandPool commandPool , VkCommandPoolTrimFlags flags )
 const PFN_vkTrimCommandPoolKHR = Ptr{Cvoid}
 
@@ -6571,7 +6604,7 @@ const VkPhysicalDeviceGroupPropertiesKHR = VkPhysicalDeviceGroupProperties
 
 const VkDeviceGroupDeviceCreateInfoKHR = VkDeviceGroupDeviceCreateInfo
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkEnumeratePhysicalDeviceGroupsKHR ) ( VkInstance instance , uint32_t * pPhysicalDeviceGroupCount , VkPhysicalDeviceGroupProperties * pPhysicalDeviceGroupProperties )
 const PFN_vkEnumeratePhysicalDeviceGroupsKHR = Ptr{Cvoid}
 
@@ -6599,7 +6632,7 @@ const VkExternalBufferPropertiesKHR = VkExternalBufferProperties
 
 const VkPhysicalDeviceIDPropertiesKHR = VkPhysicalDeviceIDProperties
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceExternalBufferInfo * pExternalBufferInfo , VkExternalBufferProperties * pExternalBufferProperties )
 const PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR = Ptr{Cvoid}
 
@@ -6633,11 +6666,11 @@ struct VkMemoryGetFdInfoKHR
     handleType::VkExternalMemoryHandleTypeFlagBits
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetMemoryFdKHR ) ( VkDevice device , const VkMemoryGetFdInfoKHR * pGetFdInfo , int * pFd )
 const PFN_vkGetMemoryFdKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetMemoryFdPropertiesKHR ) ( VkDevice device , VkExternalMemoryHandleTypeFlagBits handleType , int fd , VkMemoryFdPropertiesKHR * pMemoryFdProperties )
 const PFN_vkGetMemoryFdPropertiesKHR = Ptr{Cvoid}
 
@@ -6661,7 +6694,7 @@ const VkPhysicalDeviceExternalSemaphoreInfoKHR = VkPhysicalDeviceExternalSemapho
 
 const VkExternalSemaphorePropertiesKHR = VkExternalSemaphoreProperties
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceExternalSemaphoreInfo * pExternalSemaphoreInfo , VkExternalSemaphoreProperties * pExternalSemaphoreProperties )
 const PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR = Ptr{Cvoid}
 
@@ -6691,11 +6724,11 @@ struct VkSemaphoreGetFdInfoKHR
     handleType::VkExternalSemaphoreHandleTypeFlagBits
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkImportSemaphoreFdKHR ) ( VkDevice device , const VkImportSemaphoreFdInfoKHR * pImportSemaphoreFdInfo )
 const PFN_vkImportSemaphoreFdKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetSemaphoreFdKHR ) ( VkDevice device , const VkSemaphoreGetFdInfoKHR * pGetFdInfo , int * pFd )
 const PFN_vkGetSemaphoreFdKHR = Ptr{Cvoid}
 
@@ -6713,11 +6746,11 @@ struct VkPhysicalDevicePushDescriptorPropertiesKHR
     maxPushDescriptors::UInt32
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdPushDescriptorSetKHR ) ( VkCommandBuffer commandBuffer , VkPipelineBindPoint pipelineBindPoint , VkPipelineLayout layout , uint32_t set , uint32_t descriptorWriteCount , const VkWriteDescriptorSet * pDescriptorWrites )
 const PFN_vkCmdPushDescriptorSetKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdPushDescriptorSetWithTemplateKHR ) ( VkCommandBuffer commandBuffer , VkDescriptorUpdateTemplate descriptorUpdateTemplate , VkPipelineLayout layout , uint32_t set , const void * pData )
 const PFN_vkCmdPushDescriptorSetWithTemplateKHR = Ptr{Cvoid}
 
@@ -6763,15 +6796,15 @@ const VkDescriptorUpdateTemplateEntryKHR = VkDescriptorUpdateTemplateEntry
 
 const VkDescriptorUpdateTemplateCreateInfoKHR = VkDescriptorUpdateTemplateCreateInfo
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDescriptorUpdateTemplateKHR ) ( VkDevice device , const VkDescriptorUpdateTemplateCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkDescriptorUpdateTemplate * pDescriptorUpdateTemplate )
 const PFN_vkCreateDescriptorUpdateTemplateKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyDescriptorUpdateTemplateKHR ) ( VkDevice device , VkDescriptorUpdateTemplate descriptorUpdateTemplate , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyDescriptorUpdateTemplateKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkUpdateDescriptorSetWithTemplateKHR ) ( VkDevice device , VkDescriptorSet descriptorSet , VkDescriptorUpdateTemplate descriptorUpdateTemplate , const void * pData )
 const PFN_vkUpdateDescriptorSetWithTemplateKHR = Ptr{Cvoid}
 
@@ -6809,19 +6842,19 @@ const VkSubpassBeginInfoKHR = VkSubpassBeginInfo
 
 const VkSubpassEndInfoKHR = VkSubpassEndInfo
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateRenderPass2KHR ) ( VkDevice device , const VkRenderPassCreateInfo2 * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkRenderPass * pRenderPass )
 const PFN_vkCreateRenderPass2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBeginRenderPass2KHR ) ( VkCommandBuffer commandBuffer , const VkRenderPassBeginInfo * pRenderPassBegin , const VkSubpassBeginInfo * pSubpassBeginInfo )
 const PFN_vkCmdBeginRenderPass2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdNextSubpass2KHR ) ( VkCommandBuffer commandBuffer , const VkSubpassBeginInfo * pSubpassBeginInfo , const VkSubpassEndInfo * pSubpassEndInfo )
 const PFN_vkCmdNextSubpass2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdEndRenderPass2KHR ) ( VkCommandBuffer commandBuffer , const VkSubpassEndInfo * pSubpassEndInfo )
 const PFN_vkCmdEndRenderPass2KHR = Ptr{Cvoid}
 
@@ -6847,7 +6880,7 @@ struct VkSharedPresentSurfaceCapabilitiesKHR
     sharedPresentSupportedUsageFlags::VkImageUsageFlags
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetSwapchainStatusKHR ) ( VkDevice device , VkSwapchainKHR swapchain )
 const PFN_vkGetSwapchainStatusKHR = Ptr{Cvoid}
 
@@ -6867,7 +6900,7 @@ const VkPhysicalDeviceExternalFenceInfoKHR = VkPhysicalDeviceExternalFenceInfo
 
 const VkExternalFencePropertiesKHR = VkExternalFenceProperties
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceExternalFenceInfo * pExternalFenceInfo , VkExternalFenceProperties * pExternalFenceProperties )
 const PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR = Ptr{Cvoid}
 
@@ -6897,11 +6930,11 @@ struct VkFenceGetFdInfoKHR
     handleType::VkExternalFenceHandleTypeFlagBits
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkImportFenceFdKHR ) ( VkDevice device , const VkImportFenceFdInfoKHR * pImportFenceFdInfo )
 const PFN_vkImportFenceFdKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetFenceFdKHR ) ( VkDevice device , const VkFenceGetFdInfoKHR * pGetFdInfo , int * pFd )
 const PFN_vkGetFenceFdKHR = Ptr{Cvoid}
 
@@ -7005,6 +7038,26 @@ struct VkPerformanceCounterResultKHR
     data::NTuple{8, UInt8}
 end
 
+function Base.getproperty(x::Ptr{VkPerformanceCounterResultKHR}, f::Symbol)
+    f === :int32 && return Ptr{Int32}(x + 0)
+    f === :int64 && return Ptr{Int64}(x + 0)
+    f === :uint32 && return Ptr{UInt32}(x + 0)
+    f === :uint64 && return Ptr{UInt64}(x + 0)
+    f === :float32 && return Ptr{Cfloat}(x + 0)
+    f === :float64 && return Ptr{Cdouble}(x + 0)
+    return getfield(x, f)
+end
+
+function Base.getproperty(x::VkPerformanceCounterResultKHR, f::Symbol)
+    r = Ref{VkPerformanceCounterResultKHR}(x)
+    ptr = Base.unsafe_convert(VkPerformanceCounterResultKHR, r)
+    GC.@preserve r unsafe_load(getproperty(ptr, f))
+end
+
+function Base.setproperty!(x::Ptr{VkPerformanceCounterResultKHR}, f::Symbol, v)
+    unsafe_store!(getproperty(x, f), v)
+end
+
 struct VkAcquireProfilingLockInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
@@ -7018,19 +7071,19 @@ struct VkPerformanceQuerySubmitInfoKHR
     counterPassIndex::UInt32
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR ) ( VkPhysicalDevice physicalDevice , uint32_t queueFamilyIndex , uint32_t * pCounterCount , VkPerformanceCounterKHR * pCounters , VkPerformanceCounterDescriptionKHR * pCounterDescriptions )
 const PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR ) ( VkPhysicalDevice physicalDevice , const VkQueryPoolPerformanceCreateInfoKHR * pPerformanceQueryCreateInfo , uint32_t * pNumPasses )
 const PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkAcquireProfilingLockKHR ) ( VkDevice device , const VkAcquireProfilingLockInfoKHR * pInfo )
 const PFN_vkAcquireProfilingLockKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkReleaseProfilingLockKHR ) ( VkDevice device )
 const PFN_vkReleaseProfilingLockKHR = Ptr{Cvoid}
 
@@ -7082,11 +7135,11 @@ struct VkSurfaceFormat2KHR
     surfaceFormat::VkSurfaceFormatKHR
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceSurfaceInfo2KHR * pSurfaceInfo , VkSurfaceCapabilities2KHR * pSurfaceCapabilities )
 const PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceSurfaceFormats2KHR ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceSurfaceInfo2KHR * pSurfaceInfo , uint32_t * pSurfaceFormatCount , VkSurfaceFormat2KHR * pSurfaceFormats )
 const PFN_vkGetPhysicalDeviceSurfaceFormats2KHR = Ptr{Cvoid}
 
@@ -7133,19 +7186,19 @@ struct VkDisplayPlaneCapabilities2KHR
     capabilities::VkDisplayPlaneCapabilitiesKHR
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceDisplayProperties2KHR ) ( VkPhysicalDevice physicalDevice , uint32_t * pPropertyCount , VkDisplayProperties2KHR * pProperties )
 const PFN_vkGetPhysicalDeviceDisplayProperties2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceDisplayPlaneProperties2KHR ) ( VkPhysicalDevice physicalDevice , uint32_t * pPropertyCount , VkDisplayPlaneProperties2KHR * pProperties )
 const PFN_vkGetPhysicalDeviceDisplayPlaneProperties2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetDisplayModeProperties2KHR ) ( VkPhysicalDevice physicalDevice , VkDisplayKHR display , uint32_t * pPropertyCount , VkDisplayModeProperties2KHR * pProperties )
 const PFN_vkGetDisplayModeProperties2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetDisplayPlaneCapabilities2KHR ) ( VkPhysicalDevice physicalDevice , const VkDisplayPlaneInfo2KHR * pDisplayPlaneInfo , VkDisplayPlaneCapabilities2KHR * pCapabilities )
 const PFN_vkGetDisplayPlaneCapabilities2KHR = Ptr{Cvoid}
 
@@ -7179,15 +7232,15 @@ const VkMemoryRequirements2KHR = VkMemoryRequirements2
 
 const VkSparseImageMemoryRequirements2KHR = VkSparseImageMemoryRequirements2
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetImageMemoryRequirements2KHR ) ( VkDevice device , const VkImageMemoryRequirementsInfo2 * pInfo , VkMemoryRequirements2 * pMemoryRequirements )
 const PFN_vkGetImageMemoryRequirements2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetBufferMemoryRequirements2KHR ) ( VkDevice device , const VkBufferMemoryRequirementsInfo2 * pInfo , VkMemoryRequirements2 * pMemoryRequirements )
 const PFN_vkGetBufferMemoryRequirements2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetImageSparseMemoryRequirements2KHR ) ( VkDevice device , const VkImageSparseMemoryRequirementsInfo2 * pInfo , uint32_t * pSparseMemoryRequirementCount , VkSparseImageMemoryRequirements2 * pSparseMemoryRequirements )
 const PFN_vkGetImageSparseMemoryRequirements2KHR = Ptr{Cvoid}
 
@@ -7225,11 +7278,11 @@ const VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR = VkPhysicalDeviceSample
 
 const VkSamplerYcbcrConversionImageFormatPropertiesKHR = VkSamplerYcbcrConversionImageFormatProperties
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateSamplerYcbcrConversionKHR ) ( VkDevice device , const VkSamplerYcbcrConversionCreateInfo * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSamplerYcbcrConversion * pYcbcrConversion )
 const PFN_vkCreateSamplerYcbcrConversionKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroySamplerYcbcrConversionKHR ) ( VkDevice device , VkSamplerYcbcrConversion ycbcrConversion , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroySamplerYcbcrConversionKHR = Ptr{Cvoid}
 
@@ -7245,11 +7298,11 @@ const VkBindBufferMemoryInfoKHR = VkBindBufferMemoryInfo
 
 const VkBindImageMemoryInfoKHR = VkBindImageMemoryInfo
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkBindBufferMemory2KHR ) ( VkDevice device , uint32_t bindInfoCount , const VkBindBufferMemoryInfo * pBindInfos )
 const PFN_vkBindBufferMemory2KHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkBindImageMemory2KHR ) ( VkDevice device , uint32_t bindInfoCount , const VkBindImageMemoryInfo * pBindInfos )
 const PFN_vkBindImageMemory2KHR = Ptr{Cvoid}
 
@@ -7265,7 +7318,7 @@ const VkPhysicalDeviceMaintenance3PropertiesKHR = VkPhysicalDeviceMaintenance3Pr
 
 const VkDescriptorSetLayoutSupportKHR = VkDescriptorSetLayoutSupport
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetDescriptorSetLayoutSupportKHR ) ( VkDevice device , const VkDescriptorSetLayoutCreateInfo * pCreateInfo , VkDescriptorSetLayoutSupport * pSupport )
 const PFN_vkGetDescriptorSetLayoutSupportKHR = Ptr{Cvoid}
 
@@ -7273,11 +7326,11 @@ function vkGetDescriptorSetLayoutSupportKHR(device, pCreateInfo, pSupport)
     ccall((:vkGetDescriptorSetLayoutSupportKHR, libvulkan), Cvoid, (VkDevice, Ptr{VkDescriptorSetLayoutCreateInfo}, Ptr{VkDescriptorSetLayoutSupport}), device, pCreateInfo, pSupport)
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawIndirectCountKHR ) ( VkCommandBuffer commandBuffer , VkBuffer buffer , VkDeviceSize offset , VkBuffer countBuffer , VkDeviceSize countBufferOffset , uint32_t maxDrawCount , uint32_t stride )
 const PFN_vkCmdDrawIndirectCountKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawIndexedIndirectCountKHR ) ( VkCommandBuffer commandBuffer , VkBuffer buffer , VkDeviceSize offset , VkBuffer countBuffer , VkDeviceSize countBufferOffset , uint32_t maxDrawCount , uint32_t stride )
 const PFN_vkCmdDrawIndexedIndirectCountKHR = Ptr{Cvoid}
 
@@ -7338,15 +7391,15 @@ const VkSemaphoreWaitInfoKHR = VkSemaphoreWaitInfo
 
 const VkSemaphoreSignalInfoKHR = VkSemaphoreSignalInfo
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetSemaphoreCounterValueKHR ) ( VkDevice device , VkSemaphore semaphore , uint64_t * pValue )
 const PFN_vkGetSemaphoreCounterValueKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkWaitSemaphoresKHR ) ( VkDevice device , const VkSemaphoreWaitInfo * pWaitInfo , uint64_t timeout )
 const PFN_vkWaitSemaphoresKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkSignalSemaphoreKHR ) ( VkDevice device , const VkSemaphoreSignalInfo * pSignalInfo )
 const PFN_vkSignalSemaphoreKHR = Ptr{Cvoid}
 
@@ -7388,15 +7441,15 @@ const VkMemoryOpaqueCaptureAddressAllocateInfoKHR = VkMemoryOpaqueCaptureAddress
 
 const VkDeviceMemoryOpaqueCaptureAddressInfoKHR = VkDeviceMemoryOpaqueCaptureAddressInfo
 
-# C code: 
+# C code:
 # typedef VkDeviceAddress ( VKAPI_PTR * PFN_vkGetBufferDeviceAddressKHR ) ( VkDevice device , const VkBufferDeviceAddressInfo * pInfo )
 const PFN_vkGetBufferDeviceAddressKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef uint64_t ( VKAPI_PTR * PFN_vkGetBufferOpaqueCaptureAddressKHR ) ( VkDevice device , const VkBufferDeviceAddressInfo * pInfo )
 const PFN_vkGetBufferOpaqueCaptureAddressKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef uint64_t ( VKAPI_PTR * PFN_vkGetDeviceMemoryOpaqueCaptureAddressKHR ) ( VkDevice device , const VkDeviceMemoryOpaqueCaptureAddressInfo * pInfo )
 const PFN_vkGetDeviceMemoryOpaqueCaptureAddressKHR = Ptr{Cvoid}
 
@@ -7452,6 +7505,24 @@ struct VkPipelineExecutableStatisticValueKHR
     data::NTuple{8, UInt8}
 end
 
+function Base.getproperty(x::Ptr{VkPipelineExecutableStatisticValueKHR}, f::Symbol)
+    f === :b32 && return Ptr{VkBool32}(x + 0)
+    f === :i64 && return Ptr{Int64}(x + 0)
+    f === :u64 && return Ptr{UInt64}(x + 0)
+    f === :f64 && return Ptr{Cdouble}(x + 0)
+    return getfield(x, f)
+end
+
+function Base.getproperty(x::VkPipelineExecutableStatisticValueKHR, f::Symbol)
+    r = Ref{VkPipelineExecutableStatisticValueKHR}(x)
+    ptr = Base.unsafe_convert(VkPipelineExecutableStatisticValueKHR, r)
+    GC.@preserve r unsafe_load(getproperty(ptr, f))
+end
+
+function Base.setproperty!(x::Ptr{VkPipelineExecutableStatisticValueKHR}, f::Symbol, v)
+    unsafe_store!(getproperty(x, f), v)
+end
+
 struct VkPipelineExecutableStatisticKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
@@ -7471,15 +7542,15 @@ struct VkPipelineExecutableInternalRepresentationKHR
     pData::Ptr{Cvoid}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPipelineExecutablePropertiesKHR ) ( VkDevice device , const VkPipelineInfoKHR * pPipelineInfo , uint32_t * pExecutableCount , VkPipelineExecutablePropertiesKHR * pProperties )
 const PFN_vkGetPipelineExecutablePropertiesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPipelineExecutableStatisticsKHR ) ( VkDevice device , const VkPipelineExecutableInfoKHR * pExecutableInfo , uint32_t * pStatisticCount , VkPipelineExecutableStatisticKHR * pStatistics )
 const PFN_vkGetPipelineExecutableStatisticsKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPipelineExecutableInternalRepresentationsKHR ) ( VkDevice device , const VkPipelineExecutableInfoKHR * pExecutableInfo , uint32_t * pInternalRepresentationCount , VkPipelineExecutableInternalRepresentationKHR * pInternalRepresentations )
 const PFN_vkGetPipelineExecutableInternalRepresentationsKHR = Ptr{Cvoid}
 
@@ -7554,7 +7625,7 @@ end
 
 const VkDebugReportFlagsEXT = VkFlags
 
-# C code: 
+# C code:
 # typedef VkBool32 ( VKAPI_PTR * PFN_vkDebugReportCallbackEXT ) ( VkDebugReportFlagsEXT flags , VkDebugReportObjectTypeEXT objectType , uint64_t object , size_t location , int32_t messageCode , const char * pLayerPrefix , const char * pMessage , void * pUserData )
 const PFN_vkDebugReportCallbackEXT = Ptr{Cvoid}
 
@@ -7566,15 +7637,15 @@ struct VkDebugReportCallbackCreateInfoEXT
     pUserData::Ptr{Cvoid}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDebugReportCallbackEXT ) ( VkInstance instance , const VkDebugReportCallbackCreateInfoEXT * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkDebugReportCallbackEXT * pCallback )
 const PFN_vkCreateDebugReportCallbackEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyDebugReportCallbackEXT ) ( VkInstance instance , VkDebugReportCallbackEXT callback , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyDebugReportCallbackEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDebugReportMessageEXT ) ( VkInstance instance , VkDebugReportFlagsEXT flags , VkDebugReportObjectTypeEXT objectType , uint64_t object , size_t location , int32_t messageCode , const char * pLayerPrefix , const char * pMessage )
 const PFN_vkDebugReportMessageEXT = Ptr{Cvoid}
 
@@ -7627,23 +7698,23 @@ struct VkDebugMarkerMarkerInfoEXT
     color::NTuple{4, Cfloat}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkDebugMarkerSetObjectTagEXT ) ( VkDevice device , const VkDebugMarkerObjectTagInfoEXT * pTagInfo )
 const PFN_vkDebugMarkerSetObjectTagEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkDebugMarkerSetObjectNameEXT ) ( VkDevice device , const VkDebugMarkerObjectNameInfoEXT * pNameInfo )
 const PFN_vkDebugMarkerSetObjectNameEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDebugMarkerBeginEXT ) ( VkCommandBuffer commandBuffer , const VkDebugMarkerMarkerInfoEXT * pMarkerInfo )
 const PFN_vkCmdDebugMarkerBeginEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDebugMarkerEndEXT ) ( VkCommandBuffer commandBuffer )
 const PFN_vkCmdDebugMarkerEndEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDebugMarkerInsertEXT ) ( VkCommandBuffer commandBuffer , const VkDebugMarkerMarkerInfoEXT * pMarkerInfo )
 const PFN_vkCmdDebugMarkerInsertEXT = Ptr{Cvoid}
 
@@ -7717,27 +7788,27 @@ struct VkPipelineRasterizationStateStreamCreateInfoEXT
     rasterizationStream::UInt32
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBindTransformFeedbackBuffersEXT ) ( VkCommandBuffer commandBuffer , uint32_t firstBinding , uint32_t bindingCount , const VkBuffer * pBuffers , const VkDeviceSize * pOffsets , const VkDeviceSize * pSizes )
 const PFN_vkCmdBindTransformFeedbackBuffersEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBeginTransformFeedbackEXT ) ( VkCommandBuffer commandBuffer , uint32_t firstCounterBuffer , uint32_t counterBufferCount , const VkBuffer * pCounterBuffers , const VkDeviceSize * pCounterBufferOffsets )
 const PFN_vkCmdBeginTransformFeedbackEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdEndTransformFeedbackEXT ) ( VkCommandBuffer commandBuffer , uint32_t firstCounterBuffer , uint32_t counterBufferCount , const VkBuffer * pCounterBuffers , const VkDeviceSize * pCounterBufferOffsets )
 const PFN_vkCmdEndTransformFeedbackEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBeginQueryIndexedEXT ) ( VkCommandBuffer commandBuffer , VkQueryPool queryPool , uint32_t query , VkQueryControlFlags flags , uint32_t index )
 const PFN_vkCmdBeginQueryIndexedEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdEndQueryIndexedEXT ) ( VkCommandBuffer commandBuffer , VkQueryPool queryPool , uint32_t query , uint32_t index )
 const PFN_vkCmdEndQueryIndexedEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawIndirectByteCountEXT ) ( VkCommandBuffer commandBuffer , uint32_t instanceCount , uint32_t firstInstance , VkBuffer counterBuffer , VkDeviceSize counterBufferOffset , uint32_t counterOffset , uint32_t vertexStride )
 const PFN_vkCmdDrawIndirectByteCountEXT = Ptr{Cvoid}
 
@@ -7780,11 +7851,11 @@ struct VkImageViewAddressPropertiesNVX
     size::VkDeviceSize
 end
 
-# C code: 
+# C code:
 # typedef uint32_t ( VKAPI_PTR * PFN_vkGetImageViewHandleNVX ) ( VkDevice device , const VkImageViewHandleInfoNVX * pInfo )
 const PFN_vkGetImageViewHandleNVX = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetImageViewAddressNVX ) ( VkDevice device , VkImageView imageView , VkImageViewAddressPropertiesNVX * pProperties )
 const PFN_vkGetImageViewAddressNVX = Ptr{Cvoid}
 
@@ -7796,11 +7867,11 @@ function vkGetImageViewAddressNVX(device, imageView, pProperties)
     ccall((:vkGetImageViewAddressNVX, libvulkan), VkResult, (VkDevice, VkImageView, Ptr{VkImageViewAddressPropertiesNVX}), device, imageView, pProperties)
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawIndirectCountAMD ) ( VkCommandBuffer commandBuffer , VkBuffer buffer , VkDeviceSize offset , VkBuffer countBuffer , VkDeviceSize countBufferOffset , uint32_t maxDrawCount , uint32_t stride )
 const PFN_vkCmdDrawIndirectCountAMD = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawIndexedIndirectCountAMD ) ( VkCommandBuffer commandBuffer , VkBuffer buffer , VkDeviceSize offset , VkBuffer countBuffer , VkDeviceSize countBufferOffset , uint32_t maxDrawCount , uint32_t stride )
 const PFN_vkCmdDrawIndexedIndirectCountAMD = Ptr{Cvoid}
 
@@ -7843,7 +7914,7 @@ struct VkShaderStatisticsInfoAMD
     computeWorkGroupSize::NTuple{3, UInt32}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetShaderInfoAMD ) ( VkDevice device , VkPipeline pipeline , VkShaderStageFlagBits shaderStage , VkShaderInfoTypeAMD infoType , size_t * pInfoSize , void * pInfo )
 const PFN_vkGetShaderInfoAMD = Ptr{Cvoid}
 
@@ -7883,7 +7954,7 @@ struct VkExternalImageFormatPropertiesNV
     compatibleHandleTypes::VkExternalMemoryHandleTypeFlagsNV
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV ) ( VkPhysicalDevice physicalDevice , VkFormat format , VkImageType type , VkImageTiling tiling , VkImageUsageFlags usage , VkImageCreateFlags flags , VkExternalMemoryHandleTypeFlagsNV externalHandleType , VkExternalImageFormatPropertiesNV * pExternalImageFormatProperties )
 const PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV = Ptr{Cvoid}
 
@@ -7962,11 +8033,11 @@ struct VkCommandBufferInheritanceConditionalRenderingInfoEXT
     conditionalRenderingEnable::VkBool32
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBeginConditionalRenderingEXT ) ( VkCommandBuffer commandBuffer , const VkConditionalRenderingBeginInfoEXT * pConditionalRenderingBegin )
 const PFN_vkCmdBeginConditionalRenderingEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdEndConditionalRenderingEXT ) ( VkCommandBuffer commandBuffer )
 const PFN_vkCmdEndConditionalRenderingEXT = Ptr{Cvoid}
 
@@ -7991,7 +8062,7 @@ struct VkPipelineViewportWScalingStateCreateInfoNV
     pViewportWScalings::Ptr{VkViewportWScalingNV}
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetViewportWScalingNV ) ( VkCommandBuffer commandBuffer , uint32_t firstViewport , uint32_t viewportCount , const VkViewportWScalingNV * pViewportWScalings )
 const PFN_vkCmdSetViewportWScalingNV = Ptr{Cvoid}
 
@@ -7999,7 +8070,7 @@ function vkCmdSetViewportWScalingNV(commandBuffer, firstViewport, viewportCount,
     ccall((:vkCmdSetViewportWScalingNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkViewportWScalingNV}), commandBuffer, firstViewport, viewportCount, pViewportWScalings)
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkReleaseDisplayEXT ) ( VkPhysicalDevice physicalDevice , VkDisplayKHR display )
 const PFN_vkReleaseDisplayEXT = Ptr{Cvoid}
 
@@ -8030,7 +8101,7 @@ struct VkSurfaceCapabilities2EXT
     supportedSurfaceCounters::VkSurfaceCounterFlagsEXT
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT ) ( VkPhysicalDevice physicalDevice , VkSurfaceKHR surface , VkSurfaceCapabilities2EXT * pSurfaceCapabilities )
 const PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT = Ptr{Cvoid}
 
@@ -8079,19 +8150,19 @@ struct VkSwapchainCounterCreateInfoEXT
     surfaceCounters::VkSurfaceCounterFlagsEXT
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkDisplayPowerControlEXT ) ( VkDevice device , VkDisplayKHR display , const VkDisplayPowerInfoEXT * pDisplayPowerInfo )
 const PFN_vkDisplayPowerControlEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkRegisterDeviceEventEXT ) ( VkDevice device , const VkDeviceEventInfoEXT * pDeviceEventInfo , const VkAllocationCallbacks * pAllocator , VkFence * pFence )
 const PFN_vkRegisterDeviceEventEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkRegisterDisplayEventEXT ) ( VkDevice device , VkDisplayKHR display , const VkDisplayEventInfoEXT * pDisplayEventInfo , const VkAllocationCallbacks * pAllocator , VkFence * pFence )
 const PFN_vkRegisterDisplayEventEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetSwapchainCounterEXT ) ( VkDevice device , VkSwapchainKHR swapchain , VkSurfaceCounterFlagBitsEXT counter , uint64_t * pCounterValue )
 const PFN_vkGetSwapchainCounterEXT = Ptr{Cvoid}
 
@@ -8135,11 +8206,11 @@ struct VkPresentTimesInfoGOOGLE
     pTimes::Ptr{VkPresentTimeGOOGLE}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetRefreshCycleDurationGOOGLE ) ( VkDevice device , VkSwapchainKHR swapchain , VkRefreshCycleDurationGOOGLE * pDisplayTimingProperties )
 const PFN_vkGetRefreshCycleDurationGOOGLE = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPastPresentationTimingGOOGLE ) ( VkDevice device , VkSwapchainKHR swapchain , uint32_t * pPresentationTimingCount , VkPastPresentationTimingGOOGLE * pPresentationTimings )
 const PFN_vkGetPastPresentationTimingGOOGLE = Ptr{Cvoid}
 
@@ -8209,7 +8280,7 @@ struct VkPipelineDiscardRectangleStateCreateInfoEXT
     pDiscardRectangles::Ptr{VkRect2D}
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetDiscardRectangleEXT ) ( VkCommandBuffer commandBuffer , uint32_t firstDiscardRectangle , uint32_t discardRectangleCount , const VkRect2D * pDiscardRectangles )
 const PFN_vkCmdSetDiscardRectangleEXT = Ptr{Cvoid}
 
@@ -8281,7 +8352,7 @@ struct VkHdrMetadataEXT
     maxFrameAverageLightLevel::Cfloat
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkSetHdrMetadataEXT ) ( VkDevice device , uint32_t swapchainCount , const VkSwapchainKHR * pSwapchains , const VkHdrMetadataEXT * pMetadata )
 const PFN_vkSetHdrMetadataEXT = Ptr{Cvoid}
 
@@ -8346,7 +8417,7 @@ struct VkDebugUtilsMessengerCallbackDataEXT
     pObjects::Ptr{VkDebugUtilsObjectNameInfoEXT}
 end
 
-# C code: 
+# C code:
 # typedef VkBool32 ( VKAPI_PTR * PFN_vkDebugUtilsMessengerCallbackEXT ) ( VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity , VkDebugUtilsMessageTypeFlagsEXT messageTypes , const VkDebugUtilsMessengerCallbackDataEXT * pCallbackData , void * pUserData )
 const PFN_vkDebugUtilsMessengerCallbackEXT = Ptr{Cvoid}
 
@@ -8370,47 +8441,47 @@ struct VkDebugUtilsObjectTagInfoEXT
     pTag::Ptr{Cvoid}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkSetDebugUtilsObjectNameEXT ) ( VkDevice device , const VkDebugUtilsObjectNameInfoEXT * pNameInfo )
 const PFN_vkSetDebugUtilsObjectNameEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkSetDebugUtilsObjectTagEXT ) ( VkDevice device , const VkDebugUtilsObjectTagInfoEXT * pTagInfo )
 const PFN_vkSetDebugUtilsObjectTagEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkQueueBeginDebugUtilsLabelEXT ) ( VkQueue queue , const VkDebugUtilsLabelEXT * pLabelInfo )
 const PFN_vkQueueBeginDebugUtilsLabelEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkQueueEndDebugUtilsLabelEXT ) ( VkQueue queue )
 const PFN_vkQueueEndDebugUtilsLabelEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkQueueInsertDebugUtilsLabelEXT ) ( VkQueue queue , const VkDebugUtilsLabelEXT * pLabelInfo )
 const PFN_vkQueueInsertDebugUtilsLabelEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBeginDebugUtilsLabelEXT ) ( VkCommandBuffer commandBuffer , const VkDebugUtilsLabelEXT * pLabelInfo )
 const PFN_vkCmdBeginDebugUtilsLabelEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdEndDebugUtilsLabelEXT ) ( VkCommandBuffer commandBuffer )
 const PFN_vkCmdEndDebugUtilsLabelEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdInsertDebugUtilsLabelEXT ) ( VkCommandBuffer commandBuffer , const VkDebugUtilsLabelEXT * pLabelInfo )
 const PFN_vkCmdInsertDebugUtilsLabelEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDebugUtilsMessengerEXT ) ( VkInstance instance , const VkDebugUtilsMessengerCreateInfoEXT * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkDebugUtilsMessengerEXT * pMessenger )
 const PFN_vkCreateDebugUtilsMessengerEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyDebugUtilsMessengerEXT ) ( VkInstance instance , VkDebugUtilsMessengerEXT messenger , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyDebugUtilsMessengerEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkSubmitDebugUtilsMessageEXT ) ( VkInstance instance , VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity , VkDebugUtilsMessageTypeFlagsEXT messageTypes , const VkDebugUtilsMessengerCallbackDataEXT * pCallbackData )
 const PFN_vkSubmitDebugUtilsMessageEXT = Ptr{Cvoid}
 
@@ -8550,11 +8621,11 @@ struct VkMultisamplePropertiesEXT
     maxSampleLocationGridSize::VkExtent2D
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetSampleLocationsEXT ) ( VkCommandBuffer commandBuffer , const VkSampleLocationsInfoEXT * pSampleLocationsInfo )
 const PFN_vkCmdSetSampleLocationsEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT ) ( VkPhysicalDevice physicalDevice , VkSampleCountFlagBits samples , VkMultisamplePropertiesEXT * pMultisampleProperties )
 const PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT = Ptr{Cvoid}
 
@@ -8684,7 +8755,7 @@ struct VkImageDrmFormatModifierPropertiesEXT
     drmFormatModifier::UInt64
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetImageDrmFormatModifierPropertiesEXT ) ( VkDevice device , VkImage image , VkImageDrmFormatModifierPropertiesEXT * pProperties )
 const PFN_vkGetImageDrmFormatModifierPropertiesEXT = Ptr{Cvoid}
 
@@ -8717,19 +8788,19 @@ struct VkShaderModuleValidationCacheCreateInfoEXT
     validationCache::VkValidationCacheEXT
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateValidationCacheEXT ) ( VkDevice device , const VkValidationCacheCreateInfoEXT * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkValidationCacheEXT * pValidationCache )
 const PFN_vkCreateValidationCacheEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyValidationCacheEXT ) ( VkDevice device , VkValidationCacheEXT validationCache , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyValidationCacheEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkMergeValidationCachesEXT ) ( VkDevice device , VkValidationCacheEXT dstCache , uint32_t srcCacheCount , const VkValidationCacheEXT * pSrcCaches )
 const PFN_vkMergeValidationCachesEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetValidationCacheDataEXT ) ( VkDevice device , VkValidationCacheEXT validationCache , size_t * pDataSize , void * pData )
 const PFN_vkGetValidationCacheDataEXT = Ptr{Cvoid}
 
@@ -8836,15 +8907,15 @@ struct VkPipelineViewportCoarseSampleOrderStateCreateInfoNV
     pCustomSampleOrders::Ptr{VkCoarseSampleOrderCustomNV}
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBindShadingRateImageNV ) ( VkCommandBuffer commandBuffer , VkImageView imageView , VkImageLayout imageLayout )
 const PFN_vkCmdBindShadingRateImageNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetViewportShadingRatePaletteNV ) ( VkCommandBuffer commandBuffer , uint32_t firstViewport , uint32_t viewportCount , const VkShadingRatePaletteNV * pShadingRatePalettes )
 const PFN_vkCmdSetViewportShadingRatePaletteNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetCoarseSampleOrderNV ) ( VkCommandBuffer commandBuffer , VkCoarseSampleOrderTypeNV sampleOrderType , uint32_t customSampleOrderCount , const VkCoarseSampleOrderCustomNV * pCustomSampleOrders )
 const PFN_vkCmdSetCoarseSampleOrderNV = Ptr{Cvoid}
 
@@ -9116,69 +9187,89 @@ struct VkAccelerationStructureInstanceKHR
     data::NTuple{64, UInt8}
 end
 
+function Base.getproperty(x::Ptr{VkAccelerationStructureInstanceKHR}, f::Symbol)
+    f === :transform && return Ptr{VkTransformMatrixKHR}(x + 0)
+    f === :instanceCustomIndex && return Ptr{UInt32}(x + 384)
+    f === :mask && return Ptr{UInt32}(x + 408)
+    f === :instanceShaderBindingTableRecordOffset && return Ptr{UInt32}(x + 416)
+    f === :flags && return Ptr{VkGeometryInstanceFlagsKHR}(x + 440)
+    f === :accelerationStructureReference && return Ptr{UInt64}(x + 448)
+    return getfield(x, f)
+end
+
+function Base.getproperty(x::VkAccelerationStructureInstanceKHR, f::Symbol)
+    r = Ref{VkAccelerationStructureInstanceKHR}(x)
+    ptr = Base.unsafe_convert(VkAccelerationStructureInstanceKHR, r)
+    GC.@preserve r unsafe_load(getproperty(ptr, f))
+end
+
+function Base.setproperty!(x::Ptr{VkAccelerationStructureInstanceKHR}, f::Symbol, v)
+    unsafe_store!(getproperty(x, f), v)
+end
+
 const VkAccelerationStructureInstanceNV = VkAccelerationStructureInstanceKHR
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateAccelerationStructureNV ) ( VkDevice device , const VkAccelerationStructureCreateInfoNV * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkAccelerationStructureNV * pAccelerationStructure )
 const PFN_vkCreateAccelerationStructureNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyAccelerationStructureKHR ) ( VkDevice device , VkAccelerationStructureKHR accelerationStructure , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyAccelerationStructureKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyAccelerationStructureNV ) ( VkDevice device , VkAccelerationStructureKHR accelerationStructure , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyAccelerationStructureNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetAccelerationStructureMemoryRequirementsNV ) ( VkDevice device , const VkAccelerationStructureMemoryRequirementsInfoNV * pInfo , VkMemoryRequirements2KHR * pMemoryRequirements )
 const PFN_vkGetAccelerationStructureMemoryRequirementsNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkBindAccelerationStructureMemoryKHR ) ( VkDevice device , uint32_t bindInfoCount , const VkBindAccelerationStructureMemoryInfoKHR * pBindInfos )
 const PFN_vkBindAccelerationStructureMemoryKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkBindAccelerationStructureMemoryNV ) ( VkDevice device , uint32_t bindInfoCount , const VkBindAccelerationStructureMemoryInfoKHR * pBindInfos )
 const PFN_vkBindAccelerationStructureMemoryNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBuildAccelerationStructureNV ) ( VkCommandBuffer commandBuffer , const VkAccelerationStructureInfoNV * pInfo , VkBuffer instanceData , VkDeviceSize instanceOffset , VkBool32 update , VkAccelerationStructureKHR dst , VkAccelerationStructureKHR src , VkBuffer scratch , VkDeviceSize scratchOffset )
 const PFN_vkCmdBuildAccelerationStructureNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdCopyAccelerationStructureNV ) ( VkCommandBuffer commandBuffer , VkAccelerationStructureKHR dst , VkAccelerationStructureKHR src , VkCopyAccelerationStructureModeKHR mode )
 const PFN_vkCmdCopyAccelerationStructureNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdTraceRaysNV ) ( VkCommandBuffer commandBuffer , VkBuffer raygenShaderBindingTableBuffer , VkDeviceSize raygenShaderBindingOffset , VkBuffer missShaderBindingTableBuffer , VkDeviceSize missShaderBindingOffset , VkDeviceSize missShaderBindingStride , VkBuffer hitShaderBindingTableBuffer , VkDeviceSize hitShaderBindingOffset , VkDeviceSize hitShaderBindingStride , VkBuffer callableShaderBindingTableBuffer , VkDeviceSize callableShaderBindingOffset , VkDeviceSize callableShaderBindingStride , uint32_t width , uint32_t height , uint32_t depth )
 const PFN_vkCmdTraceRaysNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateRayTracingPipelinesNV ) ( VkDevice device , VkPipelineCache pipelineCache , uint32_t createInfoCount , const VkRayTracingPipelineCreateInfoNV * pCreateInfos , const VkAllocationCallbacks * pAllocator , VkPipeline * pPipelines )
 const PFN_vkCreateRayTracingPipelinesNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetRayTracingShaderGroupHandlesKHR ) ( VkDevice device , VkPipeline pipeline , uint32_t firstGroup , uint32_t groupCount , size_t dataSize , void * pData )
 const PFN_vkGetRayTracingShaderGroupHandlesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetRayTracingShaderGroupHandlesNV ) ( VkDevice device , VkPipeline pipeline , uint32_t firstGroup , uint32_t groupCount , size_t dataSize , void * pData )
 const PFN_vkGetRayTracingShaderGroupHandlesNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetAccelerationStructureHandleNV ) ( VkDevice device , VkAccelerationStructureKHR accelerationStructure , size_t dataSize , void * pData )
 const PFN_vkGetAccelerationStructureHandleNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdWriteAccelerationStructuresPropertiesKHR ) ( VkCommandBuffer commandBuffer , uint32_t accelerationStructureCount , const VkAccelerationStructureKHR * pAccelerationStructures , VkQueryType queryType , VkQueryPool queryPool , uint32_t firstQuery )
 const PFN_vkCmdWriteAccelerationStructuresPropertiesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdWriteAccelerationStructuresPropertiesNV ) ( VkCommandBuffer commandBuffer , uint32_t accelerationStructureCount , const VkAccelerationStructureKHR * pAccelerationStructures , VkQueryType queryType , VkQueryPool queryPool , uint32_t firstQuery )
 const PFN_vkCmdWriteAccelerationStructuresPropertiesNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCompileDeferredNV ) ( VkDevice device , VkPipeline pipeline , uint32_t shader )
 const PFN_vkCompileDeferredNV = Ptr{Cvoid}
 
@@ -9304,7 +9395,7 @@ struct VkPhysicalDeviceExternalMemoryHostPropertiesEXT
     minImportedHostPointerAlignment::VkDeviceSize
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetMemoryHostPointerPropertiesEXT ) ( VkDevice device , VkExternalMemoryHandleTypeFlagBits handleType , const void * pHostPointer , VkMemoryHostPointerPropertiesEXT * pMemoryHostPointerProperties )
 const PFN_vkGetMemoryHostPointerPropertiesEXT = Ptr{Cvoid}
 
@@ -9312,7 +9403,7 @@ function vkGetMemoryHostPointerPropertiesEXT(device, handleType, pHostPointer, p
     ccall((:vkGetMemoryHostPointerPropertiesEXT, libvulkan), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Ptr{Cvoid}, Ptr{VkMemoryHostPointerPropertiesEXT}), device, handleType, pHostPointer, pMemoryHostPointerProperties)
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdWriteBufferMarkerAMD ) ( VkCommandBuffer commandBuffer , VkPipelineStageFlagBits pipelineStage , VkBuffer dstBuffer , VkDeviceSize dstOffset , uint32_t marker )
 const PFN_vkCmdWriteBufferMarkerAMD = Ptr{Cvoid}
 
@@ -9346,11 +9437,11 @@ struct VkCalibratedTimestampInfoEXT
     timeDomain::VkTimeDomainEXT
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT ) ( VkPhysicalDevice physicalDevice , uint32_t * pTimeDomainCount , VkTimeDomainEXT * pTimeDomains )
 const PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetCalibratedTimestampsEXT ) ( VkDevice device , uint32_t timestampCount , const VkCalibratedTimestampInfoEXT * pTimestampInfos , uint64_t * pTimestamps , uint64_t * pMaxDeviation )
 const PFN_vkGetCalibratedTimestampsEXT = Ptr{Cvoid}
 
@@ -9478,15 +9569,15 @@ struct VkDrawMeshTasksIndirectCommandNV
     firstTask::UInt32
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawMeshTasksNV ) ( VkCommandBuffer commandBuffer , uint32_t taskCount , uint32_t firstTask )
 const PFN_vkCmdDrawMeshTasksNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawMeshTasksIndirectNV ) ( VkCommandBuffer commandBuffer , VkBuffer buffer , VkDeviceSize offset , uint32_t drawCount , uint32_t stride )
 const PFN_vkCmdDrawMeshTasksIndirectNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdDrawMeshTasksIndirectCountNV ) ( VkCommandBuffer commandBuffer , VkBuffer buffer , VkDeviceSize offset , VkBuffer countBuffer , VkDeviceSize countBufferOffset , uint32_t maxDrawCount , uint32_t stride )
 const PFN_vkCmdDrawMeshTasksIndirectCountNV = Ptr{Cvoid}
 
@@ -9527,7 +9618,7 @@ struct VkPhysicalDeviceExclusiveScissorFeaturesNV
     exclusiveScissor::VkBool32
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetExclusiveScissorNV ) ( VkCommandBuffer commandBuffer , uint32_t firstExclusiveScissor , uint32_t exclusiveScissorCount , const VkRect2D * pExclusiveScissors )
 const PFN_vkCmdSetExclusiveScissorNV = Ptr{Cvoid}
 
@@ -9548,11 +9639,11 @@ struct VkCheckpointDataNV
     pCheckpointMarker::Ptr{Cvoid}
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetCheckpointNV ) ( VkCommandBuffer commandBuffer , const void * pCheckpointMarker )
 const PFN_vkCmdSetCheckpointNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetQueueCheckpointDataNV ) ( VkQueue queue , uint32_t * pCheckpointDataCount , VkCheckpointDataNV * pCheckpointData )
 const PFN_vkGetQueueCheckpointDataNV = Ptr{Cvoid}
 
@@ -9609,6 +9700,25 @@ struct VkPerformanceValueDataINTEL
     data::NTuple{8, UInt8}
 end
 
+function Base.getproperty(x::Ptr{VkPerformanceValueDataINTEL}, f::Symbol)
+    f === :value32 && return Ptr{UInt32}(x + 0)
+    f === :value64 && return Ptr{UInt64}(x + 0)
+    f === :valueFloat && return Ptr{Cfloat}(x + 0)
+    f === :valueBool && return Ptr{VkBool32}(x + 0)
+    f === :valueString && return Ptr{Ptr{Cchar}}(x + 0)
+    return getfield(x, f)
+end
+
+function Base.getproperty(x::VkPerformanceValueDataINTEL, f::Symbol)
+    r = Ref{VkPerformanceValueDataINTEL}(x)
+    ptr = Base.unsafe_convert(VkPerformanceValueDataINTEL, r)
+    GC.@preserve r unsafe_load(getproperty(ptr, f))
+end
+
+function Base.setproperty!(x::Ptr{VkPerformanceValueDataINTEL}, f::Symbol, v)
+    unsafe_store!(getproperty(x, f), v)
+end
+
 struct VkPerformanceValueINTEL
     type::VkPerformanceValueTypeINTEL
     data::VkPerformanceValueDataINTEL
@@ -9654,39 +9764,39 @@ struct VkPerformanceConfigurationAcquireInfoINTEL
     type::VkPerformanceConfigurationTypeINTEL
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkInitializePerformanceApiINTEL ) ( VkDevice device , const VkInitializePerformanceApiInfoINTEL * pInitializeInfo )
 const PFN_vkInitializePerformanceApiINTEL = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkUninitializePerformanceApiINTEL ) ( VkDevice device )
 const PFN_vkUninitializePerformanceApiINTEL = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCmdSetPerformanceMarkerINTEL ) ( VkCommandBuffer commandBuffer , const VkPerformanceMarkerInfoINTEL * pMarkerInfo )
 const PFN_vkCmdSetPerformanceMarkerINTEL = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCmdSetPerformanceStreamMarkerINTEL ) ( VkCommandBuffer commandBuffer , const VkPerformanceStreamMarkerInfoINTEL * pMarkerInfo )
 const PFN_vkCmdSetPerformanceStreamMarkerINTEL = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCmdSetPerformanceOverrideINTEL ) ( VkCommandBuffer commandBuffer , const VkPerformanceOverrideInfoINTEL * pOverrideInfo )
 const PFN_vkCmdSetPerformanceOverrideINTEL = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkAcquirePerformanceConfigurationINTEL ) ( VkDevice device , const VkPerformanceConfigurationAcquireInfoINTEL * pAcquireInfo , VkPerformanceConfigurationINTEL * pConfiguration )
 const PFN_vkAcquirePerformanceConfigurationINTEL = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkReleasePerformanceConfigurationINTEL ) ( VkDevice device , VkPerformanceConfigurationINTEL configuration )
 const PFN_vkReleasePerformanceConfigurationINTEL = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkQueueSetPerformanceConfigurationINTEL ) ( VkQueue queue , VkPerformanceConfigurationINTEL configuration )
 const PFN_vkQueueSetPerformanceConfigurationINTEL = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPerformanceParameterINTEL ) ( VkDevice device , VkPerformanceParameterTypeINTEL parameter , VkPerformanceValueINTEL * pValue )
 const PFN_vkGetPerformanceParameterINTEL = Ptr{Cvoid}
 
@@ -9747,7 +9857,7 @@ struct VkSwapchainDisplayNativeHdrCreateInfoAMD
     localDimmingEnable::VkBool32
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkSetLocalDimmingAMD ) ( VkDevice device , VkSwapchainKHR swapChain , VkBool32 localDimmingEnable )
 const PFN_vkSetLocalDimmingAMD = Ptr{Cvoid}
 
@@ -9863,7 +9973,7 @@ struct VkBufferDeviceAddressCreateInfoEXT
     deviceAddress::VkDeviceAddress
 end
 
-# C code: 
+# C code:
 # typedef VkDeviceAddress ( VKAPI_PTR * PFN_vkGetBufferDeviceAddressEXT ) ( VkDevice device , const VkBufferDeviceAddressInfo * pInfo )
 const PFN_vkGetBufferDeviceAddressEXT = Ptr{Cvoid}
 
@@ -9894,7 +10004,7 @@ struct VkPhysicalDeviceToolPropertiesEXT
     layer::NTuple{256, Cchar}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceToolPropertiesEXT ) ( VkPhysicalDevice physicalDevice , uint32_t * pToolCount , VkPhysicalDeviceToolPropertiesEXT * pToolProperties )
 const PFN_vkGetPhysicalDeviceToolPropertiesEXT = Ptr{Cvoid}
 
@@ -9982,7 +10092,7 @@ struct VkPhysicalDeviceCooperativeMatrixPropertiesNV
     cooperativeMatrixSupportedStages::VkShaderStageFlags
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV ) ( VkPhysicalDevice physicalDevice , uint32_t * pPropertyCount , VkCooperativeMatrixPropertiesNV * pProperties )
 const PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV = Ptr{Cvoid}
 
@@ -10020,7 +10130,7 @@ struct VkFramebufferMixedSamplesCombinationNV
     colorSamples::VkSampleCountFlags
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV ) ( VkPhysicalDevice physicalDevice , uint32_t * pCombinationCount , VkFramebufferMixedSamplesCombinationNV * pCombinations )
 const PFN_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV = Ptr{Cvoid}
 
@@ -10050,7 +10160,7 @@ struct VkHeadlessSurfaceCreateInfoEXT
     flags::VkHeadlessSurfaceCreateFlagsEXT
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateHeadlessSurfaceEXT ) ( VkInstance instance , const VkHeadlessSurfaceCreateInfoEXT * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateHeadlessSurfaceEXT = Ptr{Cvoid}
 
@@ -10092,7 +10202,7 @@ struct VkPipelineRasterizationLineStateCreateInfoEXT
     lineStipplePattern::UInt16
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetLineStippleEXT ) ( VkCommandBuffer commandBuffer , uint32_t lineStippleFactor , uint16_t lineStipplePattern )
 const PFN_vkCmdSetLineStippleEXT = Ptr{Cvoid}
 
@@ -10119,7 +10229,7 @@ end
 
 const VkPhysicalDeviceHostQueryResetFeaturesEXT = VkPhysicalDeviceHostQueryResetFeatures
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkResetQueryPoolEXT ) ( VkDevice device , VkQueryPool queryPool , uint32_t firstQuery , uint32_t queryCount )
 const PFN_vkResetQueryPoolEXT = Ptr{Cvoid}
 
@@ -10139,51 +10249,51 @@ struct VkPhysicalDeviceExtendedDynamicStateFeaturesEXT
     extendedDynamicState::VkBool32
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetCullModeEXT ) ( VkCommandBuffer commandBuffer , VkCullModeFlags cullMode )
 const PFN_vkCmdSetCullModeEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetFrontFaceEXT ) ( VkCommandBuffer commandBuffer , VkFrontFace frontFace )
 const PFN_vkCmdSetFrontFaceEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetPrimitiveTopologyEXT ) ( VkCommandBuffer commandBuffer , VkPrimitiveTopology primitiveTopology )
 const PFN_vkCmdSetPrimitiveTopologyEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetViewportWithCountEXT ) ( VkCommandBuffer commandBuffer , uint32_t viewportCount , const VkViewport * pViewports )
 const PFN_vkCmdSetViewportWithCountEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetScissorWithCountEXT ) ( VkCommandBuffer commandBuffer , uint32_t scissorCount , const VkRect2D * pScissors )
 const PFN_vkCmdSetScissorWithCountEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBindVertexBuffers2EXT ) ( VkCommandBuffer commandBuffer , uint32_t firstBinding , uint32_t bindingCount , const VkBuffer * pBuffers , const VkDeviceSize * pOffsets , const VkDeviceSize * pSizes , const VkDeviceSize * pStrides )
 const PFN_vkCmdBindVertexBuffers2EXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetDepthTestEnableEXT ) ( VkCommandBuffer commandBuffer , VkBool32 depthTestEnable )
 const PFN_vkCmdSetDepthTestEnableEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetDepthWriteEnableEXT ) ( VkCommandBuffer commandBuffer , VkBool32 depthWriteEnable )
 const PFN_vkCmdSetDepthWriteEnableEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetDepthCompareOpEXT ) ( VkCommandBuffer commandBuffer , VkCompareOp depthCompareOp )
 const PFN_vkCmdSetDepthCompareOpEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetDepthBoundsTestEnableEXT ) ( VkCommandBuffer commandBuffer , VkBool32 depthBoundsTestEnable )
 const PFN_vkCmdSetDepthBoundsTestEnableEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetStencilTestEnableEXT ) ( VkCommandBuffer commandBuffer , VkBool32 stencilTestEnable )
 const PFN_vkCmdSetStencilTestEnableEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdSetStencilOpEXT ) ( VkCommandBuffer commandBuffer , VkStencilFaceFlags faceMask , VkStencilOp failOp , VkStencilOp passOp , VkStencilOp depthFailOp , VkCompareOp compareOp )
 const PFN_vkCmdSetStencilOpEXT = Ptr{Cvoid}
 
@@ -10392,27 +10502,27 @@ struct VkGeneratedCommandsMemoryRequirementsInfoNV
     maxSequencesCount::UInt32
 end
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetGeneratedCommandsMemoryRequirementsNV ) ( VkDevice device , const VkGeneratedCommandsMemoryRequirementsInfoNV * pInfo , VkMemoryRequirements2 * pMemoryRequirements )
 const PFN_vkGetGeneratedCommandsMemoryRequirementsNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdPreprocessGeneratedCommandsNV ) ( VkCommandBuffer commandBuffer , const VkGeneratedCommandsInfoNV * pGeneratedCommandsInfo )
 const PFN_vkCmdPreprocessGeneratedCommandsNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdExecuteGeneratedCommandsNV ) ( VkCommandBuffer commandBuffer , VkBool32 isPreprocessed , const VkGeneratedCommandsInfoNV * pGeneratedCommandsInfo )
 const PFN_vkCmdExecuteGeneratedCommandsNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBindPipelineShaderGroupNV ) ( VkCommandBuffer commandBuffer , VkPipelineBindPoint pipelineBindPoint , VkPipeline pipeline , uint32_t groupIndex )
 const PFN_vkCmdBindPipelineShaderGroupNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateIndirectCommandsLayoutNV ) ( VkDevice device , const VkIndirectCommandsLayoutCreateInfoNV * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkIndirectCommandsLayoutNV * pIndirectCommandsLayout )
 const PFN_vkCreateIndirectCommandsLayoutNV = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyIndirectCommandsLayoutNV ) ( VkDevice device , VkIndirectCommandsLayoutNV indirectCommandsLayout , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyIndirectCommandsLayoutNV = Ptr{Cvoid}
 
@@ -10531,19 +10641,19 @@ struct VkPrivateDataSlotCreateInfoEXT
     flags::VkPrivateDataSlotCreateFlagsEXT
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreatePrivateDataSlotEXT ) ( VkDevice device , const VkPrivateDataSlotCreateInfoEXT * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkPrivateDataSlotEXT * pPrivateDataSlot )
 const PFN_vkCreatePrivateDataSlotEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyPrivateDataSlotEXT ) ( VkDevice device , VkPrivateDataSlotEXT privateDataSlot , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyPrivateDataSlotEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkSetPrivateDataEXT ) ( VkDevice device , VkObjectType objectType , uint64_t objectHandle , VkPrivateDataSlotEXT privateDataSlot , uint64_t data )
 const PFN_vkSetPrivateDataEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetPrivateDataEXT ) ( VkDevice device , VkObjectType objectType , uint64_t objectHandle , VkPrivateDataSlotEXT privateDataSlot , uint64_t * pData )
 const PFN_vkGetPrivateDataEXT = Ptr{Cvoid}
 
@@ -10618,9 +10728,9 @@ struct VkPhysicalDevice4444FormatsFeaturesEXT
     formatA4B4G4R4::VkBool32
 end
 
-const ANativeWindow = Cvoid
-
 const VkAndroidSurfaceCreateFlagsKHR = VkFlags
+
+const ANativeWindow = Cvoid
 
 struct VkAndroidSurfaceCreateInfoKHR
     sType::VkStructureType
@@ -10629,15 +10739,13 @@ struct VkAndroidSurfaceCreateInfoKHR
     window::Ptr{ANativeWindow}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateAndroidSurfaceKHR ) ( VkInstance instance , const VkAndroidSurfaceCreateInfoKHR * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateAndroidSurfaceKHR = Ptr{Cvoid}
 
 function vkCreateAndroidSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
     ccall((:vkCreateAndroidSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkAndroidSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
-
-const AHardwareBuffer = Cvoid
 
 struct VkAndroidHardwareBufferUsageANDROID
     sType::VkStructureType
@@ -10665,6 +10773,8 @@ struct VkAndroidHardwareBufferFormatPropertiesANDROID
     suggestedYChromaOffset::VkChromaLocation
 end
 
+const AHardwareBuffer = Cvoid
+
 struct VkImportAndroidHardwareBufferInfoANDROID
     sType::VkStructureType
     pNext::Ptr{Cvoid}
@@ -10683,11 +10793,11 @@ struct VkExternalFormatANDROID
     externalFormat::UInt64
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetAndroidHardwareBufferPropertiesANDROID ) ( VkDevice device , const struct AHardwareBuffer * buffer , VkAndroidHardwareBufferPropertiesANDROID * pProperties )
 const PFN_vkGetAndroidHardwareBufferPropertiesANDROID = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetMemoryAndroidHardwareBufferANDROID ) ( VkDevice device , const VkMemoryGetAndroidHardwareBufferInfoANDROID * pInfo , struct AHardwareBuffer * * pBuffer )
 const PFN_vkGetMemoryAndroidHardwareBufferANDROID = Ptr{Cvoid}
 
@@ -10708,7 +10818,7 @@ struct VkImagePipeSurfaceCreateInfoFUCHSIA
     imagePipeHandle::Cint
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateImagePipeSurfaceFUCHSIA ) ( VkInstance instance , const VkImagePipeSurfaceCreateInfoFUCHSIA * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateImagePipeSurfaceFUCHSIA = Ptr{Cvoid}
 
@@ -10725,7 +10835,7 @@ struct VkIOSSurfaceCreateInfoMVK
     pView::Ptr{Cvoid}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateIOSSurfaceMVK ) ( VkInstance instance , const VkIOSSurfaceCreateInfoMVK * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateIOSSurfaceMVK = Ptr{Cvoid}
 
@@ -10742,7 +10852,7 @@ struct VkMacOSSurfaceCreateInfoMVK
     pView::Ptr{Cvoid}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateMacOSSurfaceMVK ) ( VkInstance instance , const VkMacOSSurfaceCreateInfoMVK * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateMacOSSurfaceMVK = Ptr{Cvoid}
 
@@ -10761,7 +10871,7 @@ struct VkMetalSurfaceCreateInfoEXT
     pLayer::Ptr{CAMetalLayer}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateMetalSurfaceEXT ) ( VkInstance instance , const VkMetalSurfaceCreateInfoEXT * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateMetalSurfaceEXT = Ptr{Cvoid}
 
@@ -10778,7 +10888,7 @@ struct VkViSurfaceCreateInfoNN
     window::Ptr{Cvoid}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateViSurfaceNN ) ( VkInstance instance , const VkViSurfaceCreateInfoNN * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateViSurfaceNN = Ptr{Cvoid}
 
@@ -10788,6 +10898,10 @@ end
 
 const VkWaylandSurfaceCreateFlagsKHR = VkFlags
 
+const wl_display = Cvoid
+
+const wl_surface = Cvoid
+
 struct VkWaylandSurfaceCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
@@ -10796,11 +10910,11 @@ struct VkWaylandSurfaceCreateInfoKHR
     surface::Ptr{wl_surface}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateWaylandSurfaceKHR ) ( VkInstance instance , const VkWaylandSurfaceCreateInfoKHR * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateWaylandSurfaceKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkBool32 ( VKAPI_PTR * PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR ) ( VkPhysicalDevice physicalDevice , uint32_t queueFamilyIndex , struct wl_display * display )
 const PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR = Ptr{Cvoid}
 
@@ -10822,11 +10936,11 @@ struct VkWin32SurfaceCreateInfoKHR
     hwnd::Cint
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateWin32SurfaceKHR ) ( VkInstance instance , const VkWin32SurfaceCreateInfoKHR * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateWin32SurfaceKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkBool32 ( VKAPI_PTR * PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR ) ( VkPhysicalDevice physicalDevice , uint32_t queueFamilyIndex )
 const PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR = Ptr{Cvoid}
 
@@ -10867,11 +10981,11 @@ struct VkMemoryGetWin32HandleInfoKHR
     handleType::VkExternalMemoryHandleTypeFlagBits
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetMemoryWin32HandleKHR ) ( VkDevice device , const VkMemoryGetWin32HandleInfoKHR * pGetWin32HandleInfo , HANDLE * pHandle )
 const PFN_vkGetMemoryWin32HandleKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetMemoryWin32HandlePropertiesKHR ) ( VkDevice device , VkExternalMemoryHandleTypeFlagBits handleType , HANDLE handle , VkMemoryWin32HandlePropertiesKHR * pMemoryWin32HandleProperties )
 const PFN_vkGetMemoryWin32HandlePropertiesKHR = Ptr{Cvoid}
 
@@ -10929,11 +11043,11 @@ struct VkSemaphoreGetWin32HandleInfoKHR
     handleType::VkExternalSemaphoreHandleTypeFlagBits
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkImportSemaphoreWin32HandleKHR ) ( VkDevice device , const VkImportSemaphoreWin32HandleInfoKHR * pImportSemaphoreWin32HandleInfo )
 const PFN_vkImportSemaphoreWin32HandleKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetSemaphoreWin32HandleKHR ) ( VkDevice device , const VkSemaphoreGetWin32HandleInfoKHR * pGetWin32HandleInfo , HANDLE * pHandle )
 const PFN_vkGetSemaphoreWin32HandleKHR = Ptr{Cvoid}
 
@@ -10970,11 +11084,11 @@ struct VkFenceGetWin32HandleInfoKHR
     handleType::VkExternalFenceHandleTypeFlagBits
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkImportFenceWin32HandleKHR ) ( VkDevice device , const VkImportFenceWin32HandleInfoKHR * pImportFenceWin32HandleInfo )
 const PFN_vkImportFenceWin32HandleKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetFenceWin32HandleKHR ) ( VkDevice device , const VkFenceGetWin32HandleInfoKHR * pGetWin32HandleInfo , HANDLE * pHandle )
 const PFN_vkGetFenceWin32HandleKHR = Ptr{Cvoid}
 
@@ -11000,7 +11114,7 @@ struct VkExportMemoryWin32HandleInfoNV
     dwAccess::Cint
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetMemoryWin32HandleNV ) ( VkDevice device , VkDeviceMemory memory , VkExternalMemoryHandleTypeFlagsNV handleType , HANDLE * pHandle )
 const PFN_vkGetMemoryWin32HandleNV = Ptr{Cvoid}
 
@@ -11046,19 +11160,19 @@ struct VkSurfaceFullScreenExclusiveWin32InfoEXT
     hmonitor::Cint
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT ) ( VkPhysicalDevice physicalDevice , const VkPhysicalDeviceSurfaceInfo2KHR * pSurfaceInfo , uint32_t * pPresentModeCount , VkPresentModeKHR * pPresentModes )
 const PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkAcquireFullScreenExclusiveModeEXT ) ( VkDevice device , VkSwapchainKHR swapchain )
 const PFN_vkAcquireFullScreenExclusiveModeEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkReleaseFullScreenExclusiveModeEXT ) ( VkDevice device , VkSwapchainKHR swapchain )
 const PFN_vkReleaseFullScreenExclusiveModeEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetDeviceGroupSurfacePresentModes2EXT ) ( VkDevice device , const VkPhysicalDeviceSurfaceInfo2KHR * pSurfaceInfo , VkDeviceGroupPresentModeFlagsKHR * pModes )
 const PFN_vkGetDeviceGroupSurfacePresentModes2EXT = Ptr{Cvoid}
 
@@ -11088,11 +11202,11 @@ struct VkXcbSurfaceCreateInfoKHR
     window::Cint
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateXcbSurfaceKHR ) ( VkInstance instance , const VkXcbSurfaceCreateInfoKHR * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateXcbSurfaceKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkBool32 ( VKAPI_PTR * PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR ) ( VkPhysicalDevice physicalDevice , uint32_t queueFamilyIndex , xcb_connection_t * connection , xcb_visualid_t visual_id )
 const PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR = Ptr{Cvoid}
 
@@ -11114,11 +11228,11 @@ struct VkXlibSurfaceCreateInfoKHR
     window::Cint
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateXlibSurfaceKHR ) ( VkInstance instance , const VkXlibSurfaceCreateInfoKHR * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateXlibSurfaceKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkBool32 ( VKAPI_PTR * PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR ) ( VkPhysicalDevice physicalDevice , uint32_t queueFamilyIndex , Display * dpy , VisualID visualID )
 const PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR = Ptr{Cvoid}
 
@@ -11140,11 +11254,11 @@ struct VkDirectFBSurfaceCreateInfoEXT
     surface::Ptr{Cint}
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDirectFBSurfaceEXT ) ( VkInstance instance , const VkDirectFBSurfaceCreateInfoEXT * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateDirectFBSurfaceEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkBool32 ( VKAPI_PTR * PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT ) ( VkPhysicalDevice physicalDevice , uint32_t queueFamilyIndex , IDirectFB * dfb )
 const PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT = Ptr{Cvoid}
 
@@ -11156,11 +11270,11 @@ function vkGetPhysicalDeviceDirectFBPresentationSupportEXT(physicalDevice, queue
     ccall((:vkGetPhysicalDeviceDirectFBPresentationSupportEXT, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{Cint}), physicalDevice, queueFamilyIndex, dfb)
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkAcquireXlibDisplayEXT ) ( VkPhysicalDevice physicalDevice , Display * dpy , VkDisplayKHR display )
 const PFN_vkAcquireXlibDisplayEXT = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetRandROutputDisplayEXT ) ( VkPhysicalDevice physicalDevice , Display * dpy , RROutput rrOutput , VkDisplayKHR * pDisplay )
 const PFN_vkGetRandROutputDisplayEXT = Ptr{Cvoid}
 
@@ -11181,7 +11295,7 @@ struct VkStreamDescriptorSurfaceCreateInfoGGP
     streamDescriptor::Cint
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateStreamDescriptorSurfaceGGP ) ( VkInstance instance , const VkStreamDescriptorSurfaceCreateInfoGGP * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
 const PFN_vkCreateStreamDescriptorSurfaceGGP = Ptr{Cvoid}
 
@@ -11205,23 +11319,23 @@ struct VkDeferredOperationInfoKHR
     operationHandle::VkDeferredOperationKHR
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDeferredOperationKHR ) ( VkDevice device , const VkAllocationCallbacks * pAllocator , VkDeferredOperationKHR * pDeferredOperation )
 const PFN_vkCreateDeferredOperationKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkDestroyDeferredOperationKHR ) ( VkDevice device , VkDeferredOperationKHR operation , const VkAllocationCallbacks * pAllocator )
 const PFN_vkDestroyDeferredOperationKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef uint32_t ( VKAPI_PTR * PFN_vkGetDeferredOperationMaxConcurrencyKHR ) ( VkDevice device , VkDeferredOperationKHR operation )
 const PFN_vkGetDeferredOperationMaxConcurrencyKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetDeferredOperationResultKHR ) ( VkDevice device , VkDeferredOperationKHR operation )
 const PFN_vkGetDeferredOperationResultKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkDeferredOperationJoinKHR ) ( VkDevice device , VkDeferredOperationKHR operation )
 const PFN_vkDeferredOperationJoinKHR = Ptr{Cvoid}
 
@@ -11263,8 +11377,40 @@ struct VkDeviceOrHostAddressKHR
     data::NTuple{8, UInt8}
 end
 
+function Base.getproperty(x::Ptr{VkDeviceOrHostAddressKHR}, f::Symbol)
+    f === :deviceAddress && return Ptr{VkDeviceAddress}(x + 0)
+    f === :hostAddress && return Ptr{Ptr{Cvoid}}(x + 0)
+    return getfield(x, f)
+end
+
+function Base.getproperty(x::VkDeviceOrHostAddressKHR, f::Symbol)
+    r = Ref{VkDeviceOrHostAddressKHR}(x)
+    ptr = Base.unsafe_convert(VkDeviceOrHostAddressKHR, r)
+    GC.@preserve r unsafe_load(getproperty(ptr, f))
+end
+
+function Base.setproperty!(x::Ptr{VkDeviceOrHostAddressKHR}, f::Symbol, v)
+    unsafe_store!(getproperty(x, f), v)
+end
+
 struct VkDeviceOrHostAddressConstKHR
     data::NTuple{8, UInt8}
+end
+
+function Base.getproperty(x::Ptr{VkDeviceOrHostAddressConstKHR}, f::Symbol)
+    f === :deviceAddress && return Ptr{VkDeviceAddress}(x + 0)
+    f === :hostAddress && return Ptr{Ptr{Cvoid}}(x + 0)
+    return getfield(x, f)
+end
+
+function Base.getproperty(x::VkDeviceOrHostAddressConstKHR, f::Symbol)
+    r = Ref{VkDeviceOrHostAddressConstKHR}(x)
+    ptr = Base.unsafe_convert(VkDeviceOrHostAddressConstKHR, r)
+    GC.@preserve r unsafe_load(getproperty(ptr, f))
+end
+
+function Base.setproperty!(x::Ptr{VkDeviceOrHostAddressConstKHR}, f::Symbol, v)
+    unsafe_store!(getproperty(x, f), v)
 end
 
 struct VkAccelerationStructureBuildOffsetInfoKHR
@@ -11336,6 +11482,23 @@ end
 
 struct VkAccelerationStructureGeometryDataKHR
     data::NTuple{64, UInt8}
+end
+
+function Base.getproperty(x::Ptr{VkAccelerationStructureGeometryDataKHR}, f::Symbol)
+    f === :triangles && return Ptr{VkAccelerationStructureGeometryTrianglesDataKHR}(x + 0)
+    f === :aabbs && return Ptr{VkAccelerationStructureGeometryAabbsDataKHR}(x + 0)
+    f === :instances && return Ptr{VkAccelerationStructureGeometryInstancesDataKHR}(x + 0)
+    return getfield(x, f)
+end
+
+function Base.getproperty(x::VkAccelerationStructureGeometryDataKHR, f::Symbol)
+    r = Ref{VkAccelerationStructureGeometryDataKHR}(x)
+    ptr = Base.unsafe_convert(VkAccelerationStructureGeometryDataKHR, r)
+    GC.@preserve r unsafe_load(getproperty(ptr, f))
+end
+
+function Base.setproperty!(x::Ptr{VkAccelerationStructureGeometryDataKHR}, f::Symbol, v)
+    unsafe_store!(getproperty(x, f), v)
 end
 
 struct VkAccelerationStructureGeometryKHR
@@ -11467,75 +11630,75 @@ struct VkCopyAccelerationStructureInfoKHR
     mode::VkCopyAccelerationStructureModeKHR
 end
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateAccelerationStructureKHR ) ( VkDevice device , const VkAccelerationStructureCreateInfoKHR * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkAccelerationStructureKHR * pAccelerationStructure )
 const PFN_vkCreateAccelerationStructureKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkGetAccelerationStructureMemoryRequirementsKHR ) ( VkDevice device , const VkAccelerationStructureMemoryRequirementsInfoKHR * pInfo , VkMemoryRequirements2 * pMemoryRequirements )
 const PFN_vkGetAccelerationStructureMemoryRequirementsKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBuildAccelerationStructureKHR ) ( VkCommandBuffer commandBuffer , uint32_t infoCount , const VkAccelerationStructureBuildGeometryInfoKHR * pInfos , const VkAccelerationStructureBuildOffsetInfoKHR * const * ppOffsetInfos )
 const PFN_vkCmdBuildAccelerationStructureKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdBuildAccelerationStructureIndirectKHR ) ( VkCommandBuffer commandBuffer , const VkAccelerationStructureBuildGeometryInfoKHR * pInfo , VkBuffer indirectBuffer , VkDeviceSize indirectOffset , uint32_t indirectStride )
 const PFN_vkCmdBuildAccelerationStructureIndirectKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkBuildAccelerationStructureKHR ) ( VkDevice device , uint32_t infoCount , const VkAccelerationStructureBuildGeometryInfoKHR * pInfos , const VkAccelerationStructureBuildOffsetInfoKHR * const * ppOffsetInfos )
 const PFN_vkBuildAccelerationStructureKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCopyAccelerationStructureKHR ) ( VkDevice device , const VkCopyAccelerationStructureInfoKHR * pInfo )
 const PFN_vkCopyAccelerationStructureKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCopyAccelerationStructureToMemoryKHR ) ( VkDevice device , const VkCopyAccelerationStructureToMemoryInfoKHR * pInfo )
 const PFN_vkCopyAccelerationStructureToMemoryKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCopyMemoryToAccelerationStructureKHR ) ( VkDevice device , const VkCopyMemoryToAccelerationStructureInfoKHR * pInfo )
 const PFN_vkCopyMemoryToAccelerationStructureKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkWriteAccelerationStructuresPropertiesKHR ) ( VkDevice device , uint32_t accelerationStructureCount , const VkAccelerationStructureKHR * pAccelerationStructures , VkQueryType queryType , size_t dataSize , void * pData , size_t stride )
 const PFN_vkWriteAccelerationStructuresPropertiesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdCopyAccelerationStructureKHR ) ( VkCommandBuffer commandBuffer , const VkCopyAccelerationStructureInfoKHR * pInfo )
 const PFN_vkCmdCopyAccelerationStructureKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdCopyAccelerationStructureToMemoryKHR ) ( VkCommandBuffer commandBuffer , const VkCopyAccelerationStructureToMemoryInfoKHR * pInfo )
 const PFN_vkCmdCopyAccelerationStructureToMemoryKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdCopyMemoryToAccelerationStructureKHR ) ( VkCommandBuffer commandBuffer , const VkCopyMemoryToAccelerationStructureInfoKHR * pInfo )
 const PFN_vkCmdCopyMemoryToAccelerationStructureKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdTraceRaysKHR ) ( VkCommandBuffer commandBuffer , const VkStridedBufferRegionKHR * pRaygenShaderBindingTable , const VkStridedBufferRegionKHR * pMissShaderBindingTable , const VkStridedBufferRegionKHR * pHitShaderBindingTable , const VkStridedBufferRegionKHR * pCallableShaderBindingTable , uint32_t width , uint32_t height , uint32_t depth )
 const PFN_vkCmdTraceRaysKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateRayTracingPipelinesKHR ) ( VkDevice device , VkPipelineCache pipelineCache , uint32_t createInfoCount , const VkRayTracingPipelineCreateInfoKHR * pCreateInfos , const VkAllocationCallbacks * pAllocator , VkPipeline * pPipelines )
 const PFN_vkCreateRayTracingPipelinesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkDeviceAddress ( VKAPI_PTR * PFN_vkGetAccelerationStructureDeviceAddressKHR ) ( VkDevice device , const VkAccelerationStructureDeviceAddressInfoKHR * pInfo )
 const PFN_vkGetAccelerationStructureDeviceAddressKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR ) ( VkDevice device , VkPipeline pipeline , uint32_t firstGroup , uint32_t groupCount , size_t dataSize , void * pData )
 const PFN_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef void ( VKAPI_PTR * PFN_vkCmdTraceRaysIndirectKHR ) ( VkCommandBuffer commandBuffer , const VkStridedBufferRegionKHR * pRaygenShaderBindingTable , const VkStridedBufferRegionKHR * pMissShaderBindingTable , const VkStridedBufferRegionKHR * pHitShaderBindingTable , const VkStridedBufferRegionKHR * pCallableShaderBindingTable , VkBuffer buffer , VkDeviceSize offset )
 const PFN_vkCmdTraceRaysIndirectKHR = Ptr{Cvoid}
 
-# C code: 
+# C code:
 # typedef VkResult ( VKAPI_PTR * PFN_vkGetDeviceAccelerationStructureCompatibilityKHR ) ( VkDevice device , const VkAccelerationStructureVersionKHR * version )
 const PFN_vkGetDeviceAccelerationStructureCompatibilityKHR = Ptr{Cvoid}
 
@@ -11625,23 +11788,11 @@ const VULKAN_CORE_H_ = 1
 
 const VK_VERSION_1_0 = 1
 
-# Skipping MacroDefinition: VK_DEFINE_HANDLE ( object ) typedef struct object ## _T * object ;
-
-# Skipping MacroDefinition: VK_DEFINE_NON_DISPATCHABLE_HANDLE ( object ) typedef struct object ## _T * object ;
-
-VK_MAKE_VERSION(major, minor, patch) = (uint32_t(major) << 22 | uint32_t(minor) << 12) | uint32_t(patch)
-
 # Skipping MacroDefinition: VK_API_VERSION_1_0 VK_MAKE_VERSION ( 1 , 0 , 0 )
 
 const VK_HEADER_VERSION = 151
 
 # Skipping MacroDefinition: VK_HEADER_VERSION_COMPLETE VK_MAKE_VERSION ( 1 , 2 , VK_HEADER_VERSION )
-
-VK_VERSION_MAJOR(version) = uint32_t(version) >> 22
-
-VK_VERSION_MINOR(version) = uint32_t(version) >> 12 & Float32(0x3f)
-
-VK_VERSION_PATCH(version) = uint32_t(version) & Float32(0xff)
 
 const VK_NULL_HANDLE = 0
 
