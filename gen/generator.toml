@@ -1,14 +1,18 @@
 [general]
 library_name = "libvulkan"
 
-output_file_path = "./src/LibVulkan.jl"
+output_file_path = "../src/LibVulkan.jl"
 
 module_name = "LibVulkan"
 
 export_symbol_prefixes = ["VK_", "Vk", "vk"]
 
-prologue_file_path = "./gen/prologue.jl"
+prologue_file_path = "./prologue.jl"
 epilogue_file_path = ""
+
+auto_mutability = false
+auto_mutability_blacklist = []
+auto_mutability_whitelist = []
 
 [codegen]
 opaque_as_mutable_struct = false

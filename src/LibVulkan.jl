@@ -3171,7 +3171,7 @@ end
 
 function Base.getproperty(x::VkClearColorValue, f::Symbol)
     r = Ref{VkClearColorValue}(x)
-    ptr = Base.unsafe_convert(VkClearColorValue, r)
+    ptr = Base.unsafe_convert(Ptr{VkClearColorValue}, r)
     GC.@preserve r unsafe_load(getproperty(ptr, f))
 end
 
@@ -3196,7 +3196,7 @@ end
 
 function Base.getproperty(x::VkClearValue, f::Symbol)
     r = Ref{VkClearValue}(x)
-    ptr = Base.unsafe_convert(VkClearValue, r)
+    ptr = Base.unsafe_convert(Ptr{VkClearValue}, r)
     GC.@preserve r unsafe_load(getproperty(ptr, f))
 end
 
@@ -7050,7 +7050,7 @@ end
 
 function Base.getproperty(x::VkPerformanceCounterResultKHR, f::Symbol)
     r = Ref{VkPerformanceCounterResultKHR}(x)
-    ptr = Base.unsafe_convert(VkPerformanceCounterResultKHR, r)
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, r)
     GC.@preserve r unsafe_load(getproperty(ptr, f))
 end
 
@@ -7515,7 +7515,7 @@ end
 
 function Base.getproperty(x::VkPipelineExecutableStatisticValueKHR, f::Symbol)
     r = Ref{VkPipelineExecutableStatisticValueKHR}(x)
-    ptr = Base.unsafe_convert(VkPipelineExecutableStatisticValueKHR, r)
+    ptr = Base.unsafe_convert(Ptr{VkPipelineExecutableStatisticValueKHR}, r)
     GC.@preserve r unsafe_load(getproperty(ptr, f))
 end
 
@@ -9199,7 +9199,7 @@ end
 
 function Base.getproperty(x::VkAccelerationStructureInstanceKHR, f::Symbol)
     r = Ref{VkAccelerationStructureInstanceKHR}(x)
-    ptr = Base.unsafe_convert(VkAccelerationStructureInstanceKHR, r)
+    ptr = Base.unsafe_convert(Ptr{VkAccelerationStructureInstanceKHR}, r)
     GC.@preserve r unsafe_load(getproperty(ptr, f))
 end
 
@@ -9711,7 +9711,7 @@ end
 
 function Base.getproperty(x::VkPerformanceValueDataINTEL, f::Symbol)
     r = Ref{VkPerformanceValueDataINTEL}(x)
-    ptr = Base.unsafe_convert(VkPerformanceValueDataINTEL, r)
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceValueDataINTEL}, r)
     GC.@preserve r unsafe_load(getproperty(ptr, f))
 end
 
@@ -11385,7 +11385,7 @@ end
 
 function Base.getproperty(x::VkDeviceOrHostAddressKHR, f::Symbol)
     r = Ref{VkDeviceOrHostAddressKHR}(x)
-    ptr = Base.unsafe_convert(VkDeviceOrHostAddressKHR, r)
+    ptr = Base.unsafe_convert(Ptr{VkDeviceOrHostAddressKHR}, r)
     GC.@preserve r unsafe_load(getproperty(ptr, f))
 end
 
@@ -11405,7 +11405,7 @@ end
 
 function Base.getproperty(x::VkDeviceOrHostAddressConstKHR, f::Symbol)
     r = Ref{VkDeviceOrHostAddressConstKHR}(x)
-    ptr = Base.unsafe_convert(VkDeviceOrHostAddressConstKHR, r)
+    ptr = Base.unsafe_convert(Ptr{VkDeviceOrHostAddressConstKHR}, r)
     GC.@preserve r unsafe_load(getproperty(ptr, f))
 end
 
@@ -11493,7 +11493,7 @@ end
 
 function Base.getproperty(x::VkAccelerationStructureGeometryDataKHR, f::Symbol)
     r = Ref{VkAccelerationStructureGeometryDataKHR}(x)
-    ptr = Base.unsafe_convert(VkAccelerationStructureGeometryDataKHR, r)
+    ptr = Base.unsafe_convert(Ptr{VkAccelerationStructureGeometryDataKHR}, r)
     GC.@preserve r unsafe_load(getproperty(ptr, f))
 end
 
