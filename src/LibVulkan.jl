@@ -2159,13 +2159,13 @@ struct VkBufferMemoryBarrier
     size::VkDeviceSize
 end
 
-struct VkDispatchIndirectCommand
+mutable struct VkDispatchIndirectCommand
     x::UInt32
     y::UInt32
     z::UInt32
 end
 
-struct VkDrawIndexedIndirectCommand
+mutable struct VkDrawIndexedIndirectCommand
     indexCount::UInt32
     instanceCount::UInt32
     firstIndex::UInt32
@@ -2173,7 +2173,7 @@ struct VkDrawIndexedIndirectCommand
     firstInstance::UInt32
 end
 
-struct VkDrawIndirectCommand
+mutable struct VkDrawIndirectCommand
     vertexCount::UInt32
     instanceCount::UInt32
     firstVertex::UInt32
@@ -2265,7 +2265,7 @@ struct VkImageFormatProperties
     maxResourceSize::VkDeviceSize
 end
 
-struct VkInstanceCreateInfo
+mutable struct VkInstanceCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkInstanceCreateFlags
@@ -2496,7 +2496,7 @@ struct VkDeviceQueueCreateInfo
     pQueuePriorities::Ptr{Cfloat}
 end
 
-struct VkDeviceCreateInfo
+mutable struct VkDeviceCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkDeviceCreateFlags
@@ -2541,7 +2541,7 @@ struct VkMappedMemoryRange
     size::VkDeviceSize
 end
 
-struct VkMemoryAllocateInfo
+mutable struct VkMemoryAllocateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     allocationSize::VkDeviceSize
@@ -2624,25 +2624,25 @@ struct VkSparseImageMemoryRequirements
     imageMipTailStride::VkDeviceSize
 end
 
-struct VkFenceCreateInfo
+mutable struct VkFenceCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkFenceCreateFlags
 end
 
-struct VkSemaphoreCreateInfo
+mutable struct VkSemaphoreCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkSemaphoreCreateFlags
 end
 
-struct VkEventCreateInfo
+mutable struct VkEventCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkEventCreateFlags
 end
 
-struct VkQueryPoolCreateInfo
+mutable struct VkQueryPoolCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkQueryPoolCreateFlags
@@ -2651,7 +2651,7 @@ struct VkQueryPoolCreateInfo
     pipelineStatistics::VkQueryPipelineStatisticFlags
 end
 
-struct VkBufferCreateInfo
+mutable struct VkBufferCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkBufferCreateFlags
@@ -2662,7 +2662,7 @@ struct VkBufferCreateInfo
     pQueueFamilyIndices::Ptr{UInt32}
 end
 
-struct VkBufferViewCreateInfo
+mutable struct VkBufferViewCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkBufferViewCreateFlags
@@ -2672,7 +2672,7 @@ struct VkBufferViewCreateInfo
     range::VkDeviceSize
 end
 
-struct VkImageCreateInfo
+mutable struct VkImageCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkImageCreateFlags
@@ -2705,7 +2705,7 @@ struct VkComponentMapping
     a::VkComponentSwizzle
 end
 
-struct VkImageViewCreateInfo
+mutable struct VkImageViewCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkImageViewCreateFlags
@@ -2716,7 +2716,7 @@ struct VkImageViewCreateInfo
     subresourceRange::VkImageSubresourceRange
 end
 
-struct VkShaderModuleCreateInfo
+mutable struct VkShaderModuleCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkShaderModuleCreateFlags
@@ -2724,7 +2724,7 @@ struct VkShaderModuleCreateInfo
     pCode::Ptr{UInt32}
 end
 
-struct VkPipelineCacheCreateInfo
+mutable struct VkPipelineCacheCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkPipelineCacheCreateFlags
@@ -2933,7 +2933,7 @@ struct VkPushConstantRange
     size::UInt32
 end
 
-struct VkPipelineLayoutCreateInfo
+mutable struct VkPipelineLayoutCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkPipelineLayoutCreateFlags
@@ -2943,7 +2943,7 @@ struct VkPipelineLayoutCreateInfo
     pPushConstantRanges::Ptr{VkPushConstantRange}
 end
 
-struct VkSamplerCreateInfo
+mutable struct VkSamplerCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkSamplerCreateFlags
@@ -2993,7 +2993,7 @@ struct VkDescriptorPoolSize
     descriptorCount::UInt32
 end
 
-struct VkDescriptorPoolCreateInfo
+mutable struct VkDescriptorPoolCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkDescriptorPoolCreateFlags
@@ -3002,7 +3002,7 @@ struct VkDescriptorPoolCreateInfo
     pPoolSizes::Ptr{VkDescriptorPoolSize}
 end
 
-struct VkDescriptorSetAllocateInfo
+mutable struct VkDescriptorSetAllocateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     descriptorPool::VkDescriptorPool
@@ -3018,7 +3018,7 @@ struct VkDescriptorSetLayoutBinding
     pImmutableSamplers::Ptr{VkSampler}
 end
 
-struct VkDescriptorSetLayoutCreateInfo
+mutable struct VkDescriptorSetLayoutCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkDescriptorSetLayoutCreateFlags
@@ -3056,7 +3056,7 @@ struct VkAttachmentReference
     layout::VkImageLayout
 end
 
-struct VkFramebufferCreateInfo
+mutable struct VkFramebufferCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkFramebufferCreateFlags
@@ -3091,7 +3091,7 @@ struct VkSubpassDependency
     dependencyFlags::VkDependencyFlags
 end
 
-struct VkRenderPassCreateInfo
+mutable struct VkRenderPassCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkRenderPassCreateFlags
@@ -3103,14 +3103,14 @@ struct VkRenderPassCreateInfo
     pDependencies::Ptr{VkSubpassDependency}
 end
 
-struct VkCommandPoolCreateInfo
+mutable struct VkCommandPoolCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkCommandPoolCreateFlags
     queueFamilyIndex::UInt32
 end
 
-struct VkCommandBufferAllocateInfo
+mutable struct VkCommandBufferAllocateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     commandPool::VkCommandPool
@@ -3129,7 +3129,7 @@ struct VkCommandBufferInheritanceInfo
     pipelineStatistics::VkQueryPipelineStatisticFlags
 end
 
-struct VkCommandBufferBeginInfo
+mutable struct VkCommandBufferBeginInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkCommandBufferUsageFlags
@@ -3239,7 +3239,7 @@ struct VkImageResolve
     extent::VkExtent3D
 end
 
-struct VkRenderPassBeginInfo
+mutable struct VkRenderPassBeginInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     renderPass::VkRenderPass
@@ -4554,7 +4554,7 @@ end
 
 const VkExternalSemaphoreFeatureFlags = VkFlags
 
-struct VkPhysicalDeviceSubgroupProperties
+mutable struct VkPhysicalDeviceSubgroupProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     subgroupSize::UInt32
@@ -4579,7 +4579,7 @@ struct VkBindImageMemoryInfo
     memoryOffset::VkDeviceSize
 end
 
-struct VkPhysicalDevice16BitStorageFeatures
+mutable struct VkPhysicalDevice16BitStorageFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     storageBuffer16BitAccess::VkBool32
@@ -4588,28 +4588,28 @@ struct VkPhysicalDevice16BitStorageFeatures
     storageInputOutput16::VkBool32
 end
 
-struct VkMemoryDedicatedRequirements
+mutable struct VkMemoryDedicatedRequirements
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     prefersDedicatedAllocation::VkBool32
     requiresDedicatedAllocation::VkBool32
 end
 
-struct VkMemoryDedicatedAllocateInfo
+mutable struct VkMemoryDedicatedAllocateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     image::VkImage
     buffer::VkBuffer
 end
 
-struct VkMemoryAllocateFlagsInfo
+mutable struct VkMemoryAllocateFlagsInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkMemoryAllocateFlags
     deviceMask::UInt32
 end
 
-struct VkDeviceGroupRenderPassBeginInfo
+mutable struct VkDeviceGroupRenderPassBeginInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     deviceMask::UInt32
@@ -4617,13 +4617,13 @@ struct VkDeviceGroupRenderPassBeginInfo
     pDeviceRenderAreas::Ptr{VkRect2D}
 end
 
-struct VkDeviceGroupCommandBufferBeginInfo
+mutable struct VkDeviceGroupCommandBufferBeginInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     deviceMask::UInt32
 end
 
-struct VkDeviceGroupSubmitInfo
+mutable struct VkDeviceGroupSubmitInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     waitSemaphoreCount::UInt32
@@ -4634,21 +4634,21 @@ struct VkDeviceGroupSubmitInfo
     pSignalSemaphoreDeviceIndices::Ptr{UInt32}
 end
 
-struct VkDeviceGroupBindSparseInfo
+mutable struct VkDeviceGroupBindSparseInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     resourceDeviceIndex::UInt32
     memoryDeviceIndex::UInt32
 end
 
-struct VkBindBufferMemoryDeviceGroupInfo
+mutable struct VkBindBufferMemoryDeviceGroupInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     deviceIndexCount::UInt32
     pDeviceIndices::Ptr{UInt32}
 end
 
-struct VkBindImageMemoryDeviceGroupInfo
+mutable struct VkBindImageMemoryDeviceGroupInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     deviceIndexCount::UInt32
@@ -4665,20 +4665,20 @@ struct VkPhysicalDeviceGroupProperties
     subsetAllocation::VkBool32
 end
 
-struct VkDeviceGroupDeviceCreateInfo
+mutable struct VkDeviceGroupDeviceCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     physicalDeviceCount::UInt32
     pPhysicalDevices::Ptr{VkPhysicalDevice}
 end
 
-struct VkBufferMemoryRequirementsInfo2
+mutable struct VkBufferMemoryRequirementsInfo2
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     buffer::VkBuffer
 end
 
-struct VkImageMemoryRequirementsInfo2
+mutable struct VkImageMemoryRequirementsInfo2
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     image::VkImage
@@ -4690,7 +4690,7 @@ struct VkImageSparseMemoryRequirementsInfo2
     image::VkImage
 end
 
-struct VkMemoryRequirements2
+mutable struct VkMemoryRequirements2
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     memoryRequirements::VkMemoryRequirements
@@ -4702,31 +4702,31 @@ struct VkSparseImageMemoryRequirements2
     memoryRequirements::VkSparseImageMemoryRequirements
 end
 
-struct VkPhysicalDeviceFeatures2
+mutable struct VkPhysicalDeviceFeatures2
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     features::VkPhysicalDeviceFeatures
 end
 
-struct VkPhysicalDeviceProperties2
+mutable struct VkPhysicalDeviceProperties2
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     properties::VkPhysicalDeviceProperties
 end
 
-struct VkFormatProperties2
+mutable struct VkFormatProperties2
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     formatProperties::VkFormatProperties
 end
 
-struct VkImageFormatProperties2
+mutable struct VkImageFormatProperties2
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     imageFormatProperties::VkImageFormatProperties
 end
 
-struct VkPhysicalDeviceImageFormatInfo2
+mutable struct VkPhysicalDeviceImageFormatInfo2
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     format::VkFormat
@@ -4742,7 +4742,7 @@ struct VkQueueFamilyProperties2
     queueFamilyProperties::VkQueueFamilyProperties
 end
 
-struct VkPhysicalDeviceMemoryProperties2
+mutable struct VkPhysicalDeviceMemoryProperties2
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     memoryProperties::VkPhysicalDeviceMemoryProperties
@@ -4764,7 +4764,7 @@ struct VkPhysicalDeviceSparseImageFormatInfo2
     tiling::VkImageTiling
 end
 
-struct VkPhysicalDevicePointClippingProperties
+mutable struct VkPhysicalDevicePointClippingProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pointClippingBehavior::VkPointClippingBehavior
@@ -4776,26 +4776,26 @@ struct VkInputAttachmentAspectReference
     aspectMask::VkImageAspectFlags
 end
 
-struct VkRenderPassInputAttachmentAspectCreateInfo
+mutable struct VkRenderPassInputAttachmentAspectCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     aspectReferenceCount::UInt32
     pAspectReferences::Ptr{VkInputAttachmentAspectReference}
 end
 
-struct VkImageViewUsageCreateInfo
+mutable struct VkImageViewUsageCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     usage::VkImageUsageFlags
 end
 
-struct VkPipelineTessellationDomainOriginStateCreateInfo
+mutable struct VkPipelineTessellationDomainOriginStateCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     domainOrigin::VkTessellationDomainOrigin
 end
 
-struct VkRenderPassMultiviewCreateInfo
+mutable struct VkRenderPassMultiviewCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     subpassCount::UInt32
@@ -4806,7 +4806,7 @@ struct VkRenderPassMultiviewCreateInfo
     pCorrelationMasks::Ptr{UInt32}
 end
 
-struct VkPhysicalDeviceMultiviewFeatures
+mutable struct VkPhysicalDeviceMultiviewFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     multiview::VkBool32
@@ -4814,14 +4814,14 @@ struct VkPhysicalDeviceMultiviewFeatures
     multiviewTessellationShader::VkBool32
 end
 
-struct VkPhysicalDeviceMultiviewProperties
+mutable struct VkPhysicalDeviceMultiviewProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxMultiviewViewCount::UInt32
     maxMultiviewInstanceIndex::UInt32
 end
 
-struct VkPhysicalDeviceVariablePointersFeatures
+mutable struct VkPhysicalDeviceVariablePointersFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     variablePointersStorageBuffer::VkBool32
@@ -4830,19 +4830,19 @@ end
 
 const VkPhysicalDeviceVariablePointerFeatures = VkPhysicalDeviceVariablePointersFeatures
 
-struct VkPhysicalDeviceProtectedMemoryFeatures
+mutable struct VkPhysicalDeviceProtectedMemoryFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     protectedMemory::VkBool32
 end
 
-struct VkPhysicalDeviceProtectedMemoryProperties
+mutable struct VkPhysicalDeviceProtectedMemoryProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     protectedNoFault::VkBool32
 end
 
-struct VkDeviceQueueInfo2
+mutable struct VkDeviceQueueInfo2
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkDeviceQueueCreateFlags
@@ -4850,13 +4850,13 @@ struct VkDeviceQueueInfo2
     queueIndex::UInt32
 end
 
-struct VkProtectedSubmitInfo
+mutable struct VkProtectedSubmitInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     protectedSubmit::VkBool32
 end
 
-struct VkSamplerYcbcrConversionCreateInfo
+mutable struct VkSamplerYcbcrConversionCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     format::VkFormat
@@ -4869,31 +4869,31 @@ struct VkSamplerYcbcrConversionCreateInfo
     forceExplicitReconstruction::VkBool32
 end
 
-struct VkSamplerYcbcrConversionInfo
+mutable struct VkSamplerYcbcrConversionInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     conversion::VkSamplerYcbcrConversion
 end
 
-struct VkBindImagePlaneMemoryInfo
+mutable struct VkBindImagePlaneMemoryInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     planeAspect::VkImageAspectFlagBits
 end
 
-struct VkImagePlaneMemoryRequirementsInfo
+mutable struct VkImagePlaneMemoryRequirementsInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     planeAspect::VkImageAspectFlagBits
 end
 
-struct VkPhysicalDeviceSamplerYcbcrConversionFeatures
+mutable struct VkPhysicalDeviceSamplerYcbcrConversionFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     samplerYcbcrConversion::VkBool32
 end
 
-struct VkSamplerYcbcrConversionImageFormatProperties
+mutable struct VkSamplerYcbcrConversionImageFormatProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     combinedImageSamplerDescriptorCount::UInt32
@@ -4908,7 +4908,7 @@ struct VkDescriptorUpdateTemplateEntry
     stride::Csize_t
 end
 
-struct VkDescriptorUpdateTemplateCreateInfo
+mutable struct VkDescriptorUpdateTemplateCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkDescriptorUpdateTemplateCreateFlags
@@ -4927,19 +4927,19 @@ struct VkExternalMemoryProperties
     compatibleHandleTypes::VkExternalMemoryHandleTypeFlags
 end
 
-struct VkPhysicalDeviceExternalImageFormatInfo
+mutable struct VkPhysicalDeviceExternalImageFormatInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleType::VkExternalMemoryHandleTypeFlagBits
 end
 
-struct VkExternalImageFormatProperties
+mutable struct VkExternalImageFormatProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     externalMemoryProperties::VkExternalMemoryProperties
 end
 
-struct VkPhysicalDeviceExternalBufferInfo
+mutable struct VkPhysicalDeviceExternalBufferInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkBufferCreateFlags
@@ -4947,13 +4947,13 @@ struct VkPhysicalDeviceExternalBufferInfo
     handleType::VkExternalMemoryHandleTypeFlagBits
 end
 
-struct VkExternalBufferProperties
+mutable struct VkExternalBufferProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     externalMemoryProperties::VkExternalMemoryProperties
 end
 
-struct VkPhysicalDeviceIDProperties
+mutable struct VkPhysicalDeviceIDProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     deviceUUID::NTuple{16, UInt8}
@@ -4963,31 +4963,31 @@ struct VkPhysicalDeviceIDProperties
     deviceLUIDValid::VkBool32
 end
 
-struct VkExternalMemoryImageCreateInfo
+mutable struct VkExternalMemoryImageCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleTypes::VkExternalMemoryHandleTypeFlags
 end
 
-struct VkExternalMemoryBufferCreateInfo
+mutable struct VkExternalMemoryBufferCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleTypes::VkExternalMemoryHandleTypeFlags
 end
 
-struct VkExportMemoryAllocateInfo
+mutable struct VkExportMemoryAllocateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleTypes::VkExternalMemoryHandleTypeFlags
 end
 
-struct VkPhysicalDeviceExternalFenceInfo
+mutable struct VkPhysicalDeviceExternalFenceInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleType::VkExternalFenceHandleTypeFlagBits
 end
 
-struct VkExternalFenceProperties
+mutable struct VkExternalFenceProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     exportFromImportedHandleTypes::VkExternalFenceHandleTypeFlags
@@ -4995,25 +4995,25 @@ struct VkExternalFenceProperties
     externalFenceFeatures::VkExternalFenceFeatureFlags
 end
 
-struct VkExportFenceCreateInfo
+mutable struct VkExportFenceCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleTypes::VkExternalFenceHandleTypeFlags
 end
 
-struct VkExportSemaphoreCreateInfo
+mutable struct VkExportSemaphoreCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleTypes::VkExternalSemaphoreHandleTypeFlags
 end
 
-struct VkPhysicalDeviceExternalSemaphoreInfo
+mutable struct VkPhysicalDeviceExternalSemaphoreInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleType::VkExternalSemaphoreHandleTypeFlagBits
 end
 
-struct VkExternalSemaphoreProperties
+mutable struct VkExternalSemaphoreProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     exportFromImportedHandleTypes::VkExternalSemaphoreHandleTypeFlags
@@ -5021,20 +5021,20 @@ struct VkExternalSemaphoreProperties
     externalSemaphoreFeatures::VkExternalSemaphoreFeatureFlags
 end
 
-struct VkPhysicalDeviceMaintenance3Properties
+mutable struct VkPhysicalDeviceMaintenance3Properties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxPerSetDescriptors::UInt32
     maxMemoryAllocationSize::VkDeviceSize
 end
 
-struct VkDescriptorSetLayoutSupport
+mutable struct VkDescriptorSetLayoutSupport
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     supported::VkBool32
 end
 
-struct VkPhysicalDeviceShaderDrawParametersFeatures
+mutable struct VkPhysicalDeviceShaderDrawParametersFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderDrawParameters::VkBool32
@@ -5362,7 +5362,7 @@ end
 
 const VkSemaphoreWaitFlags = VkFlags
 
-struct VkPhysicalDeviceVulkan11Features
+mutable struct VkPhysicalDeviceVulkan11Features
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     storageBuffer16BitAccess::VkBool32
@@ -5379,7 +5379,7 @@ struct VkPhysicalDeviceVulkan11Features
     shaderDrawParameters::VkBool32
 end
 
-struct VkPhysicalDeviceVulkan11Properties
+mutable struct VkPhysicalDeviceVulkan11Properties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     deviceUUID::NTuple{16, UInt8}
@@ -5399,7 +5399,7 @@ struct VkPhysicalDeviceVulkan11Properties
     maxMemoryAllocationSize::VkDeviceSize
 end
 
-struct VkPhysicalDeviceVulkan12Features
+mutable struct VkPhysicalDeviceVulkan12Features
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     samplerMirrorClampToEdge::VkBool32
@@ -5458,7 +5458,7 @@ struct VkConformanceVersion
     patch::UInt8
 end
 
-struct VkPhysicalDeviceVulkan12Properties
+mutable struct VkPhysicalDeviceVulkan12Properties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     driverID::VkDriverId
@@ -5515,7 +5515,7 @@ struct VkPhysicalDeviceVulkan12Properties
     framebufferIntegerColorSampleCounts::VkSampleCountFlags
 end
 
-struct VkImageFormatListCreateInfo
+mutable struct VkImageFormatListCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     viewFormatCount::UInt32
@@ -5573,7 +5573,7 @@ struct VkSubpassDependency2
     viewOffset::Int32
 end
 
-struct VkRenderPassCreateInfo2
+mutable struct VkRenderPassCreateInfo2
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkRenderPassCreateFlags
@@ -5587,18 +5587,18 @@ struct VkRenderPassCreateInfo2
     pCorrelatedViewMasks::Ptr{UInt32}
 end
 
-struct VkSubpassBeginInfo
+mutable struct VkSubpassBeginInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     contents::VkSubpassContents
 end
 
-struct VkSubpassEndInfo
+mutable struct VkSubpassEndInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
 end
 
-struct VkPhysicalDevice8BitStorageFeatures
+mutable struct VkPhysicalDevice8BitStorageFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     storageBuffer8BitAccess::VkBool32
@@ -5606,7 +5606,7 @@ struct VkPhysicalDevice8BitStorageFeatures
     storagePushConstant8::VkBool32
 end
 
-struct VkPhysicalDeviceDriverProperties
+mutable struct VkPhysicalDeviceDriverProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     driverID::VkDriverId
@@ -5615,21 +5615,21 @@ struct VkPhysicalDeviceDriverProperties
     conformanceVersion::VkConformanceVersion
 end
 
-struct VkPhysicalDeviceShaderAtomicInt64Features
+mutable struct VkPhysicalDeviceShaderAtomicInt64Features
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderBufferInt64Atomics::VkBool32
     shaderSharedInt64Atomics::VkBool32
 end
 
-struct VkPhysicalDeviceShaderFloat16Int8Features
+mutable struct VkPhysicalDeviceShaderFloat16Int8Features
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderFloat16::VkBool32
     shaderInt8::VkBool32
 end
 
-struct VkPhysicalDeviceFloatControlsProperties
+mutable struct VkPhysicalDeviceFloatControlsProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     denormBehaviorIndependence::VkShaderFloatControlsIndependence
@@ -5651,14 +5651,14 @@ struct VkPhysicalDeviceFloatControlsProperties
     shaderRoundingModeRTZFloat64::VkBool32
 end
 
-struct VkDescriptorSetLayoutBindingFlagsCreateInfo
+mutable struct VkDescriptorSetLayoutBindingFlagsCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     bindingCount::UInt32
     pBindingFlags::Ptr{VkDescriptorBindingFlags}
 end
 
-struct VkPhysicalDeviceDescriptorIndexingFeatures
+mutable struct VkPhysicalDeviceDescriptorIndexingFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderInputAttachmentArrayDynamicIndexing::VkBool32
@@ -5683,7 +5683,7 @@ struct VkPhysicalDeviceDescriptorIndexingFeatures
     runtimeDescriptorArray::VkBool32
 end
 
-struct VkPhysicalDeviceDescriptorIndexingProperties
+mutable struct VkPhysicalDeviceDescriptorIndexingProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxUpdateAfterBindDescriptorsInAllPools::UInt32
@@ -5711,20 +5711,20 @@ struct VkPhysicalDeviceDescriptorIndexingProperties
     maxDescriptorSetUpdateAfterBindInputAttachments::UInt32
 end
 
-struct VkDescriptorSetVariableDescriptorCountAllocateInfo
+mutable struct VkDescriptorSetVariableDescriptorCountAllocateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     descriptorSetCount::UInt32
     pDescriptorCounts::Ptr{UInt32}
 end
 
-struct VkDescriptorSetVariableDescriptorCountLayoutSupport
+mutable struct VkDescriptorSetVariableDescriptorCountLayoutSupport
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxVariableDescriptorCount::UInt32
 end
 
-struct VkSubpassDescriptionDepthStencilResolve
+mutable struct VkSubpassDescriptionDepthStencilResolve
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     depthResolveMode::VkResolveModeFlagBits
@@ -5732,7 +5732,7 @@ struct VkSubpassDescriptionDepthStencilResolve
     pDepthStencilResolveAttachment::Ptr{VkAttachmentReference2}
 end
 
-struct VkPhysicalDeviceDepthStencilResolveProperties
+mutable struct VkPhysicalDeviceDepthStencilResolveProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     supportedDepthResolveModes::VkResolveModeFlags
@@ -5741,32 +5741,32 @@ struct VkPhysicalDeviceDepthStencilResolveProperties
     independentResolve::VkBool32
 end
 
-struct VkPhysicalDeviceScalarBlockLayoutFeatures
+mutable struct VkPhysicalDeviceScalarBlockLayoutFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     scalarBlockLayout::VkBool32
 end
 
-struct VkImageStencilUsageCreateInfo
+mutable struct VkImageStencilUsageCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     stencilUsage::VkImageUsageFlags
 end
 
-struct VkSamplerReductionModeCreateInfo
+mutable struct VkSamplerReductionModeCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     reductionMode::VkSamplerReductionMode
 end
 
-struct VkPhysicalDeviceSamplerFilterMinmaxProperties
+mutable struct VkPhysicalDeviceSamplerFilterMinmaxProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     filterMinmaxSingleComponentFormats::VkBool32
     filterMinmaxImageComponentMapping::VkBool32
 end
 
-struct VkPhysicalDeviceVulkanMemoryModelFeatures
+mutable struct VkPhysicalDeviceVulkanMemoryModelFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     vulkanMemoryModel::VkBool32
@@ -5774,7 +5774,7 @@ struct VkPhysicalDeviceVulkanMemoryModelFeatures
     vulkanMemoryModelAvailabilityVisibilityChains::VkBool32
 end
 
-struct VkPhysicalDeviceImagelessFramebufferFeatures
+mutable struct VkPhysicalDeviceImagelessFramebufferFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     imagelessFramebuffer::VkBool32
@@ -5792,77 +5792,77 @@ struct VkFramebufferAttachmentImageInfo
     pViewFormats::Ptr{VkFormat}
 end
 
-struct VkFramebufferAttachmentsCreateInfo
+mutable struct VkFramebufferAttachmentsCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     attachmentImageInfoCount::UInt32
     pAttachmentImageInfos::Ptr{VkFramebufferAttachmentImageInfo}
 end
 
-struct VkRenderPassAttachmentBeginInfo
+mutable struct VkRenderPassAttachmentBeginInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     attachmentCount::UInt32
     pAttachments::Ptr{VkImageView}
 end
 
-struct VkPhysicalDeviceUniformBufferStandardLayoutFeatures
+mutable struct VkPhysicalDeviceUniformBufferStandardLayoutFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     uniformBufferStandardLayout::VkBool32
 end
 
-struct VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures
+mutable struct VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderSubgroupExtendedTypes::VkBool32
 end
 
-struct VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures
+mutable struct VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     separateDepthStencilLayouts::VkBool32
 end
 
-struct VkAttachmentReferenceStencilLayout
+mutable struct VkAttachmentReferenceStencilLayout
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     stencilLayout::VkImageLayout
 end
 
-struct VkAttachmentDescriptionStencilLayout
+mutable struct VkAttachmentDescriptionStencilLayout
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     stencilInitialLayout::VkImageLayout
     stencilFinalLayout::VkImageLayout
 end
 
-struct VkPhysicalDeviceHostQueryResetFeatures
+mutable struct VkPhysicalDeviceHostQueryResetFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     hostQueryReset::VkBool32
 end
 
-struct VkPhysicalDeviceTimelineSemaphoreFeatures
+mutable struct VkPhysicalDeviceTimelineSemaphoreFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     timelineSemaphore::VkBool32
 end
 
-struct VkPhysicalDeviceTimelineSemaphoreProperties
+mutable struct VkPhysicalDeviceTimelineSemaphoreProperties
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxTimelineSemaphoreValueDifference::UInt64
 end
 
-struct VkSemaphoreTypeCreateInfo
+mutable struct VkSemaphoreTypeCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     semaphoreType::VkSemaphoreType
     initialValue::UInt64
 end
 
-struct VkTimelineSemaphoreSubmitInfo
+mutable struct VkTimelineSemaphoreSubmitInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     waitSemaphoreValueCount::UInt32
@@ -5880,14 +5880,14 @@ struct VkSemaphoreWaitInfo
     pValues::Ptr{UInt64}
 end
 
-struct VkSemaphoreSignalInfo
+mutable struct VkSemaphoreSignalInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     semaphore::VkSemaphore
     value::UInt64
 end
 
-struct VkPhysicalDeviceBufferDeviceAddressFeatures
+mutable struct VkPhysicalDeviceBufferDeviceAddressFeatures
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     bufferDeviceAddress::VkBool32
@@ -5895,25 +5895,25 @@ struct VkPhysicalDeviceBufferDeviceAddressFeatures
     bufferDeviceAddressMultiDevice::VkBool32
 end
 
-struct VkBufferDeviceAddressInfo
+mutable struct VkBufferDeviceAddressInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     buffer::VkBuffer
 end
 
-struct VkBufferOpaqueCaptureAddressCreateInfo
+mutable struct VkBufferOpaqueCaptureAddressCreateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     opaqueCaptureAddress::UInt64
 end
 
-struct VkMemoryOpaqueCaptureAddressAllocateInfo
+mutable struct VkMemoryOpaqueCaptureAddressAllocateInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     opaqueCaptureAddress::UInt64
 end
 
-struct VkDeviceMemoryOpaqueCaptureAddressInfo
+mutable struct VkDeviceMemoryOpaqueCaptureAddressInfo
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     memory::VkDeviceMemory
@@ -6186,7 +6186,7 @@ struct VkSwapchainCreateInfoKHR
     oldSwapchain::VkSwapchainKHR
 end
 
-struct VkPresentInfoKHR
+mutable struct VkPresentInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     waitSemaphoreCount::UInt32
@@ -6197,13 +6197,13 @@ struct VkPresentInfoKHR
     pResults::Ptr{VkResult}
 end
 
-struct VkImageSwapchainCreateInfoKHR
+mutable struct VkImageSwapchainCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     swapchain::VkSwapchainKHR
 end
 
-struct VkBindImageMemorySwapchainInfoKHR
+mutable struct VkBindImageMemorySwapchainInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     swapchain::VkSwapchainKHR
@@ -6220,14 +6220,14 @@ struct VkAcquireNextImageInfoKHR
     deviceMask::UInt32
 end
 
-struct VkDeviceGroupPresentCapabilitiesKHR
+mutable struct VkDeviceGroupPresentCapabilitiesKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     presentMask::NTuple{32, UInt32}
     modes::VkDeviceGroupPresentModeFlagsKHR
 end
 
-struct VkDeviceGroupPresentInfoKHR
+mutable struct VkDeviceGroupPresentInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     swapchainCount::UInt32
@@ -6235,7 +6235,7 @@ struct VkDeviceGroupPresentInfoKHR
     mode::VkDeviceGroupPresentModeFlagBitsKHR
 end
 
-struct VkDeviceGroupSwapchainCreateInfoKHR
+mutable struct VkDeviceGroupSwapchainCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     modes::VkDeviceGroupPresentModeFlagsKHR
@@ -6340,7 +6340,7 @@ struct VkDisplayModeParametersKHR
     refreshRate::UInt32
 end
 
-struct VkDisplayModeCreateInfoKHR
+mutable struct VkDisplayModeCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkDisplayModeCreateFlagsKHR
@@ -6379,7 +6379,7 @@ struct VkDisplayPropertiesKHR
     persistentContent::VkBool32
 end
 
-struct VkDisplaySurfaceCreateInfoKHR
+mutable struct VkDisplaySurfaceCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkDisplaySurfaceCreateFlagsKHR
@@ -6448,7 +6448,7 @@ function vkCreateDisplayPlaneSurfaceKHR(instance, pCreateInfo, pAllocator, pSurf
     ccall((:vkCreateDisplayPlaneSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkDisplaySurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
-struct VkDisplayPresentInfoKHR
+mutable struct VkDisplayPresentInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     srcRect::VkRect2D
@@ -6646,7 +6646,7 @@ const VkExternalMemoryBufferCreateInfoKHR = VkExternalMemoryBufferCreateInfo
 
 const VkExportMemoryAllocateInfoKHR = VkExportMemoryAllocateInfo
 
-struct VkImportMemoryFdInfoKHR
+mutable struct VkImportMemoryFdInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleType::VkExternalMemoryHandleTypeFlagBits
@@ -6659,7 +6659,7 @@ struct VkMemoryFdPropertiesKHR
     memoryTypeBits::UInt32
 end
 
-struct VkMemoryGetFdInfoKHR
+mutable struct VkMemoryGetFdInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     memory::VkDeviceMemory
@@ -6708,7 +6708,7 @@ const VkSemaphoreImportFlagBitsKHR = VkSemaphoreImportFlagBits
 
 const VkExportSemaphoreCreateInfoKHR = VkExportSemaphoreCreateInfo
 
-struct VkImportSemaphoreFdInfoKHR
+mutable struct VkImportSemaphoreFdInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     semaphore::VkSemaphore
@@ -6717,7 +6717,7 @@ struct VkImportSemaphoreFdInfoKHR
     fd::Cint
 end
 
-struct VkSemaphoreGetFdInfoKHR
+mutable struct VkSemaphoreGetFdInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     semaphore::VkSemaphore
@@ -6740,7 +6740,7 @@ function vkGetSemaphoreFdKHR(device, pGetFdInfo, pFd)
     ccall((:vkGetSemaphoreFdKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreGetFdInfoKHR}, Ptr{Cint}), device, pGetFdInfo, pFd)
 end
 
-struct VkPhysicalDevicePushDescriptorPropertiesKHR
+mutable struct VkPhysicalDevicePushDescriptorPropertiesKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxPushDescriptors::UInt32
@@ -6779,7 +6779,7 @@ struct VkPresentRegionKHR
     pRectangles::Ptr{VkRectLayerKHR}
 end
 
-struct VkPresentRegionsKHR
+mutable struct VkPresentRegionsKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     swapchainCount::UInt32
@@ -6874,7 +6874,7 @@ function vkCmdEndRenderPass2KHR(commandBuffer, pSubpassEndInfo)
     ccall((:vkCmdEndRenderPass2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkSubpassEndInfo}), commandBuffer, pSubpassEndInfo)
 end
 
-struct VkSharedPresentSurfaceCapabilitiesKHR
+mutable struct VkSharedPresentSurfaceCapabilitiesKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     sharedPresentSupportedUsageFlags::VkImageUsageFlags
@@ -6914,7 +6914,7 @@ const VkFenceImportFlagBitsKHR = VkFenceImportFlagBits
 
 const VkExportFenceCreateInfoKHR = VkExportFenceCreateInfo
 
-struct VkImportFenceFdInfoKHR
+mutable struct VkImportFenceFdInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     fence::VkFence
@@ -6923,7 +6923,7 @@ struct VkImportFenceFdInfoKHR
     fd::Cint
 end
 
-struct VkFenceGetFdInfoKHR
+mutable struct VkFenceGetFdInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     fence::VkFence
@@ -6995,14 +6995,14 @@ end
 
 const VkAcquireProfilingLockFlagsKHR = VkFlags
 
-struct VkPhysicalDevicePerformanceQueryFeaturesKHR
+mutable struct VkPhysicalDevicePerformanceQueryFeaturesKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     performanceCounterQueryPools::VkBool32
     performanceCounterMultipleQueryPools::VkBool32
 end
 
-struct VkPhysicalDevicePerformanceQueryPropertiesKHR
+mutable struct VkPhysicalDevicePerformanceQueryPropertiesKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     allowCommandBufferQueryCopies::VkBool32
@@ -7058,14 +7058,14 @@ function Base.setproperty!(x::Ptr{VkPerformanceCounterResultKHR}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
 end
 
-struct VkAcquireProfilingLockInfoKHR
+mutable struct VkAcquireProfilingLockInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkAcquireProfilingLockFlagsKHR
     timeout::UInt64
 end
 
-struct VkPerformanceQuerySubmitInfoKHR
+mutable struct VkPerformanceQuerySubmitInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     counterPassIndex::UInt32
@@ -7123,7 +7123,7 @@ struct VkPhysicalDeviceSurfaceInfo2KHR
     surface::VkSurfaceKHR
 end
 
-struct VkSurfaceCapabilities2KHR
+mutable struct VkSurfaceCapabilities2KHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     surfaceCapabilities::VkSurfaceCapabilitiesKHR
@@ -7173,14 +7173,14 @@ struct VkDisplayModeProperties2KHR
     displayModeProperties::VkDisplayModePropertiesKHR
 end
 
-struct VkDisplayPlaneInfo2KHR
+mutable struct VkDisplayPlaneInfo2KHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     mode::VkDisplayModeKHR
     planeIndex::UInt32
 end
 
-struct VkDisplayPlaneCapabilities2KHR
+mutable struct VkDisplayPlaneCapabilities2KHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     capabilities::VkDisplayPlaneCapabilitiesKHR
@@ -7348,7 +7348,7 @@ const VkPhysicalDevice8BitStorageFeaturesKHR = VkPhysicalDevice8BitStorageFeatur
 
 const VkPhysicalDeviceShaderAtomicInt64FeaturesKHR = VkPhysicalDeviceShaderAtomicInt64Features
 
-struct VkPhysicalDeviceShaderClockFeaturesKHR
+mutable struct VkPhysicalDeviceShaderClockFeaturesKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderSubgroupClock::VkBool32
@@ -7417,7 +7417,7 @@ end
 
 const VkPhysicalDeviceVulkanMemoryModelFeaturesKHR = VkPhysicalDeviceVulkanMemoryModelFeatures
 
-struct VkSurfaceProtectedCapabilitiesKHR
+mutable struct VkSurfaceProtectedCapabilitiesKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     supportsProtected::VkBool32
@@ -7473,7 +7473,7 @@ end
     VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_MAX_ENUM_KHR = 2147483647
 end
 
-struct VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR
+mutable struct VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pipelineExecutableInfo::VkBool32
@@ -7629,7 +7629,7 @@ const VkDebugReportFlagsEXT = VkFlags
 # typedef VkBool32 ( VKAPI_PTR * PFN_vkDebugReportCallbackEXT ) ( VkDebugReportFlagsEXT flags , VkDebugReportObjectTypeEXT objectType , uint64_t object , size_t location , int32_t messageCode , const char * pLayerPrefix , const char * pMessage , void * pUserData )
 const PFN_vkDebugReportCallbackEXT = Ptr{Cvoid}
 
-struct VkDebugReportCallbackCreateInfoEXT
+mutable struct VkDebugReportCallbackCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkDebugReportFlagsEXT
@@ -7667,13 +7667,13 @@ end
     VK_RASTERIZATION_ORDER_MAX_ENUM_AMD = 2147483647
 end
 
-struct VkPipelineRasterizationStateRasterizationOrderAMD
+mutable struct VkPipelineRasterizationStateRasterizationOrderAMD
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     rasterizationOrder::VkRasterizationOrderAMD
 end
 
-struct VkDebugMarkerObjectNameInfoEXT
+mutable struct VkDebugMarkerObjectNameInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     objectType::VkDebugReportObjectTypeEXT
@@ -7681,7 +7681,7 @@ struct VkDebugMarkerObjectNameInfoEXT
     pObjectName::Ptr{Cchar}
 end
 
-struct VkDebugMarkerObjectTagInfoEXT
+mutable struct VkDebugMarkerObjectTagInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     objectType::VkDebugReportObjectTypeEXT
@@ -7691,7 +7691,7 @@ struct VkDebugMarkerObjectTagInfoEXT
     pTag::Ptr{Cvoid}
 end
 
-struct VkDebugMarkerMarkerInfoEXT
+mutable struct VkDebugMarkerMarkerInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pMarkerName::Ptr{Cchar}
@@ -7738,19 +7738,19 @@ function vkCmdDebugMarkerInsertEXT(commandBuffer, pMarkerInfo)
     ccall((:vkCmdDebugMarkerInsertEXT, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkDebugMarkerMarkerInfoEXT}), commandBuffer, pMarkerInfo)
 end
 
-struct VkDedicatedAllocationImageCreateInfoNV
+mutable struct VkDedicatedAllocationImageCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     dedicatedAllocation::VkBool32
 end
 
-struct VkDedicatedAllocationBufferCreateInfoNV
+mutable struct VkDedicatedAllocationBufferCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     dedicatedAllocation::VkBool32
 end
 
-struct VkDedicatedAllocationMemoryAllocateInfoNV
+mutable struct VkDedicatedAllocationMemoryAllocateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     image::VkImage
@@ -7759,14 +7759,14 @@ end
 
 const VkPipelineRasterizationStateStreamCreateFlagsEXT = VkFlags
 
-struct VkPhysicalDeviceTransformFeedbackFeaturesEXT
+mutable struct VkPhysicalDeviceTransformFeedbackFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     transformFeedback::VkBool32
     geometryStreams::VkBool32
 end
 
-struct VkPhysicalDeviceTransformFeedbackPropertiesEXT
+mutable struct VkPhysicalDeviceTransformFeedbackPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxTransformFeedbackStreams::UInt32
@@ -7781,7 +7781,7 @@ struct VkPhysicalDeviceTransformFeedbackPropertiesEXT
     transformFeedbackDraw::VkBool32
 end
 
-struct VkPipelineRasterizationStateStreamCreateInfoEXT
+mutable struct VkPipelineRasterizationStateStreamCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkPipelineRasterizationStateStreamCreateFlagsEXT
@@ -7836,7 +7836,7 @@ function vkCmdDrawIndirectByteCountEXT(commandBuffer, instanceCount, firstInstan
     ccall((:vkCmdDrawIndirectByteCountEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride)
 end
 
-struct VkImageViewHandleInfoNVX
+mutable struct VkImageViewHandleInfoNVX
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     imageView::VkImageView
@@ -7844,7 +7844,7 @@ struct VkImageViewHandleInfoNVX
     sampler::VkSampler
 end
 
-struct VkImageViewAddressPropertiesNVX
+mutable struct VkImageViewAddressPropertiesNVX
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     deviceAddress::VkDeviceAddress
@@ -7883,7 +7883,7 @@ function vkCmdDrawIndexedIndirectCountAMD(commandBuffer, buffer, offset, countBu
     ccall((:vkCmdDrawIndexedIndirectCountAMD, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
-struct VkTextureLODGatherFormatPropertiesAMD
+mutable struct VkTextureLODGatherFormatPropertiesAMD
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     supportsTextureGatherLODBiasAMD::VkBool32
@@ -7904,7 +7904,7 @@ struct VkShaderResourceUsageAMD
     scratchMemUsageInBytes::Csize_t
 end
 
-struct VkShaderStatisticsInfoAMD
+mutable struct VkShaderStatisticsInfoAMD
     shaderStageMask::VkShaderStageFlags
     resourceUsage::VkShaderResourceUsageAMD
     numPhysicalVgprs::UInt32
@@ -7922,7 +7922,7 @@ function vkGetShaderInfoAMD(device, pipeline, shaderStage, infoType, pInfoSize, 
     ccall((:vkGetShaderInfoAMD, libvulkan), VkResult, (VkDevice, VkPipeline, VkShaderStageFlagBits, VkShaderInfoTypeAMD, Ptr{Csize_t}, Ptr{Cvoid}), device, pipeline, shaderStage, infoType, pInfoSize, pInfo)
 end
 
-struct VkPhysicalDeviceCornerSampledImageFeaturesNV
+mutable struct VkPhysicalDeviceCornerSampledImageFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     cornerSampledImage::VkBool32
@@ -7947,7 +7947,7 @@ end
 
 const VkExternalMemoryFeatureFlagsNV = VkFlags
 
-struct VkExternalImageFormatPropertiesNV
+mutable struct VkExternalImageFormatPropertiesNV
     imageFormatProperties::VkImageFormatProperties
     externalMemoryFeatures::VkExternalMemoryFeatureFlagsNV
     exportFromImportedHandleTypes::VkExternalMemoryHandleTypeFlagsNV
@@ -7962,13 +7962,13 @@ function vkGetPhysicalDeviceExternalImageFormatPropertiesNV(physicalDevice, form
     ccall((:vkGetPhysicalDeviceExternalImageFormatPropertiesNV, libvulkan), VkResult, (VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlags, VkImageCreateFlags, VkExternalMemoryHandleTypeFlagsNV, Ptr{VkExternalImageFormatPropertiesNV}), physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties)
 end
 
-struct VkExternalMemoryImageCreateInfoNV
+mutable struct VkExternalMemoryImageCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleTypes::VkExternalMemoryHandleTypeFlagsNV
 end
 
-struct VkExportMemoryAllocateInfoNV
+mutable struct VkExportMemoryAllocateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleTypes::VkExternalMemoryHandleTypeFlagsNV
@@ -7980,26 +7980,26 @@ end
     VK_VALIDATION_CHECK_MAX_ENUM_EXT = 2147483647
 end
 
-struct VkValidationFlagsEXT
+mutable struct VkValidationFlagsEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     disabledValidationCheckCount::UInt32
     pDisabledValidationChecks::Ptr{VkValidationCheckEXT}
 end
 
-struct VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXT
+mutable struct VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     textureCompressionASTC_HDR::VkBool32
 end
 
-struct VkImageViewASTCDecodeModeEXT
+mutable struct VkImageViewASTCDecodeModeEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     decodeMode::VkFormat
 end
 
-struct VkPhysicalDeviceASTCDecodeFeaturesEXT
+mutable struct VkPhysicalDeviceASTCDecodeFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     decodeModeSharedExponent::VkBool32
@@ -8012,7 +8012,7 @@ end
 
 const VkConditionalRenderingFlagsEXT = VkFlags
 
-struct VkConditionalRenderingBeginInfoEXT
+mutable struct VkConditionalRenderingBeginInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     buffer::VkBuffer
@@ -8020,14 +8020,14 @@ struct VkConditionalRenderingBeginInfoEXT
     flags::VkConditionalRenderingFlagsEXT
 end
 
-struct VkPhysicalDeviceConditionalRenderingFeaturesEXT
+mutable struct VkPhysicalDeviceConditionalRenderingFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     conditionalRendering::VkBool32
     inheritedConditionalRendering::VkBool32
 end
 
-struct VkCommandBufferInheritanceConditionalRenderingInfoEXT
+mutable struct VkCommandBufferInheritanceConditionalRenderingInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     conditionalRenderingEnable::VkBool32
@@ -8054,7 +8054,7 @@ struct VkViewportWScalingNV
     ycoeff::Cfloat
 end
 
-struct VkPipelineViewportWScalingStateCreateInfoNV
+mutable struct VkPipelineViewportWScalingStateCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     viewportWScalingEnable::VkBool32
@@ -8085,7 +8085,7 @@ end
 
 const VkSurfaceCounterFlagsEXT = VkFlags
 
-struct VkSurfaceCapabilities2EXT
+mutable struct VkSurfaceCapabilities2EXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     minImageCount::UInt32
@@ -8126,25 +8126,25 @@ end
     VK_DISPLAY_EVENT_TYPE_MAX_ENUM_EXT = 2147483647
 end
 
-struct VkDisplayPowerInfoEXT
+mutable struct VkDisplayPowerInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     powerState::VkDisplayPowerStateEXT
 end
 
-struct VkDeviceEventInfoEXT
+mutable struct VkDeviceEventInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     deviceEvent::VkDeviceEventTypeEXT
 end
 
-struct VkDisplayEventInfoEXT
+mutable struct VkDisplayEventInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     displayEvent::VkDisplayEventTypeEXT
 end
 
-struct VkSwapchainCounterCreateInfoEXT
+mutable struct VkSwapchainCounterCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     surfaceCounters::VkSurfaceCounterFlagsEXT
@@ -8182,7 +8182,7 @@ function vkGetSwapchainCounterEXT(device, swapchain, counter, pCounterValue)
     ccall((:vkGetSwapchainCounterEXT, libvulkan), VkResult, (VkDevice, VkSwapchainKHR, VkSurfaceCounterFlagBitsEXT, Ptr{UInt64}), device, swapchain, counter, pCounterValue)
 end
 
-struct VkRefreshCycleDurationGOOGLE
+mutable struct VkRefreshCycleDurationGOOGLE
     refreshDuration::UInt64
 end
 
@@ -8199,7 +8199,7 @@ struct VkPresentTimeGOOGLE
     desiredPresentTime::UInt64
 end
 
-struct VkPresentTimesInfoGOOGLE
+mutable struct VkPresentTimesInfoGOOGLE
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     swapchainCount::UInt32
@@ -8222,7 +8222,7 @@ function vkGetPastPresentationTimingGOOGLE(device, swapchain, pPresentationTimin
     ccall((:vkGetPastPresentationTimingGOOGLE, libvulkan), VkResult, (VkDevice, VkSwapchainKHR, Ptr{UInt32}, Ptr{VkPastPresentationTimingGOOGLE}), device, swapchain, pPresentationTimingCount, pPresentationTimings)
 end
 
-struct VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+mutable struct VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     perViewPositionAllComponents::VkBool32
@@ -8249,7 +8249,7 @@ struct VkViewportSwizzleNV
     w::VkViewportCoordinateSwizzleNV
 end
 
-struct VkPipelineViewportSwizzleStateCreateInfoNV
+mutable struct VkPipelineViewportSwizzleStateCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkPipelineViewportSwizzleStateCreateFlagsNV
@@ -8265,13 +8265,13 @@ end
 
 const VkPipelineDiscardRectangleStateCreateFlagsEXT = VkFlags
 
-struct VkPhysicalDeviceDiscardRectanglePropertiesEXT
+mutable struct VkPhysicalDeviceDiscardRectanglePropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxDiscardRectangles::UInt32
 end
 
-struct VkPipelineDiscardRectangleStateCreateInfoEXT
+mutable struct VkPipelineDiscardRectangleStateCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkPipelineDiscardRectangleStateCreateFlagsEXT
@@ -8297,7 +8297,7 @@ end
 
 const VkPipelineRasterizationConservativeStateCreateFlagsEXT = VkFlags
 
-struct VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+mutable struct VkPhysicalDeviceConservativeRasterizationPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     primitiveOverestimationSize::Cfloat
@@ -8311,7 +8311,7 @@ struct VkPhysicalDeviceConservativeRasterizationPropertiesEXT
     conservativeRasterizationPostDepthCoverage::VkBool32
 end
 
-struct VkPipelineRasterizationConservativeStateCreateInfoEXT
+mutable struct VkPipelineRasterizationConservativeStateCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkPipelineRasterizationConservativeStateCreateFlagsEXT
@@ -8321,13 +8321,13 @@ end
 
 const VkPipelineRasterizationDepthClipStateCreateFlagsEXT = VkFlags
 
-struct VkPhysicalDeviceDepthClipEnableFeaturesEXT
+mutable struct VkPhysicalDeviceDepthClipEnableFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     depthClipEnable::VkBool32
 end
 
-struct VkPipelineRasterizationDepthClipStateCreateInfoEXT
+mutable struct VkPipelineRasterizationDepthClipStateCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkPipelineRasterizationDepthClipStateCreateFlagsEXT
@@ -8402,7 +8402,7 @@ struct VkDebugUtilsObjectNameInfoEXT
     pObjectName::Ptr{Cchar}
 end
 
-struct VkDebugUtilsMessengerCallbackDataEXT
+mutable struct VkDebugUtilsMessengerCallbackDataEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkDebugUtilsMessengerCallbackDataFlagsEXT
@@ -8421,7 +8421,7 @@ end
 # typedef VkBool32 ( VKAPI_PTR * PFN_vkDebugUtilsMessengerCallbackEXT ) ( VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity , VkDebugUtilsMessageTypeFlagsEXT messageTypes , const VkDebugUtilsMessengerCallbackDataEXT * pCallbackData , void * pUserData )
 const PFN_vkDebugUtilsMessengerCallbackEXT = Ptr{Cvoid}
 
-struct VkDebugUtilsMessengerCreateInfoEXT
+mutable struct VkDebugUtilsMessengerCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkDebugUtilsMessengerCreateFlagsEXT
@@ -8431,7 +8431,7 @@ struct VkDebugUtilsMessengerCreateInfoEXT
     pUserData::Ptr{Cvoid}
 end
 
-struct VkDebugUtilsObjectTagInfoEXT
+mutable struct VkDebugUtilsObjectTagInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     objectType::VkObjectType
@@ -8535,14 +8535,14 @@ const VkSamplerReductionModeCreateInfoEXT = VkSamplerReductionModeCreateInfo
 
 const VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT = VkPhysicalDeviceSamplerFilterMinmaxProperties
 
-struct VkPhysicalDeviceInlineUniformBlockFeaturesEXT
+mutable struct VkPhysicalDeviceInlineUniformBlockFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     inlineUniformBlock::VkBool32
     descriptorBindingInlineUniformBlockUpdateAfterBind::VkBool32
 end
 
-struct VkPhysicalDeviceInlineUniformBlockPropertiesEXT
+mutable struct VkPhysicalDeviceInlineUniformBlockPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxInlineUniformBlockSize::UInt32
@@ -8552,14 +8552,14 @@ struct VkPhysicalDeviceInlineUniformBlockPropertiesEXT
     maxDescriptorSetUpdateAfterBindInlineUniformBlocks::UInt32
 end
 
-struct VkWriteDescriptorSetInlineUniformBlockEXT
+mutable struct VkWriteDescriptorSetInlineUniformBlockEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     dataSize::UInt32
     pData::Ptr{Cvoid}
 end
 
-struct VkDescriptorPoolInlineUniformBlockCreateInfoEXT
+mutable struct VkDescriptorPoolInlineUniformBlockCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxInlineUniformBlockBindings::UInt32
@@ -8589,7 +8589,7 @@ struct VkSubpassSampleLocationsEXT
     sampleLocationsInfo::VkSampleLocationsInfoEXT
 end
 
-struct VkRenderPassSampleLocationsBeginInfoEXT
+mutable struct VkRenderPassSampleLocationsBeginInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     attachmentInitialSampleLocationsCount::UInt32
@@ -8598,14 +8598,14 @@ struct VkRenderPassSampleLocationsBeginInfoEXT
     pPostSubpassSampleLocations::Ptr{VkSubpassSampleLocationsEXT}
 end
 
-struct VkPipelineSampleLocationsStateCreateInfoEXT
+mutable struct VkPipelineSampleLocationsStateCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     sampleLocationsEnable::VkBool32
     sampleLocationsInfo::VkSampleLocationsInfoEXT
 end
 
-struct VkPhysicalDeviceSampleLocationsPropertiesEXT
+mutable struct VkPhysicalDeviceSampleLocationsPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     sampleLocationSampleCounts::VkSampleCountFlags
@@ -8615,7 +8615,7 @@ struct VkPhysicalDeviceSampleLocationsPropertiesEXT
     variableSampleLocations::VkBool32
 end
 
-struct VkMultisamplePropertiesEXT
+mutable struct VkMultisamplePropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxSampleLocationGridSize::VkExtent2D
@@ -8644,13 +8644,13 @@ end
     VK_BLEND_OVERLAP_MAX_ENUM_EXT = 2147483647
 end
 
-struct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
+mutable struct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     advancedBlendCoherentOperations::VkBool32
 end
 
-struct VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+mutable struct VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     advancedBlendMaxColorAttachments::UInt32
@@ -8661,7 +8661,7 @@ struct VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
     advancedBlendAllOperations::VkBool32
 end
 
-struct VkPipelineColorBlendAdvancedStateCreateInfoEXT
+mutable struct VkPipelineColorBlendAdvancedStateCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     srcPremultiplied::VkBool32
@@ -8671,7 +8671,7 @@ end
 
 const VkPipelineCoverageToColorStateCreateFlagsNV = VkFlags
 
-struct VkPipelineCoverageToColorStateCreateInfoNV
+mutable struct VkPipelineCoverageToColorStateCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkPipelineCoverageToColorStateCreateFlagsNV
@@ -8689,7 +8689,7 @@ end
 
 const VkPipelineCoverageModulationStateCreateFlagsNV = VkFlags
 
-struct VkPipelineCoverageModulationStateCreateInfoNV
+mutable struct VkPipelineCoverageModulationStateCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkPipelineCoverageModulationStateCreateFlagsNV
@@ -8699,14 +8699,14 @@ struct VkPipelineCoverageModulationStateCreateInfoNV
     pCoverageModulationTable::Ptr{Cfloat}
 end
 
-struct VkPhysicalDeviceShaderSMBuiltinsPropertiesNV
+mutable struct VkPhysicalDeviceShaderSMBuiltinsPropertiesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderSMCount::UInt32
     shaderWarpsPerSM::UInt32
 end
 
-struct VkPhysicalDeviceShaderSMBuiltinsFeaturesNV
+mutable struct VkPhysicalDeviceShaderSMBuiltinsFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderSMBuiltins::VkBool32
@@ -8718,14 +8718,14 @@ struct VkDrmFormatModifierPropertiesEXT
     drmFormatModifierTilingFeatures::VkFormatFeatureFlags
 end
 
-struct VkDrmFormatModifierPropertiesListEXT
+mutable struct VkDrmFormatModifierPropertiesListEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     drmFormatModifierCount::UInt32
     pDrmFormatModifierProperties::Ptr{VkDrmFormatModifierPropertiesEXT}
 end
 
-struct VkPhysicalDeviceImageDrmFormatModifierInfoEXT
+mutable struct VkPhysicalDeviceImageDrmFormatModifierInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     drmFormatModifier::UInt64
@@ -8734,14 +8734,14 @@ struct VkPhysicalDeviceImageDrmFormatModifierInfoEXT
     pQueueFamilyIndices::Ptr{UInt32}
 end
 
-struct VkImageDrmFormatModifierListCreateInfoEXT
+mutable struct VkImageDrmFormatModifierListCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     drmFormatModifierCount::UInt32
     pDrmFormatModifiers::Ptr{UInt64}
 end
 
-struct VkImageDrmFormatModifierExplicitCreateInfoEXT
+mutable struct VkImageDrmFormatModifierExplicitCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     drmFormatModifier::UInt64
@@ -8749,7 +8749,7 @@ struct VkImageDrmFormatModifierExplicitCreateInfoEXT
     pPlaneLayouts::Ptr{VkSubresourceLayout}
 end
 
-struct VkImageDrmFormatModifierPropertiesEXT
+mutable struct VkImageDrmFormatModifierPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     drmFormatModifier::UInt64
@@ -8774,7 +8774,7 @@ end
 
 const VkValidationCacheCreateFlagsEXT = VkFlags
 
-struct VkValidationCacheCreateInfoEXT
+mutable struct VkValidationCacheCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkValidationCacheCreateFlagsEXT
@@ -8782,7 +8782,7 @@ struct VkValidationCacheCreateInfoEXT
     pInitialData::Ptr{Cvoid}
 end
 
-struct VkShaderModuleValidationCacheCreateInfoEXT
+mutable struct VkShaderModuleValidationCacheCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     validationCache::VkValidationCacheEXT
@@ -8863,7 +8863,7 @@ struct VkShadingRatePaletteNV
     pShadingRatePaletteEntries::Ptr{VkShadingRatePaletteEntryNV}
 end
 
-struct VkPipelineViewportShadingRateImageStateCreateInfoNV
+mutable struct VkPipelineViewportShadingRateImageStateCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shadingRateImageEnable::VkBool32
@@ -8871,14 +8871,14 @@ struct VkPipelineViewportShadingRateImageStateCreateInfoNV
     pShadingRatePalettes::Ptr{VkShadingRatePaletteNV}
 end
 
-struct VkPhysicalDeviceShadingRateImageFeaturesNV
+mutable struct VkPhysicalDeviceShadingRateImageFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shadingRateImage::VkBool32
     shadingRateCoarseSampleOrder::VkBool32
 end
 
-struct VkPhysicalDeviceShadingRateImagePropertiesNV
+mutable struct VkPhysicalDeviceShadingRateImagePropertiesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shadingRateTexelSize::VkExtent2D
@@ -8899,7 +8899,7 @@ struct VkCoarseSampleOrderCustomNV
     pSampleLocations::Ptr{VkCoarseSampleLocationNV}
 end
 
-struct VkPipelineViewportCoarseSampleOrderStateCreateInfoNV
+mutable struct VkPipelineViewportCoarseSampleOrderStateCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     sampleOrderType::VkCoarseSampleOrderTypeNV
@@ -9118,7 +9118,7 @@ struct VkAccelerationStructureInfoNV
     pGeometries::Ptr{VkGeometryNV}
 end
 
-struct VkAccelerationStructureCreateInfoNV
+mutable struct VkAccelerationStructureCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     compactedSize::VkDeviceSize
@@ -9137,7 +9137,7 @@ end
 
 const VkBindAccelerationStructureMemoryInfoNV = VkBindAccelerationStructureMemoryInfoKHR
 
-struct VkWriteDescriptorSetAccelerationStructureKHR
+mutable struct VkWriteDescriptorSetAccelerationStructureKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     accelerationStructureCount::UInt32
@@ -9146,14 +9146,14 @@ end
 
 const VkWriteDescriptorSetAccelerationStructureNV = VkWriteDescriptorSetAccelerationStructureKHR
 
-struct VkAccelerationStructureMemoryRequirementsInfoNV
+mutable struct VkAccelerationStructureMemoryRequirementsInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     type::VkAccelerationStructureMemoryRequirementsTypeNV
     accelerationStructure::VkAccelerationStructureNV
 end
 
-struct VkPhysicalDeviceRayTracingPropertiesNV
+mutable struct VkPhysicalDeviceRayTracingPropertiesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderGroupHandleSize::UInt32
@@ -9166,13 +9166,13 @@ struct VkPhysicalDeviceRayTracingPropertiesNV
     maxDescriptorSetAccelerationStructures::UInt32
 end
 
-struct VkTransformMatrixKHR
+mutable struct VkTransformMatrixKHR
     matrix::NTuple{3, NTuple{4, Cfloat}}
 end
 
 const VkTransformMatrixNV = VkTransformMatrixKHR
 
-struct VkAabbPositionsKHR
+mutable struct VkAabbPositionsKHR
     minX::Cfloat
     minY::Cfloat
     minZ::Cfloat
@@ -9337,25 +9337,25 @@ function vkCompileDeferredNV(device, pipeline, shader)
     ccall((:vkCompileDeferredNV, libvulkan), VkResult, (VkDevice, VkPipeline, UInt32), device, pipeline, shader)
 end
 
-struct VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV
+mutable struct VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     representativeFragmentTest::VkBool32
 end
 
-struct VkPipelineRepresentativeFragmentTestStateCreateInfoNV
+mutable struct VkPipelineRepresentativeFragmentTestStateCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     representativeFragmentTestEnable::VkBool32
 end
 
-struct VkPhysicalDeviceImageViewImageFormatInfoEXT
+mutable struct VkPhysicalDeviceImageViewImageFormatInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     imageViewType::VkImageViewType
 end
 
-struct VkFilterCubicImageViewImageFormatPropertiesEXT
+mutable struct VkFilterCubicImageViewImageFormatPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     filterCubic::VkBool32
@@ -9370,26 +9370,26 @@ end
     VK_QUEUE_GLOBAL_PRIORITY_MAX_ENUM_EXT = 2147483647
 end
 
-struct VkDeviceQueueGlobalPriorityCreateInfoEXT
+mutable struct VkDeviceQueueGlobalPriorityCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     globalPriority::VkQueueGlobalPriorityEXT
 end
 
-struct VkImportMemoryHostPointerInfoEXT
+mutable struct VkImportMemoryHostPointerInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleType::VkExternalMemoryHandleTypeFlagBits
     pHostPointer::Ptr{Cvoid}
 end
 
-struct VkMemoryHostPointerPropertiesEXT
+mutable struct VkMemoryHostPointerPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     memoryTypeBits::UInt32
 end
 
-struct VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+mutable struct VkPhysicalDeviceExternalMemoryHostPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     minImportedHostPointerAlignment::VkDeviceSize
@@ -9417,7 +9417,7 @@ end
 
 const VkPipelineCompilerControlFlagsAMD = VkFlags
 
-struct VkPipelineCompilerControlCreateInfoAMD
+mutable struct VkPipelineCompilerControlCreateInfoAMD
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     compilerControlFlags::VkPipelineCompilerControlFlagsAMD
@@ -9453,7 +9453,7 @@ function vkGetCalibratedTimestampsEXT(device, timestampCount, pTimestampInfos, p
     ccall((:vkGetCalibratedTimestampsEXT, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkCalibratedTimestampInfoEXT}, Ptr{UInt64}, Ptr{UInt64}), device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation)
 end
 
-struct VkPhysicalDeviceShaderCorePropertiesAMD
+mutable struct VkPhysicalDeviceShaderCorePropertiesAMD
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderEngineCount::UInt32
@@ -9479,13 +9479,13 @@ end
     VK_MEMORY_OVERALLOCATION_BEHAVIOR_MAX_ENUM_AMD = 2147483647
 end
 
-struct VkDeviceMemoryOverallocationCreateInfoAMD
+mutable struct VkDeviceMemoryOverallocationCreateInfoAMD
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     overallocationBehavior::VkMemoryOverallocationBehaviorAMD
 end
 
-struct VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT
+mutable struct VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxVertexAttribDivisor::UInt32
@@ -9496,14 +9496,14 @@ struct VkVertexInputBindingDivisorDescriptionEXT
     divisor::UInt32
 end
 
-struct VkPipelineVertexInputDivisorStateCreateInfoEXT
+mutable struct VkPipelineVertexInputDivisorStateCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     vertexBindingDivisorCount::UInt32
     pVertexBindingDivisors::Ptr{VkVertexInputBindingDivisorDescriptionEXT}
 end
 
-struct VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT
+mutable struct VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     vertexAttributeInstanceRateDivisor::VkBool32
@@ -9524,7 +9524,7 @@ struct VkPipelineCreationFeedbackEXT
     duration::UInt64
 end
 
-struct VkPipelineCreationFeedbackCreateInfoEXT
+mutable struct VkPipelineCreationFeedbackCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pPipelineCreationFeedback::Ptr{VkPipelineCreationFeedbackEXT}
@@ -9532,21 +9532,21 @@ struct VkPipelineCreationFeedbackCreateInfoEXT
     pPipelineStageCreationFeedbacks::Ptr{VkPipelineCreationFeedbackEXT}
 end
 
-struct VkPhysicalDeviceComputeShaderDerivativesFeaturesNV
+mutable struct VkPhysicalDeviceComputeShaderDerivativesFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     computeDerivativeGroupQuads::VkBool32
     computeDerivativeGroupLinear::VkBool32
 end
 
-struct VkPhysicalDeviceMeshShaderFeaturesNV
+mutable struct VkPhysicalDeviceMeshShaderFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     taskShader::VkBool32
     meshShader::VkBool32
 end
 
-struct VkPhysicalDeviceMeshShaderPropertiesNV
+mutable struct VkPhysicalDeviceMeshShaderPropertiesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxDrawMeshTasksCount::UInt32
@@ -9564,7 +9564,7 @@ struct VkPhysicalDeviceMeshShaderPropertiesNV
     meshOutputPerPrimitiveGranularity::UInt32
 end
 
-struct VkDrawMeshTasksIndirectCommandNV
+mutable struct VkDrawMeshTasksIndirectCommandNV
     taskCount::UInt32
     firstTask::UInt32
 end
@@ -9593,26 +9593,26 @@ function vkCmdDrawMeshTasksIndirectCountNV(commandBuffer, buffer, offset, countB
     ccall((:vkCmdDrawMeshTasksIndirectCountNV, libvulkan), Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
-struct VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV
+mutable struct VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     fragmentShaderBarycentric::VkBool32
 end
 
-struct VkPhysicalDeviceShaderImageFootprintFeaturesNV
+mutable struct VkPhysicalDeviceShaderImageFootprintFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     imageFootprint::VkBool32
 end
 
-struct VkPipelineViewportExclusiveScissorStateCreateInfoNV
+mutable struct VkPipelineViewportExclusiveScissorStateCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     exclusiveScissorCount::UInt32
     pExclusiveScissors::Ptr{VkRect2D}
 end
 
-struct VkPhysicalDeviceExclusiveScissorFeaturesNV
+mutable struct VkPhysicalDeviceExclusiveScissorFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     exclusiveScissor::VkBool32
@@ -9626,7 +9626,7 @@ function vkCmdSetExclusiveScissorNV(commandBuffer, firstExclusiveScissor, exclus
     ccall((:vkCmdSetExclusiveScissorNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt32, Ptr{VkRect2D}), commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors)
 end
 
-struct VkQueueFamilyCheckpointPropertiesNV
+mutable struct VkQueueFamilyCheckpointPropertiesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     checkpointExecutionStageMask::VkPipelineStageFlags
@@ -9655,7 +9655,7 @@ function vkGetQueueCheckpointDataNV(queue, pCheckpointDataCount, pCheckpointData
     ccall((:vkGetQueueCheckpointDataNV, libvulkan), Cvoid, (VkQueue, Ptr{UInt32}, Ptr{VkCheckpointDataNV}), queue, pCheckpointDataCount, pCheckpointData)
 end
 
-struct VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL
+mutable struct VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderIntegerFunctions2::VkBool32
@@ -9719,18 +9719,18 @@ function Base.setproperty!(x::Ptr{VkPerformanceValueDataINTEL}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
 end
 
-struct VkPerformanceValueINTEL
+mutable struct VkPerformanceValueINTEL
     type::VkPerformanceValueTypeINTEL
     data::VkPerformanceValueDataINTEL
 end
 
-struct VkInitializePerformanceApiInfoINTEL
+mutable struct VkInitializePerformanceApiInfoINTEL
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pUserData::Ptr{Cvoid}
 end
 
-struct VkQueryPoolPerformanceQueryCreateInfoINTEL
+mutable struct VkQueryPoolPerformanceQueryCreateInfoINTEL
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     performanceCountersSampling::VkQueryPoolSamplingModeINTEL
@@ -9738,19 +9738,19 @@ end
 
 const VkQueryPoolCreateInfoINTEL = VkQueryPoolPerformanceQueryCreateInfoINTEL
 
-struct VkPerformanceMarkerInfoINTEL
+mutable struct VkPerformanceMarkerInfoINTEL
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     marker::UInt64
 end
 
-struct VkPerformanceStreamMarkerInfoINTEL
+mutable struct VkPerformanceStreamMarkerInfoINTEL
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     marker::UInt32
 end
 
-struct VkPerformanceOverrideInfoINTEL
+mutable struct VkPerformanceOverrideInfoINTEL
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     type::VkPerformanceOverrideTypeINTEL
@@ -9758,7 +9758,7 @@ struct VkPerformanceOverrideInfoINTEL
     parameter::UInt64
 end
 
-struct VkPerformanceConfigurationAcquireInfoINTEL
+mutable struct VkPerformanceConfigurationAcquireInfoINTEL
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     type::VkPerformanceConfigurationTypeINTEL
@@ -9836,7 +9836,7 @@ function vkGetPerformanceParameterINTEL(device, parameter, pValue)
     ccall((:vkGetPerformanceParameterINTEL, libvulkan), VkResult, (VkDevice, VkPerformanceParameterTypeINTEL, Ptr{VkPerformanceValueINTEL}), device, parameter, pValue)
 end
 
-struct VkPhysicalDevicePCIBusInfoPropertiesEXT
+mutable struct VkPhysicalDevicePCIBusInfoPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pciDomain::UInt32
@@ -9845,13 +9845,13 @@ struct VkPhysicalDevicePCIBusInfoPropertiesEXT
     pciFunction::UInt32
 end
 
-struct VkDisplayNativeHdrSurfaceCapabilitiesAMD
+mutable struct VkDisplayNativeHdrSurfaceCapabilitiesAMD
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     localDimmingSupport::VkBool32
 end
 
-struct VkSwapchainDisplayNativeHdrCreateInfoAMD
+mutable struct VkSwapchainDisplayNativeHdrCreateInfoAMD
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     localDimmingEnable::VkBool32
@@ -9865,7 +9865,7 @@ function vkSetLocalDimmingAMD(device, swapChain, localDimmingEnable)
     ccall((:vkSetLocalDimmingAMD, libvulkan), Cvoid, (VkDevice, VkSwapchainKHR, VkBool32), device, swapChain, localDimmingEnable)
 end
 
-struct VkPhysicalDeviceFragmentDensityMapFeaturesEXT
+mutable struct VkPhysicalDeviceFragmentDensityMapFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     fragmentDensityMap::VkBool32
@@ -9873,7 +9873,7 @@ struct VkPhysicalDeviceFragmentDensityMapFeaturesEXT
     fragmentDensityMapNonSubsampledImages::VkBool32
 end
 
-struct VkPhysicalDeviceFragmentDensityMapPropertiesEXT
+mutable struct VkPhysicalDeviceFragmentDensityMapPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     minFragmentDensityTexelSize::VkExtent2D
@@ -9881,7 +9881,7 @@ struct VkPhysicalDeviceFragmentDensityMapPropertiesEXT
     fragmentDensityInvocations::VkBool32
 end
 
-struct VkRenderPassFragmentDensityMapCreateInfoEXT
+mutable struct VkRenderPassFragmentDensityMapCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     fragmentDensityMapAttachment::VkAttachmentReference
@@ -9889,14 +9889,14 @@ end
 
 const VkPhysicalDeviceScalarBlockLayoutFeaturesEXT = VkPhysicalDeviceScalarBlockLayoutFeatures
 
-struct VkPhysicalDeviceSubgroupSizeControlFeaturesEXT
+mutable struct VkPhysicalDeviceSubgroupSizeControlFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     subgroupSizeControl::VkBool32
     computeFullSubgroups::VkBool32
 end
 
-struct VkPhysicalDeviceSubgroupSizeControlPropertiesEXT
+mutable struct VkPhysicalDeviceSubgroupSizeControlPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     minSubgroupSize::UInt32
@@ -9905,7 +9905,7 @@ struct VkPhysicalDeviceSubgroupSizeControlPropertiesEXT
     requiredSubgroupSizeStages::VkShaderStageFlags
 end
 
-struct VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT
+mutable struct VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     requiredSubgroupSize::UInt32
@@ -9917,45 +9917,45 @@ end
 
 const VkShaderCorePropertiesFlagsAMD = VkFlags
 
-struct VkPhysicalDeviceShaderCoreProperties2AMD
+mutable struct VkPhysicalDeviceShaderCoreProperties2AMD
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderCoreFeatures::VkShaderCorePropertiesFlagsAMD
     activeComputeUnitCount::UInt32
 end
 
-struct VkPhysicalDeviceCoherentMemoryFeaturesAMD
+mutable struct VkPhysicalDeviceCoherentMemoryFeaturesAMD
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     deviceCoherentMemory::VkBool32
 end
 
-struct VkPhysicalDeviceMemoryBudgetPropertiesEXT
+mutable struct VkPhysicalDeviceMemoryBudgetPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     heapBudget::NTuple{16, VkDeviceSize}
     heapUsage::NTuple{16, VkDeviceSize}
 end
 
-struct VkPhysicalDeviceMemoryPriorityFeaturesEXT
+mutable struct VkPhysicalDeviceMemoryPriorityFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     memoryPriority::VkBool32
 end
 
-struct VkMemoryPriorityAllocateInfoEXT
+mutable struct VkMemoryPriorityAllocateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     priority::Cfloat
 end
 
-struct VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV
+mutable struct VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     dedicatedAllocationImageAliasing::VkBool32
 end
 
-struct VkPhysicalDeviceBufferDeviceAddressFeaturesEXT
+mutable struct VkPhysicalDeviceBufferDeviceAddressFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     bufferDeviceAddress::VkBool32
@@ -9967,7 +9967,7 @@ const VkPhysicalDeviceBufferAddressFeaturesEXT = VkPhysicalDeviceBufferDeviceAdd
 
 const VkBufferDeviceAddressInfoEXT = VkBufferDeviceAddressInfo
 
-struct VkBufferDeviceAddressCreateInfoEXT
+mutable struct VkBufferDeviceAddressCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     deviceAddress::VkDeviceAddress
@@ -10034,7 +10034,7 @@ end
     VK_VALIDATION_FEATURE_DISABLE_MAX_ENUM_EXT = 2147483647
 end
 
-struct VkValidationFeaturesEXT
+mutable struct VkValidationFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     enabledValidationFeatureCount::UInt32
@@ -10079,14 +10079,14 @@ struct VkCooperativeMatrixPropertiesNV
     scope::VkScopeNV
 end
 
-struct VkPhysicalDeviceCooperativeMatrixFeaturesNV
+mutable struct VkPhysicalDeviceCooperativeMatrixFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     cooperativeMatrix::VkBool32
     cooperativeMatrixRobustBufferAccess::VkBool32
 end
 
-struct VkPhysicalDeviceCooperativeMatrixPropertiesNV
+mutable struct VkPhysicalDeviceCooperativeMatrixPropertiesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     cooperativeMatrixSupportedStages::VkShaderStageFlags
@@ -10108,13 +10108,13 @@ end
 
 const VkPipelineCoverageReductionStateCreateFlagsNV = VkFlags
 
-struct VkPhysicalDeviceCoverageReductionModeFeaturesNV
+mutable struct VkPhysicalDeviceCoverageReductionModeFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     coverageReductionMode::VkBool32
 end
 
-struct VkPipelineCoverageReductionStateCreateInfoNV
+mutable struct VkPipelineCoverageReductionStateCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkPipelineCoverageReductionStateCreateFlagsNV
@@ -10138,7 +10138,7 @@ function vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV(physi
     ccall((:vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkFramebufferMixedSamplesCombinationNV}), physicalDevice, pCombinationCount, pCombinations)
 end
 
-struct VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT
+mutable struct VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     fragmentShaderSampleInterlock::VkBool32
@@ -10146,7 +10146,7 @@ struct VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT
     fragmentShaderShadingRateInterlock::VkBool32
 end
 
-struct VkPhysicalDeviceYcbcrImageArraysFeaturesEXT
+mutable struct VkPhysicalDeviceYcbcrImageArraysFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     ycbcrImageArrays::VkBool32
@@ -10154,7 +10154,7 @@ end
 
 const VkHeadlessSurfaceCreateFlagsEXT = VkFlags
 
-struct VkHeadlessSurfaceCreateInfoEXT
+mutable struct VkHeadlessSurfaceCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkHeadlessSurfaceCreateFlagsEXT
@@ -10176,7 +10176,7 @@ end
     VK_LINE_RASTERIZATION_MODE_MAX_ENUM_EXT = 2147483647
 end
 
-struct VkPhysicalDeviceLineRasterizationFeaturesEXT
+mutable struct VkPhysicalDeviceLineRasterizationFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     rectangularLines::VkBool32
@@ -10187,13 +10187,13 @@ struct VkPhysicalDeviceLineRasterizationFeaturesEXT
     stippledSmoothLines::VkBool32
 end
 
-struct VkPhysicalDeviceLineRasterizationPropertiesEXT
+mutable struct VkPhysicalDeviceLineRasterizationPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     lineSubPixelPrecisionBits::UInt32
 end
 
-struct VkPipelineRasterizationLineStateCreateInfoEXT
+mutable struct VkPipelineRasterizationLineStateCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     lineRasterizationMode::VkLineRasterizationModeEXT
@@ -10210,7 +10210,7 @@ function vkCmdSetLineStippleEXT(commandBuffer, lineStippleFactor, lineStipplePat
     ccall((:vkCmdSetLineStippleEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, UInt16), commandBuffer, lineStippleFactor, lineStipplePattern)
 end
 
-struct VkPhysicalDeviceShaderAtomicFloatFeaturesEXT
+mutable struct VkPhysicalDeviceShaderAtomicFloatFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderBufferFloat32Atomics::VkBool32
@@ -10237,13 +10237,13 @@ function vkResetQueryPoolEXT(device, queryPool, firstQuery, queryCount)
     ccall((:vkResetQueryPoolEXT, libvulkan), Cvoid, (VkDevice, VkQueryPool, UInt32, UInt32), device, queryPool, firstQuery, queryCount)
 end
 
-struct VkPhysicalDeviceIndexTypeUint8FeaturesEXT
+mutable struct VkPhysicalDeviceIndexTypeUint8FeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     indexTypeUint8::VkBool32
 end
 
-struct VkPhysicalDeviceExtendedDynamicStateFeaturesEXT
+mutable struct VkPhysicalDeviceExtendedDynamicStateFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     extendedDynamicState::VkBool32
@@ -10345,7 +10345,7 @@ function vkCmdSetStencilOpEXT(commandBuffer, faceMask, failOp, passOp, depthFail
     ccall((:vkCmdSetStencilOpEXT, libvulkan), Cvoid, (VkCommandBuffer, VkStencilFaceFlags, VkStencilOp, VkStencilOp, VkStencilOp, VkCompareOp), commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp)
 end
 
-struct VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT
+mutable struct VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderDemoteToHelperInvocation::VkBool32
@@ -10383,7 +10383,7 @@ end
 
 const VkIndirectCommandsLayoutUsageFlagsNV = VkFlags
 
-struct VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV
+mutable struct VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxGraphicsShaderGroupCount::UInt32
@@ -10397,7 +10397,7 @@ struct VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV
     minIndirectCommandsBufferOffsetAlignment::UInt32
 end
 
-struct VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV
+mutable struct VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     deviceGeneratedCommands::VkBool32
@@ -10412,7 +10412,7 @@ struct VkGraphicsShaderGroupCreateInfoNV
     pTessellationState::Ptr{VkPipelineTessellationStateCreateInfo}
 end
 
-struct VkGraphicsPipelineShaderGroupsCreateInfoNV
+mutable struct VkGraphicsPipelineShaderGroupsCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     groupCount::UInt32
@@ -10421,23 +10421,23 @@ struct VkGraphicsPipelineShaderGroupsCreateInfoNV
     pPipelines::Ptr{VkPipeline}
 end
 
-struct VkBindShaderGroupIndirectCommandNV
+mutable struct VkBindShaderGroupIndirectCommandNV
     groupIndex::UInt32
 end
 
-struct VkBindIndexBufferIndirectCommandNV
+mutable struct VkBindIndexBufferIndirectCommandNV
     bufferAddress::VkDeviceAddress
     size::UInt32
     indexType::VkIndexType
 end
 
-struct VkBindVertexBufferIndirectCommandNV
+mutable struct VkBindVertexBufferIndirectCommandNV
     bufferAddress::VkDeviceAddress
     size::UInt32
     stride::UInt32
 end
 
-struct VkSetStateFlagsIndirectCommandNV
+mutable struct VkSetStateFlagsIndirectCommandNV
     data::UInt32
 end
 
@@ -10464,7 +10464,7 @@ struct VkIndirectCommandsLayoutTokenNV
     pIndexTypeValues::Ptr{UInt32}
 end
 
-struct VkIndirectCommandsLayoutCreateInfoNV
+mutable struct VkIndirectCommandsLayoutCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkIndirectCommandsLayoutUsageFlagsNV
@@ -10475,7 +10475,7 @@ struct VkIndirectCommandsLayoutCreateInfoNV
     pStreamStrides::Ptr{UInt32}
 end
 
-struct VkGeneratedCommandsInfoNV
+mutable struct VkGeneratedCommandsInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pipelineBindPoint::VkPipelineBindPoint
@@ -10493,7 +10493,7 @@ struct VkGeneratedCommandsInfoNV
     sequencesIndexOffset::VkDeviceSize
 end
 
-struct VkGeneratedCommandsMemoryRequirementsInfoNV
+mutable struct VkGeneratedCommandsMemoryRequirementsInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pipelineBindPoint::VkPipelineBindPoint
@@ -10550,13 +10550,13 @@ function vkDestroyIndirectCommandsLayoutNV(device, indirectCommandsLayout, pAllo
     ccall((:vkDestroyIndirectCommandsLayoutNV, libvulkan), Cvoid, (VkDevice, VkIndirectCommandsLayoutNV, Ptr{VkAllocationCallbacks}), device, indirectCommandsLayout, pAllocator)
 end
 
-struct VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT
+mutable struct VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     texelBufferAlignment::VkBool32
 end
 
-struct VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT
+mutable struct VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     storageTexelBufferOffsetAlignmentBytes::VkDeviceSize
@@ -10565,20 +10565,20 @@ struct VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT
     uniformTexelBufferOffsetSingleTexelAlignment::VkBool32
 end
 
-struct VkRenderPassTransformBeginInfoQCOM
+mutable struct VkRenderPassTransformBeginInfoQCOM
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     transform::VkSurfaceTransformFlagBitsKHR
 end
 
-struct VkCommandBufferInheritanceRenderPassTransformInfoQCOM
+mutable struct VkCommandBufferInheritanceRenderPassTransformInfoQCOM
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     transform::VkSurfaceTransformFlagBitsKHR
     renderArea::VkRect2D
 end
 
-struct VkPhysicalDeviceRobustness2FeaturesEXT
+mutable struct VkPhysicalDeviceRobustness2FeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     robustBufferAccess2::VkBool32
@@ -10586,27 +10586,27 @@ struct VkPhysicalDeviceRobustness2FeaturesEXT
     nullDescriptor::VkBool32
 end
 
-struct VkPhysicalDeviceRobustness2PropertiesEXT
+mutable struct VkPhysicalDeviceRobustness2PropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     robustStorageBufferAccessSizeAlignment::VkDeviceSize
     robustUniformBufferAccessSizeAlignment::VkDeviceSize
 end
 
-struct VkSamplerCustomBorderColorCreateInfoEXT
+mutable struct VkSamplerCustomBorderColorCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     customBorderColor::VkClearColorValue
     format::VkFormat
 end
 
-struct VkPhysicalDeviceCustomBorderColorPropertiesEXT
+mutable struct VkPhysicalDeviceCustomBorderColorPropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     maxCustomBorderColorSamplers::UInt32
 end
 
-struct VkPhysicalDeviceCustomBorderColorFeaturesEXT
+mutable struct VkPhysicalDeviceCustomBorderColorFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     customBorderColors::VkBool32
@@ -10623,19 +10623,19 @@ end
 
 const VkPrivateDataSlotCreateFlagsEXT = VkFlags
 
-struct VkPhysicalDevicePrivateDataFeaturesEXT
+mutable struct VkPhysicalDevicePrivateDataFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     privateData::VkBool32
 end
 
-struct VkDevicePrivateDataCreateInfoEXT
+mutable struct VkDevicePrivateDataCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     privateDataSlotRequestCount::UInt32
 end
 
-struct VkPrivateDataSlotCreateInfoEXT
+mutable struct VkPrivateDataSlotCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkPrivateDataSlotCreateFlagsEXT
@@ -10673,7 +10673,7 @@ function vkGetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, 
     ccall((:vkGetPrivateDataEXT, libvulkan), Cvoid, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, Ptr{UInt64}), device, objectType, objectHandle, privateDataSlot, pData)
 end
 
-struct VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT
+mutable struct VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pipelineCreationCacheControl::VkBool32
@@ -10688,25 +10688,25 @@ end
 
 const VkDeviceDiagnosticsConfigFlagsNV = VkFlags
 
-struct VkPhysicalDeviceDiagnosticsConfigFeaturesNV
+mutable struct VkPhysicalDeviceDiagnosticsConfigFeaturesNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     diagnosticsConfig::VkBool32
 end
 
-struct VkDeviceDiagnosticsConfigCreateInfoNV
+mutable struct VkDeviceDiagnosticsConfigCreateInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkDeviceDiagnosticsConfigFlagsNV
 end
 
-struct VkPhysicalDeviceFragmentDensityMap2FeaturesEXT
+mutable struct VkPhysicalDeviceFragmentDensityMap2FeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     fragmentDensityMapDeferred::VkBool32
 end
 
-struct VkPhysicalDeviceFragmentDensityMap2PropertiesEXT
+mutable struct VkPhysicalDeviceFragmentDensityMap2PropertiesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     subsampledLoads::VkBool32
@@ -10715,13 +10715,13 @@ struct VkPhysicalDeviceFragmentDensityMap2PropertiesEXT
     maxDescriptorSetSubsampledSamplers::UInt32
 end
 
-struct VkPhysicalDeviceImageRobustnessFeaturesEXT
+mutable struct VkPhysicalDeviceImageRobustnessFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     robustImageAccess::VkBool32
 end
 
-struct VkPhysicalDevice4444FormatsFeaturesEXT
+mutable struct VkPhysicalDevice4444FormatsFeaturesEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     formatA4R4G4B4::VkBool32
@@ -10732,7 +10732,7 @@ const VkAndroidSurfaceCreateFlagsKHR = VkFlags
 
 const ANativeWindow = Cvoid
 
-struct VkAndroidSurfaceCreateInfoKHR
+mutable struct VkAndroidSurfaceCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkAndroidSurfaceCreateFlagsKHR
@@ -10747,20 +10747,20 @@ function vkCreateAndroidSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
     ccall((:vkCreateAndroidSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkAndroidSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
-struct VkAndroidHardwareBufferUsageANDROID
+mutable struct VkAndroidHardwareBufferUsageANDROID
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     androidHardwareBufferUsage::UInt64
 end
 
-struct VkAndroidHardwareBufferPropertiesANDROID
+mutable struct VkAndroidHardwareBufferPropertiesANDROID
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     allocationSize::VkDeviceSize
     memoryTypeBits::UInt32
 end
 
-struct VkAndroidHardwareBufferFormatPropertiesANDROID
+mutable struct VkAndroidHardwareBufferFormatPropertiesANDROID
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     format::VkFormat
@@ -10775,19 +10775,19 @@ end
 
 const AHardwareBuffer = Cvoid
 
-struct VkImportAndroidHardwareBufferInfoANDROID
+mutable struct VkImportAndroidHardwareBufferInfoANDROID
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     buffer::Ptr{AHardwareBuffer}
 end
 
-struct VkMemoryGetAndroidHardwareBufferInfoANDROID
+mutable struct VkMemoryGetAndroidHardwareBufferInfoANDROID
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     memory::VkDeviceMemory
 end
 
-struct VkExternalFormatANDROID
+mutable struct VkExternalFormatANDROID
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     externalFormat::UInt64
@@ -10811,7 +10811,7 @@ end
 
 const VkImagePipeSurfaceCreateFlagsFUCHSIA = VkFlags
 
-struct VkImagePipeSurfaceCreateInfoFUCHSIA
+mutable struct VkImagePipeSurfaceCreateInfoFUCHSIA
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkImagePipeSurfaceCreateFlagsFUCHSIA
@@ -10828,7 +10828,7 @@ end
 
 const VkIOSSurfaceCreateFlagsMVK = VkFlags
 
-struct VkIOSSurfaceCreateInfoMVK
+mutable struct VkIOSSurfaceCreateInfoMVK
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkIOSSurfaceCreateFlagsMVK
@@ -10845,7 +10845,7 @@ end
 
 const VkMacOSSurfaceCreateFlagsMVK = VkFlags
 
-struct VkMacOSSurfaceCreateInfoMVK
+mutable struct VkMacOSSurfaceCreateInfoMVK
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkMacOSSurfaceCreateFlagsMVK
@@ -10864,7 +10864,7 @@ const CAMetalLayer = Cvoid
 
 const VkMetalSurfaceCreateFlagsEXT = VkFlags
 
-struct VkMetalSurfaceCreateInfoEXT
+mutable struct VkMetalSurfaceCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkMetalSurfaceCreateFlagsEXT
@@ -10881,7 +10881,7 @@ end
 
 const VkViSurfaceCreateFlagsNN = VkFlags
 
-struct VkViSurfaceCreateInfoNN
+mutable struct VkViSurfaceCreateInfoNN
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkViSurfaceCreateFlagsNN
@@ -10902,7 +10902,7 @@ const wl_display = Cvoid
 
 const wl_surface = Cvoid
 
-struct VkWaylandSurfaceCreateInfoKHR
+mutable struct VkWaylandSurfaceCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkWaylandSurfaceCreateFlagsKHR
@@ -10928,7 +10928,7 @@ end
 
 const VkWin32SurfaceCreateFlagsKHR = VkFlags
 
-struct VkWin32SurfaceCreateInfoKHR
+mutable struct VkWin32SurfaceCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkWin32SurfaceCreateFlagsKHR
@@ -10952,7 +10952,7 @@ function vkGetPhysicalDeviceWin32PresentationSupportKHR(physicalDevice, queueFam
     ccall((:vkGetPhysicalDeviceWin32PresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32), physicalDevice, queueFamilyIndex)
 end
 
-struct VkImportMemoryWin32HandleInfoKHR
+mutable struct VkImportMemoryWin32HandleInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleType::VkExternalMemoryHandleTypeFlagBits
@@ -10960,7 +10960,7 @@ struct VkImportMemoryWin32HandleInfoKHR
     name::Cint
 end
 
-struct VkExportMemoryWin32HandleInfoKHR
+mutable struct VkExportMemoryWin32HandleInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pAttributes::Ptr{Cint}
@@ -10974,7 +10974,7 @@ struct VkMemoryWin32HandlePropertiesKHR
     memoryTypeBits::UInt32
 end
 
-struct VkMemoryGetWin32HandleInfoKHR
+mutable struct VkMemoryGetWin32HandleInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     memory::VkDeviceMemory
@@ -10997,7 +10997,7 @@ function vkGetMemoryWin32HandlePropertiesKHR(device, handleType, handle, pMemory
     ccall((:vkGetMemoryWin32HandlePropertiesKHR, libvulkan), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryWin32HandlePropertiesKHR}), device, handleType, handle, pMemoryWin32HandleProperties)
 end
 
-struct VkWin32KeyedMutexAcquireReleaseInfoKHR
+mutable struct VkWin32KeyedMutexAcquireReleaseInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     acquireCount::UInt32
@@ -11009,7 +11009,7 @@ struct VkWin32KeyedMutexAcquireReleaseInfoKHR
     pReleaseKeys::Ptr{UInt64}
 end
 
-struct VkImportSemaphoreWin32HandleInfoKHR
+mutable struct VkImportSemaphoreWin32HandleInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     semaphore::VkSemaphore
@@ -11019,7 +11019,7 @@ struct VkImportSemaphoreWin32HandleInfoKHR
     name::Cint
 end
 
-struct VkExportSemaphoreWin32HandleInfoKHR
+mutable struct VkExportSemaphoreWin32HandleInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pAttributes::Ptr{Cint}
@@ -11027,7 +11027,7 @@ struct VkExportSemaphoreWin32HandleInfoKHR
     name::Cint
 end
 
-struct VkD3D12FenceSubmitInfoKHR
+mutable struct VkD3D12FenceSubmitInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     waitSemaphoreValuesCount::UInt32
@@ -11036,7 +11036,7 @@ struct VkD3D12FenceSubmitInfoKHR
     pSignalSemaphoreValues::Ptr{UInt64}
 end
 
-struct VkSemaphoreGetWin32HandleInfoKHR
+mutable struct VkSemaphoreGetWin32HandleInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     semaphore::VkSemaphore
@@ -11059,7 +11059,7 @@ function vkGetSemaphoreWin32HandleKHR(device, pGetWin32HandleInfo, pHandle)
     ccall((:vkGetSemaphoreWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
 end
 
-struct VkImportFenceWin32HandleInfoKHR
+mutable struct VkImportFenceWin32HandleInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     fence::VkFence
@@ -11069,7 +11069,7 @@ struct VkImportFenceWin32HandleInfoKHR
     name::Cint
 end
 
-struct VkExportFenceWin32HandleInfoKHR
+mutable struct VkExportFenceWin32HandleInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pAttributes::Ptr{Cint}
@@ -11077,7 +11077,7 @@ struct VkExportFenceWin32HandleInfoKHR
     name::Cint
 end
 
-struct VkFenceGetWin32HandleInfoKHR
+mutable struct VkFenceGetWin32HandleInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     fence::VkFence
@@ -11100,14 +11100,14 @@ function vkGetFenceWin32HandleKHR(device, pGetWin32HandleInfo, pHandle)
     ccall((:vkGetFenceWin32HandleKHR, libvulkan), VkResult, (VkDevice, Ptr{VkFenceGetWin32HandleInfoKHR}, Ptr{Cint}), device, pGetWin32HandleInfo, pHandle)
 end
 
-struct VkImportMemoryWin32HandleInfoNV
+mutable struct VkImportMemoryWin32HandleInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     handleType::VkExternalMemoryHandleTypeFlagsNV
     handle::Cint
 end
 
-struct VkExportMemoryWin32HandleInfoNV
+mutable struct VkExportMemoryWin32HandleInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     pAttributes::Ptr{Cint}
@@ -11122,7 +11122,7 @@ function vkGetMemoryWin32HandleNV(device, memory, handleType, pHandle)
     ccall((:vkGetMemoryWin32HandleNV, libvulkan), VkResult, (VkDevice, VkDeviceMemory, VkExternalMemoryHandleTypeFlagsNV, Ptr{Cint}), device, memory, handleType, pHandle)
 end
 
-struct VkWin32KeyedMutexAcquireReleaseInfoNV
+mutable struct VkWin32KeyedMutexAcquireReleaseInfoNV
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     acquireCount::UInt32
@@ -11142,19 +11142,19 @@ end
     VK_FULL_SCREEN_EXCLUSIVE_MAX_ENUM_EXT = 2147483647
 end
 
-struct VkSurfaceFullScreenExclusiveInfoEXT
+mutable struct VkSurfaceFullScreenExclusiveInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     fullScreenExclusive::VkFullScreenExclusiveEXT
 end
 
-struct VkSurfaceCapabilitiesFullScreenExclusiveEXT
+mutable struct VkSurfaceCapabilitiesFullScreenExclusiveEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     fullScreenExclusiveSupported::VkBool32
 end
 
-struct VkSurfaceFullScreenExclusiveWin32InfoEXT
+mutable struct VkSurfaceFullScreenExclusiveWin32InfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     hmonitor::Cint
@@ -11194,7 +11194,7 @@ end
 
 const VkXcbSurfaceCreateFlagsKHR = VkFlags
 
-struct VkXcbSurfaceCreateInfoKHR
+mutable struct VkXcbSurfaceCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkXcbSurfaceCreateFlagsKHR
@@ -11220,7 +11220,7 @@ end
 
 const VkXlibSurfaceCreateFlagsKHR = VkFlags
 
-struct VkXlibSurfaceCreateInfoKHR
+mutable struct VkXlibSurfaceCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkXlibSurfaceCreateFlagsKHR
@@ -11246,7 +11246,7 @@ end
 
 const VkDirectFBSurfaceCreateFlagsEXT = VkFlags
 
-struct VkDirectFBSurfaceCreateInfoEXT
+mutable struct VkDirectFBSurfaceCreateInfoEXT
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkDirectFBSurfaceCreateFlagsEXT
@@ -11288,7 +11288,7 @@ end
 
 const VkStreamDescriptorSurfaceCreateFlagsGGP = VkFlags
 
-struct VkStreamDescriptorSurfaceCreateInfoGGP
+mutable struct VkStreamDescriptorSurfaceCreateInfoGGP
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     flags::VkStreamDescriptorSurfaceCreateFlagsGGP
@@ -11303,7 +11303,7 @@ function vkCreateStreamDescriptorSurfaceGGP(instance, pCreateInfo, pAllocator, p
     ccall((:vkCreateStreamDescriptorSurfaceGGP, libvulkan), VkResult, (VkInstance, Ptr{VkStreamDescriptorSurfaceCreateInfoGGP}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
-struct VkPresentFrameTokenGGP
+mutable struct VkPresentFrameTokenGGP
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     frameToken::Cint
@@ -11313,7 +11313,7 @@ const VkDeferredOperationKHR_T = Cvoid
 
 const VkDeferredOperationKHR = Ptr{VkDeferredOperationKHR_T}
 
-struct VkDeferredOperationInfoKHR
+mutable struct VkDeferredOperationInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     operationHandle::VkDeferredOperationKHR
@@ -11455,7 +11455,7 @@ struct VkRayTracingPipelineCreateInfoKHR
     basePipelineIndex::Int32
 end
 
-struct VkAccelerationStructureGeometryTrianglesDataKHR
+mutable struct VkAccelerationStructureGeometryTrianglesDataKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     vertexFormat::VkFormat
@@ -11466,14 +11466,14 @@ struct VkAccelerationStructureGeometryTrianglesDataKHR
     transformData::VkDeviceOrHostAddressConstKHR
 end
 
-struct VkAccelerationStructureGeometryAabbsDataKHR
+mutable struct VkAccelerationStructureGeometryAabbsDataKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     data::VkDeviceOrHostAddressConstKHR
     stride::VkDeviceSize
 end
 
-struct VkAccelerationStructureGeometryInstancesDataKHR
+mutable struct VkAccelerationStructureGeometryInstancesDataKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     arrayOfPointers::VkBool32
@@ -11534,7 +11534,7 @@ struct VkAccelerationStructureCreateGeometryTypeInfoKHR
     allowsTransforms::VkBool32
 end
 
-struct VkAccelerationStructureCreateInfoKHR
+mutable struct VkAccelerationStructureCreateInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     compactedSize::VkDeviceSize
@@ -11545,7 +11545,7 @@ struct VkAccelerationStructureCreateInfoKHR
     deviceAddress::VkDeviceAddress
 end
 
-struct VkAccelerationStructureMemoryRequirementsInfoKHR
+mutable struct VkAccelerationStructureMemoryRequirementsInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     type::VkAccelerationStructureMemoryRequirementsTypeKHR
@@ -11553,7 +11553,7 @@ struct VkAccelerationStructureMemoryRequirementsInfoKHR
     accelerationStructure::VkAccelerationStructureKHR
 end
 
-struct VkPhysicalDeviceRayTracingFeaturesKHR
+mutable struct VkPhysicalDeviceRayTracingFeaturesKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     rayTracing::VkBool32
@@ -11567,7 +11567,7 @@ struct VkPhysicalDeviceRayTracingFeaturesKHR
     rayTracingPrimitiveCulling::VkBool32
 end
 
-struct VkPhysicalDeviceRayTracingPropertiesKHR
+mutable struct VkPhysicalDeviceRayTracingPropertiesKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     shaderGroupHandleSize::UInt32
@@ -11581,13 +11581,13 @@ struct VkPhysicalDeviceRayTracingPropertiesKHR
     shaderGroupHandleCaptureReplaySize::UInt32
 end
 
-struct VkAccelerationStructureDeviceAddressInfoKHR
+mutable struct VkAccelerationStructureDeviceAddressInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     accelerationStructure::VkAccelerationStructureKHR
 end
 
-struct VkAccelerationStructureVersionKHR
+mutable struct VkAccelerationStructureVersionKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     versionData::Ptr{UInt8}
@@ -11600,13 +11600,13 @@ struct VkStridedBufferRegionKHR
     size::VkDeviceSize
 end
 
-struct VkTraceRaysIndirectCommandKHR
+mutable struct VkTraceRaysIndirectCommandKHR
     width::UInt32
     height::UInt32
     depth::UInt32
 end
 
-struct VkCopyAccelerationStructureToMemoryInfoKHR
+mutable struct VkCopyAccelerationStructureToMemoryInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     src::VkAccelerationStructureKHR
@@ -11614,7 +11614,7 @@ struct VkCopyAccelerationStructureToMemoryInfoKHR
     mode::VkCopyAccelerationStructureModeKHR
 end
 
-struct VkCopyMemoryToAccelerationStructureInfoKHR
+mutable struct VkCopyMemoryToAccelerationStructureInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     src::VkDeviceOrHostAddressConstKHR
@@ -11622,7 +11622,7 @@ struct VkCopyMemoryToAccelerationStructureInfoKHR
     mode::VkCopyAccelerationStructureModeKHR
 end
 
-struct VkCopyAccelerationStructureInfoKHR
+mutable struct VkCopyAccelerationStructureInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
     src::VkAccelerationStructureKHR
