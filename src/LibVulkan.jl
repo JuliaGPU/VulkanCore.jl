@@ -73,9 +73,13 @@ const zx_handle_t = UInt32
 # GGP C
 const GgpStreamDescriptor = UInt32
 const GgpFrameToken = UInt32
+# QNX
+const _screen_context = Ptr{Cvoid}
+const _screen_window = Ptr{Cvoid}
 
 # TODO: Clang.jl should support this kinda macros
 VK_MAKE_VERSION(major, minor, patch) = ( Cuint(major) << 22 ) | ( Cuint(minor) << 12 ) | patch
+VK_MAKE_VIDEO_STD_VERSION(major, minor, patch) = VK_MAKE_VERSION(major, minor, patch)
 
 VK_VERSION_MAJOR(version) = Cuint(version) >> 22
 VK_VERSION_MINOR(version) = (Cuint(version) >> 12) & 0x3ff
@@ -85,6 +89,9 @@ const VK_API_VERSION_1_0 = VK_MAKE_VERSION(1, 0, 0)
 const VK_API_VERSION_1_1 = VK_MAKE_VERSION(1, 1, 0)
 const VK_API_VERSION_1_2 = VK_MAKE_VERSION(1, 2, 0)
 
+const VK_STD_VULKAN_VIDEO_CODEC_H264_API_VERSION_0_9 = VK_MAKE_VIDEO_STD_VERSION(0, 9, 0)
+const VK_STD_VULKAN_VIDEO_CODEC_H265_API_VERSION_0_5 = VK_MAKE_VIDEO_STD_VERSION(0, 5, 0)
+
 include(joinpath(@__DIR__, "..", "gen", "vk_common.jl"))
 include(joinpath(@__DIR__, "..", "gen", "vk_api.jl"))
 
@@ -92,7 +99,7 @@ const VK_HEADER_VERSION_COMPLETE = VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION)
 
 # export everything
 foreach(names(@__MODULE__, all=true)) do s
-   if startswith(string(s), "VK_") || startswith(string(s), "Vk") || startswith(string(s), "vk")
+   if startswith(string(s), "VK_") || startswith(string(s), "Vk") || startswith(string(s), "vk") || startswith(string(s), "StdVideo")
        @eval export $s
    end
 end
