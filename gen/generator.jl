@@ -34,7 +34,7 @@ output_file=api_file,
             common_file=common_file,
             clang_includes=vcat(VK_INCLUDE_ROOT, CLANG_INCLUDE),
             clang_args="-D" .* VK_EXTENSIONS,
-            header_wrapped=(root, current) -> (startswith(current, VK_INCLUDE_ROOT) || startswith(current, "vk/video") ? true : false),
+            header_wrapped=(root, current) -> startswith(current, VK_INCLUDE_ROOT),
             header_library=x -> "libvulkan",
             clang_diagnostics=true,
             )
