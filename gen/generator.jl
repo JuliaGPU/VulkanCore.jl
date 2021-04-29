@@ -4,8 +4,8 @@ import Vulkan_Headers_jll
 
 
 # get include directory & vulkan.h
-VK_INCLUDE = joinpath(Vulkan_Headers_jll.artifact_dir, "include", "vulkan")
-VK_HEADERS = [joinpath(VK_INCLUDE, "vulkan.h")]
+VK_INCLUDE_ROOT = joinpath(Vulkan_Headers_jll.artifact_dir, "include")
+VK_HEADERS = [joinpath(VK_INCLUDE_ROOT, "vulkan", "vulkan.h")]
 
 # include all extensions
 VK_EXTENSIONS = [
@@ -22,6 +22,7 @@ VK_EXTENSIONS = [
     "VK_USE_PLATFORM_XLIB_KHR",
     "VK_USE_PLATFORM_XLIB_XRANDR_EXT",
     "VK_USE_PLATFORM_GGP",
+    "VK_USE_PLATFORM_SCREEN_QNX",
     "VK_ENABLE_BETA_EXTENSIONS",
     ]
 
@@ -31,9 +32,9 @@ api_file = joinpath(@__DIR__, "vk_api.jl")
 wc = init(; headers=VK_HEADERS,
 output_file=api_file,
             common_file=common_file,
-            clang_includes=vcat(VK_INCLUDE, CLANG_INCLUDE),
+            clang_includes=vcat(VK_INCLUDE_ROOT, CLANG_INCLUDE),
             clang_args="-D" .* VK_EXTENSIONS,
-            header_wrapped=(root, current) -> (startswith(current, VK_INCLUDE) ? true : false),
+            header_wrapped=(root, current) -> startswith(current, VK_INCLUDE_ROOT),
             header_library=x -> "libvulkan",
             clang_diagnostics=true,
             )

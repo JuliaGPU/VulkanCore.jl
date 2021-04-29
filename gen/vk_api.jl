@@ -1,5 +1,5 @@
-# Julia wrapper for header: vulkan.h
-# Automatically generated using Clang.jl
+# Julia wrapper for header: /home/belmant/.julia/artifacts/2172e04648d8f007f61b8348c3172efb89619c1c/include/vulkan/vulkan.h
+# Automatically generated using Clang.jl wrap_c
 
 
 function vkCreateInstance(pCreateInfo, pAllocator, pInstance)
@@ -395,7 +395,7 @@ function vkCmdSetDepthBias(commandBuffer, depthBiasConstantFactor, depthBiasClam
 end
 
 function vkCmdSetBlendConstants(commandBuffer, blendConstants)
-    ccall((:vkCmdSetBlendConstants, libvulkan), Cvoid, (VkCommandBuffer, Ptr{Cfloat}), commandBuffer, blendConstants)
+    ccall((:vkCmdSetBlendConstants, libvulkan), Cvoid, (VkCommandBuffer, NTuple{4, Cfloat}), commandBuffer, blendConstants)
 end
 
 function vkCmdSetDepthBounds(commandBuffer, minDepthBounds, maxDepthBounds)
@@ -1018,6 +1018,14 @@ function vkSignalSemaphoreKHR(device, pSignalInfo)
     ccall((:vkSignalSemaphoreKHR, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreSignalInfo}), device, pSignalInfo)
 end
 
+function vkGetPhysicalDeviceFragmentShadingRatesKHR(physicalDevice, pFragmentShadingRateCount, pFragmentShadingRates)
+    ccall((:vkGetPhysicalDeviceFragmentShadingRatesKHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkPhysicalDeviceFragmentShadingRateKHR}), physicalDevice, pFragmentShadingRateCount, pFragmentShadingRates)
+end
+
+function vkCmdSetFragmentShadingRateKHR(commandBuffer, pFragmentSize, combinerOps)
+    ccall((:vkCmdSetFragmentShadingRateKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkExtent2D}, NTuple{2, VkFragmentShadingRateCombinerOpKHR}), commandBuffer, pFragmentSize, combinerOps)
+end
+
 function vkGetBufferDeviceAddressKHR(device, pInfo)
     ccall((:vkGetBufferDeviceAddressKHR, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
 end
@@ -1030,6 +1038,26 @@ function vkGetDeviceMemoryOpaqueCaptureAddressKHR(device, pInfo)
     ccall((:vkGetDeviceMemoryOpaqueCaptureAddressKHR, libvulkan), UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
 end
 
+function vkCreateDeferredOperationKHR(device, pAllocator, pDeferredOperation)
+    ccall((:vkCreateDeferredOperationKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAllocationCallbacks}, Ptr{VkDeferredOperationKHR}), device, pAllocator, pDeferredOperation)
+end
+
+function vkDestroyDeferredOperationKHR(device, operation, pAllocator)
+    ccall((:vkDestroyDeferredOperationKHR, libvulkan), Cvoid, (VkDevice, VkDeferredOperationKHR, Ptr{VkAllocationCallbacks}), device, operation, pAllocator)
+end
+
+function vkGetDeferredOperationMaxConcurrencyKHR(device, operation)
+    ccall((:vkGetDeferredOperationMaxConcurrencyKHR, libvulkan), UInt32, (VkDevice, VkDeferredOperationKHR), device, operation)
+end
+
+function vkGetDeferredOperationResultKHR(device, operation)
+    ccall((:vkGetDeferredOperationResultKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+end
+
+function vkDeferredOperationJoinKHR(device, operation)
+    ccall((:vkDeferredOperationJoinKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+end
+
 function vkGetPipelineExecutablePropertiesKHR(device, pPipelineInfo, pExecutableCount, pProperties)
     ccall((:vkGetPipelineExecutablePropertiesKHR, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutablePropertiesKHR}), device, pPipelineInfo, pExecutableCount, pProperties)
 end
@@ -1040,6 +1068,62 @@ end
 
 function vkGetPipelineExecutableInternalRepresentationsKHR(device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations)
     ccall((:vkGetPipelineExecutableInternalRepresentationsKHR, libvulkan), VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableInternalRepresentationKHR}), device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations)
+end
+
+function vkCmdSetEvent2KHR(commandBuffer, event, pDependencyInfo)
+    ccall((:vkCmdSetEvent2KHR, libvulkan), Cvoid, (VkCommandBuffer, VkEvent, Ptr{VkDependencyInfoKHR}), commandBuffer, event, pDependencyInfo)
+end
+
+function vkCmdResetEvent2KHR(commandBuffer, event, stageMask)
+    ccall((:vkCmdResetEvent2KHR, libvulkan), Cvoid, (VkCommandBuffer, VkEvent, VkPipelineStageFlags2KHR), commandBuffer, event, stageMask)
+end
+
+function vkCmdWaitEvents2KHR(commandBuffer, eventCount, pEvents, pDependencyInfos)
+    ccall((:vkCmdWaitEvents2KHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkEvent}, Ptr{VkDependencyInfoKHR}), commandBuffer, eventCount, pEvents, pDependencyInfos)
+end
+
+function vkCmdPipelineBarrier2KHR(commandBuffer, pDependencyInfo)
+    ccall((:vkCmdPipelineBarrier2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkDependencyInfoKHR}), commandBuffer, pDependencyInfo)
+end
+
+function vkCmdWriteTimestamp2KHR(commandBuffer, stage, queryPool, query)
+    ccall((:vkCmdWriteTimestamp2KHR, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineStageFlags2KHR, VkQueryPool, UInt32), commandBuffer, stage, queryPool, query)
+end
+
+function vkQueueSubmit2KHR(queue, submitCount, pSubmits, fence)
+    ccall((:vkQueueSubmit2KHR, libvulkan), VkResult, (VkQueue, UInt32, Ptr{VkSubmitInfo2KHR}, VkFence), queue, submitCount, pSubmits, fence)
+end
+
+function vkCmdWriteBufferMarker2AMD(commandBuffer, stage, dstBuffer, dstOffset, marker)
+    ccall((:vkCmdWriteBufferMarker2AMD, libvulkan), Cvoid, (VkCommandBuffer, VkPipelineStageFlags2KHR, VkBuffer, VkDeviceSize, UInt32), commandBuffer, stage, dstBuffer, dstOffset, marker)
+end
+
+function vkGetQueueCheckpointData2NV(queue, pCheckpointDataCount, pCheckpointData)
+    ccall((:vkGetQueueCheckpointData2NV, libvulkan), Cvoid, (VkQueue, Ptr{UInt32}, Ptr{VkCheckpointData2NV}), queue, pCheckpointDataCount, pCheckpointData)
+end
+
+function vkCmdCopyBuffer2KHR(commandBuffer, pCopyBufferInfo)
+    ccall((:vkCmdCopyBuffer2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyBufferInfo2KHR}), commandBuffer, pCopyBufferInfo)
+end
+
+function vkCmdCopyImage2KHR(commandBuffer, pCopyImageInfo)
+    ccall((:vkCmdCopyImage2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyImageInfo2KHR}), commandBuffer, pCopyImageInfo)
+end
+
+function vkCmdCopyBufferToImage2KHR(commandBuffer, pCopyBufferToImageInfo)
+    ccall((:vkCmdCopyBufferToImage2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyBufferToImageInfo2KHR}), commandBuffer, pCopyBufferToImageInfo)
+end
+
+function vkCmdCopyImageToBuffer2KHR(commandBuffer, pCopyImageToBufferInfo)
+    ccall((:vkCmdCopyImageToBuffer2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyImageToBufferInfo2KHR}), commandBuffer, pCopyImageToBufferInfo)
+end
+
+function vkCmdBlitImage2KHR(commandBuffer, pBlitImageInfo)
+    ccall((:vkCmdBlitImage2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkBlitImageInfo2KHR}), commandBuffer, pBlitImageInfo)
+end
+
+function vkCmdResolveImage2KHR(commandBuffer, pResolveImageInfo)
+    ccall((:vkCmdResolveImage2KHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkResolveImageInfo2KHR}), commandBuffer, pResolveImageInfo)
 end
 
 function vkCreateDebugReportCallbackEXT(instance, pCreateInfo, pAllocator, pCallback)
@@ -1262,32 +1346,24 @@ function vkCreateAccelerationStructureNV(device, pCreateInfo, pAllocator, pAccel
     ccall((:vkCreateAccelerationStructureNV, libvulkan), VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureNV}), device, pCreateInfo, pAllocator, pAccelerationStructure)
 end
 
-function vkDestroyAccelerationStructureKHR(device, accelerationStructure, pAllocator)
-    ccall((:vkDestroyAccelerationStructureKHR, libvulkan), Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
-end
-
 function vkDestroyAccelerationStructureNV(device, accelerationStructure, pAllocator)
-    ccall((:vkDestroyAccelerationStructureNV, libvulkan), Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
+    ccall((:vkDestroyAccelerationStructureNV, libvulkan), Cvoid, (VkDevice, VkAccelerationStructureNV, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
 end
 
 function vkGetAccelerationStructureMemoryRequirementsNV(device, pInfo, pMemoryRequirements)
     ccall((:vkGetAccelerationStructureMemoryRequirementsNV, libvulkan), Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoNV}, Ptr{VkMemoryRequirements2KHR}), device, pInfo, pMemoryRequirements)
 end
 
-function vkBindAccelerationStructureMemoryKHR(device, bindInfoCount, pBindInfos)
-    ccall((:vkBindAccelerationStructureMemoryKHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
-end
-
 function vkBindAccelerationStructureMemoryNV(device, bindInfoCount, pBindInfos)
-    ccall((:vkBindAccelerationStructureMemoryNV, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
+    ccall((:vkBindAccelerationStructureMemoryNV, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoNV}), device, bindInfoCount, pBindInfos)
 end
 
 function vkCmdBuildAccelerationStructureNV(commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset)
-    ccall((:vkCmdBuildAccelerationStructureNV, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureInfoNV}, VkBuffer, VkDeviceSize, VkBool32, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkBuffer, VkDeviceSize), commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset)
+    ccall((:vkCmdBuildAccelerationStructureNV, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureInfoNV}, VkBuffer, VkDeviceSize, VkBool32, VkAccelerationStructureNV, VkAccelerationStructureNV, VkBuffer, VkDeviceSize), commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset)
 end
 
 function vkCmdCopyAccelerationStructureNV(commandBuffer, dst, src, mode)
-    ccall((:vkCmdCopyAccelerationStructureNV, libvulkan), Cvoid, (VkCommandBuffer, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkCopyAccelerationStructureModeKHR), commandBuffer, dst, src, mode)
+    ccall((:vkCmdCopyAccelerationStructureNV, libvulkan), Cvoid, (VkCommandBuffer, VkAccelerationStructureNV, VkAccelerationStructureNV, VkCopyAccelerationStructureModeKHR), commandBuffer, dst, src, mode)
 end
 
 function vkCmdTraceRaysNV(commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth)
@@ -1307,15 +1383,11 @@ function vkGetRayTracingShaderGroupHandlesNV(device, pipeline, firstGroup, group
 end
 
 function vkGetAccelerationStructureHandleNV(device, accelerationStructure, dataSize, pData)
-    ccall((:vkGetAccelerationStructureHandleNV, libvulkan), VkResult, (VkDevice, VkAccelerationStructureKHR, Csize_t, Ptr{Cvoid}), device, accelerationStructure, dataSize, pData)
-end
-
-function vkCmdWriteAccelerationStructuresPropertiesKHR(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
-    ccall((:vkCmdWriteAccelerationStructuresPropertiesKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+    ccall((:vkGetAccelerationStructureHandleNV, libvulkan), VkResult, (VkDevice, VkAccelerationStructureNV, Csize_t, Ptr{Cvoid}), device, accelerationStructure, dataSize, pData)
 end
 
 function vkCmdWriteAccelerationStructuresPropertiesNV(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
-    ccall((:vkCmdWriteAccelerationStructuresPropertiesNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+    ccall((:vkCmdWriteAccelerationStructuresPropertiesNV, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureNV}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
 end
 
 function vkCompileDeferredNV(device, pipeline, shader)
@@ -1518,6 +1590,134 @@ function vkGetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, 
     ccall((:vkGetPrivateDataEXT, libvulkan), Cvoid, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, Ptr{UInt64}), device, objectType, objectHandle, privateDataSlot, pData)
 end
 
+function vkCmdSetFragmentShadingRateEnumNV(commandBuffer, shadingRate, combinerOps)
+    ccall((:vkCmdSetFragmentShadingRateEnumNV, libvulkan), Cvoid, (VkCommandBuffer, VkFragmentShadingRateNV, NTuple{2, VkFragmentShadingRateCombinerOpKHR}), commandBuffer, shadingRate, combinerOps)
+end
+
+function vkAcquireWinrtDisplayNV(physicalDevice, display)
+    ccall((:vkAcquireWinrtDisplayNV, libvulkan), VkResult, (VkPhysicalDevice, VkDisplayKHR), physicalDevice, display)
+end
+
+function vkGetWinrtDisplayNV(physicalDevice, deviceRelativeId, pDisplay)
+    ccall((:vkGetWinrtDisplayNV, libvulkan), VkResult, (VkPhysicalDevice, UInt32, Ptr{VkDisplayKHR}), physicalDevice, deviceRelativeId, pDisplay)
+end
+
+function vkCmdSetVertexInputEXT(commandBuffer, vertexBindingDescriptionCount, pVertexBindingDescriptions, vertexAttributeDescriptionCount, pVertexAttributeDescriptions)
+    ccall((:vkCmdSetVertexInputEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkVertexInputBindingDescription2EXT}, UInt32, Ptr{VkVertexInputAttributeDescription2EXT}), commandBuffer, vertexBindingDescriptionCount, pVertexBindingDescriptions, vertexAttributeDescriptionCount, pVertexAttributeDescriptions)
+end
+
+function vkCmdSetPatchControlPointsEXT(commandBuffer, patchControlPoints)
+    ccall((:vkCmdSetPatchControlPointsEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32), commandBuffer, patchControlPoints)
+end
+
+function vkCmdSetRasterizerDiscardEnableEXT(commandBuffer, rasterizerDiscardEnable)
+    ccall((:vkCmdSetRasterizerDiscardEnableEXT, libvulkan), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, rasterizerDiscardEnable)
+end
+
+function vkCmdSetDepthBiasEnableEXT(commandBuffer, depthBiasEnable)
+    ccall((:vkCmdSetDepthBiasEnableEXT, libvulkan), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthBiasEnable)
+end
+
+function vkCmdSetLogicOpEXT(commandBuffer, logicOp)
+    ccall((:vkCmdSetLogicOpEXT, libvulkan), Cvoid, (VkCommandBuffer, VkLogicOp), commandBuffer, logicOp)
+end
+
+function vkCmdSetPrimitiveRestartEnableEXT(commandBuffer, primitiveRestartEnable)
+    ccall((:vkCmdSetPrimitiveRestartEnableEXT, libvulkan), Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, primitiveRestartEnable)
+end
+
+function vkCmdSetColorWriteEnableEXT(commandBuffer, attachmentCount, pColorWriteEnables)
+    ccall((:vkCmdSetColorWriteEnableEXT, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkBool32}), commandBuffer, attachmentCount, pColorWriteEnables)
+end
+
+function vkCreateAccelerationStructureKHR(device, pCreateInfo, pAllocator, pAccelerationStructure)
+    ccall((:vkCreateAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureKHR}), device, pCreateInfo, pAllocator, pAccelerationStructure)
+end
+
+function vkDestroyAccelerationStructureKHR(device, accelerationStructure, pAllocator)
+    ccall((:vkDestroyAccelerationStructureKHR, libvulkan), Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
+end
+
+function vkCmdBuildAccelerationStructuresKHR(commandBuffer, infoCount, pInfos, ppBuildRangeInfos)
+    ccall((:vkCmdBuildAccelerationStructuresKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildRangeInfoKHR}}), commandBuffer, infoCount, pInfos, ppBuildRangeInfos)
+end
+
+function vkCmdBuildAccelerationStructuresIndirectKHR(commandBuffer, infoCount, pInfos, pIndirectDeviceAddresses, pIndirectStrides, ppMaxPrimitiveCounts)
+    ccall((:vkCmdBuildAccelerationStructuresIndirectKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{VkDeviceAddress}, Ptr{UInt32}, Ptr{Ptr{UInt32}}), commandBuffer, infoCount, pInfos, pIndirectDeviceAddresses, pIndirectStrides, ppMaxPrimitiveCounts)
+end
+
+function vkBuildAccelerationStructuresKHR(device, deferredOperation, infoCount, pInfos, ppBuildRangeInfos)
+    ccall((:vkBuildAccelerationStructuresKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildRangeInfoKHR}}), device, deferredOperation, infoCount, pInfos, ppBuildRangeInfos)
+end
+
+function vkCopyAccelerationStructureKHR(device, deferredOperation, pInfo)
+    ccall((:vkCopyAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR, Ptr{VkCopyAccelerationStructureInfoKHR}), device, deferredOperation, pInfo)
+end
+
+function vkCopyAccelerationStructureToMemoryKHR(device, deferredOperation, pInfo)
+    ccall((:vkCopyAccelerationStructureToMemoryKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), device, deferredOperation, pInfo)
+end
+
+function vkCopyMemoryToAccelerationStructureKHR(device, deferredOperation, pInfo)
+    ccall((:vkCopyMemoryToAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), device, deferredOperation, pInfo)
+end
+
+function vkWriteAccelerationStructuresPropertiesKHR(device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride)
+    ccall((:vkWriteAccelerationStructuresPropertiesKHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, Csize_t, Ptr{Cvoid}, Csize_t), device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride)
+end
+
+function vkCmdCopyAccelerationStructureKHR(commandBuffer, pInfo)
+    ccall((:vkCmdCopyAccelerationStructureKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureInfoKHR}), commandBuffer, pInfo)
+end
+
+function vkCmdCopyAccelerationStructureToMemoryKHR(commandBuffer, pInfo)
+    ccall((:vkCmdCopyAccelerationStructureToMemoryKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), commandBuffer, pInfo)
+end
+
+function vkCmdCopyMemoryToAccelerationStructureKHR(commandBuffer, pInfo)
+    ccall((:vkCmdCopyMemoryToAccelerationStructureKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), commandBuffer, pInfo)
+end
+
+function vkGetAccelerationStructureDeviceAddressKHR(device, pInfo)
+    ccall((:vkGetAccelerationStructureDeviceAddressKHR, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkAccelerationStructureDeviceAddressInfoKHR}), device, pInfo)
+end
+
+function vkCmdWriteAccelerationStructuresPropertiesKHR(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+    ccall((:vkCmdWriteAccelerationStructuresPropertiesKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+end
+
+function vkGetDeviceAccelerationStructureCompatibilityKHR(device, pVersionInfo, pCompatibility)
+    ccall((:vkGetDeviceAccelerationStructureCompatibilityKHR, libvulkan), Cvoid, (VkDevice, Ptr{VkAccelerationStructureVersionInfoKHR}, Ptr{VkAccelerationStructureCompatibilityKHR}), device, pVersionInfo, pCompatibility)
+end
+
+function vkGetAccelerationStructureBuildSizesKHR(device, buildType, pBuildInfo, pMaxPrimitiveCounts, pSizeInfo)
+    ccall((:vkGetAccelerationStructureBuildSizesKHR, libvulkan), Cvoid, (VkDevice, VkAccelerationStructureBuildTypeKHR, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{UInt32}, Ptr{VkAccelerationStructureBuildSizesInfoKHR}), device, buildType, pBuildInfo, pMaxPrimitiveCounts, pSizeInfo)
+end
+
+function vkCmdTraceRaysKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth)
+    ccall((:vkCmdTraceRaysKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkStridedDeviceAddressRegionKHR}, Ptr{VkStridedDeviceAddressRegionKHR}, Ptr{VkStridedDeviceAddressRegionKHR}, Ptr{VkStridedDeviceAddressRegionKHR}, UInt32, UInt32, UInt32), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth)
+end
+
+function vkCreateRayTracingPipelinesKHR(device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+    ccall((:vkCreateRayTracingPipelinesKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+end
+
+function vkGetRayTracingCaptureReplayShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData)
+    ccall((:vkGetRayTracingCaptureReplayShaderGroupHandlesKHR, libvulkan), VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
+end
+
+function vkCmdTraceRaysIndirectKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, indirectDeviceAddress)
+    ccall((:vkCmdTraceRaysIndirectKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkStridedDeviceAddressRegionKHR}, Ptr{VkStridedDeviceAddressRegionKHR}, Ptr{VkStridedDeviceAddressRegionKHR}, Ptr{VkStridedDeviceAddressRegionKHR}, VkDeviceAddress), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, indirectDeviceAddress)
+end
+
+function vkGetRayTracingShaderGroupStackSizeKHR(device, pipeline, group, groupShader)
+    ccall((:vkGetRayTracingShaderGroupStackSizeKHR, libvulkan), VkDeviceSize, (VkDevice, VkPipeline, UInt32, VkShaderGroupShaderKHR), device, pipeline, group, groupShader)
+end
+
+function vkCmdSetRayTracingPipelineStackSizeKHR(commandBuffer, pipelineStackSize)
+    ccall((:vkCmdSetRayTracingPipelineStackSizeKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32), commandBuffer, pipelineStackSize)
+end
+
 function vkCreateAndroidSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
     ccall((:vkCreateAndroidSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkAndroidSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
@@ -1532,6 +1732,22 @@ end
 
 function vkCreateImagePipeSurfaceFUCHSIA(instance, pCreateInfo, pAllocator, pSurface)
     ccall((:vkCreateImagePipeSurfaceFUCHSIA, libvulkan), VkResult, (VkInstance, Ptr{VkImagePipeSurfaceCreateInfoFUCHSIA}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkGetMemoryZirconHandleFUCHSIA(device, pGetZirconHandleInfo, pZirconHandle)
+    ccall((:vkGetMemoryZirconHandleFUCHSIA, libvulkan), VkResult, (VkDevice, Ptr{VkMemoryGetZirconHandleInfoFUCHSIA}, Ptr{Cint}), device, pGetZirconHandleInfo, pZirconHandle)
+end
+
+function vkGetMemoryZirconHandlePropertiesFUCHSIA(device, handleType, zirconHandle, pMemoryZirconHandleProperties)
+    ccall((:vkGetMemoryZirconHandlePropertiesFUCHSIA, libvulkan), VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryZirconHandlePropertiesFUCHSIA}), device, handleType, zirconHandle, pMemoryZirconHandleProperties)
+end
+
+function vkImportSemaphoreZirconHandleFUCHSIA(device, pImportSemaphoreZirconHandleInfo)
+    ccall((:vkImportSemaphoreZirconHandleFUCHSIA, libvulkan), VkResult, (VkDevice, Ptr{VkImportSemaphoreZirconHandleInfoFUCHSIA}), device, pImportSemaphoreZirconHandleInfo)
+end
+
+function vkGetSemaphoreZirconHandleFUCHSIA(device, pGetZirconHandleInfo, pZirconHandle)
+    ccall((:vkGetSemaphoreZirconHandleFUCHSIA, libvulkan), VkResult, (VkDevice, Ptr{VkSemaphoreGetZirconHandleInfoFUCHSIA}, Ptr{Cint}), device, pGetZirconHandleInfo, pZirconHandle)
 end
 
 function vkCreateIOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface)
@@ -1646,96 +1862,68 @@ function vkCreateStreamDescriptorSurfaceGGP(instance, pCreateInfo, pAllocator, p
     ccall((:vkCreateStreamDescriptorSurfaceGGP, libvulkan), VkResult, (VkInstance, Ptr{VkStreamDescriptorSurfaceCreateInfoGGP}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
-function vkCreateDeferredOperationKHR(device, pAllocator, pDeferredOperation)
-    ccall((:vkCreateDeferredOperationKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAllocationCallbacks}, Ptr{VkDeferredOperationKHR}), device, pAllocator, pDeferredOperation)
+function vkCreateScreenSurfaceQNX(instance, pCreateInfo, pAllocator, pSurface)
+    ccall((:vkCreateScreenSurfaceQNX, libvulkan), VkResult, (VkInstance, Ptr{VkScreenSurfaceCreateInfoQNX}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
-function vkDestroyDeferredOperationKHR(device, operation, pAllocator)
-    ccall((:vkDestroyDeferredOperationKHR, libvulkan), Cvoid, (VkDevice, VkDeferredOperationKHR, Ptr{VkAllocationCallbacks}), device, operation, pAllocator)
+function vkGetPhysicalDeviceScreenPresentationSupportQNX(physicalDevice, queueFamilyIndex, window)
+    ccall((:vkGetPhysicalDeviceScreenPresentationSupportQNX, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{_screen_window}), physicalDevice, queueFamilyIndex, window)
 end
 
-function vkGetDeferredOperationMaxConcurrencyKHR(device, operation)
-    ccall((:vkGetDeferredOperationMaxConcurrencyKHR, libvulkan), UInt32, (VkDevice, VkDeferredOperationKHR), device, operation)
+function vkGetPhysicalDeviceVideoCapabilitiesKHR(physicalDevice, pVideoProfile, pCapabilities)
+    ccall((:vkGetPhysicalDeviceVideoCapabilitiesKHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkVideoProfileKHR}, Ptr{VkVideoCapabilitiesKHR}), physicalDevice, pVideoProfile, pCapabilities)
 end
 
-function vkGetDeferredOperationResultKHR(device, operation)
-    ccall((:vkGetDeferredOperationResultKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+function vkGetPhysicalDeviceVideoFormatPropertiesKHR(physicalDevice, pVideoFormatInfo, pVideoFormatPropertyCount, pVideoFormatProperties)
+    ccall((:vkGetPhysicalDeviceVideoFormatPropertiesKHR, libvulkan), VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceVideoFormatInfoKHR}, Ptr{UInt32}, Ptr{VkVideoFormatPropertiesKHR}), physicalDevice, pVideoFormatInfo, pVideoFormatPropertyCount, pVideoFormatProperties)
 end
 
-function vkDeferredOperationJoinKHR(device, operation)
-    ccall((:vkDeferredOperationJoinKHR, libvulkan), VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+function vkCreateVideoSessionKHR(device, pCreateInfo, pAllocator, pVideoSession)
+    ccall((:vkCreateVideoSessionKHR, libvulkan), VkResult, (VkDevice, Ptr{VkVideoSessionCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkVideoSessionKHR}), device, pCreateInfo, pAllocator, pVideoSession)
 end
 
-function vkCreateAccelerationStructureKHR(device, pCreateInfo, pAllocator, pAccelerationStructure)
-    ccall((:vkCreateAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureKHR}), device, pCreateInfo, pAllocator, pAccelerationStructure)
+function vkDestroyVideoSessionKHR(device, videoSession, pAllocator)
+    ccall((:vkDestroyVideoSessionKHR, libvulkan), Cvoid, (VkDevice, VkVideoSessionKHR, Ptr{VkAllocationCallbacks}), device, videoSession, pAllocator)
 end
 
-function vkGetAccelerationStructureMemoryRequirementsKHR(device, pInfo, pMemoryRequirements)
-    ccall((:vkGetAccelerationStructureMemoryRequirementsKHR, libvulkan), Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoKHR}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+function vkGetVideoSessionMemoryRequirementsKHR(device, videoSession, pVideoSessionMemoryRequirementsCount, pVideoSessionMemoryRequirements)
+    ccall((:vkGetVideoSessionMemoryRequirementsKHR, libvulkan), VkResult, (VkDevice, VkVideoSessionKHR, Ptr{UInt32}, Ptr{VkVideoGetMemoryPropertiesKHR}), device, videoSession, pVideoSessionMemoryRequirementsCount, pVideoSessionMemoryRequirements)
 end
 
-function vkCmdBuildAccelerationStructureKHR(commandBuffer, infoCount, pInfos, ppOffsetInfos)
-    ccall((:vkCmdBuildAccelerationStructureKHR, libvulkan), Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), commandBuffer, infoCount, pInfos, ppOffsetInfos)
+function vkBindVideoSessionMemoryKHR(device, videoSession, videoSessionBindMemoryCount, pVideoSessionBindMemories)
+    ccall((:vkBindVideoSessionMemoryKHR, libvulkan), VkResult, (VkDevice, VkVideoSessionKHR, UInt32, Ptr{VkVideoBindMemoryKHR}), device, videoSession, videoSessionBindMemoryCount, pVideoSessionBindMemories)
 end
 
-function vkCmdBuildAccelerationStructureIndirectKHR(commandBuffer, pInfo, indirectBuffer, indirectOffset, indirectStride)
-    ccall((:vkCmdBuildAccelerationStructureIndirectKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, VkBuffer, VkDeviceSize, UInt32), commandBuffer, pInfo, indirectBuffer, indirectOffset, indirectStride)
+function vkCreateVideoSessionParametersKHR(device, pCreateInfo, pAllocator, pVideoSessionParameters)
+    ccall((:vkCreateVideoSessionParametersKHR, libvulkan), VkResult, (VkDevice, Ptr{VkVideoSessionParametersCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkVideoSessionParametersKHR}), device, pCreateInfo, pAllocator, pVideoSessionParameters)
 end
 
-function vkBuildAccelerationStructureKHR(device, infoCount, pInfos, ppOffsetInfos)
-    ccall((:vkBuildAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), device, infoCount, pInfos, ppOffsetInfos)
+function vkUpdateVideoSessionParametersKHR(device, videoSessionParameters, pUpdateInfo)
+    ccall((:vkUpdateVideoSessionParametersKHR, libvulkan), VkResult, (VkDevice, VkVideoSessionParametersKHR, Ptr{VkVideoSessionParametersUpdateInfoKHR}), device, videoSessionParameters, pUpdateInfo)
 end
 
-function vkCopyAccelerationStructureKHR(device, pInfo)
-    ccall((:vkCopyAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureInfoKHR}), device, pInfo)
+function vkDestroyVideoSessionParametersKHR(device, videoSessionParameters, pAllocator)
+    ccall((:vkDestroyVideoSessionParametersKHR, libvulkan), Cvoid, (VkDevice, VkVideoSessionParametersKHR, Ptr{VkAllocationCallbacks}), device, videoSessionParameters, pAllocator)
 end
 
-function vkCopyAccelerationStructureToMemoryKHR(device, pInfo)
-    ccall((:vkCopyAccelerationStructureToMemoryKHR, libvulkan), VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), device, pInfo)
+function vkCmdBeginVideoCodingKHR(commandBuffer, pBeginInfo)
+    ccall((:vkCmdBeginVideoCodingKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkVideoBeginCodingInfoKHR}), commandBuffer, pBeginInfo)
 end
 
-function vkCopyMemoryToAccelerationStructureKHR(device, pInfo)
-    ccall((:vkCopyMemoryToAccelerationStructureKHR, libvulkan), VkResult, (VkDevice, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), device, pInfo)
+function vkCmdEndVideoCodingKHR(commandBuffer, pEndCodingInfo)
+    ccall((:vkCmdEndVideoCodingKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkVideoEndCodingInfoKHR}), commandBuffer, pEndCodingInfo)
 end
 
-function vkWriteAccelerationStructuresPropertiesKHR(device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride)
-    ccall((:vkWriteAccelerationStructuresPropertiesKHR, libvulkan), VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, Csize_t, Ptr{Cvoid}, Csize_t), device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride)
+function vkCmdControlVideoCodingKHR(commandBuffer, pCodingControlInfo)
+    ccall((:vkCmdControlVideoCodingKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkVideoCodingControlInfoKHR}), commandBuffer, pCodingControlInfo)
 end
 
-function vkCmdCopyAccelerationStructureKHR(commandBuffer, pInfo)
-    ccall((:vkCmdCopyAccelerationStructureKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureInfoKHR}), commandBuffer, pInfo)
+function vkCmdDecodeVideoKHR(commandBuffer, pFrameInfo)
+    ccall((:vkCmdDecodeVideoKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkVideoDecodeInfoKHR}), commandBuffer, pFrameInfo)
 end
 
-function vkCmdCopyAccelerationStructureToMemoryKHR(commandBuffer, pInfo)
-    ccall((:vkCmdCopyAccelerationStructureToMemoryKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), commandBuffer, pInfo)
-end
-
-function vkCmdCopyMemoryToAccelerationStructureKHR(commandBuffer, pInfo)
-    ccall((:vkCmdCopyMemoryToAccelerationStructureKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), commandBuffer, pInfo)
-end
-
-function vkCmdTraceRaysKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth)
-    ccall((:vkCmdTraceRaysKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, UInt32, UInt32, UInt32), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth)
-end
-
-function vkCreateRayTracingPipelinesKHR(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
-    ccall((:vkCreateRayTracingPipelinesKHR, libvulkan), VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
-end
-
-function vkGetAccelerationStructureDeviceAddressKHR(device, pInfo)
-    ccall((:vkGetAccelerationStructureDeviceAddressKHR, libvulkan), VkDeviceAddress, (VkDevice, Ptr{VkAccelerationStructureDeviceAddressInfoKHR}), device, pInfo)
-end
-
-function vkGetRayTracingCaptureReplayShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData)
-    ccall((:vkGetRayTracingCaptureReplayShaderGroupHandlesKHR, libvulkan), VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
-end
-
-function vkCmdTraceRaysIndirectKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, buffer, offset)
-    ccall((:vkCmdTraceRaysIndirectKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, VkBuffer, VkDeviceSize), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, buffer, offset)
-end
-
-function vkGetDeviceAccelerationStructureCompatibilityKHR(device, version)
-    ccall((:vkGetDeviceAccelerationStructureCompatibilityKHR, libvulkan), VkResult, (VkDevice, Ptr{VkAccelerationStructureVersionKHR}), device, version)
+function vkCmdEncodeVideoKHR(commandBuffer, pEncodeInfo)
+    ccall((:vkCmdEncodeVideoKHR, libvulkan), Cvoid, (VkCommandBuffer, Ptr{VkVideoEncodeInfoKHR}), commandBuffer, pEncodeInfo)
 end
 
 function vkCreateInstance(pCreateInfo, pAllocator, pInstance, fun_ptr)
@@ -2131,7 +2319,7 @@ function vkCmdSetDepthBias(commandBuffer, depthBiasConstantFactor, depthBiasClam
 end
 
 function vkCmdSetBlendConstants(commandBuffer, blendConstants, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{Cfloat}), commandBuffer, blendConstants)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, NTuple{4, Cfloat}), commandBuffer, blendConstants)
 end
 
 function vkCmdSetDepthBounds(commandBuffer, minDepthBounds, maxDepthBounds, fun_ptr)
@@ -2754,6 +2942,14 @@ function vkSignalSemaphoreKHR(device, pSignalInfo, fun_ptr)
     ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreSignalInfo}), device, pSignalInfo)
 end
 
+function vkGetPhysicalDeviceFragmentShadingRatesKHR(physicalDevice, pFragmentShadingRateCount, pFragmentShadingRates, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{UInt32}, Ptr{VkPhysicalDeviceFragmentShadingRateKHR}), physicalDevice, pFragmentShadingRateCount, pFragmentShadingRates)
+end
+
+function vkCmdSetFragmentShadingRateKHR(commandBuffer, pFragmentSize, combinerOps, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkExtent2D}, NTuple{2, VkFragmentShadingRateCombinerOpKHR}), commandBuffer, pFragmentSize, combinerOps)
+end
+
 function vkGetBufferDeviceAddressKHR(device, pInfo, fun_ptr)
     ccall(fun_ptr, VkDeviceAddress, (VkDevice, Ptr{VkBufferDeviceAddressInfo}), device, pInfo)
 end
@@ -2766,6 +2962,26 @@ function vkGetDeviceMemoryOpaqueCaptureAddressKHR(device, pInfo, fun_ptr)
     ccall(fun_ptr, UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
 end
 
+function vkCreateDeferredOperationKHR(device, pAllocator, pDeferredOperation, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAllocationCallbacks}, Ptr{VkDeferredOperationKHR}), device, pAllocator, pDeferredOperation)
+end
+
+function vkDestroyDeferredOperationKHR(device, operation, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkDeferredOperationKHR, Ptr{VkAllocationCallbacks}), device, operation, pAllocator)
+end
+
+function vkGetDeferredOperationMaxConcurrencyKHR(device, operation, fun_ptr)
+    ccall(fun_ptr, UInt32, (VkDevice, VkDeferredOperationKHR), device, operation)
+end
+
+function vkGetDeferredOperationResultKHR(device, operation, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+end
+
+function vkDeferredOperationJoinKHR(device, operation, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+end
+
 function vkGetPipelineExecutablePropertiesKHR(device, pPipelineInfo, pExecutableCount, pProperties, fun_ptr)
     ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPipelineInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutablePropertiesKHR}), device, pPipelineInfo, pExecutableCount, pProperties)
 end
@@ -2776,6 +2992,62 @@ end
 
 function vkGetPipelineExecutableInternalRepresentationsKHR(device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations, fun_ptr)
     ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkPipelineExecutableInfoKHR}, Ptr{UInt32}, Ptr{VkPipelineExecutableInternalRepresentationKHR}), device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations)
+end
+
+function vkCmdSetEvent2KHR(commandBuffer, event, pDependencyInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkEvent, Ptr{VkDependencyInfoKHR}), commandBuffer, event, pDependencyInfo)
+end
+
+function vkCmdResetEvent2KHR(commandBuffer, event, stageMask, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkEvent, VkPipelineStageFlags2KHR), commandBuffer, event, stageMask)
+end
+
+function vkCmdWaitEvents2KHR(commandBuffer, eventCount, pEvents, pDependencyInfos, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkEvent}, Ptr{VkDependencyInfoKHR}), commandBuffer, eventCount, pEvents, pDependencyInfos)
+end
+
+function vkCmdPipelineBarrier2KHR(commandBuffer, pDependencyInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkDependencyInfoKHR}), commandBuffer, pDependencyInfo)
+end
+
+function vkCmdWriteTimestamp2KHR(commandBuffer, stage, queryPool, query, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineStageFlags2KHR, VkQueryPool, UInt32), commandBuffer, stage, queryPool, query)
+end
+
+function vkQueueSubmit2KHR(queue, submitCount, pSubmits, fence, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkQueue, UInt32, Ptr{VkSubmitInfo2KHR}, VkFence), queue, submitCount, pSubmits, fence)
+end
+
+function vkCmdWriteBufferMarker2AMD(commandBuffer, stage, dstBuffer, dstOffset, marker, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkPipelineStageFlags2KHR, VkBuffer, VkDeviceSize, UInt32), commandBuffer, stage, dstBuffer, dstOffset, marker)
+end
+
+function vkGetQueueCheckpointData2NV(queue, pCheckpointDataCount, pCheckpointData, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkQueue, Ptr{UInt32}, Ptr{VkCheckpointData2NV}), queue, pCheckpointDataCount, pCheckpointData)
+end
+
+function vkCmdCopyBuffer2KHR(commandBuffer, pCopyBufferInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyBufferInfo2KHR}), commandBuffer, pCopyBufferInfo)
+end
+
+function vkCmdCopyImage2KHR(commandBuffer, pCopyImageInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyImageInfo2KHR}), commandBuffer, pCopyImageInfo)
+end
+
+function vkCmdCopyBufferToImage2KHR(commandBuffer, pCopyBufferToImageInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyBufferToImageInfo2KHR}), commandBuffer, pCopyBufferToImageInfo)
+end
+
+function vkCmdCopyImageToBuffer2KHR(commandBuffer, pCopyImageToBufferInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyImageToBufferInfo2KHR}), commandBuffer, pCopyImageToBufferInfo)
+end
+
+function vkCmdBlitImage2KHR(commandBuffer, pBlitImageInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkBlitImageInfo2KHR}), commandBuffer, pBlitImageInfo)
+end
+
+function vkCmdResolveImage2KHR(commandBuffer, pResolveImageInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkResolveImageInfo2KHR}), commandBuffer, pResolveImageInfo)
 end
 
 function vkCreateDebugReportCallbackEXT(instance, pCreateInfo, pAllocator, pCallback, fun_ptr)
@@ -2998,32 +3270,24 @@ function vkCreateAccelerationStructureNV(device, pCreateInfo, pAllocator, pAccel
     ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoNV}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureNV}), device, pCreateInfo, pAllocator, pAccelerationStructure)
 end
 
-function vkDestroyAccelerationStructureKHR(device, accelerationStructure, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
-end
-
 function vkDestroyAccelerationStructureNV(device, accelerationStructure, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkAccelerationStructureNV, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
 end
 
 function vkGetAccelerationStructureMemoryRequirementsNV(device, pInfo, pMemoryRequirements, fun_ptr)
     ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoNV}, Ptr{VkMemoryRequirements2KHR}), device, pInfo, pMemoryRequirements)
 end
 
-function vkBindAccelerationStructureMemoryKHR(device, bindInfoCount, pBindInfos, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
-end
-
 function vkBindAccelerationStructureMemoryNV(device, bindInfoCount, pBindInfos, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoKHR}), device, bindInfoCount, pBindInfos)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkBindAccelerationStructureMemoryInfoNV}), device, bindInfoCount, pBindInfos)
 end
 
 function vkCmdBuildAccelerationStructureNV(commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureInfoNV}, VkBuffer, VkDeviceSize, VkBool32, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkBuffer, VkDeviceSize), commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureInfoNV}, VkBuffer, VkDeviceSize, VkBool32, VkAccelerationStructureNV, VkAccelerationStructureNV, VkBuffer, VkDeviceSize), commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset)
 end
 
 function vkCmdCopyAccelerationStructureNV(commandBuffer, dst, src, mode, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkAccelerationStructureKHR, VkAccelerationStructureKHR, VkCopyAccelerationStructureModeKHR), commandBuffer, dst, src, mode)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkAccelerationStructureNV, VkAccelerationStructureNV, VkCopyAccelerationStructureModeKHR), commandBuffer, dst, src, mode)
 end
 
 function vkCmdTraceRaysNV(commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth, fun_ptr)
@@ -3043,15 +3307,11 @@ function vkGetRayTracingShaderGroupHandlesNV(device, pipeline, firstGroup, group
 end
 
 function vkGetAccelerationStructureHandleNV(device, accelerationStructure, dataSize, pData, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkAccelerationStructureKHR, Csize_t, Ptr{Cvoid}), device, accelerationStructure, dataSize, pData)
-end
-
-function vkCmdWriteAccelerationStructuresPropertiesKHR(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+    ccall(fun_ptr, VkResult, (VkDevice, VkAccelerationStructureNV, Csize_t, Ptr{Cvoid}), device, accelerationStructure, dataSize, pData)
 end
 
 function vkCmdWriteAccelerationStructuresPropertiesNV(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureNV}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
 end
 
 function vkCompileDeferredNV(device, pipeline, shader, fun_ptr)
@@ -3254,6 +3514,134 @@ function vkGetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, 
     ccall(fun_ptr, Cvoid, (VkDevice, VkObjectType, UInt64, VkPrivateDataSlotEXT, Ptr{UInt64}), device, objectType, objectHandle, privateDataSlot, pData)
 end
 
+function vkCmdSetFragmentShadingRateEnumNV(commandBuffer, shadingRate, combinerOps, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkFragmentShadingRateNV, NTuple{2, VkFragmentShadingRateCombinerOpKHR}), commandBuffer, shadingRate, combinerOps)
+end
+
+function vkAcquireWinrtDisplayNV(physicalDevice, display, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, VkDisplayKHR), physicalDevice, display)
+end
+
+function vkGetWinrtDisplayNV(physicalDevice, deviceRelativeId, pDisplay, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, UInt32, Ptr{VkDisplayKHR}), physicalDevice, deviceRelativeId, pDisplay)
+end
+
+function vkCmdSetVertexInputEXT(commandBuffer, vertexBindingDescriptionCount, pVertexBindingDescriptions, vertexAttributeDescriptionCount, pVertexAttributeDescriptions, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkVertexInputBindingDescription2EXT}, UInt32, Ptr{VkVertexInputAttributeDescription2EXT}), commandBuffer, vertexBindingDescriptionCount, pVertexBindingDescriptions, vertexAttributeDescriptionCount, pVertexAttributeDescriptions)
+end
+
+function vkCmdSetPatchControlPointsEXT(commandBuffer, patchControlPoints, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32), commandBuffer, patchControlPoints)
+end
+
+function vkCmdSetRasterizerDiscardEnableEXT(commandBuffer, rasterizerDiscardEnable, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, rasterizerDiscardEnable)
+end
+
+function vkCmdSetDepthBiasEnableEXT(commandBuffer, depthBiasEnable, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, depthBiasEnable)
+end
+
+function vkCmdSetLogicOpEXT(commandBuffer, logicOp, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkLogicOp), commandBuffer, logicOp)
+end
+
+function vkCmdSetPrimitiveRestartEnableEXT(commandBuffer, primitiveRestartEnable, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, VkBool32), commandBuffer, primitiveRestartEnable)
+end
+
+function vkCmdSetColorWriteEnableEXT(commandBuffer, attachmentCount, pColorWriteEnables, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkBool32}), commandBuffer, attachmentCount, pColorWriteEnables)
+end
+
+function vkCreateAccelerationStructureKHR(device, pCreateInfo, pAllocator, pAccelerationStructure, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureKHR}), device, pCreateInfo, pAllocator, pAccelerationStructure)
+end
+
+function vkDestroyAccelerationStructureKHR(device, accelerationStructure, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkAccelerationStructureKHR, Ptr{VkAllocationCallbacks}), device, accelerationStructure, pAllocator)
+end
+
+function vkCmdBuildAccelerationStructuresKHR(commandBuffer, infoCount, pInfos, ppBuildRangeInfos, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildRangeInfoKHR}}), commandBuffer, infoCount, pInfos, ppBuildRangeInfos)
+end
+
+function vkCmdBuildAccelerationStructuresIndirectKHR(commandBuffer, infoCount, pInfos, pIndirectDeviceAddresses, pIndirectStrides, ppMaxPrimitiveCounts, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{VkDeviceAddress}, Ptr{UInt32}, Ptr{Ptr{UInt32}}), commandBuffer, infoCount, pInfos, pIndirectDeviceAddresses, pIndirectStrides, ppMaxPrimitiveCounts)
+end
+
+function vkBuildAccelerationStructuresKHR(device, deferredOperation, infoCount, pInfos, ppBuildRangeInfos, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildRangeInfoKHR}}), device, deferredOperation, infoCount, pInfos, ppBuildRangeInfos)
+end
+
+function vkCopyAccelerationStructureKHR(device, deferredOperation, pInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR, Ptr{VkCopyAccelerationStructureInfoKHR}), device, deferredOperation, pInfo)
+end
+
+function vkCopyAccelerationStructureToMemoryKHR(device, deferredOperation, pInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), device, deferredOperation, pInfo)
+end
+
+function vkCopyMemoryToAccelerationStructureKHR(device, deferredOperation, pInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), device, deferredOperation, pInfo)
+end
+
+function vkWriteAccelerationStructuresPropertiesKHR(device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, Csize_t, Ptr{Cvoid}, Csize_t), device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride)
+end
+
+function vkCmdCopyAccelerationStructureKHR(commandBuffer, pInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureInfoKHR}), commandBuffer, pInfo)
+end
+
+function vkCmdCopyAccelerationStructureToMemoryKHR(commandBuffer, pInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), commandBuffer, pInfo)
+end
+
+function vkCmdCopyMemoryToAccelerationStructureKHR(commandBuffer, pInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), commandBuffer, pInfo)
+end
+
+function vkGetAccelerationStructureDeviceAddressKHR(device, pInfo, fun_ptr)
+    ccall(fun_ptr, VkDeviceAddress, (VkDevice, Ptr{VkAccelerationStructureDeviceAddressInfoKHR}), device, pInfo)
+end
+
+function vkCmdWriteAccelerationStructuresPropertiesKHR(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, VkQueryPool, UInt32), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery)
+end
+
+function vkGetDeviceAccelerationStructureCompatibilityKHR(device, pVersionInfo, pCompatibility, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkAccelerationStructureVersionInfoKHR}, Ptr{VkAccelerationStructureCompatibilityKHR}), device, pVersionInfo, pCompatibility)
+end
+
+function vkGetAccelerationStructureBuildSizesKHR(device, buildType, pBuildInfo, pMaxPrimitiveCounts, pSizeInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkAccelerationStructureBuildTypeKHR, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{UInt32}, Ptr{VkAccelerationStructureBuildSizesInfoKHR}), device, buildType, pBuildInfo, pMaxPrimitiveCounts, pSizeInfo)
+end
+
+function vkCmdTraceRaysKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkStridedDeviceAddressRegionKHR}, Ptr{VkStridedDeviceAddressRegionKHR}, Ptr{VkStridedDeviceAddressRegionKHR}, Ptr{VkStridedDeviceAddressRegionKHR}, UInt32, UInt32, UInt32), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth)
+end
+
+function vkCreateRayTracingPipelinesKHR(device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+end
+
+function vkGetRayTracingCaptureReplayShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
+end
+
+function vkCmdTraceRaysIndirectKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, indirectDeviceAddress, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkStridedDeviceAddressRegionKHR}, Ptr{VkStridedDeviceAddressRegionKHR}, Ptr{VkStridedDeviceAddressRegionKHR}, Ptr{VkStridedDeviceAddressRegionKHR}, VkDeviceAddress), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, indirectDeviceAddress)
+end
+
+function vkGetRayTracingShaderGroupStackSizeKHR(device, pipeline, group, groupShader, fun_ptr)
+    ccall(fun_ptr, VkDeviceSize, (VkDevice, VkPipeline, UInt32, VkShaderGroupShaderKHR), device, pipeline, group, groupShader)
+end
+
+function vkCmdSetRayTracingPipelineStackSizeKHR(commandBuffer, pipelineStackSize, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32), commandBuffer, pipelineStackSize)
+end
+
 function vkCreateAndroidSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
     ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkAndroidSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
@@ -3268,6 +3656,22 @@ end
 
 function vkCreateImagePipeSurfaceFUCHSIA(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
     ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkImagePipeSurfaceCreateInfoFUCHSIA}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
+end
+
+function vkGetMemoryZirconHandleFUCHSIA(device, pGetZirconHandleInfo, pZirconHandle, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkMemoryGetZirconHandleInfoFUCHSIA}, Ptr{Cint}), device, pGetZirconHandleInfo, pZirconHandle)
+end
+
+function vkGetMemoryZirconHandlePropertiesFUCHSIA(device, handleType, zirconHandle, pMemoryZirconHandleProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkExternalMemoryHandleTypeFlagBits, Cint, Ptr{VkMemoryZirconHandlePropertiesFUCHSIA}), device, handleType, zirconHandle, pMemoryZirconHandleProperties)
+end
+
+function vkImportSemaphoreZirconHandleFUCHSIA(device, pImportSemaphoreZirconHandleInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkImportSemaphoreZirconHandleInfoFUCHSIA}), device, pImportSemaphoreZirconHandleInfo)
+end
+
+function vkGetSemaphoreZirconHandleFUCHSIA(device, pGetZirconHandleInfo, pZirconHandle, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkSemaphoreGetZirconHandleInfoFUCHSIA}, Ptr{Cint}), device, pGetZirconHandleInfo, pZirconHandle)
 end
 
 function vkCreateIOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
@@ -3382,94 +3786,66 @@ function vkCreateStreamDescriptorSurfaceGGP(instance, pCreateInfo, pAllocator, p
     ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkStreamDescriptorSurfaceCreateInfoGGP}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
-function vkCreateDeferredOperationKHR(device, pAllocator, pDeferredOperation, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAllocationCallbacks}, Ptr{VkDeferredOperationKHR}), device, pAllocator, pDeferredOperation)
+function vkCreateScreenSurfaceQNX(instance, pCreateInfo, pAllocator, pSurface, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkInstance, Ptr{VkScreenSurfaceCreateInfoQNX}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
 end
 
-function vkDestroyDeferredOperationKHR(device, operation, pAllocator, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, VkDeferredOperationKHR, Ptr{VkAllocationCallbacks}), device, operation, pAllocator)
+function vkGetPhysicalDeviceScreenPresentationSupportQNX(physicalDevice, queueFamilyIndex, window, fun_ptr)
+    ccall(fun_ptr, VkBool32, (VkPhysicalDevice, UInt32, Ptr{_screen_window}), physicalDevice, queueFamilyIndex, window)
 end
 
-function vkGetDeferredOperationMaxConcurrencyKHR(device, operation, fun_ptr)
-    ccall(fun_ptr, UInt32, (VkDevice, VkDeferredOperationKHR), device, operation)
+function vkGetPhysicalDeviceVideoCapabilitiesKHR(physicalDevice, pVideoProfile, pCapabilities, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkVideoProfileKHR}, Ptr{VkVideoCapabilitiesKHR}), physicalDevice, pVideoProfile, pCapabilities)
 end
 
-function vkGetDeferredOperationResultKHR(device, operation, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+function vkGetPhysicalDeviceVideoFormatPropertiesKHR(physicalDevice, pVideoFormatInfo, pVideoFormatPropertyCount, pVideoFormatProperties, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkPhysicalDevice, Ptr{VkPhysicalDeviceVideoFormatInfoKHR}, Ptr{UInt32}, Ptr{VkVideoFormatPropertiesKHR}), physicalDevice, pVideoFormatInfo, pVideoFormatPropertyCount, pVideoFormatProperties)
 end
 
-function vkDeferredOperationJoinKHR(device, operation, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkDeferredOperationKHR), device, operation)
+function vkCreateVideoSessionKHR(device, pCreateInfo, pAllocator, pVideoSession, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkVideoSessionCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkVideoSessionKHR}), device, pCreateInfo, pAllocator, pVideoSession)
 end
 
-function vkCreateAccelerationStructureKHR(device, pCreateInfo, pAllocator, pAccelerationStructure, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAccelerationStructureCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkAccelerationStructureKHR}), device, pCreateInfo, pAllocator, pAccelerationStructure)
+function vkDestroyVideoSessionKHR(device, videoSession, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkVideoSessionKHR, Ptr{VkAllocationCallbacks}), device, videoSession, pAllocator)
 end
 
-function vkGetAccelerationStructureMemoryRequirementsKHR(device, pInfo, pMemoryRequirements, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkDevice, Ptr{VkAccelerationStructureMemoryRequirementsInfoKHR}, Ptr{VkMemoryRequirements2}), device, pInfo, pMemoryRequirements)
+function vkGetVideoSessionMemoryRequirementsKHR(device, videoSession, pVideoSessionMemoryRequirementsCount, pVideoSessionMemoryRequirements, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkVideoSessionKHR, Ptr{UInt32}, Ptr{VkVideoGetMemoryPropertiesKHR}), device, videoSession, pVideoSessionMemoryRequirementsCount, pVideoSessionMemoryRequirements)
 end
 
-function vkCmdBuildAccelerationStructureKHR(commandBuffer, infoCount, pInfos, ppOffsetInfos, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), commandBuffer, infoCount, pInfos, ppOffsetInfos)
+function vkBindVideoSessionMemoryKHR(device, videoSession, videoSessionBindMemoryCount, pVideoSessionBindMemories, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkVideoSessionKHR, UInt32, Ptr{VkVideoBindMemoryKHR}), device, videoSession, videoSessionBindMemoryCount, pVideoSessionBindMemories)
 end
 
-function vkCmdBuildAccelerationStructureIndirectKHR(commandBuffer, pInfo, indirectBuffer, indirectOffset, indirectStride, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, VkBuffer, VkDeviceSize, UInt32), commandBuffer, pInfo, indirectBuffer, indirectOffset, indirectStride)
+function vkCreateVideoSessionParametersKHR(device, pCreateInfo, pAllocator, pVideoSessionParameters, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkVideoSessionParametersCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkVideoSessionParametersKHR}), device, pCreateInfo, pAllocator, pVideoSessionParameters)
 end
 
-function vkBuildAccelerationStructureKHR(device, infoCount, pInfos, ppOffsetInfos, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, Ptr{Ptr{VkAccelerationStructureBuildOffsetInfoKHR}}), device, infoCount, pInfos, ppOffsetInfos)
+function vkUpdateVideoSessionParametersKHR(device, videoSessionParameters, pUpdateInfo, fun_ptr)
+    ccall(fun_ptr, VkResult, (VkDevice, VkVideoSessionParametersKHR, Ptr{VkVideoSessionParametersUpdateInfoKHR}), device, videoSessionParameters, pUpdateInfo)
 end
 
-function vkCopyAccelerationStructureKHR(device, pInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureInfoKHR}), device, pInfo)
+function vkDestroyVideoSessionParametersKHR(device, videoSessionParameters, pAllocator, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkDevice, VkVideoSessionParametersKHR, Ptr{VkAllocationCallbacks}), device, videoSessionParameters, pAllocator)
 end
 
-function vkCopyAccelerationStructureToMemoryKHR(device, pInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), device, pInfo)
+function vkCmdBeginVideoCodingKHR(commandBuffer, pBeginInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkVideoBeginCodingInfoKHR}), commandBuffer, pBeginInfo)
 end
 
-function vkCopyMemoryToAccelerationStructureKHR(device, pInfo, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), device, pInfo)
+function vkCmdEndVideoCodingKHR(commandBuffer, pEndCodingInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkVideoEndCodingInfoKHR}), commandBuffer, pEndCodingInfo)
 end
 
-function vkWriteAccelerationStructuresPropertiesKHR(device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, UInt32, Ptr{VkAccelerationStructureKHR}, VkQueryType, Csize_t, Ptr{Cvoid}, Csize_t), device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride)
+function vkCmdControlVideoCodingKHR(commandBuffer, pCodingControlInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkVideoCodingControlInfoKHR}), commandBuffer, pCodingControlInfo)
 end
 
-function vkCmdCopyAccelerationStructureKHR(commandBuffer, pInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureInfoKHR}), commandBuffer, pInfo)
+function vkCmdDecodeVideoKHR(commandBuffer, pFrameInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkVideoDecodeInfoKHR}), commandBuffer, pFrameInfo)
 end
 
-function vkCmdCopyAccelerationStructureToMemoryKHR(commandBuffer, pInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}), commandBuffer, pInfo)
-end
-
-function vkCmdCopyMemoryToAccelerationStructureKHR(commandBuffer, pInfo, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}), commandBuffer, pInfo)
-end
-
-function vkCmdTraceRaysKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, UInt32, UInt32, UInt32), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth)
-end
-
-function vkCreateRayTracingPipelinesKHR(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipelineCache, UInt32, Ptr{VkRayTracingPipelineCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkPipeline}), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
-end
-
-function vkGetAccelerationStructureDeviceAddressKHR(device, pInfo, fun_ptr)
-    ccall(fun_ptr, VkDeviceAddress, (VkDevice, Ptr{VkAccelerationStructureDeviceAddressInfoKHR}), device, pInfo)
-end
-
-function vkGetRayTracingCaptureReplayShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, VkPipeline, UInt32, UInt32, Csize_t, Ptr{Cvoid}), device, pipeline, firstGroup, groupCount, dataSize, pData)
-end
-
-function vkCmdTraceRaysIndirectKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, buffer, offset, fun_ptr)
-    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, Ptr{VkStridedBufferRegionKHR}, VkBuffer, VkDeviceSize), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, buffer, offset)
-end
-
-function vkGetDeviceAccelerationStructureCompatibilityKHR(device, version, fun_ptr)
-    ccall(fun_ptr, VkResult, (VkDevice, Ptr{VkAccelerationStructureVersionKHR}), device, version)
+function vkCmdEncodeVideoKHR(commandBuffer, pEncodeInfo, fun_ptr)
+    ccall(fun_ptr, Cvoid, (VkCommandBuffer, Ptr{VkVideoEncodeInfoKHR}), commandBuffer, pEncodeInfo)
 end
