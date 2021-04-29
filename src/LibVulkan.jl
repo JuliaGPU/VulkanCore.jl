@@ -27,7 +27,8 @@ function __init__()
     libvulkan_handle[] = Libdl.dlopen(libname)
 end
 
-using CEnum
+include(joinpath(@__DIR__, "..", "gen", "CEnum.jl"))
+using .CEnum
 
 const Ctm = Base.Libc.TmStruct
 const Ctime_t = UInt
