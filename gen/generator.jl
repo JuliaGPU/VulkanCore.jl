@@ -1,60 +1,95 @@
-using Clang
-
+using Clang.Generators
+using Clang.Generators.JLLEnvs
 import Vulkan_Headers_jll
+using Wayland_jll
+using Xorg_libxcb_jll
+using Xorg_xorgproto_jll
+using Xorg_libX11_jll
+using Xorg_libXrandr_jll
+using Xorg_libXrender_jll
 
+cd(@__DIR__)
 
 # get include directory & vulkan.h
-VK_INCLUDE_ROOT = joinpath(Vulkan_Headers_jll.artifact_dir, "include")
-VK_HEADERS = [joinpath(VK_INCLUDE_ROOT, "vulkan", "vulkan.h")]
+const VK_INCLUDE = joinpath(Vulkan_Headers_jll.artifact_dir, "include", "vulkan")
+const VK_HEADERS = [joinpath(VK_INCLUDE, "vulkan.h")]
 
-# include all extensions
-VK_EXTENSIONS = [
-    "VK_USE_PLATFORM_DIRECTFB_EXT",
-    "VK_USE_PLATFORM_ANDROID_KHR",
-    "VK_USE_PLATFORM_FUCHSIA",
-    "VK_USE_PLATFORM_IOS_MVK",
-    "VK_USE_PLATFORM_MACOS_MVK",
-    "VK_USE_PLATFORM_METAL_EXT",
-    "VK_USE_PLATFORM_VI_NN",
-    "VK_USE_PLATFORM_WAYLAND_KHR",
-    "VK_USE_PLATFORM_WIN32_KHR",
-    "VK_USE_PLATFORM_XCB_KHR",
-    "VK_USE_PLATFORM_XLIB_KHR",
-    "VK_USE_PLATFORM_XLIB_XRANDR_EXT",
-    "VK_USE_PLATFORM_GGP",
-    "VK_USE_PLATFORM_SCREEN_QNX",
-    "VK_ENABLE_BETA_EXTENSIONS",
-    ]
+# config extensions for different platforms
+# X-ref: https://github.com/SaschaWillems/Vulkan/blob/master/CMakeLists.txt
+const VK_LINUX_EXTENSION_COMMON = [
+    # "-DVK_USE_PLATFORM_DIRECTFB_EXT",  # no JLL package
+    "-DVK_USE_PLATFORM_WAYLAND_KHR",
+    "-DVK_USE_PLATFORM_XCB_KHR",
+    "-DVK_USE_PLATFORM_XLIB_KHR",
+    "-DVK_USE_PLATFORM_XLIB_XRANDR_EXT",
+]
+const VK_MACOS_EXTENSION_COMMON = ["-DVK_USE_PLATFORM_MACOS_MVK", "-DVK_USE_PLATFORM_METAL_EXT"]
+const VK_WIN_EXTENSION_COMMON = ["-DVK_USE_PLATFORM_WIN32_KHR"]
+const VK_EXTENSIONS_MAP = Dict(
+    # "aarch64-apple-darwin20" => vcat(VK_MACOS_EXTENSION_COMMON, "-DVK_USE_PLATFORM_DIRECTFB_EXT"),
+    # "x86_64-apple-darwin14" => vcat(VK_MACOS_EXTENSION_COMMON, "-DVK_USE_PLATFORM_DIRECTFB_EXT"),
+    "aarch64-apple-darwin20" => VK_MACOS_EXTENSION_COMMON,
+    "x86_64-apple-darwin14" => VK_MACOS_EXTENSION_COMMON,
+    "i686-w64-mingw32" => VK_WIN_EXTENSION_COMMON,
+    "x86_64-w64-mingw32" => VK_WIN_EXTENSION_COMMON,
+    # "aarch64-linux-gnu" => vcat(VK_LINUX_EXTENSION_COMMON, "-DVK_USE_PLATFORM_FUCHSIA"),
+    # "aarch64-linux-musl" => vcat(VK_LINUX_EXTENSION_COMMON, "-DVK_USE_PLATFORM_FUCHSIA"),
+    "aarch64-linux-gnu" => VK_LINUX_EXTENSION_COMMON,
+    "aarch64-linux-musl" => VK_LINUX_EXTENSION_COMMON,
+    "armv7l-linux-gnueabihf" => VK_LINUX_EXTENSION_COMMON,
+    "armv7l-linux-musleabihf" => VK_LINUX_EXTENSION_COMMON,
+    "x86_64-linux-gnu" => VK_LINUX_EXTENSION_COMMON,
+    "x86_64-linux-musl" => VK_LINUX_EXTENSION_COMMON,
+    "i686-linux-gnu" => VK_LINUX_EXTENSION_COMMON,
+    "i686-linux-musl" => VK_LINUX_EXTENSION_COMMON,
+    "powerpc64le-linux-gnu" => VK_LINUX_EXTENSION_COMMON,
+    "x86_64-unknown-freebsd11.1" => ["-DVK_USE_PLATFORM_XCB_KHR", "-DVK_USE_PLATFORM_XLIB_KHR", "-DVK_USE_PLATFORM_XLIB_XRANDR_EXT"],
+)
 
-common_file = joinpath(@__DIR__, "vk_common.jl")
-api_file = joinpath(@__DIR__, "vk_api.jl")
+for target in JLLEnvs.JLL_ENV_TRIPLES
+    @info "processing $target"
 
-wc = init(; headers=VK_HEADERS,
-output_file=api_file,
-            common_file=common_file,
-            clang_includes=vcat(VK_INCLUDE_ROOT, CLANG_INCLUDE),
-            clang_args="-D" .* VK_EXTENSIONS,
-            header_wrapped=(root, current) -> startswith(current, VK_INCLUDE_ROOT),
-            header_library=x -> "libvulkan",
-            clang_diagnostics=true,
-            )
+    # programmatically add options
+    options = Dict{String,Any}(
+        "general" => Dict{String,Any}(),
+        "codegen" => Dict{String,Any}(),
+        )
+    general, codegen = options["general"], options["codegen"]
+    general["library_name"] = "libvulkan"
+    general["output_file_path"] = joinpath(@__DIR__, "..", "lib", "$target.jl")
+    general["use_deterministic_symbol"] = true
+    general["print_using_CEnum"] = false
+    general["printer_blacklist"] = [
+        "VKAPI_PTR",
+        "VKAPI_CALL",
+        ]
+    codegen["opaque_as_mutable_struct"] = false
 
-# it should complain that some header files are not present (zircon/types.h, wayland-client.h...) but it should be OK since nothing from those files is actually wrapped
-run(wc)
+    # add compiler flags
+    args = get_default_args(target)
+    push!(args, "-I$VK_INCLUDE")
 
-api_str = join(readlines(api_file), "\n")
+    wayland_inc = JLLEnvs.get_pkg_include_dir(Wayland_jll, target)
+    !isempty(wayland_inc) && push!(args, "-isystem$wayland_inc")
 
-# add an additional method which uses a function pointer for each API function
-wrapped_funcs = String[]
-for func ∈ eachmatch(r"function (.*)\((.*)\)\n    (ccall.*)\nend", api_str)
-    name, args, body = func.captures
-    wrapped_func = """
-    function $name($args, fun_ptr)
-        $(replace(body, "(:$name, libvulkan)" => "fun_ptr"))
-    end
-    """
-    push!(wrapped_funcs, wrapped_func)
-end
-open(api_file, "a+") do io
-    write(io, "\n" * join(wrapped_funcs, "\n"))
+    xcb_inc = JLLEnvs.get_pkg_include_dir(Xorg_libxcb_jll, target)
+    !isempty(xcb_inc) && push!(args, "-isystem$xcb_inc")
+
+    xlibx_inc = JLLEnvs.get_pkg_include_dir(Xorg_xorgproto_jll, target)
+    !isempty(xlibx_inc) && push!(args, "-isystem$xlibx_inc")
+
+    xlib_inc = JLLEnvs.get_pkg_include_dir(Xorg_libX11_jll, target)
+    !isempty(xlib_inc) && push!(args, "-isystem$xlib_inc")
+
+    xlibXrandr_inc = JLLEnvs.get_pkg_include_dir(Xorg_libXrandr_jll, target)
+    !isempty(xlibXrandr_inc) && push!(args, "-isystem$xlibXrandr_inc")
+
+    xlibXrender_inc = JLLEnvs.get_pkg_include_dir(Xorg_libXrender_jll, target)
+    !isempty(xlibXrender_inc) && push!(args, "-isystem$xlibXrender_inc")
+
+    append!(args, VK_EXTENSIONS_MAP[target])
+
+    ctx = create_context(VK_HEADERS, args, options)
+
+    build!(ctx)
 end

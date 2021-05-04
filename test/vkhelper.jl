@@ -12,7 +12,7 @@ unsafe_strings2pp(names::Vector{String}) = Base.unsafe_convert(Ptr{Cstring}, Bas
     to_string(x::NTuple{N,UInt8}) -> String
 Convert a `NTuple{N,UInt8}` to `String` dropping all of the `\0`s.
 """
-to_string(x::NTuple{N,UInt8}) where {N} = rstrip(String(collect(x)), '\0')
+to_string(x::NTuple{N,Int8}) where {N} = rstrip(String(UInt8.(collect(x))), '\0')
 
 """
     int2version(::Type{VersionNumber}, ver::Integer) -> VersionNumber
@@ -20,7 +20,7 @@ Convert a Vulkan version integer to a `major.minor.patch` `VersionNumber`.
 """
 int2version(v::Integer) = VersionNumber(VK_VERSION_MAJOR(v), VK_VERSION_MINOR(v), VK_VERSION_PATCH(v))
 
-# extension & layer checking 
+# extension & layer checking
 struct ExtensionProperties
     name::String
     version::VersionNumber
@@ -159,12 +159,12 @@ function LibVulkan.VkDebugUtilsMessengerCreateInfoEXT(messageSeverity, messageTy
 end
 
 function LibVulkan.VkDebugUtilsMessengerCreateInfoEXT(pfnUserCallback, pUserData)
-    messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | 
-                      VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT | 
-                      VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | 
+    messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT |
+                      VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT |
+                      VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
                       VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
-    messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | 
-                  VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | 
+    messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
+                  VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
                   VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT
     return VkDebugUtilsMessengerCreateInfoEXT(messageSeverity, messageType, pfnUserCallback, pUserData)
 end

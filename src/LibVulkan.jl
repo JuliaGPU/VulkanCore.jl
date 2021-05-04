@@ -1,11 +1,14 @@
 module LibVulkan
 
+include("CEnum.jl")
+using .CEnum
+
 import Libdl
 
 @static if !isempty(get(ENV, "JULIA_VULKAN_LIBNAME", ""))
     const libvulkan = ENV["JULIA_VULKAN_LIBNAME"]
 elseif Sys.iswindows()
-    const libvulkan = "vulkan-1.dll" 
+    const libvulkan = "vulkan-1.dll"
 elseif Sys.isapple()
     const libvulkan = "libvulkan.dylib"
 elseif Sys.islinux()
@@ -27,81 +30,52 @@ function __init__()
     libvulkan_handle[] = Libdl.dlopen(libname)
 end
 
-include("CEnum.jl")
-using .CEnum
-
-const Ctm = Base.Libc.TmStruct
-const Ctime_t = UInt
-const Cclock_t = UInt
-
-export Ctm, Ctime_t, Cclock_t
-
-#### External definitions
-
-# X11/X.h
-const Window = UInt32 # unsigned long
-const VisualID = UInt32 # unsigned long
-# X11/Xlib.h
-const Display = Cvoid # Opaque struct
-# X11/Xrandr.h
-const RROutput = UInt32
-# xcb.h
-const xcb_connection_t = Cvoid # opaque struct
-const xcb_window_t = UInt32
-const xcb_visualid_t = UInt32
-# Wayland
-const wl_display = Cvoid # TODO: make opaque for now
-const wl_surface = Cvoid # TODO: make opaque for now
-# Mir
-const MirConnection = Cvoid # TODO: make opaque for now
-const MirSurface = Cvoid # TODO: make opaque for now
-# Android
-const ANativeWindow = Cvoid # TODO: make opaque for now
-# Windows
-const HINSTANCE = Ptr{Cvoid}
-const HWND = Ptr{Cvoid}
-const HMONITOR = Ptr{Cvoid}
-const HANDLE = HMONITOR
-const DWORD = UInt32
-const LPCWSTR = UInt16
-const SECURITY_ATTRIBUTES = Cvoid # opaque struct
-# DirectFB
-const IDirectFB = Cvoid # opaque struct
-const IDirectFBSurface = Cvoid # opaque struct
-# Zircon
-const zx_handle_t = UInt32
-# GGP C
-const GgpStreamDescriptor = UInt32
-const GgpFrameToken = UInt32
-# QNX
-const _screen_context = Ptr{Cvoid}
-const _screen_window = Ptr{Cvoid}
-
-# TODO: Clang.jl should support this kinda macros
-VK_MAKE_VERSION(major, minor, patch) = ( Cuint(major) << 22 ) | ( Cuint(minor) << 12 ) | patch
-VK_MAKE_VIDEO_STD_VERSION(major, minor, patch) = VK_MAKE_VERSION(major, minor, patch)
+VK_MAKE_VERSION(major, minor, patch) = (Cuint(major) << 22) | (Cuint(minor) << 12) | patch
+VK_MAKE_API_VERSION(variant, major, minor, patch) = (Cuint(variant) << 29) | (Cuint(major) << 22) | (Cuint(minor) << 12) | Cuint(patch)
 
 VK_VERSION_MAJOR(version) = Cuint(version) >> 22
 VK_VERSION_MINOR(version) = (Cuint(version) >> 12) & 0x3ff
 VK_VERSION_PATCH(version) = Cuint(version) & 0xfff
 
-const VK_API_VERSION_1_0 = VK_MAKE_VERSION(1, 0, 0)
-const VK_API_VERSION_1_1 = VK_MAKE_VERSION(1, 1, 0)
-const VK_API_VERSION_1_2 = VK_MAKE_VERSION(1, 2, 0)
+const IS_LIBC_MUSL = occursin("musl", Base.BUILD_TRIPLET)
+if Sys.isapple() && Sys.ARCH === :aarch64
+    include("../lib/aarch64-apple-darwin20.jl")
+elseif Sys.islinux() && Sys.ARCH === :aarch64 && !IS_LIBC_MUSL
+    include("../lib/aarch64-linux-gnu.jl")
+elseif Sys.islinux() && Sys.ARCH === :aarch64 && IS_LIBC_MUSL
+    include("../lib/aarch64-linux-musl.jl")
+elseif Sys.islinux() && startswith(string(Sys.ARCH), "arm") && !IS_LIBC_MUSL
+    include("../lib/armv7l-linux-gnueabihf.jl")
+elseif Sys.islinux() && startswith(string(Sys.ARCH), "arm") && IS_LIBC_MUSL
+    include("../lib/armv7l-linux-musleabihf.jl")
+elseif Sys.islinux() && Sys.ARCH === :i686 && !IS_LIBC_MUSL
+    include("../lib/i686-linux-gnu.jl")
+elseif Sys.islinux() && Sys.ARCH === :i686 && IS_LIBC_MUSL
+    include("../lib/i686-linux-musl.jl")
+elseif Sys.iswindows() && Sys.ARCH === :i686
+    include("../lib/i686-w64-mingw32.jl")
+elseif Sys.islinux() && Sys.ARCH === :powerpc64le
+    include("../lib/powerpc64le-linux-gnu.jl")
+elseif Sys.isapple() && Sys.ARCH === :x86_64
+    include("../lib/x86_64-apple-darwin14.jl")
+elseif Sys.islinux() && Sys.ARCH === :x86_64 && !IS_LIBC_MUSL
+    include("../lib/x86_64-linux-gnu.jl")
+elseif Sys.islinux() && Sys.ARCH === :x86_64 && IS_LIBC_MUSL
+    include("../lib/x86_64-linux-musl.jl")
+elseif Sys.isbsd() && !Sys.isapple()
+    include("../lib/x86_64-unknown-freebsd11.1.jl")
+elseif Sys.iswindows() && Sys.ARCH === :x86_64
+    include("../lib/x86_64-w64-mingw32.jl")
+else
+    error("Unknown platform: $(Base.BUILD_TRIPLET)")
+end
 
-const VK_STD_VULKAN_VIDEO_CODEC_H264_API_VERSION_0_9 = VK_MAKE_VIDEO_STD_VERSION(0, 9, 0)
-const VK_STD_VULKAN_VIDEO_CODEC_H265_API_VERSION_0_5 = VK_MAKE_VIDEO_STD_VERSION(0, 5, 0)
-
-include(joinpath(@__DIR__, "..", "gen", "vk_common.jl"))
-include(joinpath(@__DIR__, "..", "gen", "vk_api.jl"))
-
-const VK_HEADER_VERSION_COMPLETE = VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION)
-
-# export everything
-foreach(names(@__MODULE__, all=true)) do s
-   if startswith(string(s), "VK_") || startswith(string(s), "Vk") || startswith(string(s), "vk") || startswith(string(s), "StdVideo")
-       @eval export $s
-   end
+# exports
+const PREFIXES = ["VK_", "Vk", "vk"]
+for name in names(@__MODULE__; all=true), prefix in PREFIXES
+    if startswith(string(name), prefix)
+        @eval export $name
+    end
 end
 
 end # module
