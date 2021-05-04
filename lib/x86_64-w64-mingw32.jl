@@ -10571,10 +10571,6 @@ end
 
 const VULKAN_H_ = 1
 
-const VKAPI_CALL = __stdcall
-
-const VKAPI_PTR = VKAPI_CALL
-
 const VULKAN_CORE_H_ = 1
 
 const VK_VERSION_1_0 = 1

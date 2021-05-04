@@ -59,6 +59,10 @@ for target in JLLEnvs.JLL_ENV_TRIPLES
     general["output_file_path"] = joinpath(@__DIR__, "..", "lib", "$target.jl")
     general["use_deterministic_symbol"] = true
     general["print_using_CEnum"] = false
+    general["printer_blacklist"] = [
+        "VKAPI_PTR",
+        "VKAPI_CALL",
+        ]
     codegen["opaque_as_mutable_struct"] = false
 
     # add compiler flags
