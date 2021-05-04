@@ -1,0 +1,14 @@
+[deps]
+Clang = "40e3b903-d033-50b4-a0cc-940c62c95e31"
+Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+Vulkan_Headers_jll = "8d446b21-f3ad-5576-a034-752265b9b6f9"
+Wayland_jll = "a2964d1f-97da-50d4-b82a-358c7fce9d89"
+Xorg_libX11_jll = "4f6342f7-b3d2-589e-9d20-edeb45f2b2bc"
+Xorg_libXrandr_jll = "ec84b674-ba8e-5d96-8ba1-2a689ba10484"
+Xorg_libXrender_jll = "ea2f1a96-1ddc-540d-b46f-429655e07cfa"
+Xorg_libxcb_jll = "c7cfdc94-dc32-55de-ac96-5a1b8d977c5b"
+Xorg_xorgproto_jll = "c4d99508-4286-5418-9131-c86396af500b"
+
+[compat]
+Clang = "0.14.0"
+Vulkan_Headers_jll = "1.2.177"
