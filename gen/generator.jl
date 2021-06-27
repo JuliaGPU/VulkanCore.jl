@@ -63,6 +63,7 @@ for target in JLLEnvs.JLL_ENV_TRIPLES
         "VKAPI_PTR",
         "VKAPI_CALL",
         ]
+    general["add_fptr_methods"] = true
     codegen["opaque_as_mutable_struct"] = false
 
     # add compiler flags
