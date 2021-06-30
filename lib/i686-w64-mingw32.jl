@@ -3180,6 +3180,29 @@ function Base.setproperty!(x::Ptr{VkClearColorValue}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
 end
 
+const __U_VkClearColorValue = Union{NTuple{4, Cfloat}, NTuple{4, Int32}, NTuple{4, UInt32}}
+
+function VkClearColorValue(float32::NTuple{4, Cfloat})
+    ref = Ref{VkClearColorValue}()
+    ptr = Base.unsafe_convert(Ptr{VkClearColorValue}, ref)
+    ptr.float32 = float32
+    ref[]
+end
+
+function VkClearColorValue(int32::NTuple{4, Int32})
+    ref = Ref{VkClearColorValue}()
+    ptr = Base.unsafe_convert(Ptr{VkClearColorValue}, ref)
+    ptr.int32 = int32
+    ref[]
+end
+
+function VkClearColorValue(uint32::NTuple{4, UInt32})
+    ref = Ref{VkClearColorValue}()
+    ptr = Base.unsafe_convert(Ptr{VkClearColorValue}, ref)
+    ptr.uint32 = uint32
+    ref[]
+end
+
 struct VkClearDepthStencilValue
     depth::Cfloat
     stencil::UInt32
@@ -3204,6 +3227,22 @@ end
 
 function Base.setproperty!(x::Ptr{VkClearValue}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
+end
+
+const __U_VkClearValue = Union{VkClearColorValue, VkClearDepthStencilValue}
+
+function VkClearValue(color::VkClearColorValue)
+    ref = Ref{VkClearValue}()
+    ptr = Base.unsafe_convert(Ptr{VkClearValue}, ref)
+    ptr.color = color
+    ref[]
+end
+
+function VkClearValue(depthStencil::VkClearDepthStencilValue)
+    ref = Ref{VkClearValue}()
+    ptr = Base.unsafe_convert(Ptr{VkClearValue}, ref)
+    ptr.depthStencil = depthStencil
+    ref[]
 end
 
 struct VkClearAttachment
@@ -7747,6 +7786,50 @@ function Base.setproperty!(x::Ptr{VkPerformanceCounterResultKHR}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
 end
 
+const __U_VkPerformanceCounterResultKHR = Union{Int32, Int64, UInt32, UInt64, Cfloat, Cdouble}
+
+function VkPerformanceCounterResultKHR(int32::Int32)
+    ref = Ref{VkPerformanceCounterResultKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, ref)
+    ptr.int32 = int32
+    ref[]
+end
+
+function VkPerformanceCounterResultKHR(int64::Int64)
+    ref = Ref{VkPerformanceCounterResultKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, ref)
+    ptr.int64 = int64
+    ref[]
+end
+
+function VkPerformanceCounterResultKHR(uint32::UInt32)
+    ref = Ref{VkPerformanceCounterResultKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, ref)
+    ptr.uint32 = uint32
+    ref[]
+end
+
+function VkPerformanceCounterResultKHR(uint64::UInt64)
+    ref = Ref{VkPerformanceCounterResultKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, ref)
+    ptr.uint64 = uint64
+    ref[]
+end
+
+function VkPerformanceCounterResultKHR(float32::Cfloat)
+    ref = Ref{VkPerformanceCounterResultKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, ref)
+    ptr.float32 = float32
+    ref[]
+end
+
+function VkPerformanceCounterResultKHR(float64::Cdouble)
+    ref = Ref{VkPerformanceCounterResultKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, ref)
+    ptr.float64 = float64
+    ref[]
+end
+
 struct VkAcquireProfilingLockInfoKHR
     sType::VkStructureType
     pNext::Ptr{Cvoid}
@@ -8434,6 +8517,36 @@ end
 
 function Base.setproperty!(x::Ptr{VkPipelineExecutableStatisticValueKHR}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
+end
+
+const __U_VkPipelineExecutableStatisticValueKHR = Union{VkBool32, Int64, UInt64, Cdouble}
+
+function VkPipelineExecutableStatisticValueKHR(b32::VkBool32)
+    ref = Ref{VkPipelineExecutableStatisticValueKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkPipelineExecutableStatisticValueKHR}, ref)
+    ptr.b32 = b32
+    ref[]
+end
+
+function VkPipelineExecutableStatisticValueKHR(i64::Int64)
+    ref = Ref{VkPipelineExecutableStatisticValueKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkPipelineExecutableStatisticValueKHR}, ref)
+    ptr.i64 = i64
+    ref[]
+end
+
+function VkPipelineExecutableStatisticValueKHR(u64::UInt64)
+    ref = Ref{VkPipelineExecutableStatisticValueKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkPipelineExecutableStatisticValueKHR}, ref)
+    ptr.u64 = u64
+    ref[]
+end
+
+function VkPipelineExecutableStatisticValueKHR(f64::Cdouble)
+    ref = Ref{VkPipelineExecutableStatisticValueKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkPipelineExecutableStatisticValueKHR}, ref)
+    ptr.f64 = f64
+    ref[]
 end
 
 struct VkPipelineExecutableStatisticKHR
@@ -10686,6 +10799,18 @@ function Base.setproperty!(x::Ptr{VkAccelerationStructureInstanceKHR}, f::Symbol
     unsafe_store!(getproperty(x, f), v)
 end
 
+function VkAccelerationStructureInstanceKHR(transform::VkTransformMatrixKHR, instanceCustomIndex::UInt32, mask::UInt32, instanceShaderBindingTableRecordOffset::UInt32, flags::VkGeometryInstanceFlagsKHR, accelerationStructureReference::UInt64)
+    ref = Ref{VkAccelerationStructureInstanceKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkAccelerationStructureInstanceKHR}, ref)
+    ptr.transform = transform
+    ptr.instanceCustomIndex = instanceCustomIndex
+    ptr.mask = mask
+    ptr.instanceShaderBindingTableRecordOffset = instanceShaderBindingTableRecordOffset
+    ptr.flags = flags
+    ptr.accelerationStructureReference = accelerationStructureReference
+    ref[]
+end
+
 const VkAccelerationStructureInstanceNV = VkAccelerationStructureInstanceKHR
 
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateAccelerationStructureNV
@@ -11240,6 +11365,43 @@ end
 
 function Base.setproperty!(x::Ptr{VkPerformanceValueDataINTEL}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
+end
+
+const __U_VkPerformanceValueDataINTEL = Union{UInt32, UInt64, Cfloat, VkBool32, Ptr{Cchar}}
+
+function VkPerformanceValueDataINTEL(value32::UInt32)
+    ref = Ref{VkPerformanceValueDataINTEL}()
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceValueDataINTEL}, ref)
+    ptr.value32 = value32
+    ref[]
+end
+
+function VkPerformanceValueDataINTEL(value64::UInt64)
+    ref = Ref{VkPerformanceValueDataINTEL}()
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceValueDataINTEL}, ref)
+    ptr.value64 = value64
+    ref[]
+end
+
+function VkPerformanceValueDataINTEL(valueFloat::Cfloat)
+    ref = Ref{VkPerformanceValueDataINTEL}()
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceValueDataINTEL}, ref)
+    ptr.valueFloat = valueFloat
+    ref[]
+end
+
+function VkPerformanceValueDataINTEL(valueBool::VkBool32)
+    ref = Ref{VkPerformanceValueDataINTEL}()
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceValueDataINTEL}, ref)
+    ptr.valueBool = valueBool
+    ref[]
+end
+
+function VkPerformanceValueDataINTEL(valueString::Ptr{Cchar})
+    ref = Ref{VkPerformanceValueDataINTEL}()
+    ptr = Base.unsafe_convert(Ptr{VkPerformanceValueDataINTEL}, ref)
+    ptr.valueString = valueString
+    ref[]
 end
 
 struct VkPerformanceValueINTEL
@@ -12729,6 +12891,22 @@ function Base.setproperty!(x::Ptr{VkDeviceOrHostAddressKHR}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
 end
 
+const __U_VkDeviceOrHostAddressKHR = Union{VkDeviceAddress, Ptr{Cvoid}}
+
+function VkDeviceOrHostAddressKHR(deviceAddress::VkDeviceAddress)
+    ref = Ref{VkDeviceOrHostAddressKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkDeviceOrHostAddressKHR}, ref)
+    ptr.deviceAddress = deviceAddress
+    ref[]
+end
+
+function VkDeviceOrHostAddressKHR(hostAddress::Ptr{Cvoid})
+    ref = Ref{VkDeviceOrHostAddressKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkDeviceOrHostAddressKHR}, ref)
+    ptr.hostAddress = hostAddress
+    ref[]
+end
+
 struct VkDeviceOrHostAddressConstKHR
     data::NTuple{8, UInt8}
 end
@@ -12748,6 +12926,22 @@ end
 
 function Base.setproperty!(x::Ptr{VkDeviceOrHostAddressConstKHR}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
+end
+
+const __U_VkDeviceOrHostAddressConstKHR = Union{VkDeviceAddress, Ptr{Cvoid}}
+
+function VkDeviceOrHostAddressConstKHR(deviceAddress::VkDeviceAddress)
+    ref = Ref{VkDeviceOrHostAddressConstKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkDeviceOrHostAddressConstKHR}, ref)
+    ptr.deviceAddress = deviceAddress
+    ref[]
+end
+
+function VkDeviceOrHostAddressConstKHR(hostAddress::Ptr{Cvoid})
+    ref = Ref{VkDeviceOrHostAddressConstKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkDeviceOrHostAddressConstKHR}, ref)
+    ptr.hostAddress = hostAddress
+    ref[]
 end
 
 struct VkAccelerationStructureBuildRangeInfoKHR
@@ -12803,6 +12997,29 @@ end
 
 function Base.setproperty!(x::Ptr{VkAccelerationStructureGeometryDataKHR}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
+end
+
+const __U_VkAccelerationStructureGeometryDataKHR = Union{VkAccelerationStructureGeometryTrianglesDataKHR, VkAccelerationStructureGeometryAabbsDataKHR, VkAccelerationStructureGeometryInstancesDataKHR}
+
+function VkAccelerationStructureGeometryDataKHR(triangles::VkAccelerationStructureGeometryTrianglesDataKHR)
+    ref = Ref{VkAccelerationStructureGeometryDataKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkAccelerationStructureGeometryDataKHR}, ref)
+    ptr.triangles = triangles
+    ref[]
+end
+
+function VkAccelerationStructureGeometryDataKHR(aabbs::VkAccelerationStructureGeometryAabbsDataKHR)
+    ref = Ref{VkAccelerationStructureGeometryDataKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkAccelerationStructureGeometryDataKHR}, ref)
+    ptr.aabbs = aabbs
+    ref[]
+end
+
+function VkAccelerationStructureGeometryDataKHR(instances::VkAccelerationStructureGeometryInstancesDataKHR)
+    ref = Ref{VkAccelerationStructureGeometryDataKHR}()
+    ptr = Base.unsafe_convert(Ptr{VkAccelerationStructureGeometryDataKHR}, ref)
+    ptr.instances = instances
+    ref[]
 end
 
 struct VkAccelerationStructureGeometryKHR
