@@ -3184,24 +3184,16 @@ end
 
 const __U_VkClearColorValue = Union{NTuple{4, Cfloat}, NTuple{4, Int32}, NTuple{4, UInt32}}
 
-function VkClearColorValue(float32::NTuple{4, Cfloat})
+function VkClearColorValue(val::__U_VkClearColorValue)
     ref = Ref{VkClearColorValue}()
     ptr = Base.unsafe_convert(Ptr{VkClearColorValue}, ref)
-    ptr.float32 = float32
-    ref[]
-end
-
-function VkClearColorValue(int32::NTuple{4, Int32})
-    ref = Ref{VkClearColorValue}()
-    ptr = Base.unsafe_convert(Ptr{VkClearColorValue}, ref)
-    ptr.int32 = int32
-    ref[]
-end
-
-function VkClearColorValue(uint32::NTuple{4, UInt32})
-    ref = Ref{VkClearColorValue}()
-    ptr = Base.unsafe_convert(Ptr{VkClearColorValue}, ref)
-    ptr.uint32 = uint32
+    if val isa NTuple{4, Cfloat}
+        ptr.float32 = val
+    elseif val isa NTuple{4, Int32}
+        ptr.int32 = val
+    elseif val isa NTuple{4, UInt32}
+        ptr.uint32 = val
+    end
     ref[]
 end
 
@@ -3233,17 +3225,14 @@ end
 
 const __U_VkClearValue = Union{VkClearColorValue, VkClearDepthStencilValue}
 
-function VkClearValue(color::VkClearColorValue)
+function VkClearValue(val::__U_VkClearValue)
     ref = Ref{VkClearValue}()
     ptr = Base.unsafe_convert(Ptr{VkClearValue}, ref)
-    ptr.color = color
-    ref[]
-end
-
-function VkClearValue(depthStencil::VkClearDepthStencilValue)
-    ref = Ref{VkClearValue}()
-    ptr = Base.unsafe_convert(Ptr{VkClearValue}, ref)
-    ptr.depthStencil = depthStencil
+    if val isa VkClearColorValue
+        ptr.color = val
+    elseif val isa VkClearDepthStencilValue
+        ptr.depthStencil = val
+    end
     ref[]
 end
 
@@ -7802,45 +7791,22 @@ end
 
 const __U_VkPerformanceCounterResultKHR = Union{Int32, Int64, UInt32, UInt64, Cfloat, Cdouble}
 
-function VkPerformanceCounterResultKHR(int32::Int32)
+function VkPerformanceCounterResultKHR(val::__U_VkPerformanceCounterResultKHR)
     ref = Ref{VkPerformanceCounterResultKHR}()
     ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, ref)
-    ptr.int32 = int32
-    ref[]
-end
-
-function VkPerformanceCounterResultKHR(int64::Int64)
-    ref = Ref{VkPerformanceCounterResultKHR}()
-    ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, ref)
-    ptr.int64 = int64
-    ref[]
-end
-
-function VkPerformanceCounterResultKHR(uint32::UInt32)
-    ref = Ref{VkPerformanceCounterResultKHR}()
-    ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, ref)
-    ptr.uint32 = uint32
-    ref[]
-end
-
-function VkPerformanceCounterResultKHR(uint64::UInt64)
-    ref = Ref{VkPerformanceCounterResultKHR}()
-    ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, ref)
-    ptr.uint64 = uint64
-    ref[]
-end
-
-function VkPerformanceCounterResultKHR(float32::Cfloat)
-    ref = Ref{VkPerformanceCounterResultKHR}()
-    ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, ref)
-    ptr.float32 = float32
-    ref[]
-end
-
-function VkPerformanceCounterResultKHR(float64::Cdouble)
-    ref = Ref{VkPerformanceCounterResultKHR}()
-    ptr = Base.unsafe_convert(Ptr{VkPerformanceCounterResultKHR}, ref)
-    ptr.float64 = float64
+    if val isa Int32
+        ptr.int32 = val
+    elseif val isa Int64
+        ptr.int64 = val
+    elseif val isa UInt32
+        ptr.uint32 = val
+    elseif val isa UInt64
+        ptr.uint64 = val
+    elseif val isa Cfloat
+        ptr.float32 = val
+    elseif val isa Cdouble
+        ptr.float64 = val
+    end
     ref[]
 end
 
@@ -8537,31 +8503,18 @@ end
 
 const __U_VkPipelineExecutableStatisticValueKHR = Union{VkBool32, Int64, UInt64, Cdouble}
 
-function VkPipelineExecutableStatisticValueKHR(b32::VkBool32)
+function VkPipelineExecutableStatisticValueKHR(val::__U_VkPipelineExecutableStatisticValueKHR)
     ref = Ref{VkPipelineExecutableStatisticValueKHR}()
     ptr = Base.unsafe_convert(Ptr{VkPipelineExecutableStatisticValueKHR}, ref)
-    ptr.b32 = b32
-    ref[]
-end
-
-function VkPipelineExecutableStatisticValueKHR(i64::Int64)
-    ref = Ref{VkPipelineExecutableStatisticValueKHR}()
-    ptr = Base.unsafe_convert(Ptr{VkPipelineExecutableStatisticValueKHR}, ref)
-    ptr.i64 = i64
-    ref[]
-end
-
-function VkPipelineExecutableStatisticValueKHR(u64::UInt64)
-    ref = Ref{VkPipelineExecutableStatisticValueKHR}()
-    ptr = Base.unsafe_convert(Ptr{VkPipelineExecutableStatisticValueKHR}, ref)
-    ptr.u64 = u64
-    ref[]
-end
-
-function VkPipelineExecutableStatisticValueKHR(f64::Cdouble)
-    ref = Ref{VkPipelineExecutableStatisticValueKHR}()
-    ptr = Base.unsafe_convert(Ptr{VkPipelineExecutableStatisticValueKHR}, ref)
-    ptr.f64 = f64
+    if val isa VkBool32
+        ptr.b32 = val
+    elseif val isa Int64
+        ptr.i64 = val
+    elseif val isa UInt64
+        ptr.u64 = val
+    elseif val isa Cdouble
+        ptr.f64 = val
+    end
     ref[]
 end
 
@@ -11395,38 +11348,20 @@ end
 
 const __U_VkPerformanceValueDataINTEL = Union{UInt32, UInt64, Cfloat, VkBool32, Ptr{Cchar}}
 
-function VkPerformanceValueDataINTEL(value32::UInt32)
+function VkPerformanceValueDataINTEL(val::__U_VkPerformanceValueDataINTEL)
     ref = Ref{VkPerformanceValueDataINTEL}()
     ptr = Base.unsafe_convert(Ptr{VkPerformanceValueDataINTEL}, ref)
-    ptr.value32 = value32
-    ref[]
-end
-
-function VkPerformanceValueDataINTEL(value64::UInt64)
-    ref = Ref{VkPerformanceValueDataINTEL}()
-    ptr = Base.unsafe_convert(Ptr{VkPerformanceValueDataINTEL}, ref)
-    ptr.value64 = value64
-    ref[]
-end
-
-function VkPerformanceValueDataINTEL(valueFloat::Cfloat)
-    ref = Ref{VkPerformanceValueDataINTEL}()
-    ptr = Base.unsafe_convert(Ptr{VkPerformanceValueDataINTEL}, ref)
-    ptr.valueFloat = valueFloat
-    ref[]
-end
-
-function VkPerformanceValueDataINTEL(valueBool::VkBool32)
-    ref = Ref{VkPerformanceValueDataINTEL}()
-    ptr = Base.unsafe_convert(Ptr{VkPerformanceValueDataINTEL}, ref)
-    ptr.valueBool = valueBool
-    ref[]
-end
-
-function VkPerformanceValueDataINTEL(valueString::Ptr{Cchar})
-    ref = Ref{VkPerformanceValueDataINTEL}()
-    ptr = Base.unsafe_convert(Ptr{VkPerformanceValueDataINTEL}, ref)
-    ptr.valueString = valueString
+    if val isa UInt32
+        ptr.value32 = val
+    elseif val isa UInt64
+        ptr.value64 = val
+    elseif val isa Cfloat
+        ptr.valueFloat = val
+    elseif val isa VkBool32
+        ptr.valueBool = val
+    elseif val isa Ptr{Cchar}
+        ptr.valueString = val
+    end
     ref[]
 end
 
@@ -12925,17 +12860,14 @@ end
 
 const __U_VkDeviceOrHostAddressKHR = Union{VkDeviceAddress, Ptr{Cvoid}}
 
-function VkDeviceOrHostAddressKHR(deviceAddress::VkDeviceAddress)
+function VkDeviceOrHostAddressKHR(val::__U_VkDeviceOrHostAddressKHR)
     ref = Ref{VkDeviceOrHostAddressKHR}()
     ptr = Base.unsafe_convert(Ptr{VkDeviceOrHostAddressKHR}, ref)
-    ptr.deviceAddress = deviceAddress
-    ref[]
-end
-
-function VkDeviceOrHostAddressKHR(hostAddress::Ptr{Cvoid})
-    ref = Ref{VkDeviceOrHostAddressKHR}()
-    ptr = Base.unsafe_convert(Ptr{VkDeviceOrHostAddressKHR}, ref)
-    ptr.hostAddress = hostAddress
+    if val isa VkDeviceAddress
+        ptr.deviceAddress = val
+    elseif val isa Ptr{Cvoid}
+        ptr.hostAddress = val
+    end
     ref[]
 end
 
@@ -12962,17 +12894,14 @@ end
 
 const __U_VkDeviceOrHostAddressConstKHR = Union{VkDeviceAddress, Ptr{Cvoid}}
 
-function VkDeviceOrHostAddressConstKHR(deviceAddress::VkDeviceAddress)
+function VkDeviceOrHostAddressConstKHR(val::__U_VkDeviceOrHostAddressConstKHR)
     ref = Ref{VkDeviceOrHostAddressConstKHR}()
     ptr = Base.unsafe_convert(Ptr{VkDeviceOrHostAddressConstKHR}, ref)
-    ptr.deviceAddress = deviceAddress
-    ref[]
-end
-
-function VkDeviceOrHostAddressConstKHR(hostAddress::Ptr{Cvoid})
-    ref = Ref{VkDeviceOrHostAddressConstKHR}()
-    ptr = Base.unsafe_convert(Ptr{VkDeviceOrHostAddressConstKHR}, ref)
-    ptr.hostAddress = hostAddress
+    if val isa VkDeviceAddress
+        ptr.deviceAddress = val
+    elseif val isa Ptr{Cvoid}
+        ptr.hostAddress = val
+    end
     ref[]
 end
 
@@ -13033,24 +12962,16 @@ end
 
 const __U_VkAccelerationStructureGeometryDataKHR = Union{VkAccelerationStructureGeometryTrianglesDataKHR, VkAccelerationStructureGeometryAabbsDataKHR, VkAccelerationStructureGeometryInstancesDataKHR}
 
-function VkAccelerationStructureGeometryDataKHR(triangles::VkAccelerationStructureGeometryTrianglesDataKHR)
+function VkAccelerationStructureGeometryDataKHR(val::__U_VkAccelerationStructureGeometryDataKHR)
     ref = Ref{VkAccelerationStructureGeometryDataKHR}()
     ptr = Base.unsafe_convert(Ptr{VkAccelerationStructureGeometryDataKHR}, ref)
-    ptr.triangles = triangles
-    ref[]
-end
-
-function VkAccelerationStructureGeometryDataKHR(aabbs::VkAccelerationStructureGeometryAabbsDataKHR)
-    ref = Ref{VkAccelerationStructureGeometryDataKHR}()
-    ptr = Base.unsafe_convert(Ptr{VkAccelerationStructureGeometryDataKHR}, ref)
-    ptr.aabbs = aabbs
-    ref[]
-end
-
-function VkAccelerationStructureGeometryDataKHR(instances::VkAccelerationStructureGeometryInstancesDataKHR)
-    ref = Ref{VkAccelerationStructureGeometryDataKHR}()
-    ptr = Base.unsafe_convert(Ptr{VkAccelerationStructureGeometryDataKHR}, ref)
-    ptr.instances = instances
+    if val isa VkAccelerationStructureGeometryTrianglesDataKHR
+        ptr.triangles = val
+    elseif val isa VkAccelerationStructureGeometryAabbsDataKHR
+        ptr.aabbs = val
+    elseif val isa VkAccelerationStructureGeometryInstancesDataKHR
+        ptr.instances = val
+    end
     ref[]
 end
 

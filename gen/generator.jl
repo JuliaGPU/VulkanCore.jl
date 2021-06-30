@@ -65,6 +65,7 @@ for target in JLLEnvs.JLL_ENV_TRIPLES
         ]
     general["add_fptr_methods"] = true
     codegen["add_record_constructors"] = true
+    codegen["union_single_constructor"] = true
     codegen["opaque_as_mutable_struct"] = false
 
     # add compiler flags
