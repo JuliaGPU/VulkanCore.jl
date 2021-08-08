@@ -64,6 +64,9 @@ for target in JLLEnvs.JLL_ENV_TRIPLES
         "VKAPI_CALL",
         ]
     general["add_fptr_methods"] = true
+    general["extract_c_comment_style"] = "doxygen"
+    general["struct_field_comment_style"] = "outofline"
+    general["enumerator_comment_style"] = "outofline"
     codegen["add_record_constructors"] = true
     codegen["union_single_constructor"] = true
     codegen["opaque_as_mutable_struct"] = false

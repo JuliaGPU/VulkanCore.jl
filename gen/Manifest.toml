@@ -22,9 +22,9 @@ version = "0.14.0"
 
 [[Clang_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "libLLVM_jll"]
-git-tree-sha1 = "a5923c06de3178dd755f4b9411ea8922a7ae6fb8"
+git-tree-sha1 = "0312b2bec066a688bd79706c49deb48fefca836c"
 uuid = "0ee61d77-7f21-5576-8119-9fcc46b10100"
-version = "11.0.1+3"
+version = "12.0.1+0"
 
 [[Dates]]
 deps = ["Printf"]
