@@ -12,7 +12,12 @@ If you are looking for a high-level Julian API you might wish to take a look at
 
 ### Installation
 You are required to have a Vulkan capable device and the appropriate drivers.
-If these are present, just run `pkg> add VulkanCore` in Julia.
+
+If these are present, run:
+
+```
+pkg> add VulkanCore
+```
 
 ### References
 - [Vulkan](https://www.khronos.org/vulkan/)
