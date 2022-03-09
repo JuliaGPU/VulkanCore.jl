@@ -22,10 +22,10 @@ const libvulkan_handle = Ref{Ptr{Cvoid}}(0)
 function __init__()
     libname = Libdl.find_library(libvulkan)
     if isempty(libname)
-            error("""
-            Failed to retrieve a valid Vulkan library called '$libvulkan'.
-            If you configure the `JULIA_VULKAN_LIBNAME` environment variable before precompiling VulkanCore, it will be used instead of '$libvulkan'. You may also manually add search paths by appending them to Lidbl.DL_LOAD_PATH, but note that this may have repercussions beyond this package.
-            """)
+        error("""
+        Failed to retrieve a valid Vulkan library called '$libvulkan'.
+        If you configure the `JULIA_VULKAN_LIBNAME` environment variable before precompiling VulkanCore, it will be used instead of '$libvulkan'. You may also manually add search paths by appending them to Lidbl.DL_LOAD_PATH, but note that this may have repercussions beyond this package.
+        """)
     end
     libvulkan_handle[] = Libdl.dlopen(libname)
 end
@@ -63,7 +63,7 @@ elseif Sys.islinux() && Sys.ARCH === :x86_64 && !IS_LIBC_MUSL
 elseif Sys.islinux() && Sys.ARCH === :x86_64 && IS_LIBC_MUSL
     include("../lib/x86_64-linux-musl.jl")
 elseif Sys.isbsd() && !Sys.isapple()
-    include("../lib/x86_64-unknown-freebsd11.1.jl")
+    include("../lib/x86_64-unknown-freebsd.jl")
 elseif Sys.iswindows() && Sys.ARCH === :x86_64
     include("../lib/x86_64-w64-mingw32.jl")
 else
@@ -72,7 +72,7 @@ end
 
 # exports
 const PREFIXES = ["VK_", "Vk", "vk"]
-for name in names(@__MODULE__; all=true), prefix in PREFIXES
+for name in names(@__MODULE__; all = true), prefix in PREFIXES
     if startswith(string(name), prefix)
         @eval export $name
     end
