@@ -43,7 +43,7 @@ const VK_EXTENSIONS_MAP = Dict(
     "i686-linux-gnu" => VK_LINUX_EXTENSION_COMMON,
     "i686-linux-musl" => VK_LINUX_EXTENSION_COMMON,
     "powerpc64le-linux-gnu" => VK_LINUX_EXTENSION_COMMON,
-    "x86_64-unknown-freebsd11.1" => ["-DVK_USE_PLATFORM_XCB_KHR", "-DVK_USE_PLATFORM_XLIB_KHR", "-DVK_USE_PLATFORM_XLIB_XRANDR_EXT"],
+    "x86_64-unknown-freebsd" => ["-DVK_USE_PLATFORM_XCB_KHR", "-DVK_USE_PLATFORM_XLIB_KHR", "-DVK_USE_PLATFORM_XLIB_XRANDR_EXT"],
 )
 
 for target in JLLEnvs.JLL_ENV_TRIPLES

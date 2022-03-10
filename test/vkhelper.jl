@@ -10,9 +10,16 @@ unsafe_strings2pp(names::Vector{String}) = Base.unsafe_convert(Ptr{Cstring}, Bas
 
 """
     to_string(x::NTuple{N,UInt8}) -> String
-Convert a `NTuple{N,UInt8}` to `String` dropping all of the `\0`s.
+Convert a `NTuple{N,UInt8}` to `String`, stopping at the first `\0` encountered.
 """
-to_string(x::NTuple{N,Int8}) where {N} = rstrip(String(UInt8.(collect(x))), '\0')
+function to_string(x::NTuple{N,Int8}) where {N}
+    nullchar = findfirst(iszero, x)
+    nullchar == 1 && return ""
+    if !isnothing(nullchar)
+        x = x[1:nullchar-1]
+    end
+    String(reinterpret(UInt8, collect(x)))
+end
 
 """
     int2version(::Type{VersionNumber}, ver::Integer) -> VersionNumber
@@ -65,7 +72,7 @@ function check_extensions(required_extensions::Vector{<:AbstractString})
         @info "  $(x.name): $(x.version)"
     end
     names = [x.name for x in supported]
-    if all(x->x in names, required_extensions)
+    if all(x -> x in names, required_extensions)
         return true
     else
         @error "not all required extensions are supported."
@@ -227,7 +234,7 @@ Return a `QueueFamilyIndices` for the input device.
 function find_queue_families(device::VkPhysicalDevice)
     indices = QueueFamilyIndices()
     families = get_queue_family_properties(device)
-    for (i,family) in enumerate(families)
+    for (i, family) in enumerate(families)
         if Bool(family.queueFlags & VK_QUEUE_GRAPHICS_BIT)
             indices.graphicsFamily = i
         end
@@ -255,4 +262,4 @@ function LibVulkan.VkDeviceCreateInfo(queue_count::Integer, queue_info::Ref{VkDe
     return VkDeviceCreateInfo(sType, pNext, flags, queueCreateInfoCount, pQueueCreateInfos, 0, C_NULL, 0, C_NULL, pEnabledFeatures)
 end
 
-LibVulkan.VkPhysicalDeviceFeatures() = VkPhysicalDeviceFeatures(fill(VK_FALSE,55)...)
+LibVulkan.VkPhysicalDeviceFeatures() = VkPhysicalDeviceFeatures(fill(VK_FALSE, 55)...)

@@ -7,7 +7,7 @@ VulkanCore wraps Vulkan and exposes the library calls necessary to work with
 Vulkan. It is targeted for developers wanting to directly work with Vulkan in
 Julia.
 
-If you are looking for a high-level Julian API you might wish to take a look at
+If you are looking for a high-level idiomatic Julia API you might wish to take a look at
 [Vulkan.jl](https://github.com/JuliaGPU/Vulkan.jl).
 
 ### Installation
