@@ -26,9 +26,13 @@ const VkFlags = UInt32
 
 const VkSampleMask = UInt32
 
-const VkBuffer = UInt64
+const VkBuffer_T = Cvoid
 
-const VkImage = UInt64
+const VkBuffer = Ptr{VkBuffer_T}
+
+const VkImage_T = Cvoid
+
+const VkImage = Ptr{VkImage_T}
 
 const VkInstance_T = Cvoid
 
@@ -46,45 +50,81 @@ const VkQueue_T = Cvoid
 
 const VkQueue = Ptr{VkQueue_T}
 
-const VkSemaphore = UInt64
+const VkSemaphore_T = Cvoid
+
+const VkSemaphore = Ptr{VkSemaphore_T}
 
 const VkCommandBuffer_T = Cvoid
 
 const VkCommandBuffer = Ptr{VkCommandBuffer_T}
 
-const VkFence = UInt64
+const VkFence_T = Cvoid
 
-const VkDeviceMemory = UInt64
+const VkFence = Ptr{VkFence_T}
 
-const VkEvent = UInt64
+const VkDeviceMemory_T = Cvoid
 
-const VkQueryPool = UInt64
+const VkDeviceMemory = Ptr{VkDeviceMemory_T}
 
-const VkBufferView = UInt64
+const VkEvent_T = Cvoid
 
-const VkImageView = UInt64
+const VkEvent = Ptr{VkEvent_T}
 
-const VkShaderModule = UInt64
+const VkQueryPool_T = Cvoid
 
-const VkPipelineCache = UInt64
+const VkQueryPool = Ptr{VkQueryPool_T}
 
-const VkPipelineLayout = UInt64
+const VkBufferView_T = Cvoid
 
-const VkPipeline = UInt64
+const VkBufferView = Ptr{VkBufferView_T}
 
-const VkRenderPass = UInt64
+const VkImageView_T = Cvoid
 
-const VkDescriptorSetLayout = UInt64
+const VkImageView = Ptr{VkImageView_T}
 
-const VkSampler = UInt64
+const VkShaderModule_T = Cvoid
 
-const VkDescriptorSet = UInt64
+const VkShaderModule = Ptr{VkShaderModule_T}
 
-const VkDescriptorPool = UInt64
+const VkPipelineCache_T = Cvoid
 
-const VkFramebuffer = UInt64
+const VkPipelineCache = Ptr{VkPipelineCache_T}
 
-const VkCommandPool = UInt64
+const VkPipelineLayout_T = Cvoid
+
+const VkPipelineLayout = Ptr{VkPipelineLayout_T}
+
+const VkPipeline_T = Cvoid
+
+const VkPipeline = Ptr{VkPipeline_T}
+
+const VkRenderPass_T = Cvoid
+
+const VkRenderPass = Ptr{VkRenderPass_T}
+
+const VkDescriptorSetLayout_T = Cvoid
+
+const VkDescriptorSetLayout = Ptr{VkDescriptorSetLayout_T}
+
+const VkSampler_T = Cvoid
+
+const VkSampler = Ptr{VkSampler_T}
+
+const VkDescriptorSet_T = Cvoid
+
+const VkDescriptorSet = Ptr{VkDescriptorSet_T}
+
+const VkDescriptorPool_T = Cvoid
+
+const VkDescriptorPool = Ptr{VkDescriptorPool_T}
+
+const VkFramebuffer_T = Cvoid
+
+const VkFramebuffer = Ptr{VkFramebuffer_T}
+
+const VkCommandPool_T = Cvoid
+
+const VkCommandPool = Ptr{VkCommandPool_T}
 
 @cenum VkResult::Int32 begin
     VK_SUCCESS = 0
@@ -5252,9 +5292,13 @@ function vkCmdExecuteCommands(commandBuffer, commandBufferCount, pCommandBuffers
     ccall(fptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkCommandBuffer}), commandBuffer, commandBufferCount, pCommandBuffers)
 end
 
-const VkSamplerYcbcrConversion = UInt64
+const VkSamplerYcbcrConversion_T = Cvoid
 
-const VkDescriptorUpdateTemplate = UInt64
+const VkSamplerYcbcrConversion = Ptr{VkSamplerYcbcrConversion_T}
+
+const VkDescriptorUpdateTemplate_T = Cvoid
+
+const VkDescriptorUpdateTemplate = Ptr{VkDescriptorUpdateTemplate_T}
 
 @cenum VkPointClippingBehavior::UInt32 begin
     VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES = 0
@@ -7065,7 +7109,9 @@ end
 
 const VkFlags64 = UInt64
 
-const VkPrivateDataSlot = UInt64
+const VkPrivateDataSlot_T = Cvoid
+
+const VkPrivateDataSlot = Ptr{VkPrivateDataSlot_T}
 
 @cenum VkPipelineCreationFeedbackFlagBits::UInt32 begin
     VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT = 1
@@ -8070,7 +8116,9 @@ function vkGetDeviceImageSparseMemoryRequirements(device, pInfo, pSparseMemoryRe
     ccall(fptr, Cvoid, (VkDevice, Ptr{VkDeviceImageMemoryRequirements}, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements2}), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
 end
 
-const VkSurfaceKHR = UInt64
+const VkSurfaceKHR_T = Cvoid
+
+const VkSurfaceKHR = Ptr{VkSurfaceKHR_T}
 
 @cenum VkPresentModeKHR::UInt32 begin
     VK_PRESENT_MODE_IMMEDIATE_KHR = 0
@@ -8202,7 +8250,9 @@ function vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, pPre
     ccall(fptr, VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, surface, pPresentModeCount, pPresentModes)
 end
 
-const VkSwapchainKHR = UInt64
+const VkSwapchainKHR_T = Cvoid
+
+const VkSwapchainKHR = Ptr{VkSwapchainKHR_T}
 
 @cenum VkSwapchainCreateFlagBitsKHR::UInt32 begin
     VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR = 1
@@ -8399,9 +8449,13 @@ function vkAcquireNextImage2KHR(device, pAcquireInfo, pImageIndex, fptr)
     ccall(fptr, VkResult, (VkDevice, Ptr{VkAcquireNextImageInfoKHR}, Ptr{UInt32}), device, pAcquireInfo, pImageIndex)
 end
 
-const VkDisplayKHR = UInt64
+const VkDisplayKHR_T = Cvoid
 
-const VkDisplayModeKHR = UInt64
+const VkDisplayKHR = Ptr{VkDisplayKHR_T}
+
+const VkDisplayModeKHR_T = Cvoid
+
+const VkDisplayModeKHR = Ptr{VkDisplayModeKHR_T}
 
 const VkDisplayModeCreateFlagsKHR = VkFlags
 
@@ -8570,9 +8624,13 @@ function vkCreateSharedSwapchainsKHR(device, swapchainCount, pCreateInfos, pAllo
     ccall(fptr, VkResult, (VkDevice, UInt32, Ptr{VkSwapchainCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSwapchainKHR}), device, swapchainCount, pCreateInfos, pAllocator, pSwapchains)
 end
 
-const VkVideoSessionKHR = UInt64
+const VkVideoSessionKHR_T = Cvoid
 
-const VkVideoSessionParametersKHR = UInt64
+const VkVideoSessionKHR = Ptr{VkVideoSessionKHR_T}
+
+const VkVideoSessionParametersKHR_T = Cvoid
+
+const VkVideoSessionParametersKHR = Ptr{VkVideoSessionParametersKHR_T}
 
 @cenum VkQueryResultStatusKHR::Int32 begin
     VK_QUERY_RESULT_STATUS_ERROR_KHR = -1
@@ -12108,7 +12166,9 @@ function vkGetDeviceMemoryOpaqueCaptureAddressKHR(device, pInfo, fptr)
     ccall(fptr, UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
 end
 
-const VkDeferredOperationKHR = UInt64
+const VkDeferredOperationKHR_T = Cvoid
+
+const VkDeferredOperationKHR = Ptr{VkDeferredOperationKHR_T}
 
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDeferredOperationKHR ) ( VkDevice device , const VkAllocationCallbacks * pAllocator , VkDeferredOperationKHR * pDeferredOperation )
 const PFN_vkCreateDeferredOperationKHR = Ptr{Cvoid}
@@ -12645,7 +12705,9 @@ function vkGetDeviceImageSparseMemoryRequirementsKHR(device, pInfo, pSparseMemor
     ccall(fptr, Cvoid, (VkDevice, Ptr{VkDeviceImageMemoryRequirements}, Ptr{UInt32}, Ptr{VkSparseImageMemoryRequirements2}), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements)
 end
 
-const VkDebugReportCallbackEXT = UInt64
+const VkDebugReportCallbackEXT_T = Cvoid
+
+const VkDebugReportCallbackEXT = Ptr{VkDebugReportCallbackEXT_T}
 
 @cenum VkDebugReportObjectTypeEXT::UInt32 begin
     VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT = 0
@@ -12957,9 +13019,13 @@ function vkCmdDrawIndirectByteCountEXT(commandBuffer, instanceCount, firstInstan
     ccall(fptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride)
 end
 
-const VkCuModuleNVX = UInt64
+const VkCuModuleNVX_T = Cvoid
 
-const VkCuFunctionNVX = UInt64
+const VkCuModuleNVX = Ptr{VkCuModuleNVX_T}
+
+const VkCuFunctionNVX_T = Cvoid
+
+const VkCuFunctionNVX = Ptr{VkCuFunctionNVX_T}
 
 struct VkCuModuleCreateInfoNVX
     sType::VkStructureType
@@ -13665,7 +13731,9 @@ function vkSetHdrMetadataEXT(device, swapchainCount, pSwapchains, pMetadata, fpt
     ccall(fptr, Cvoid, (VkDevice, UInt32, Ptr{VkSwapchainKHR}, Ptr{VkHdrMetadataEXT}), device, swapchainCount, pSwapchains, pMetadata)
 end
 
-const VkDebugUtilsMessengerEXT = UInt64
+const VkDebugUtilsMessengerEXT_T = Cvoid
+
+const VkDebugUtilsMessengerEXT = Ptr{VkDebugUtilsMessengerEXT_T}
 
 const VkDebugUtilsMessengerCallbackDataFlagsEXT = VkFlags
 
@@ -14099,7 +14167,9 @@ function vkGetImageDrmFormatModifierPropertiesEXT(device, image, pProperties, fp
     ccall(fptr, VkResult, (VkDevice, VkImage, Ptr{VkImageDrmFormatModifierPropertiesEXT}), device, image, pProperties)
 end
 
-const VkValidationCacheEXT = UInt64
+const VkValidationCacheEXT_T = Cvoid
+
+const VkValidationCacheEXT = Ptr{VkValidationCacheEXT_T}
 
 @cenum VkValidationCacheHeaderVersionEXT::UInt32 begin
     VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT = 1
@@ -14286,7 +14356,9 @@ function vkCmdSetCoarseSampleOrderNV(commandBuffer, sampleOrderType, customSampl
     ccall(fptr, Cvoid, (VkCommandBuffer, VkCoarseSampleOrderTypeNV, UInt32, Ptr{VkCoarseSampleOrderCustomNV}), commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders)
 end
 
-const VkAccelerationStructureNV = UInt64
+const VkAccelerationStructureNV_T = Cvoid
+
+const VkAccelerationStructureNV = Ptr{VkAccelerationStructureNV_T}
 
 @cenum VkRayTracingShaderGroupTypeKHR::UInt32 begin
     VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_KHR = 0
@@ -15073,7 +15145,9 @@ struct VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL
     shaderIntegerFunctions2::VkBool32
 end
 
-const VkPerformanceConfigurationINTEL = UInt64
+const VkPerformanceConfigurationINTEL_T = Cvoid
+
+const VkPerformanceConfigurationINTEL = Ptr{VkPerformanceConfigurationINTEL_T}
 
 @cenum VkPerformanceConfigurationTypeINTEL::UInt32 begin
     VK_PERFORMANCE_CONFIGURATION_TYPE_COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED_INTEL = 0
@@ -15977,7 +16051,9 @@ end
 
 const VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT = VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures
 
-const VkIndirectCommandsLayoutNV = UInt64
+const VkIndirectCommandsLayoutNV_T = Cvoid
+
+const VkIndirectCommandsLayoutNV = Ptr{VkIndirectCommandsLayoutNV_T}
 
 @cenum VkIndirectCommandsTokenTypeNV::UInt32 begin
     VK_INDIRECT_COMMANDS_TOKEN_TYPE_SHADER_GROUP_NV = 0
@@ -16421,7 +16497,9 @@ struct VkDeviceDiagnosticsConfigCreateInfoNV
     flags::VkDeviceDiagnosticsConfigFlagsNV
 end
 
-const VkAccelerationStructureKHR = UInt64
+const VkAccelerationStructureKHR_T = Cvoid
+
+const VkAccelerationStructureKHR = Ptr{VkAccelerationStructureKHR_T}
 
 struct VkPhysicalDeviceDescriptorBufferPropertiesEXT
     sType::VkStructureType
@@ -17705,7 +17783,9 @@ struct VkPhysicalDeviceImage2DViewOf3DFeaturesEXT
     sampler2DViewOf3D::VkBool32
 end
 
-const VkMicromapEXT = UInt64
+const VkMicromapEXT_T = Cvoid
+
+const VkMicromapEXT = Ptr{VkMicromapEXT_T}
 
 @cenum VkMicromapTypeEXT::UInt32 begin
     VK_MICROMAP_TYPE_OPACITY_MICROMAP_EXT = 0
@@ -18861,7 +18941,9 @@ function vkGetShaderModuleCreateInfoIdentifierEXT(device, pCreateInfo, pIdentifi
     ccall(fptr, Cvoid, (VkDevice, Ptr{VkShaderModuleCreateInfo}, Ptr{VkShaderModuleIdentifierEXT}), device, pCreateInfo, pIdentifier)
 end
 
-const VkOpticalFlowSessionNV = UInt64
+const VkOpticalFlowSessionNV_T = Cvoid
+
+const VkOpticalFlowSessionNV = Ptr{VkOpticalFlowSessionNV_T}
 
 @cenum VkOpticalFlowPerformanceLevelNV::UInt32 begin
     VK_OPTICAL_FLOW_PERFORMANCE_LEVEL_UNKNOWN_NV = 0
@@ -19198,7 +19280,7 @@ struct VkAccelerationStructureGeometryInstancesDataKHR
 end
 
 struct VkAccelerationStructureGeometryDataKHR
-    data::NTuple{52, UInt8}
+    data::NTuple{64, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkAccelerationStructureGeometryDataKHR}, f::Symbol)
@@ -19749,42 +19831,6 @@ function vkCmdDrawMeshTasksIndirectCountEXT(commandBuffer, buffer, offset, count
     ccall(fptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
-const VkWaylandSurfaceCreateFlagsKHR = VkFlags
-
-const wl_display = Cvoid
-
-const wl_surface = Cvoid
-
-struct VkWaylandSurfaceCreateInfoKHR
-    sType::VkStructureType
-    pNext::Ptr{Cvoid}
-    flags::VkWaylandSurfaceCreateFlagsKHR
-    display::Ptr{wl_display}
-    surface::Ptr{wl_surface}
-end
-
-# typedef VkResult ( VKAPI_PTR * PFN_vkCreateWaylandSurfaceKHR ) ( VkInstance instance , const VkWaylandSurfaceCreateInfoKHR * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
-const PFN_vkCreateWaylandSurfaceKHR = Ptr{Cvoid}
-
-# typedef VkBool32 ( VKAPI_PTR * PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR ) ( VkPhysicalDevice physicalDevice , uint32_t queueFamilyIndex , struct wl_display * display )
-const PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR = Ptr{Cvoid}
-
-function vkCreateWaylandSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateWaylandSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkWaylandSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
-end
-
-function vkCreateWaylandSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fptr)
-    ccall(fptr, VkResult, (VkInstance, Ptr{VkWaylandSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
-end
-
-function vkGetPhysicalDeviceWaylandPresentationSupportKHR(physicalDevice, queueFamilyIndex, display)
-    ccall((:vkGetPhysicalDeviceWaylandPresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{wl_display}), physicalDevice, queueFamilyIndex, display)
-end
-
-function vkGetPhysicalDeviceWaylandPresentationSupportKHR(physicalDevice, queueFamilyIndex, display, fptr)
-    ccall(fptr, VkBool32, (VkPhysicalDevice, UInt32, Ptr{wl_display}), physicalDevice, queueFamilyIndex, display)
-end
-
 const VkXcbSurfaceCreateFlagsKHR = VkFlags
 
 struct VkXcbSurfaceCreateInfoKHR
@@ -19877,9 +19923,9 @@ const VULKAN_CORE_H_ = 1
 
 const VK_VERSION_1_0 = 1
 
-const VK_USE_64_BIT_PTR_DEFINES = 0
+const VK_USE_64_BIT_PTR_DEFINES = 1
 
-const VK_NULL_HANDLE = Culonglong(0)
+# Skipping MacroDefinition: VK_NULL_HANDLE ( ( void * ) 0 )
 
 const VK_API_VERSION_1_0 = VK_MAKE_API_VERSION(0, 1, 0, 0)
 
@@ -21774,14 +21820,6 @@ const VK_EXT_mesh_shader = 1
 const VK_EXT_MESH_SHADER_SPEC_VERSION = 1
 
 const VK_EXT_MESH_SHADER_EXTENSION_NAME = "VK_EXT_mesh_shader"
-
-const VULKAN_WAYLAND_H_ = 1
-
-const VK_KHR_wayland_surface = 1
-
-const VK_KHR_WAYLAND_SURFACE_SPEC_VERSION = 6
-
-const VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME = "VK_KHR_wayland_surface"
 
 const VULKAN_XCB_H_ = 1
 

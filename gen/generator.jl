@@ -11,21 +11,22 @@ using Xorg_libXrender_jll
 cd(@__DIR__)
 
 # get include directory & vulkan.h
-const VK_INCLUDE = joinpath(Vulkan_Headers_jll.artifact_dir, "include", "vulkan")
-const VK_HEADERS = [joinpath(VK_INCLUDE, "vulkan.h")]
+VK_INCLUDE_BASE = joinpath(Vulkan_Headers_jll.artifact_dir, "include")
+VK_INCLUDE = joinpath(VK_INCLUDE_BASE, "vulkan")
+VK_HEADERS = [joinpath(VK_INCLUDE, "vulkan.h")]
 
 # config extensions for different platforms
 # X-ref: https://github.com/SaschaWillems/Vulkan/blob/master/CMakeLists.txt
-const VK_LINUX_EXTENSION_COMMON = [
+VK_LINUX_EXTENSION_COMMON = [
     # "-DVK_USE_PLATFORM_DIRECTFB_EXT",  # no JLL package
     "-DVK_USE_PLATFORM_WAYLAND_KHR",
     "-DVK_USE_PLATFORM_XCB_KHR",
     "-DVK_USE_PLATFORM_XLIB_KHR",
     "-DVK_USE_PLATFORM_XLIB_XRANDR_EXT",
 ]
-const VK_MACOS_EXTENSION_COMMON = ["-DVK_USE_PLATFORM_MACOS_MVK", "-DVK_USE_PLATFORM_METAL_EXT"]
-const VK_WIN_EXTENSION_COMMON = ["-DVK_USE_PLATFORM_WIN32_KHR"]
-const VK_EXTENSIONS_MAP = Dict(
+VK_MACOS_EXTENSION_COMMON = ["-DVK_USE_PLATFORM_MACOS_MVK", "-DVK_USE_PLATFORM_METAL_EXT"]
+VK_WIN_EXTENSION_COMMON = ["-DVK_USE_PLATFORM_WIN32_KHR"]
+VK_EXTENSIONS_MAP = Dict(
     # "aarch64-apple-darwin20" => vcat(VK_MACOS_EXTENSION_COMMON, "-DVK_USE_PLATFORM_DIRECTFB_EXT"),
     # "x86_64-apple-darwin14" => vcat(VK_MACOS_EXTENSION_COMMON, "-DVK_USE_PLATFORM_DIRECTFB_EXT"),
     "aarch64-apple-darwin20" => VK_MACOS_EXTENSION_COMMON,
@@ -95,6 +96,8 @@ for target in JLLEnvs.JLL_ENV_TRIPLES
 
     append!(args, VK_EXTENSIONS_MAP[target])
 
+    # add header directory to detect `vk_video` headers
+    push!(args, "-I$VK_INCLUDE_BASE")
     ctx = create_context(VK_HEADERS, args, options)
 
     build!(ctx)
