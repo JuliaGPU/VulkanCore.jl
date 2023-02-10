@@ -69,6 +69,7 @@ jobs:
         echo JULIA_VULKAN_SDK_SEARCH_PATH=$VULKAN_SDK/lib >> $GITHUB_ENV
         echo VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d >> $GITHUB_ENV
         echo VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json >> $GITHUB_ENV
+        echo JULIA_VULKAN_LIBNAME=libvulkan.1 >> $GITHUB_ENV
     - name: Download & Extract Vulkan SDK
       run: |
         wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg
