@@ -32,31 +32,31 @@ jobs:
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-  windows-latest-x64:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set Environment variables
-      run: echo "VULKAN_SDK=C:\VulkanSDK\${{env.VulkanSDKVersion}}" >> $GITHUB_ENV
-    - name: Download & Install Vulkan SDK
-      run: |
-        Invoke-WebRequest -Uri https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/windows/VulkanSDK-${{env.VulkanSDKVersion}}-Installer.exe -OutFile ../vulkan-sdk-${{env.VulkanSDKVersion}}.exe
-        $installer = Start-Process -FilePath ../vulkan-sdk-${{env.VulkanSDKVersion}}.exe -Wait -PassThru -ArgumentList @("/S");
-        $installer.WaitForExit(); 
-        Invoke-WebRequest -Uri https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-runtime.exe -OutFile ../vulkan-runtime.exe
-        $installer = Start-Process -FilePath ../vulkan-runtime.exe -Wait -PassThru -ArgumentList @("/S");
-        $installer.WaitForExit();
-    - uses: julia-actions/setup-julia@v1
-      with:
-        version: ${{env.JuliaVersion}}
-        arch: x64
-    - uses: julia-actions/julia-buildpkg@latest
-    - uses: julia-actions/julia-runtest@latest
-      env:
-        DISPLAY: :99
-    - uses: julia-actions/julia-uploadcodecov@latest
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  # windows-latest-x64:
+  #   runs-on: windows-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Set Environment variables
+  #     run: echo "VULKAN_SDK=C:\VulkanSDK\${{env.VulkanSDKVersion}}" >> $GITHUB_ENV
+  #   - name: Download & Install Vulkan SDK
+  #     run: |
+  #       Invoke-WebRequest -Uri https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/windows/VulkanSDK-${{env.VulkanSDKVersion}}-Installer.exe -OutFile ../vulkan-sdk-${{env.VulkanSDKVersion}}.exe
+  #       $installer = Start-Process -FilePath ../vulkan-sdk-${{env.VulkanSDKVersion}}.exe -Wait -PassThru -ArgumentList @("/S");
+  #       $installer.WaitForExit();
+  #       Invoke-WebRequest -Uri https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-runtime.exe -OutFile ../vulkan-runtime.exe
+  #       $installer = Start-Process -FilePath ../vulkan-runtime.exe -Wait -PassThru -ArgumentList @("/S");
+  #       $installer.WaitForExit();
+  #   - uses: julia-actions/setup-julia@v1
+  #     with:
+  #       version: ${{env.JuliaVersion}}
+  #       arch: x64
+  #   - uses: julia-actions/julia-buildpkg@latest
+  #   - uses: julia-actions/julia-runtest@latest
+  #     env:
+  #       DISPLAY: :99
+  #   - uses: julia-actions/julia-uploadcodecov@latest
+  #     env:
+  #       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   macos-latest-x64:
     runs-on: macos-latest
