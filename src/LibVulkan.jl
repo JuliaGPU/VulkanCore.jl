@@ -73,7 +73,7 @@ else
 end
 
 # exports
-const PREFIXES = ["VK_", "Vk", "vk", "StdVideo"]
+const PREFIXES = ["VK_", "Vk", "vk", "StdVideo", "STD_VIDEO"]
 for name in names(@__MODULE__; all = true), prefix in PREFIXES
     if startswith(string(name), prefix)
         @eval export $name
