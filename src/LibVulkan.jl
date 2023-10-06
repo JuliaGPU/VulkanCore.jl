@@ -37,6 +37,8 @@ VK_VERSION_MAJOR(version) = Cuint(version) >> 22
 VK_VERSION_MINOR(version) = (Cuint(version) >> 12) & 0x3ff
 VK_VERSION_PATCH(version) = Cuint(version) & 0xfff
 
+VK_MAKE_VIDEO_STD_VERSION(major, minor, patch) = VK_MAKE_VERSION(major, minor, patch)
+
 const IS_LIBC_MUSL = occursin("musl", Base.BUILD_TRIPLET)
 if Sys.isapple() && Sys.ARCH === :aarch64
     include("../lib/aarch64-apple-darwin20.jl")
@@ -71,7 +73,7 @@ else
 end
 
 # exports
-const PREFIXES = ["VK_", "Vk", "vk"]
+const PREFIXES = ["VK_", "Vk", "vk", "StdVideo", "STD_VIDEO"]
 for name in names(@__MODULE__; all = true), prefix in PREFIXES
     if startswith(string(name), prefix)
         @eval export $name
