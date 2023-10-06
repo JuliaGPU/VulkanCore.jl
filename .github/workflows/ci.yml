@@ -13,7 +13,7 @@ jobs:
     env:
       VULKAN_SDK: $GITHUB_WORKSPACE/../$VulkanSDKVersion/x86_64
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Download & Extract Vulkan SDK
       run: |
         wget --no-cookies -O ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/linux/vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz
@@ -35,7 +35,7 @@ jobs:
   # windows-latest-x64:
   #   runs-on: windows-latest
   #   steps:
-  #   - uses: actions/checkout@v3
+  #   - uses: actions/checkout@v4
   #   - name: Set Environment variables
   #     run: echo "VULKAN_SDK=C:\VulkanSDK\${{env.VulkanSDKVersion}}" >> $GITHUB_ENV
   #   - name: Download & Install Vulkan SDK
@@ -61,7 +61,7 @@ jobs:
   macos-latest-x64:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set Environment variables
       run: |
         VULKAN_SDK=$GITHUB_WORKSPACE/../vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS
