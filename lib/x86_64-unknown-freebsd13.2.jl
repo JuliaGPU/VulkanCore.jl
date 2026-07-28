@@ -26,9 +26,13 @@ const VkFlags = UInt32
 
 const VkSampleMask = UInt32
 
-const VkBuffer = UInt64
+const VkBuffer_T = Cvoid
 
-const VkImage = UInt64
+const VkBuffer = Ptr{VkBuffer_T}
+
+const VkImage_T = Cvoid
+
+const VkImage = Ptr{VkImage_T}
 
 const VkInstance_T = Cvoid
 
@@ -46,45 +50,81 @@ const VkQueue_T = Cvoid
 
 const VkQueue = Ptr{VkQueue_T}
 
-const VkSemaphore = UInt64
+const VkSemaphore_T = Cvoid
+
+const VkSemaphore = Ptr{VkSemaphore_T}
 
 const VkCommandBuffer_T = Cvoid
 
 const VkCommandBuffer = Ptr{VkCommandBuffer_T}
 
-const VkFence = UInt64
+const VkFence_T = Cvoid
 
-const VkDeviceMemory = UInt64
+const VkFence = Ptr{VkFence_T}
 
-const VkEvent = UInt64
+const VkDeviceMemory_T = Cvoid
 
-const VkQueryPool = UInt64
+const VkDeviceMemory = Ptr{VkDeviceMemory_T}
 
-const VkBufferView = UInt64
+const VkEvent_T = Cvoid
 
-const VkImageView = UInt64
+const VkEvent = Ptr{VkEvent_T}
 
-const VkShaderModule = UInt64
+const VkQueryPool_T = Cvoid
 
-const VkPipelineCache = UInt64
+const VkQueryPool = Ptr{VkQueryPool_T}
 
-const VkPipelineLayout = UInt64
+const VkBufferView_T = Cvoid
 
-const VkPipeline = UInt64
+const VkBufferView = Ptr{VkBufferView_T}
 
-const VkRenderPass = UInt64
+const VkImageView_T = Cvoid
 
-const VkDescriptorSetLayout = UInt64
+const VkImageView = Ptr{VkImageView_T}
 
-const VkSampler = UInt64
+const VkShaderModule_T = Cvoid
 
-const VkDescriptorSet = UInt64
+const VkShaderModule = Ptr{VkShaderModule_T}
 
-const VkDescriptorPool = UInt64
+const VkPipelineCache_T = Cvoid
 
-const VkFramebuffer = UInt64
+const VkPipelineCache = Ptr{VkPipelineCache_T}
 
-const VkCommandPool = UInt64
+const VkPipelineLayout_T = Cvoid
+
+const VkPipelineLayout = Ptr{VkPipelineLayout_T}
+
+const VkPipeline_T = Cvoid
+
+const VkPipeline = Ptr{VkPipeline_T}
+
+const VkRenderPass_T = Cvoid
+
+const VkRenderPass = Ptr{VkRenderPass_T}
+
+const VkDescriptorSetLayout_T = Cvoid
+
+const VkDescriptorSetLayout = Ptr{VkDescriptorSetLayout_T}
+
+const VkSampler_T = Cvoid
+
+const VkSampler = Ptr{VkSampler_T}
+
+const VkDescriptorSet_T = Cvoid
+
+const VkDescriptorSet = Ptr{VkDescriptorSet_T}
+
+const VkDescriptorPool_T = Cvoid
+
+const VkDescriptorPool = Ptr{VkDescriptorPool_T}
+
+const VkFramebuffer_T = Cvoid
+
+const VkFramebuffer = Ptr{VkFramebuffer_T}
+
+const VkCommandPool_T = Cvoid
+
+const VkCommandPool = Ptr{VkCommandPool_T}
 
 @cenum VkResult::Int32 begin
     VK_SUCCESS = 0
@@ -5837,9 +5877,13 @@ function vkCmdExecuteCommands(commandBuffer, commandBufferCount, pCommandBuffers
     ccall(fptr, Cvoid, (VkCommandBuffer, UInt32, Ptr{VkCommandBuffer}), commandBuffer, commandBufferCount, pCommandBuffers)
 end
 
-const VkSamplerYcbcrConversion = UInt64
+const VkSamplerYcbcrConversion_T = Cvoid
 
-const VkDescriptorUpdateTemplate = UInt64
+const VkSamplerYcbcrConversion = Ptr{VkSamplerYcbcrConversion_T}
+
+const VkDescriptorUpdateTemplate_T = Cvoid
+
+const VkDescriptorUpdateTemplate = Ptr{VkDescriptorUpdateTemplate_T}
 
 @cenum VkPointClippingBehavior::UInt32 begin
     VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES = 0
@@ -7665,7 +7709,9 @@ end
 
 const VkFlags64 = UInt64
 
-const VkPrivateDataSlot = UInt64
+const VkPrivateDataSlot_T = Cvoid
+
+const VkPrivateDataSlot = Ptr{VkPrivateDataSlot_T}
 
 @cenum VkPipelineCreationFeedbackFlagBits::UInt32 begin
     VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT = 1
@@ -8130,20 +8176,20 @@ struct VkPhysicalDeviceTextureCompressionASTCHDRFeatures
 end
 
 struct VkRenderingAttachmentInfo
-    data::NTuple{64, UInt8}
+    data::NTuple{72, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkRenderingAttachmentInfo}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :imageView && return Ptr{VkImageView}(x + 8)
-    f === :imageLayout && return Ptr{VkImageLayout}(x + 16)
-    f === :resolveMode && return Ptr{VkResolveModeFlagBits}(x + 20)
-    f === :resolveImageView && return Ptr{VkImageView}(x + 24)
-    f === :resolveImageLayout && return Ptr{VkImageLayout}(x + 32)
-    f === :loadOp && return Ptr{VkAttachmentLoadOp}(x + 36)
-    f === :storeOp && return Ptr{VkAttachmentStoreOp}(x + 40)
-    f === :clearValue && return Ptr{VkClearValue}(x + 44)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :imageView && return Ptr{VkImageView}(x + 16)
+    f === :imageLayout && return Ptr{VkImageLayout}(x + 24)
+    f === :resolveMode && return Ptr{VkResolveModeFlagBits}(x + 28)
+    f === :resolveImageView && return Ptr{VkImageView}(x + 32)
+    f === :resolveImageLayout && return Ptr{VkImageLayout}(x + 40)
+    f === :loadOp && return Ptr{VkAttachmentLoadOp}(x + 44)
+    f === :storeOp && return Ptr{VkAttachmentStoreOp}(x + 48)
+    f === :clearValue && return Ptr{VkClearValue}(x + 52)
     return getfield(x, f)
 end
 
@@ -9441,7 +9487,9 @@ function vkTransitionImageLayout(device, transitionCount, pTransitions, fptr)
     ccall(fptr, VkResult, (VkDevice, UInt32, Ptr{VkHostImageLayoutTransitionInfo}), device, transitionCount, pTransitions)
 end
 
-const VkSurfaceKHR = UInt64
+const VkSurfaceKHR_T = Cvoid
+
+const VkSurfaceKHR = Ptr{VkSurfaceKHR_T}
 
 @cenum VkPresentModeKHR::UInt32 begin
     VK_PRESENT_MODE_IMMEDIATE_KHR = 0
@@ -9575,7 +9623,9 @@ function vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, pPre
     ccall(fptr, VkResult, (VkPhysicalDevice, VkSurfaceKHR, Ptr{UInt32}, Ptr{VkPresentModeKHR}), physicalDevice, surface, pPresentModeCount, pPresentModes)
 end
 
-const VkSwapchainKHR = UInt64
+const VkSwapchainKHR_T = Cvoid
+
+const VkSwapchainKHR = Ptr{VkSwapchainKHR_T}
 
 @cenum VkSwapchainCreateFlagBitsKHR::UInt32 begin
     VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR = 1
@@ -9775,9 +9825,13 @@ function vkAcquireNextImage2KHR(device, pAcquireInfo, pImageIndex, fptr)
     ccall(fptr, VkResult, (VkDevice, Ptr{VkAcquireNextImageInfoKHR}, Ptr{UInt32}), device, pAcquireInfo, pImageIndex)
 end
 
-const VkDisplayKHR = UInt64
+const VkDisplayKHR_T = Cvoid
 
-const VkDisplayModeKHR = UInt64
+const VkDisplayKHR = Ptr{VkDisplayKHR_T}
+
+const VkDisplayModeKHR_T = Cvoid
+
+const VkDisplayModeKHR = Ptr{VkDisplayModeKHR_T}
 
 const VkDisplayModeCreateFlagsKHR = VkFlags
 
@@ -9946,9 +10000,13 @@ function vkCreateSharedSwapchainsKHR(device, swapchainCount, pCreateInfos, pAllo
     ccall(fptr, VkResult, (VkDevice, UInt32, Ptr{VkSwapchainCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSwapchainKHR}), device, swapchainCount, pCreateInfos, pAllocator, pSwapchains)
 end
 
-const VkVideoSessionKHR = UInt64
+const VkVideoSessionKHR_T = Cvoid
 
-const VkVideoSessionParametersKHR = UInt64
+const VkVideoSessionKHR = Ptr{VkVideoSessionKHR_T}
+
+const VkVideoSessionParametersKHR_T = Cvoid
+
+const VkVideoSessionParametersKHR = Ptr{VkVideoSessionParametersKHR_T}
 
 @cenum VkQueryResultStatusKHR::Int32 begin
     VK_QUERY_RESULT_STATUS_ERROR_KHR = -1
@@ -10613,7 +10671,7 @@ struct StdVideoH264HrdParameters
 end
 
 struct StdVideoH264SequenceParameterSetVui
-    data::NTuple{36, UInt8}
+    data::NTuple{40, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoH264SequenceParameterSetVui}, f::Symbol)
@@ -10782,7 +10840,7 @@ struct StdVideoH264ScalingLists
 end
 
 struct StdVideoH264SequenceParameterSet
-    data::NTuple{76, UInt8}
+    data::NTuple{88, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoH264SequenceParameterSet}, f::Symbol)
@@ -10809,8 +10867,8 @@ function Base.getproperty(x::Ptr{StdVideoH264SequenceParameterSet}, f::Symbol)
     f === :frame_crop_bottom_offset && return Ptr{UInt32}(x + 56)
     f === :reserved2 && return Ptr{UInt32}(x + 60)
     f === :pOffsetForRefFrame && return Ptr{Ptr{Int32}}(x + 64)
-    f === :pScalingLists && return Ptr{Ptr{StdVideoH264ScalingLists}}(x + 68)
-    f === :pSequenceParameterSetVui && return Ptr{Ptr{StdVideoH264SequenceParameterSetVui}}(x + 72)
+    f === :pScalingLists && return Ptr{Ptr{StdVideoH264ScalingLists}}(x + 72)
+    f === :pSequenceParameterSetVui && return Ptr{Ptr{StdVideoH264SequenceParameterSetVui}}(x + 80)
     return getfield(x, f)
 end
 
@@ -10946,7 +11004,7 @@ function StdVideoH264PpsFlags(transform_8x8_mode_flag::UInt32, redundant_pic_cnt
 end
 
 struct StdVideoH264PictureParameterSet
-    data::NTuple{20, UInt8}
+    data::NTuple{24, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoH264PictureParameterSet}, f::Symbol)
@@ -11324,7 +11382,7 @@ struct StdVideoEncodeH264RefPicMarkingEntry
 end
 
 struct StdVideoEncodeH264ReferenceListsInfo
-    data::NTuple{92, UInt8}
+    data::NTuple{104, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoEncodeH264ReferenceListsInfo}, f::Symbol)
@@ -11338,8 +11396,8 @@ function Base.getproperty(x::Ptr{StdVideoEncodeH264ReferenceListsInfo}, f::Symbo
     f === :refPicMarkingOpCount && return Ptr{UInt8}(x + 72)
     f === :reserved1 && return Ptr{NTuple{7, UInt8}}(x + 73)
     f === :pRefList0ModOperations && return Ptr{Ptr{StdVideoEncodeH264RefListModEntry}}(x + 80)
-    f === :pRefList1ModOperations && return Ptr{Ptr{StdVideoEncodeH264RefListModEntry}}(x + 84)
-    f === :pRefPicMarkingOperations && return Ptr{Ptr{StdVideoEncodeH264RefPicMarkingEntry}}(x + 88)
+    f === :pRefList1ModOperations && return Ptr{Ptr{StdVideoEncodeH264RefListModEntry}}(x + 88)
+    f === :pRefPicMarkingOperations && return Ptr{Ptr{StdVideoEncodeH264RefPicMarkingEntry}}(x + 96)
     return getfield(x, f)
 end
 
@@ -11381,7 +11439,7 @@ function StdVideoEncodeH264ReferenceListsInfo(flags::StdVideoEncodeH264Reference
 end
 
 struct StdVideoEncodeH264PictureInfo
-    data::NTuple{28, UInt8}
+    data::NTuple{32, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoEncodeH264PictureInfo}, f::Symbol)
@@ -11481,7 +11539,7 @@ function StdVideoEncodeH264ReferenceInfo(flags::StdVideoEncodeH264ReferenceInfoF
 end
 
 struct StdVideoEncodeH264SliceHeader
-    data::NTuple{28, UInt8}
+    data::NTuple{32, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoEncodeH264SliceHeader}, f::Symbol)
@@ -11900,7 +11958,7 @@ function StdVideoH265HrdFlags(nal_hrd_parameters_present_flag::UInt32, vcl_hrd_p
 end
 
 struct StdVideoH265HrdParameters
-    data::NTuple{48, UInt8}
+    data::NTuple{56, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoH265HrdParameters}, f::Symbol)
@@ -11918,7 +11976,7 @@ function Base.getproperty(x::Ptr{StdVideoH265HrdParameters}, f::Symbol)
     f === :elemental_duration_in_tc_minus1 && return Ptr{NTuple{7, UInt16}}(x + 20)
     f === :reserved && return Ptr{NTuple{3, UInt16}}(x + 34)
     f === :pSubLayerHrdParametersNal && return Ptr{Ptr{StdVideoH265SubLayerHrdParameters}}(x + 40)
-    f === :pSubLayerHrdParametersVcl && return Ptr{Ptr{StdVideoH265SubLayerHrdParameters}}(x + 44)
+    f === :pSubLayerHrdParametersVcl && return Ptr{Ptr{StdVideoH265SubLayerHrdParameters}}(x + 48)
     return getfield(x, f)
 end
 
@@ -12150,7 +12208,7 @@ function StdVideoH265ProfileTierLevel(flags::StdVideoH265ProfileTierLevelFlags, 
 end
 
 struct StdVideoH265VideoParameterSet
-    data::NTuple{36, UInt8}
+    data::NTuple{48, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoH265VideoParameterSet}, f::Symbol)
@@ -12164,8 +12222,8 @@ function Base.getproperty(x::Ptr{StdVideoH265VideoParameterSet}, f::Symbol)
     f === :vps_num_ticks_poc_diff_one_minus1 && return Ptr{UInt32}(x + 16)
     f === :reserved3 && return Ptr{UInt32}(x + 20)
     f === :pDecPicBufMgr && return Ptr{Ptr{StdVideoH265DecPicBufMgr}}(x + 24)
-    f === :pHrdParameters && return Ptr{Ptr{StdVideoH265HrdParameters}}(x + 28)
-    f === :pProfileTierLevel && return Ptr{Ptr{StdVideoH265ProfileTierLevel}}(x + 32)
+    f === :pHrdParameters && return Ptr{Ptr{StdVideoH265HrdParameters}}(x + 32)
+    f === :pProfileTierLevel && return Ptr{Ptr{StdVideoH265ProfileTierLevel}}(x + 40)
     return getfield(x, f)
 end
 
@@ -12317,7 +12375,7 @@ function StdVideoH265SpsVuiFlags(aspect_ratio_info_present_flag::UInt32, oversca
 end
 
 struct StdVideoH265SequenceParameterSetVui
-    data::NTuple{52, UInt8}
+    data::NTuple{56, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoH265SequenceParameterSetVui}, f::Symbol)
@@ -12666,7 +12724,7 @@ struct StdVideoH265LongTermRefPicsSps
 end
 
 struct StdVideoH265SequenceParameterSet
-    data::NTuple{84, UInt8}
+    data::NTuple{112, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoH265SequenceParameterSet}, f::Symbol)
@@ -12703,12 +12761,12 @@ function Base.getproperty(x::Ptr{StdVideoH265SequenceParameterSet}, f::Symbol)
     f === :conf_win_top_offset && return Ptr{UInt32}(x + 48)
     f === :conf_win_bottom_offset && return Ptr{UInt32}(x + 52)
     f === :pProfileTierLevel && return Ptr{Ptr{StdVideoH265ProfileTierLevel}}(x + 56)
-    f === :pDecPicBufMgr && return Ptr{Ptr{StdVideoH265DecPicBufMgr}}(x + 60)
-    f === :pScalingLists && return Ptr{Ptr{StdVideoH265ScalingLists}}(x + 64)
-    f === :pShortTermRefPicSet && return Ptr{Ptr{StdVideoH265ShortTermRefPicSet}}(x + 68)
-    f === :pLongTermRefPicsSps && return Ptr{Ptr{StdVideoH265LongTermRefPicsSps}}(x + 72)
-    f === :pSequenceParameterSetVui && return Ptr{Ptr{StdVideoH265SequenceParameterSetVui}}(x + 76)
-    f === :pPredictorPaletteEntries && return Ptr{Ptr{StdVideoH265PredictorPaletteEntries}}(x + 80)
+    f === :pDecPicBufMgr && return Ptr{Ptr{StdVideoH265DecPicBufMgr}}(x + 64)
+    f === :pScalingLists && return Ptr{Ptr{StdVideoH265ScalingLists}}(x + 72)
+    f === :pShortTermRefPicSet && return Ptr{Ptr{StdVideoH265ShortTermRefPicSet}}(x + 80)
+    f === :pLongTermRefPicsSps && return Ptr{Ptr{StdVideoH265LongTermRefPicsSps}}(x + 88)
+    f === :pSequenceParameterSetVui && return Ptr{Ptr{StdVideoH265SequenceParameterSetVui}}(x + 96)
+    f === :pPredictorPaletteEntries && return Ptr{Ptr{StdVideoH265PredictorPaletteEntries}}(x + 104)
     return getfield(x, f)
 end
 
@@ -12904,7 +12962,7 @@ function StdVideoH265PpsFlags(dependent_slice_segments_enabled_flag::UInt32, out
 end
 
 struct StdVideoH265PictureParameterSet
-    data::NTuple{136, UInt8}
+    data::NTuple{144, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoH265PictureParameterSet}, f::Symbol)
@@ -12943,7 +13001,7 @@ function Base.getproperty(x::Ptr{StdVideoH265PictureParameterSet}, f::Symbol)
     f === :row_height_minus1 && return Ptr{NTuple{21, UInt16}}(x + 82)
     f === :reserved3 && return Ptr{UInt32}(x + 124)
     f === :pScalingLists && return Ptr{Ptr{StdVideoH265ScalingLists}}(x + 128)
-    f === :pPredictorPaletteEntries && return Ptr{Ptr{StdVideoH265PredictorPaletteEntries}}(x + 132)
+    f === :pPredictorPaletteEntries && return Ptr{Ptr{StdVideoH265PredictorPaletteEntries}}(x + 136)
     return getfield(x, f)
 end
 
@@ -13121,7 +13179,7 @@ function StdVideoEncodeH265SliceSegmentHeaderFlags(first_slice_segment_in_pic_fl
 end
 
 struct StdVideoEncodeH265SliceSegmentHeader
-    data::NTuple{28, UInt8}
+    data::NTuple{32, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoEncodeH265SliceSegmentHeader}, f::Symbol)
@@ -13397,7 +13455,7 @@ struct StdVideoEncodeH265LongTermRefPics
 end
 
 struct StdVideoEncodeH265PictureInfo
-    data::NTuple{36, UInt8}
+    data::NTuple{48, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoEncodeH265PictureInfo}, f::Symbol)
@@ -13411,8 +13469,8 @@ function Base.getproperty(x::Ptr{StdVideoEncodeH265PictureInfo}, f::Symbol)
     f === :TemporalId && return Ptr{UInt8}(x + 16)
     f === :reserved1 && return Ptr{NTuple{7, UInt8}}(x + 17)
     f === :pRefLists && return Ptr{Ptr{StdVideoEncodeH265ReferenceListsInfo}}(x + 24)
-    f === :pShortTermRefPicSet && return Ptr{Ptr{StdVideoH265ShortTermRefPicSet}}(x + 28)
-    f === :pLongTermRefPics && return Ptr{Ptr{StdVideoEncodeH265LongTermRefPics}}(x + 32)
+    f === :pShortTermRefPicSet && return Ptr{Ptr{StdVideoH265ShortTermRefPicSet}}(x + 32)
+    f === :pLongTermRefPics && return Ptr{Ptr{StdVideoEncodeH265LongTermRefPics}}(x + 40)
     return getfield(x, f)
 end
 
@@ -15765,7 +15823,9 @@ function vkGetDeviceMemoryOpaqueCaptureAddressKHR(device, pInfo, fptr)
     ccall(fptr, UInt64, (VkDevice, Ptr{VkDeviceMemoryOpaqueCaptureAddressInfo}), device, pInfo)
 end
 
-const VkDeferredOperationKHR = UInt64
+const VkDeferredOperationKHR_T = Cvoid
+
+const VkDeferredOperationKHR = Ptr{VkDeferredOperationKHR_T}
 
 # typedef VkResult ( VKAPI_PTR * PFN_vkCreateDeferredOperationKHR ) ( VkDevice device , const VkAllocationCallbacks * pAllocator , VkDeferredOperationKHR * pDeferredOperation )
 const PFN_vkCreateDeferredOperationKHR = Ptr{Cvoid}
@@ -15907,16 +15967,16 @@ function VkPipelineExecutableStatisticValueKHR(val::__U_VkPipelineExecutableStat
 end
 
 struct VkPipelineExecutableStatisticKHR
-    data::NTuple{536, UInt8}
+    data::NTuple{544, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkPipelineExecutableStatisticKHR}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :name && return Ptr{NTuple{256, Cchar}}(x + 8)
-    f === :description && return Ptr{NTuple{256, Cchar}}(x + 264)
-    f === :format && return Ptr{VkPipelineExecutableStatisticFormatKHR}(x + 520)
-    f === :value && return Ptr{VkPipelineExecutableStatisticValueKHR}(x + 528)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :name && return Ptr{NTuple{256, Cchar}}(x + 16)
+    f === :description && return Ptr{NTuple{256, Cchar}}(x + 272)
+    f === :format && return Ptr{VkPipelineExecutableStatisticFormatKHR}(x + 528)
+    f === :value && return Ptr{VkPipelineExecutableStatisticValueKHR}(x + 536)
     return getfield(x, f)
 end
 
@@ -16667,7 +16727,9 @@ struct VkPhysicalDeviceRayTracingPositionFetchFeaturesKHR
     rayTracingPositionFetch::VkBool32
 end
 
-const VkPipelineBinaryKHR = UInt64
+const VkPipelineBinaryKHR_T = Cvoid
+
+const VkPipelineBinaryKHR = Ptr{VkPipelineBinaryKHR_T}
 
 struct VkPhysicalDevicePipelineBinaryFeaturesKHR
     sType::VkStructureType
@@ -17710,7 +17772,7 @@ function StdVideoAV1TileInfoFlags(uniform_tile_spacing_flag::UInt32, reserved::U
 end
 
 struct StdVideoAV1TileInfo
-    data::NTuple{32, UInt8}
+    data::NTuple{48, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoAV1TileInfo}, f::Symbol)
@@ -17721,9 +17783,9 @@ function Base.getproperty(x::Ptr{StdVideoAV1TileInfo}, f::Symbol)
     f === :tile_size_bytes_minus_1 && return Ptr{UInt8}(x + 8)
     f === :reserved1 && return Ptr{NTuple{7, UInt8}}(x + 9)
     f === :pMiColStarts && return Ptr{Ptr{UInt16}}(x + 16)
-    f === :pMiRowStarts && return Ptr{Ptr{UInt16}}(x + 20)
-    f === :pWidthInSbsMinus1 && return Ptr{Ptr{UInt16}}(x + 24)
-    f === :pHeightInSbsMinus1 && return Ptr{Ptr{UInt16}}(x + 28)
+    f === :pMiRowStarts && return Ptr{Ptr{UInt16}}(x + 24)
+    f === :pWidthInSbsMinus1 && return Ptr{Ptr{UInt16}}(x + 32)
+    f === :pHeightInSbsMinus1 && return Ptr{Ptr{UInt16}}(x + 40)
     return getfield(x, f)
 end
 
@@ -18045,7 +18107,7 @@ function StdVideoAV1SequenceHeaderFlags(still_picture::UInt32, reduced_still_pic
 end
 
 struct StdVideoAV1SequenceHeader
-    data::NTuple{32, UInt8}
+    data::NTuple{40, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoAV1SequenceHeader}, f::Symbol)
@@ -18062,7 +18124,7 @@ function Base.getproperty(x::Ptr{StdVideoAV1SequenceHeader}, f::Symbol)
     f === :seq_force_screen_content_tools && return Ptr{UInt8}(x + 18)
     f === :reserved1 && return Ptr{NTuple{5, UInt8}}(x + 19)
     f === :pColorConfig && return Ptr{Ptr{StdVideoAV1ColorConfig}}(x + 24)
-    f === :pTimingInfo && return Ptr{Ptr{StdVideoAV1TimingInfo}}(x + 28)
+    f === :pTimingInfo && return Ptr{Ptr{StdVideoAV1TimingInfo}}(x + 32)
     return getfield(x, f)
 end
 
@@ -18231,7 +18293,7 @@ function StdVideoDecodeAV1PictureInfoFlags(error_resilient_mode::UInt32, disable
 end
 
 struct StdVideoDecodeAV1PictureInfo
-    data::NTuple{104, UInt8}
+    data::NTuple{136, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoDecodeAV1PictureInfo}, f::Symbol)
@@ -18252,13 +18314,13 @@ function Base.getproperty(x::Ptr{StdVideoDecodeAV1PictureInfo}, f::Symbol)
     f === :OrderHints && return Ptr{NTuple{8, UInt8}}(x + 32)
     f === :expectedFrameId && return Ptr{NTuple{8, UInt32}}(x + 40)
     f === :pTileInfo && return Ptr{Ptr{StdVideoAV1TileInfo}}(x + 72)
-    f === :pQuantization && return Ptr{Ptr{StdVideoAV1Quantization}}(x + 76)
-    f === :pSegmentation && return Ptr{Ptr{StdVideoAV1Segmentation}}(x + 80)
-    f === :pLoopFilter && return Ptr{Ptr{StdVideoAV1LoopFilter}}(x + 84)
-    f === :pCDEF && return Ptr{Ptr{StdVideoAV1CDEF}}(x + 88)
-    f === :pLoopRestoration && return Ptr{Ptr{StdVideoAV1LoopRestoration}}(x + 92)
-    f === :pGlobalMotion && return Ptr{Ptr{StdVideoAV1GlobalMotion}}(x + 96)
-    f === :pFilmGrain && return Ptr{Ptr{StdVideoAV1FilmGrain}}(x + 100)
+    f === :pQuantization && return Ptr{Ptr{StdVideoAV1Quantization}}(x + 80)
+    f === :pSegmentation && return Ptr{Ptr{StdVideoAV1Segmentation}}(x + 88)
+    f === :pLoopFilter && return Ptr{Ptr{StdVideoAV1LoopFilter}}(x + 96)
+    f === :pCDEF && return Ptr{Ptr{StdVideoAV1CDEF}}(x + 104)
+    f === :pLoopRestoration && return Ptr{Ptr{StdVideoAV1LoopRestoration}}(x + 112)
+    f === :pGlobalMotion && return Ptr{Ptr{StdVideoAV1GlobalMotion}}(x + 120)
+    f === :pFilmGrain && return Ptr{Ptr{StdVideoAV1FilmGrain}}(x + 128)
     return getfield(x, f)
 end
 
@@ -18720,7 +18782,7 @@ function StdVideoEncodeAV1PictureInfoFlags(error_resilient_mode::UInt32, disable
 end
 
 struct StdVideoEncodeAV1PictureInfo
-    data::NTuple{116, UInt8}
+    data::NTuple{152, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoEncodeAV1PictureInfo}, f::Symbol)
@@ -18743,14 +18805,14 @@ function Base.getproperty(x::Ptr{StdVideoEncodeAV1PictureInfo}, f::Symbol)
     f === :reserved1 && return Ptr{NTuple{3, UInt8}}(x + 49)
     f === :delta_frame_id_minus_1 && return Ptr{NTuple{7, UInt32}}(x + 52)
     f === :pTileInfo && return Ptr{Ptr{StdVideoAV1TileInfo}}(x + 80)
-    f === :pQuantization && return Ptr{Ptr{StdVideoAV1Quantization}}(x + 84)
-    f === :pSegmentation && return Ptr{Ptr{StdVideoAV1Segmentation}}(x + 88)
-    f === :pLoopFilter && return Ptr{Ptr{StdVideoAV1LoopFilter}}(x + 92)
-    f === :pCDEF && return Ptr{Ptr{StdVideoAV1CDEF}}(x + 96)
-    f === :pLoopRestoration && return Ptr{Ptr{StdVideoAV1LoopRestoration}}(x + 100)
-    f === :pGlobalMotion && return Ptr{Ptr{StdVideoAV1GlobalMotion}}(x + 104)
-    f === :pExtensionHeader && return Ptr{Ptr{StdVideoEncodeAV1ExtensionHeader}}(x + 108)
-    f === :pBufferRemovalTimes && return Ptr{Ptr{UInt32}}(x + 112)
+    f === :pQuantization && return Ptr{Ptr{StdVideoAV1Quantization}}(x + 88)
+    f === :pSegmentation && return Ptr{Ptr{StdVideoAV1Segmentation}}(x + 96)
+    f === :pLoopFilter && return Ptr{Ptr{StdVideoAV1LoopFilter}}(x + 104)
+    f === :pCDEF && return Ptr{Ptr{StdVideoAV1CDEF}}(x + 112)
+    f === :pLoopRestoration && return Ptr{Ptr{StdVideoAV1LoopRestoration}}(x + 120)
+    f === :pGlobalMotion && return Ptr{Ptr{StdVideoAV1GlobalMotion}}(x + 128)
+    f === :pExtensionHeader && return Ptr{Ptr{StdVideoEncodeAV1ExtensionHeader}}(x + 136)
+    f === :pBufferRemovalTimes && return Ptr{Ptr{UInt32}}(x + 144)
     return getfield(x, f)
 end
 
@@ -18878,7 +18940,7 @@ function StdVideoEncodeAV1ReferenceInfoFlags(disable_frame_end_update_cdf::UInt3
 end
 
 struct StdVideoEncodeAV1ReferenceInfo
-    data::NTuple{20, UInt8}
+    data::NTuple{24, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoEncodeAV1ReferenceInfo}, f::Symbol)
@@ -19615,7 +19677,7 @@ function StdVideoDecodeVP9PictureInfoFlags(error_resilient_mode::UInt32, intra_o
 end
 
 struct StdVideoDecodeVP9PictureInfo
-    data::NTuple{44, UInt8}
+    data::NTuple{56, UInt8}
 end
 
 function Base.getproperty(x::Ptr{StdVideoDecodeVP9PictureInfo}, f::Symbol)
@@ -19635,8 +19697,8 @@ function Base.getproperty(x::Ptr{StdVideoDecodeVP9PictureInfo}, f::Symbol)
     f === :tile_rows_log2 && return Ptr{UInt8}(x + 25)
     f === :reserved1 && return Ptr{NTuple{3, UInt16}}(x + 26)
     f === :pColorConfig && return Ptr{Ptr{StdVideoVP9ColorConfig}}(x + 32)
-    f === :pLoopFilter && return Ptr{Ptr{StdVideoVP9LoopFilter}}(x + 36)
-    f === :pSegmentation && return Ptr{Ptr{StdVideoVP9Segmentation}}(x + 40)
+    f === :pLoopFilter && return Ptr{Ptr{StdVideoVP9LoopFilter}}(x + 40)
+    f === :pSegmentation && return Ptr{Ptr{StdVideoVP9Segmentation}}(x + 48)
     return getfield(x, f)
 end
 
@@ -20172,7 +20234,9 @@ struct VkPhysicalDevicePresentModeFifoLatestReadyFeaturesKHR
     presentModeFifoLatestReady::VkBool32
 end
 
-const VkDebugReportCallbackEXT = UInt64
+const VkDebugReportCallbackEXT_T = Cvoid
+
+const VkDebugReportCallbackEXT = Ptr{VkDebugReportCallbackEXT_T}
 
 @cenum VkDebugReportObjectTypeEXT::UInt32 begin
     VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT = 0
@@ -20486,9 +20550,13 @@ function vkCmdDrawIndirectByteCountEXT(commandBuffer, instanceCount, firstInstan
     ccall(fptr, Cvoid, (VkCommandBuffer, UInt32, UInt32, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride)
 end
 
-const VkCuModuleNVX = UInt64
+const VkCuModuleNVX_T = Cvoid
 
-const VkCuFunctionNVX = UInt64
+const VkCuModuleNVX = Ptr{VkCuModuleNVX_T}
+
+const VkCuFunctionNVX_T = Cvoid
+
+const VkCuFunctionNVX = Ptr{VkCuFunctionNVX_T}
 
 struct VkCuModuleCreateInfoNVX
     sType::VkStructureType
@@ -21216,7 +21284,9 @@ struct VkPhysicalDeviceRelaxedLineRasterizationFeaturesIMG
     relaxedLineRasterization::VkBool32
 end
 
-const VkDebugUtilsMessengerEXT = UInt64
+const VkDebugUtilsMessengerEXT_T = Cvoid
+
+const VkDebugUtilsMessengerEXT = Ptr{VkDebugUtilsMessengerEXT_T}
 
 const VkDebugUtilsMessengerCallbackDataFlagsEXT = VkFlags
 
@@ -21660,7 +21730,9 @@ function vkGetImageDrmFormatModifierPropertiesEXT(device, image, pProperties, fp
     ccall(fptr, VkResult, (VkDevice, VkImage, Ptr{VkImageDrmFormatModifierPropertiesEXT}), device, image, pProperties)
 end
 
-const VkValidationCacheEXT = UInt64
+const VkValidationCacheEXT_T = Cvoid
+
+const VkValidationCacheEXT = Ptr{VkValidationCacheEXT_T}
 
 @cenum VkValidationCacheHeaderVersionEXT::UInt32 begin
     VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT = 1
@@ -21847,7 +21919,9 @@ function vkCmdSetCoarseSampleOrderNV(commandBuffer, sampleOrderType, customSampl
     ccall(fptr, Cvoid, (VkCommandBuffer, VkCoarseSampleOrderTypeNV, UInt32, Ptr{VkCoarseSampleOrderCustomNV}), commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders)
 end
 
-const VkAccelerationStructureNV = UInt64
+const VkAccelerationStructureNV_T = Cvoid
+
+const VkAccelerationStructureNV = Ptr{VkAccelerationStructureNV_T}
 
 @cenum VkRayTracingShaderGroupTypeKHR::UInt32 begin
     VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_KHR = 0
@@ -22669,7 +22743,9 @@ struct VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL
     shaderIntegerFunctions2::VkBool32
 end
 
-const VkPerformanceConfigurationINTEL = UInt64
+const VkPerformanceConfigurationINTEL_T = Cvoid
+
+const VkPerformanceConfigurationINTEL = Ptr{VkPerformanceConfigurationINTEL_T}
 
 @cenum VkPerformanceConfigurationTypeINTEL::UInt32 begin
     VK_PERFORMANCE_CONFIGURATION_TYPE_COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED_INTEL = 0
@@ -23616,7 +23692,9 @@ end
 
 const VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT = VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures
 
-const VkIndirectCommandsLayoutNV = UInt64
+const VkIndirectCommandsLayoutNV_T = Cvoid
+
+const VkIndirectCommandsLayoutNV = Ptr{VkIndirectCommandsLayoutNV_T}
 
 @cenum VkIndirectCommandsTokenTypeNV::UInt32 begin
     VK_INDIRECT_COMMANDS_TOKEN_TYPE_SHADER_GROUP_NV = 0
@@ -23978,14 +24056,14 @@ const VkPhysicalDeviceRobustness2FeaturesEXT = VkPhysicalDeviceRobustness2Featur
 const VkPhysicalDeviceRobustness2PropertiesEXT = VkPhysicalDeviceRobustness2PropertiesKHR
 
 struct VkSamplerCustomBorderColorCreateInfoEXT
-    data::NTuple{28, UInt8}
+    data::NTuple{40, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkSamplerCustomBorderColorCreateInfoEXT}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :customBorderColor && return Ptr{VkClearColorValue}(x + 8)
-    f === :format && return Ptr{VkFormat}(x + 24)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :customBorderColor && return Ptr{VkClearColorValue}(x + 16)
+    f === :format && return Ptr{VkFormat}(x + 32)
     return getfield(x, f)
 end
 
@@ -24224,7 +24302,9 @@ struct VkQueryLowLatencySupportNV
     pQueriedLowLatencyData::Ptr{Cvoid}
 end
 
-const VkAccelerationStructureKHR = UInt64
+const VkAccelerationStructureKHR_T = Cvoid
+
+const VkAccelerationStructureKHR = Ptr{VkAccelerationStructureKHR_T}
 
 struct VkPhysicalDeviceDescriptorBufferPropertiesEXT
     sType::VkStructureType
@@ -24367,14 +24447,14 @@ function VkDescriptorDataEXT(val::__U_VkDescriptorDataEXT)
 end
 
 struct VkDescriptorGetInfoEXT
-    data::NTuple{24, UInt8}
+    data::NTuple{32, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkDescriptorGetInfoEXT}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :type && return Ptr{VkDescriptorType}(x + 8)
-    f === :data && return Ptr{VkDescriptorDataEXT}(x + 16)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :type && return Ptr{VkDescriptorType}(x + 16)
+    f === :data && return Ptr{VkDescriptorDataEXT}(x + 24)
     return getfield(x, f)
 end
 
@@ -24709,13 +24789,13 @@ function VkDeviceOrHostAddressConstKHR(val::__U_VkDeviceOrHostAddressConstKHR)
 end
 
 struct VkAccelerationStructureGeometryMotionTrianglesDataNV
-    data::NTuple{16, UInt8}
+    data::NTuple{24, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkAccelerationStructureGeometryMotionTrianglesDataNV}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :vertexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 8)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :vertexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 16)
     return getfield(x, f)
 end
 
@@ -25672,7 +25752,9 @@ struct VkPhysicalDeviceShaderTileImagePropertiesEXT
     shaderTileImageReadFromHelperInvocation::VkBool32
 end
 
-const VkMicromapEXT = UInt64
+const VkMicromapEXT_T = Cvoid
+
+const VkMicromapEXT = Ptr{VkMicromapEXT_T}
 
 @cenum VkMicromapTypeEXT::UInt32 begin
     VK_MICROMAP_TYPE_OPACITY_MICROMAP_EXT = 0
@@ -25785,23 +25867,23 @@ function VkDeviceOrHostAddressKHR(val::__U_VkDeviceOrHostAddressKHR)
 end
 
 struct VkMicromapBuildInfoEXT
-    data::NTuple{80, UInt8}
+    data::NTuple{96, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkMicromapBuildInfoEXT}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :type && return Ptr{VkMicromapTypeEXT}(x + 8)
-    f === :flags && return Ptr{VkBuildMicromapFlagsEXT}(x + 12)
-    f === :mode && return Ptr{VkBuildMicromapModeEXT}(x + 16)
-    f === :dstMicromap && return Ptr{VkMicromapEXT}(x + 24)
-    f === :usageCountsCount && return Ptr{UInt32}(x + 32)
-    f === :pUsageCounts && return Ptr{Ptr{VkMicromapUsageEXT}}(x + 36)
-    f === :ppUsageCounts && return Ptr{Ptr{Ptr{VkMicromapUsageEXT}}}(x + 40)
-    f === :data && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 48)
-    f === :scratchData && return Ptr{VkDeviceOrHostAddressKHR}(x + 56)
-    f === :triangleArray && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 64)
-    f === :triangleArrayStride && return Ptr{VkDeviceSize}(x + 72)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :type && return Ptr{VkMicromapTypeEXT}(x + 16)
+    f === :flags && return Ptr{VkBuildMicromapFlagsEXT}(x + 20)
+    f === :mode && return Ptr{VkBuildMicromapModeEXT}(x + 24)
+    f === :dstMicromap && return Ptr{VkMicromapEXT}(x + 32)
+    f === :usageCountsCount && return Ptr{UInt32}(x + 40)
+    f === :pUsageCounts && return Ptr{Ptr{VkMicromapUsageEXT}}(x + 48)
+    f === :ppUsageCounts && return Ptr{Ptr{Ptr{VkMicromapUsageEXT}}}(x + 56)
+    f === :data && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 64)
+    f === :scratchData && return Ptr{VkDeviceOrHostAddressKHR}(x + 72)
+    f === :triangleArray && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 80)
+    f === :triangleArrayStride && return Ptr{VkDeviceSize}(x + 88)
     return getfield(x, f)
 end
 
@@ -25876,15 +25958,15 @@ struct VkMicromapVersionInfoEXT
 end
 
 struct VkCopyMicromapToMemoryInfoEXT
-    data::NTuple{32, UInt8}
+    data::NTuple{40, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkCopyMicromapToMemoryInfoEXT}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :src && return Ptr{VkMicromapEXT}(x + 8)
-    f === :dst && return Ptr{VkDeviceOrHostAddressKHR}(x + 16)
-    f === :mode && return Ptr{VkCopyMicromapModeEXT}(x + 24)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :src && return Ptr{VkMicromapEXT}(x + 16)
+    f === :dst && return Ptr{VkDeviceOrHostAddressKHR}(x + 24)
+    f === :mode && return Ptr{VkCopyMicromapModeEXT}(x + 32)
     return getfield(x, f)
 end
 
@@ -25919,15 +26001,15 @@ function VkCopyMicromapToMemoryInfoEXT(sType::VkStructureType, pNext::Ptr{Cvoid}
 end
 
 struct VkCopyMemoryToMicromapInfoEXT
-    data::NTuple{32, UInt8}
+    data::NTuple{40, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkCopyMemoryToMicromapInfoEXT}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :src && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 8)
-    f === :dst && return Ptr{VkMicromapEXT}(x + 16)
-    f === :mode && return Ptr{VkCopyMicromapModeEXT}(x + 24)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :src && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 16)
+    f === :dst && return Ptr{VkMicromapEXT}(x + 24)
+    f === :mode && return Ptr{VkCopyMicromapModeEXT}(x + 32)
     return getfield(x, f)
 end
 
@@ -25978,20 +26060,20 @@ struct VkMicromapBuildSizesInfoEXT
 end
 
 struct VkAccelerationStructureTrianglesOpacityMicromapEXT
-    data::NTuple{56, UInt8}
+    data::NTuple{72, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkAccelerationStructureTrianglesOpacityMicromapEXT}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :indexType && return Ptr{VkIndexType}(x + 8)
-    f === :indexBuffer && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 16)
-    f === :indexStride && return Ptr{VkDeviceSize}(x + 24)
-    f === :baseTriangle && return Ptr{UInt32}(x + 32)
-    f === :usageCountsCount && return Ptr{UInt32}(x + 36)
-    f === :pUsageCounts && return Ptr{Ptr{VkMicromapUsageEXT}}(x + 40)
-    f === :ppUsageCounts && return Ptr{Ptr{Ptr{VkMicromapUsageEXT}}}(x + 44)
-    f === :micromap && return Ptr{VkMicromapEXT}(x + 48)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :indexType && return Ptr{VkIndexType}(x + 16)
+    f === :indexBuffer && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 24)
+    f === :indexStride && return Ptr{VkDeviceSize}(x + 32)
+    f === :baseTriangle && return Ptr{UInt32}(x + 40)
+    f === :usageCountsCount && return Ptr{UInt32}(x + 44)
+    f === :pUsageCounts && return Ptr{Ptr{VkMicromapUsageEXT}}(x + 48)
+    f === :ppUsageCounts && return Ptr{Ptr{Ptr{VkMicromapUsageEXT}}}(x + 56)
+    f === :micromap && return Ptr{VkMicromapEXT}(x + 64)
     return getfield(x, f)
 end
 
@@ -26592,23 +26674,23 @@ struct VkPhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV
 end
 
 struct VkAccelerationStructureGeometryLinearSweptSpheresDataNV
-    data::NTuple{88, UInt8}
+    data::NTuple{96, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkAccelerationStructureGeometryLinearSweptSpheresDataNV}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :vertexFormat && return Ptr{VkFormat}(x + 8)
-    f === :vertexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 16)
-    f === :vertexStride && return Ptr{VkDeviceSize}(x + 24)
-    f === :radiusFormat && return Ptr{VkFormat}(x + 32)
-    f === :radiusData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 40)
-    f === :radiusStride && return Ptr{VkDeviceSize}(x + 48)
-    f === :indexType && return Ptr{VkIndexType}(x + 56)
-    f === :indexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 64)
-    f === :indexStride && return Ptr{VkDeviceSize}(x + 72)
-    f === :indexingMode && return Ptr{VkRayTracingLssIndexingModeNV}(x + 80)
-    f === :endCapsMode && return Ptr{VkRayTracingLssPrimitiveEndCapsModeNV}(x + 84)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :vertexFormat && return Ptr{VkFormat}(x + 16)
+    f === :vertexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 24)
+    f === :vertexStride && return Ptr{VkDeviceSize}(x + 32)
+    f === :radiusFormat && return Ptr{VkFormat}(x + 40)
+    f === :radiusData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 48)
+    f === :radiusStride && return Ptr{VkDeviceSize}(x + 56)
+    f === :indexType && return Ptr{VkIndexType}(x + 64)
+    f === :indexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 72)
+    f === :indexStride && return Ptr{VkDeviceSize}(x + 80)
+    f === :indexingMode && return Ptr{VkRayTracingLssIndexingModeNV}(x + 88)
+    f === :endCapsMode && return Ptr{VkRayTracingLssPrimitiveEndCapsModeNV}(x + 92)
     return getfield(x, f)
 end
 
@@ -26651,21 +26733,21 @@ function VkAccelerationStructureGeometryLinearSweptSpheresDataNV(sType::VkStruct
 end
 
 struct VkAccelerationStructureGeometrySpheresDataNV
-    data::NTuple{80, UInt8}
+    data::NTuple{88, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkAccelerationStructureGeometrySpheresDataNV}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :vertexFormat && return Ptr{VkFormat}(x + 8)
-    f === :vertexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 16)
-    f === :vertexStride && return Ptr{VkDeviceSize}(x + 24)
-    f === :radiusFormat && return Ptr{VkFormat}(x + 32)
-    f === :radiusData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 40)
-    f === :radiusStride && return Ptr{VkDeviceSize}(x + 48)
-    f === :indexType && return Ptr{VkIndexType}(x + 56)
-    f === :indexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 64)
-    f === :indexStride && return Ptr{VkDeviceSize}(x + 72)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :vertexFormat && return Ptr{VkFormat}(x + 16)
+    f === :vertexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 24)
+    f === :vertexStride && return Ptr{VkDeviceSize}(x + 32)
+    f === :radiusFormat && return Ptr{VkFormat}(x + 40)
+    f === :radiusData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 48)
+    f === :radiusStride && return Ptr{VkDeviceSize}(x + 56)
+    f === :indexType && return Ptr{VkIndexType}(x + 64)
+    f === :indexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 72)
+    f === :indexStride && return Ptr{VkDeviceSize}(x + 80)
     return getfield(x, f)
 end
 
@@ -27240,9 +27322,13 @@ struct VkDirectDriverLoadingListLUNARG
     pDrivers::Ptr{VkDirectDriverLoadingInfoLUNARG}
 end
 
-const VkTensorARM = UInt64
+const VkTensorARM_T = Cvoid
 
-const VkTensorViewARM = UInt64
+const VkTensorARM = Ptr{VkTensorARM_T}
+
+const VkTensorViewARM_T = Cvoid
+
+const VkTensorViewARM = Ptr{VkTensorViewARM_T}
 
 @cenum VkTensorTilingARM::UInt32 begin
     VK_TENSOR_TILING_OPTIMAL_ARM = 0
@@ -27625,7 +27711,9 @@ function vkGetShaderModuleCreateInfoIdentifierEXT(device, pCreateInfo, pIdentifi
     ccall(fptr, Cvoid, (VkDevice, Ptr{VkShaderModuleCreateInfo}, Ptr{VkShaderModuleIdentifierEXT}), device, pCreateInfo, pIdentifier)
 end
 
-const VkOpticalFlowSessionNV = UInt64
+const VkOpticalFlowSessionNV_T = Cvoid
+
+const VkOpticalFlowSessionNV = Ptr{VkOpticalFlowSessionNV_T}
 
 @cenum VkOpticalFlowPerformanceLevelNV::UInt32 begin
     VK_OPTICAL_FLOW_PERFORMANCE_LEVEL_UNKNOWN_NV = 0
@@ -27861,7 +27949,9 @@ function vkAntiLagUpdateAMD(device, pData, fptr)
     ccall(fptr, Cvoid, (VkDevice, Ptr{VkAntiLagDataAMD}), device, pData)
 end
 
-const VkShaderEXT = UInt64
+const VkShaderEXT_T = Cvoid
+
+const VkShaderEXT = Ptr{VkShaderEXT_T}
 
 @cenum VkShaderCodeTypeEXT::UInt32 begin
     VK_SHADER_CODE_TYPE_BINARY_EXT = 0
@@ -28090,24 +28180,24 @@ struct VkCooperativeVectorPropertiesNV
 end
 
 struct VkConvertCooperativeVectorMatrixInfoNV
-    data::NTuple{72, UInt8}
+    data::NTuple{96, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkConvertCooperativeVectorMatrixInfoNV}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :srcSize && return Ptr{Csize_t}(x + 8)
-    f === :srcData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 16)
-    f === :pDstSize && return Ptr{Ptr{Csize_t}}(x + 24)
-    f === :dstData && return Ptr{VkDeviceOrHostAddressKHR}(x + 32)
-    f === :srcComponentType && return Ptr{VkComponentTypeKHR}(x + 40)
-    f === :dstComponentType && return Ptr{VkComponentTypeKHR}(x + 44)
-    f === :numRows && return Ptr{UInt32}(x + 48)
-    f === :numColumns && return Ptr{UInt32}(x + 52)
-    f === :srcLayout && return Ptr{VkCooperativeVectorMatrixLayoutNV}(x + 56)
-    f === :srcStride && return Ptr{Csize_t}(x + 60)
-    f === :dstLayout && return Ptr{VkCooperativeVectorMatrixLayoutNV}(x + 64)
-    f === :dstStride && return Ptr{Csize_t}(x + 68)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :srcSize && return Ptr{Csize_t}(x + 16)
+    f === :srcData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 24)
+    f === :pDstSize && return Ptr{Ptr{Csize_t}}(x + 32)
+    f === :dstData && return Ptr{VkDeviceOrHostAddressKHR}(x + 40)
+    f === :srcComponentType && return Ptr{VkComponentTypeKHR}(x + 48)
+    f === :dstComponentType && return Ptr{VkComponentTypeKHR}(x + 52)
+    f === :numRows && return Ptr{UInt32}(x + 56)
+    f === :numColumns && return Ptr{UInt32}(x + 60)
+    f === :srcLayout && return Ptr{VkCooperativeVectorMatrixLayoutNV}(x + 64)
+    f === :srcStride && return Ptr{Csize_t}(x + 72)
+    f === :dstLayout && return Ptr{VkCooperativeVectorMatrixLayoutNV}(x + 80)
+    f === :dstStride && return Ptr{Csize_t}(x + 88)
     return getfield(x, f)
 end
 
@@ -28412,7 +28502,9 @@ function vkQueueNotifyOutOfBandNV(queue, pQueueTypeInfo, fptr)
     ccall(fptr, Cvoid, (VkQueue, Ptr{VkOutOfBandQueueTypeInfoNV}), queue, pQueueTypeInfo)
 end
 
-const VkDataGraphPipelineSessionARM = UInt64
+const VkDataGraphPipelineSessionARM_T = Cvoid
+
+const VkDataGraphPipelineSessionARM = Ptr{VkDataGraphPipelineSessionARM_T}
 
 @cenum VkDataGraphPipelineSessionBindPointARM::UInt32 begin
     VK_DATA_GRAPH_PIPELINE_SESSION_BIND_POINT_TRANSIENT_ARM = 0
@@ -29130,7 +29222,7 @@ struct VkClusterAccelerationStructureMoveObjectsInputNV
 end
 
 struct VkClusterAccelerationStructureOpInputNV
-    data::NTuple{4, UInt8}
+    data::NTuple{8, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkClusterAccelerationStructureOpInputNV}, f::Symbol)
@@ -29175,17 +29267,17 @@ function VkClusterAccelerationStructureOpInputNV(val::__U_VkClusterAccelerationS
 end
 
 struct VkClusterAccelerationStructureInputInfoNV
-    data::NTuple{28, UInt8}
+    data::NTuple{40, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkClusterAccelerationStructureInputInfoNV}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :maxAccelerationStructureCount && return Ptr{UInt32}(x + 8)
-    f === :flags && return Ptr{VkBuildAccelerationStructureFlagsKHR}(x + 12)
-    f === :opType && return Ptr{VkClusterAccelerationStructureOpTypeNV}(x + 16)
-    f === :opMode && return Ptr{VkClusterAccelerationStructureOpModeNV}(x + 20)
-    f === :opInput && return Ptr{VkClusterAccelerationStructureOpInputNV}(x + 24)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :maxAccelerationStructureCount && return Ptr{UInt32}(x + 16)
+    f === :flags && return Ptr{VkBuildAccelerationStructureFlagsKHR}(x + 20)
+    f === :opType && return Ptr{VkClusterAccelerationStructureOpTypeNV}(x + 24)
+    f === :opMode && return Ptr{VkClusterAccelerationStructureOpModeNV}(x + 28)
+    f === :opInput && return Ptr{VkClusterAccelerationStructureOpInputNV}(x + 32)
     return getfield(x, f)
 end
 
@@ -29228,20 +29320,20 @@ struct VkStridedDeviceAddressRegionKHR
 end
 
 struct VkClusterAccelerationStructureCommandsInfoNV
-    data::NTuple{144, UInt8}
+    data::NTuple{160, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkClusterAccelerationStructureCommandsInfoNV}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :input && return Ptr{VkClusterAccelerationStructureInputInfoNV}(x + 8)
-    f === :dstImplicitData && return Ptr{VkDeviceAddress}(x + 40)
-    f === :scratchData && return Ptr{VkDeviceAddress}(x + 48)
-    f === :dstAddressesArray && return Ptr{VkStridedDeviceAddressRegionKHR}(x + 56)
-    f === :dstSizesArray && return Ptr{VkStridedDeviceAddressRegionKHR}(x + 80)
-    f === :srcInfosArray && return Ptr{VkStridedDeviceAddressRegionKHR}(x + 104)
-    f === :srcInfosCount && return Ptr{VkDeviceAddress}(x + 128)
-    f === :addressResolutionFlags && return Ptr{VkClusterAccelerationStructureAddressResolutionFlagsNV}(x + 136)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :input && return Ptr{VkClusterAccelerationStructureInputInfoNV}(x + 16)
+    f === :dstImplicitData && return Ptr{VkDeviceAddress}(x + 56)
+    f === :scratchData && return Ptr{VkDeviceAddress}(x + 64)
+    f === :dstAddressesArray && return Ptr{VkStridedDeviceAddressRegionKHR}(x + 72)
+    f === :dstSizesArray && return Ptr{VkStridedDeviceAddressRegionKHR}(x + 96)
+    f === :srcInfosArray && return Ptr{VkStridedDeviceAddressRegionKHR}(x + 120)
+    f === :srcInfosCount && return Ptr{VkDeviceAddress}(x + 144)
+    f === :addressResolutionFlags && return Ptr{VkClusterAccelerationStructureAddressResolutionFlagsNV}(x + 152)
     return getfield(x, f)
 end
 
@@ -29796,9 +29888,13 @@ function vkCmdBuildPartitionedAccelerationStructuresNV(commandBuffer, pBuildInfo
     ccall(fptr, Cvoid, (VkCommandBuffer, Ptr{VkBuildPartitionedAccelerationStructureInfoNV}), commandBuffer, pBuildInfo)
 end
 
-const VkIndirectExecutionSetEXT = UInt64
+const VkIndirectExecutionSetEXT_T = Cvoid
 
-const VkIndirectCommandsLayoutEXT = UInt64
+const VkIndirectExecutionSetEXT = Ptr{VkIndirectExecutionSetEXT_T}
+
+const VkIndirectCommandsLayoutEXT_T = Cvoid
+
+const VkIndirectCommandsLayoutEXT = Ptr{VkIndirectCommandsLayoutEXT_T}
 
 @cenum VkIndirectExecutionSetInfoTypeEXT::UInt32 begin
     VK_INDIRECT_EXECUTION_SET_INFO_TYPE_PIPELINES_EXT = 0
@@ -29900,7 +29996,7 @@ struct VkIndirectExecutionSetShaderInfoEXT
 end
 
 struct VkIndirectExecutionSetInfoEXT
-    data::NTuple{4, UInt8}
+    data::NTuple{8, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkIndirectExecutionSetInfoEXT}, f::Symbol)
@@ -29942,14 +30038,14 @@ function VkIndirectExecutionSetInfoEXT(val::__U_VkIndirectExecutionSetInfoEXT)
 end
 
 struct VkIndirectExecutionSetCreateInfoEXT
-    data::NTuple{16, UInt8}
+    data::NTuple{32, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkIndirectExecutionSetCreateInfoEXT}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :type && return Ptr{VkIndirectExecutionSetInfoTypeEXT}(x + 8)
-    f === :info && return Ptr{VkIndirectExecutionSetInfoEXT}(x + 12)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :type && return Ptr{VkIndirectExecutionSetInfoTypeEXT}(x + 16)
+    f === :info && return Ptr{VkIndirectExecutionSetInfoEXT}(x + 24)
     return getfield(x, f)
 end
 
@@ -30022,7 +30118,7 @@ struct VkIndirectCommandsExecutionSetTokenEXT
 end
 
 struct VkIndirectCommandsTokenDataEXT
-    data::NTuple{4, UInt8}
+    data::NTuple{8, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkIndirectCommandsTokenDataEXT}, f::Symbol)
@@ -30070,15 +30166,15 @@ function VkIndirectCommandsTokenDataEXT(val::__U_VkIndirectCommandsTokenDataEXT)
 end
 
 struct VkIndirectCommandsLayoutTokenEXT
-    data::NTuple{20, UInt8}
+    data::NTuple{40, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkIndirectCommandsLayoutTokenEXT}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :type && return Ptr{VkIndirectCommandsTokenTypeEXT}(x + 8)
-    f === :data && return Ptr{VkIndirectCommandsTokenDataEXT}(x + 12)
-    f === :offset && return Ptr{UInt32}(x + 16)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :type && return Ptr{VkIndirectCommandsTokenTypeEXT}(x + 16)
+    f === :data && return Ptr{VkIndirectCommandsTokenDataEXT}(x + 24)
+    f === :offset && return Ptr{UInt32}(x + 32)
     return getfield(x, f)
 end
 
@@ -30450,19 +30546,19 @@ struct VkAccelerationStructureBuildRangeInfoKHR
 end
 
 struct VkAccelerationStructureGeometryTrianglesDataKHR
-    data::NTuple{56, UInt8}
+    data::NTuple{64, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkAccelerationStructureGeometryTrianglesDataKHR}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :vertexFormat && return Ptr{VkFormat}(x + 8)
-    f === :vertexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 16)
-    f === :vertexStride && return Ptr{VkDeviceSize}(x + 24)
-    f === :maxVertex && return Ptr{UInt32}(x + 32)
-    f === :indexType && return Ptr{VkIndexType}(x + 36)
-    f === :indexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 40)
-    f === :transformData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 48)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :vertexFormat && return Ptr{VkFormat}(x + 16)
+    f === :vertexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 24)
+    f === :vertexStride && return Ptr{VkDeviceSize}(x + 32)
+    f === :maxVertex && return Ptr{UInt32}(x + 40)
+    f === :indexType && return Ptr{VkIndexType}(x + 44)
+    f === :indexData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 48)
+    f === :transformData && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 56)
     return getfield(x, f)
 end
 
@@ -30501,14 +30597,14 @@ function VkAccelerationStructureGeometryTrianglesDataKHR(sType::VkStructureType,
 end
 
 struct VkAccelerationStructureGeometryAabbsDataKHR
-    data::NTuple{24, UInt8}
+    data::NTuple{32, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkAccelerationStructureGeometryAabbsDataKHR}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :data && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 8)
-    f === :stride && return Ptr{VkDeviceSize}(x + 16)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :data && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 16)
+    f === :stride && return Ptr{VkDeviceSize}(x + 24)
     return getfield(x, f)
 end
 
@@ -30542,14 +30638,14 @@ function VkAccelerationStructureGeometryAabbsDataKHR(sType::VkStructureType, pNe
 end
 
 struct VkAccelerationStructureGeometryInstancesDataKHR
-    data::NTuple{24, UInt8}
+    data::NTuple{32, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkAccelerationStructureGeometryInstancesDataKHR}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :arrayOfPointers && return Ptr{VkBool32}(x + 8)
-    f === :data && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 16)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :arrayOfPointers && return Ptr{VkBool32}(x + 16)
+    f === :data && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 24)
     return getfield(x, f)
 end
 
@@ -30583,7 +30679,7 @@ function VkAccelerationStructureGeometryInstancesDataKHR(sType::VkStructureType,
 end
 
 struct VkAccelerationStructureGeometryDataKHR
-    data::NTuple{56, UInt8}
+    data::NTuple{64, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkAccelerationStructureGeometryDataKHR}, f::Symbol)
@@ -30628,15 +30724,15 @@ function VkAccelerationStructureGeometryDataKHR(val::__U_VkAccelerationStructure
 end
 
 struct VkAccelerationStructureGeometryKHR
-    data::NTuple{80, UInt8}
+    data::NTuple{96, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkAccelerationStructureGeometryKHR}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :geometryType && return Ptr{VkGeometryTypeKHR}(x + 8)
-    f === :geometry && return Ptr{VkAccelerationStructureGeometryDataKHR}(x + 16)
-    f === :flags && return Ptr{VkGeometryFlagsKHR}(x + 72)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :geometryType && return Ptr{VkGeometryTypeKHR}(x + 16)
+    f === :geometry && return Ptr{VkAccelerationStructureGeometryDataKHR}(x + 24)
+    f === :flags && return Ptr{VkGeometryFlagsKHR}(x + 88)
     return getfield(x, f)
 end
 
@@ -30671,21 +30767,21 @@ function VkAccelerationStructureGeometryKHR(sType::VkStructureType, pNext::Ptr{C
 end
 
 struct VkAccelerationStructureBuildGeometryInfoKHR
-    data::NTuple{64, UInt8}
+    data::NTuple{80, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkAccelerationStructureBuildGeometryInfoKHR}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :type && return Ptr{VkAccelerationStructureTypeKHR}(x + 8)
-    f === :flags && return Ptr{VkBuildAccelerationStructureFlagsKHR}(x + 12)
-    f === :mode && return Ptr{VkBuildAccelerationStructureModeKHR}(x + 16)
-    f === :srcAccelerationStructure && return Ptr{VkAccelerationStructureKHR}(x + 24)
-    f === :dstAccelerationStructure && return Ptr{VkAccelerationStructureKHR}(x + 32)
-    f === :geometryCount && return Ptr{UInt32}(x + 40)
-    f === :pGeometries && return Ptr{Ptr{VkAccelerationStructureGeometryKHR}}(x + 44)
-    f === :ppGeometries && return Ptr{Ptr{Ptr{VkAccelerationStructureGeometryKHR}}}(x + 48)
-    f === :scratchData && return Ptr{VkDeviceOrHostAddressKHR}(x + 56)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :type && return Ptr{VkAccelerationStructureTypeKHR}(x + 16)
+    f === :flags && return Ptr{VkBuildAccelerationStructureFlagsKHR}(x + 20)
+    f === :mode && return Ptr{VkBuildAccelerationStructureModeKHR}(x + 24)
+    f === :srcAccelerationStructure && return Ptr{VkAccelerationStructureKHR}(x + 32)
+    f === :dstAccelerationStructure && return Ptr{VkAccelerationStructureKHR}(x + 40)
+    f === :geometryCount && return Ptr{UInt32}(x + 48)
+    f === :pGeometries && return Ptr{Ptr{VkAccelerationStructureGeometryKHR}}(x + 56)
+    f === :ppGeometries && return Ptr{Ptr{Ptr{VkAccelerationStructureGeometryKHR}}}(x + 64)
+    f === :scratchData && return Ptr{VkDeviceOrHostAddressKHR}(x + 72)
     return getfield(x, f)
 end
 
@@ -30779,15 +30875,15 @@ struct VkAccelerationStructureVersionInfoKHR
 end
 
 struct VkCopyAccelerationStructureToMemoryInfoKHR
-    data::NTuple{32, UInt8}
+    data::NTuple{40, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkCopyAccelerationStructureToMemoryInfoKHR}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :src && return Ptr{VkAccelerationStructureKHR}(x + 8)
-    f === :dst && return Ptr{VkDeviceOrHostAddressKHR}(x + 16)
-    f === :mode && return Ptr{VkCopyAccelerationStructureModeKHR}(x + 24)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :src && return Ptr{VkAccelerationStructureKHR}(x + 16)
+    f === :dst && return Ptr{VkDeviceOrHostAddressKHR}(x + 24)
+    f === :mode && return Ptr{VkCopyAccelerationStructureModeKHR}(x + 32)
     return getfield(x, f)
 end
 
@@ -30822,15 +30918,15 @@ function VkCopyAccelerationStructureToMemoryInfoKHR(sType::VkStructureType, pNex
 end
 
 struct VkCopyMemoryToAccelerationStructureInfoKHR
-    data::NTuple{32, UInt8}
+    data::NTuple{40, UInt8}
 end
 
 function Base.getproperty(x::Ptr{VkCopyMemoryToAccelerationStructureInfoKHR}, f::Symbol)
     f === :sType && return Ptr{VkStructureType}(x + 0)
-    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 4)
-    f === :src && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 8)
-    f === :dst && return Ptr{VkAccelerationStructureKHR}(x + 16)
-    f === :mode && return Ptr{VkCopyAccelerationStructureModeKHR}(x + 24)
+    f === :pNext && return Ptr{Ptr{Cvoid}}(x + 8)
+    f === :src && return Ptr{VkDeviceOrHostAddressConstKHR}(x + 16)
+    f === :dst && return Ptr{VkAccelerationStructureKHR}(x + 24)
+    f === :mode && return Ptr{VkCopyAccelerationStructureModeKHR}(x + 32)
     return getfield(x, f)
 end
 
@@ -31274,42 +31370,6 @@ function vkCmdDrawMeshTasksIndirectCountEXT(commandBuffer, buffer, offset, count
     ccall(fptr, Cvoid, (VkCommandBuffer, VkBuffer, VkDeviceSize, VkBuffer, VkDeviceSize, UInt32, UInt32), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride)
 end
 
-const VkWaylandSurfaceCreateFlagsKHR = VkFlags
-
-const wl_display = Cvoid
-
-const wl_surface = Cvoid
-
-struct VkWaylandSurfaceCreateInfoKHR
-    sType::VkStructureType
-    pNext::Ptr{Cvoid}
-    flags::VkWaylandSurfaceCreateFlagsKHR
-    display::Ptr{wl_display}
-    surface::Ptr{wl_surface}
-end
-
-# typedef VkResult ( VKAPI_PTR * PFN_vkCreateWaylandSurfaceKHR ) ( VkInstance instance , const VkWaylandSurfaceCreateInfoKHR * pCreateInfo , const VkAllocationCallbacks * pAllocator , VkSurfaceKHR * pSurface )
-const PFN_vkCreateWaylandSurfaceKHR = Ptr{Cvoid}
-
-# typedef VkBool32 ( VKAPI_PTR * PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR ) ( VkPhysicalDevice physicalDevice , uint32_t queueFamilyIndex , struct wl_display * display )
-const PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR = Ptr{Cvoid}
-
-function vkCreateWaylandSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface)
-    ccall((:vkCreateWaylandSurfaceKHR, libvulkan), VkResult, (VkInstance, Ptr{VkWaylandSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
-end
-
-function vkCreateWaylandSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface, fptr)
-    ccall(fptr, VkResult, (VkInstance, Ptr{VkWaylandSurfaceCreateInfoKHR}, Ptr{VkAllocationCallbacks}, Ptr{VkSurfaceKHR}), instance, pCreateInfo, pAllocator, pSurface)
-end
-
-function vkGetPhysicalDeviceWaylandPresentationSupportKHR(physicalDevice, queueFamilyIndex, display)
-    ccall((:vkGetPhysicalDeviceWaylandPresentationSupportKHR, libvulkan), VkBool32, (VkPhysicalDevice, UInt32, Ptr{wl_display}), physicalDevice, queueFamilyIndex, display)
-end
-
-function vkGetPhysicalDeviceWaylandPresentationSupportKHR(physicalDevice, queueFamilyIndex, display, fptr)
-    ccall(fptr, VkBool32, (VkPhysicalDevice, UInt32, Ptr{wl_display}), physicalDevice, queueFamilyIndex, display)
-end
-
 const VkXcbSurfaceCreateFlagsKHR = VkFlags
 
 struct VkXcbSurfaceCreateInfoKHR
@@ -31402,9 +31462,9 @@ const VULKAN_CORE_H_ = 1
 
 const VK_VERSION_1_0 = 1
 
-const VK_USE_64_BIT_PTR_DEFINES = 0
+const VK_USE_64_BIT_PTR_DEFINES = 1
 
-const VK_NULL_HANDLE = Culonglong(0)
+# Skipping MacroDefinition: VK_NULL_HANDLE ( ( void * ) 0 )
 
 const VK_API_VERSION_1_0 = VK_MAKE_API_VERSION(0, 1, 0, 0)
 
@@ -34047,14 +34107,6 @@ const VK_EXT_mesh_shader = 1
 const VK_EXT_MESH_SHADER_SPEC_VERSION = 1
 
 const VK_EXT_MESH_SHADER_EXTENSION_NAME = "VK_EXT_mesh_shader"
-
-const VULKAN_WAYLAND_H_ = 1
-
-const VK_KHR_wayland_surface = 1
-
-const VK_KHR_WAYLAND_SURFACE_SPEC_VERSION = 6
-
-const VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME = "VK_KHR_wayland_surface"
 
 const VULKAN_XCB_H_ = 1
 

@@ -47,6 +47,20 @@ VK_EXTENSIONS_MAP = Dict(
     "x86_64-unknown-freebsd" => ["-DVK_USE_PLATFORM_XCB_KHR", "-DVK_USE_PLATFORM_XLIB_KHR", "-DVK_USE_PLATFORM_XLIB_XRANDR_EXT"],
 )
 
+# JLLEnvs gained version-suffixed triples (e.g. "x86_64-unknown-freebsd13.2",
+# "x86_64-apple-darwin14"), so an exact lookup in VK_EXTENSIONS_MAP misses. Compare
+# with the trailing version stripped from both sides.
+strip_triple_version(t) = replace(t, r"[0-9.]+$" => "")
+
+function extension_flags(target)
+    haskey(VK_EXTENSIONS_MAP, target) && return VK_EXTENSIONS_MAP[target]
+    nt = strip_triple_version(target)
+    for (k, v) in VK_EXTENSIONS_MAP
+        strip_triple_version(k) == nt && return v
+    end
+    error("no Vulkan platform flags configured for target $target")
+end
+
 for target in JLLEnvs.JLL_ENV_TRIPLES
     @info "processing $target"
 
@@ -94,7 +108,7 @@ for target in JLLEnvs.JLL_ENV_TRIPLES
     xlibXrender_inc = JLLEnvs.get_pkg_include_dir(Xorg_libXrender_jll, target)
     !isempty(xlibXrender_inc) && push!(args, "-isystem$xlibXrender_inc")
 
-    append!(args, VK_EXTENSIONS_MAP[target])
+    append!(args, extension_flags(target))
 
     # add header directory to detect `vk_video` headers
     push!(args, "-I$VK_INCLUDE_BASE")
