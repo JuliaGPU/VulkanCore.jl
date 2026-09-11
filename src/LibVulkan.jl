@@ -19,15 +19,29 @@ end
 
 const libvulkan_handle = Ref{Ptr{Cvoid}}(0)
 
+"""Whether a Vulkan loader was found when this module was loaded.
+
+`false` is a normal state, not a broken one: a machine with no driver can still
+`using VulkanCore` and everything that does not call the API works. Ask this
+before building an instance — see `__init__` for why it is not an error.
+"""
+loaded() = libvulkan_handle[] != C_NULL
+
 function __init__()
     libname = Libdl.find_library(libvulkan)
-    if isempty(libname)
-        error("""
-        Failed to retrieve a valid Vulkan library called '$libvulkan'.
-        If you configure the `JULIA_VULKAN_LIBNAME` environment variable before precompiling VulkanCore, it will be used instead of '$libvulkan'. You may also manually add search paths by appending them to Lidbl.DL_LOAD_PATH, but note that this may have repercussions beyond this package.
-        """)
-    end
+    # NO error. Failing here made merely DEPENDING on VulkanCore fatal on a
+    # machine with no loader — a Mac, a CI runner, a container — which forced
+    # every package above it to reach the driver through a weak dependency and
+    # an extension, and to hand-maintain the import list that a separate module
+    # needs. Nothing here reads `libvulkan_handle`: the entry points are
+    # `ccall((:vkCreateInstance, libvulkan), …)`, which bind by NAME and dlopen
+    # themselves on the first call. So the absence is already representable, and
+    # a caller that actually uses the API gets Julia's own "could not load
+    # library '$libvulkan'" at the point of use, which says the same thing at
+    # the moment it is true.
+    isempty(libname) && return nothing
     libvulkan_handle[] = Libdl.dlopen(libname)
+    return nothing
 end
 
 VK_MAKE_VERSION(major, minor, patch) = (Cuint(major) << 22) | (Cuint(minor) << 12) | patch
