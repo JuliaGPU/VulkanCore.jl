@@ -17,6 +17,19 @@ else
     const libvulkan = "libvulkan"
 end
 
+"""
+Whether a Vulkan loader was findable when this package was PRECOMPILED.
+
+The gate on everything below. Without a loader the 34,000 generated lines of
+`ccall` wrappers are not compiled at all: this package is then a name, a
+constant and nothing else, so depending on it from a package that only uses
+Vulkan on some platforms costs nothing on the others.
+
+A precompile-time answer, so installing a driver afterwards needs
+`Pkg.precompile(; force = true)` — Julia does not watch the library path.
+"""
+const HAS_LOADER = !isempty(Libdl.find_library(libvulkan))
+
 const libvulkan_handle = Ref{Ptr{Cvoid}}(0)
 
 """Whether a Vulkan loader was found when this module was loaded.
@@ -54,7 +67,9 @@ VK_VERSION_PATCH(version) = Cuint(version) & 0xfff
 VK_MAKE_VIDEO_STD_VERSION(major, minor, patch) = VK_MAKE_VERSION(major, minor, patch)
 
 const IS_LIBC_MUSL = occursin("musl", Base.BUILD_TRIPLET)
-if Sys.isapple() && Sys.ARCH === :aarch64
+@static if !HAS_LOADER
+    # Nothing to bind to. See `HAS_LOADER`.
+elseif Sys.isapple() && Sys.ARCH === :aarch64
     include("../lib/aarch64-apple-darwin20.jl")
 elseif Sys.islinux() && Sys.ARCH === :aarch64 && !IS_LIBC_MUSL
     include("../lib/aarch64-linux-gnu.jl")
