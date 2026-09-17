@@ -94,7 +94,7 @@ elseif Sys.islinux() && Sys.ARCH === :x86_64 && !IS_LIBC_MUSL
 elseif Sys.islinux() && Sys.ARCH === :x86_64 && IS_LIBC_MUSL
     include("../lib/x86_64-linux-musl.jl")
 elseif Sys.isbsd() && !Sys.isapple()
-    include("../lib/x86_64-unknown-freebsd.jl")
+    include("../lib/x86_64-unknown-freebsd13.2.jl")
 elseif Sys.iswindows() && Sys.ARCH === :x86_64
     include("../lib/x86_64-w64-mingw32.jl")
 else
