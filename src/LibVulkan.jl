@@ -4,18 +4,33 @@ include("CEnum.jl")
 using .CEnum
 
 import Libdl
+using Preferences: @load_preference
 
-@static if !isempty(get(ENV, "JULIA_VULKAN_LIBNAME", ""))
-    const libvulkan = ENV["JULIA_VULKAN_LIBNAME"]
-elseif Sys.iswindows()
-    const libvulkan = "vulkan-1.dll"
-elseif Sys.isapple()
-    const libvulkan = "libvulkan.dylib"
-elseif Sys.islinux()
-    const libvulkan = "libvulkan.so.1"
-else
-    const libvulkan = "libvulkan"
-end
+"""
+The name the system gives a Vulkan implementation, when nothing else says otherwise.
+"""
+const SYSTEM_LIBVULKAN = Sys.iswindows() ? "vulkan-1.dll" :
+                         Sys.isapple()   ? "libvulkan.dylib" :
+                         Sys.islinux()   ? "libvulkan.so.1" : "libvulkan"
+
+"""
+Which Vulkan library this package binds to.
+
+A PREFERENCE first, because that is the only one of the three that works
+reliably. This is read while the package precompiles, and a preference is part of
+the precompile hash: change it and the bindings are rebuilt against the new
+library on the next load. Set it with `Vulkan.set_driver`, or by hand with
+`Preferences.set_preferences!("VulkanCore", "libvulkan" => path)`.
+
+`JULIA_VULKAN_LIBNAME` still works and still comes before the system default, but
+it is the fragile one and only a fallback now: an `ENV` read is NOT part of the
+precompile hash, so setting it takes effect only if something else happens to
+invalidate the cache. Observed directly -- setting it and restarting Julia reused
+a cache built without it, and `HAS_LOADER` stayed `false` on a machine that then
+had a perfectly good driver.
+"""
+const libvulkan = @load_preference("libvulkan",
+                                   get(ENV, "JULIA_VULKAN_LIBNAME", SYSTEM_LIBVULKAN))
 
 """
 Whether a Vulkan loader was findable when this package was PRECOMPILED.
