@@ -48,6 +48,11 @@ jobs:
           # GLFW looks the loader up by name, and Homebrew's lib directory is not on
           # dyld's default search path.
           echo "DYLD_FALLBACK_LIBRARY_PATH=$(brew --prefix vulkan-loader)/lib:$HOME/lib:/usr/local/lib:/lib:/usr/lib" >> $GITHUB_ENV
+          # The loader answers "layer not present" for a manifest it found and a library
+          # it could not load; only it knows which.
+          echo "VK_LOADER_DEBUG=layer,error,warn" >> $GITHUB_ENV
+          ls -l "$(brew --prefix vulkan-validationlayers)/share/vulkan/explicit_layer.d" "$(brew --prefix vulkan-validationlayers)/lib"
+          cat "$(brew --prefix vulkan-validationlayers)/share/vulkan/explicit_layer.d/"*.json
           # Homebrew's lib directory is not on dyld's default search path, so the
           # loader has to be named outright. A preference rather than
           # JULIA_VULKAN_LIBNAME because only the preference is part of the
