@@ -1,8 +1,8 @@
-# The driver comes from the distribution: Mesa's lavapipe is a software Vulkan
-# implementation, so a runner with no GPU still has something to create an
-# instance against. This used to download the LunarG SDK, and LunarG stopped
-# serving the pinned 1.3.239.0 build -- every job failed on a 404 before Julia
-# was even installed.
+# The driver comes from the distribution rather than from LunarG, whose pinned
+# 1.3.239.0 SDK is a 404 now -- every job used to fail on that before Julia was
+# even installed. Linux gets Mesa's lavapipe, a software implementation, so a
+# runner with no GPU still has something to create an instance against; macOS
+# gets MoltenVK, which is how Vulkan is meant to be reached there.
 name: CI
 
 on:
@@ -19,13 +19,11 @@ jobs:
         julia-version: ['lts', '1', 'nightly']
         os: [ubuntu-latest]
         include:
-          # No Vulkan driver on purpose. A machine without one must still be able
-          # to load this package, which is what `HAS_LOADER` is for, and macOS is
-          # where that case is actually met.
           - julia-version: '1'
             os: macos-latest
     steps:
       - uses: actions/checkout@v7
+
       - uses: serenity4/julia-lavapipe@v1
         if: runner.os == 'Linux'
       - name: Start a virtual display for GLFW
@@ -34,16 +32,30 @@ jobs:
           sudo apt-get install -y xvfb
           Xvfb :99 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
+
+      - name: Install MoltenVK, the loader and the validation layers
+        if: runner.os == 'macOS'
+        run: |
+          brew install molten-vk vulkan-loader vulkan-validationlayers
+          echo "VK_DRIVER_FILES=$(brew --prefix molten-vk)/share/vulkan/icd.d/MoltenVK_icd.json" >> $GITHUB_ENV
+          echo "VK_LAYER_PATH=$(brew --prefix vulkan-validationlayers)/share/vulkan/explicit_layer.d" >> $GITHUB_ENV
+          # Homebrew's lib directory is not on dyld's default search path, so the
+          # loader has to be named outright. A preference rather than
+          # JULIA_VULKAN_LIBNAME because only the preference is part of the
+          # precompile hash -- an env var loses to a restored package cache. Pkg.test
+          # copies this into the test sandbox.
+          cat > LocalPreferences.toml <<EOF
+          [VulkanCore]
+          libvulkan = "$(brew --prefix vulkan-loader)/lib/libvulkan.1.dylib"
+          EOF
+          cat LocalPreferences.toml
+
       - uses: julia-actions/setup-julia@latest
         with:
           version: ${{ matrix.julia-version }}
       - uses: julia-actions/cache@v3
       - uses: julia-actions/julia-buildpkg@latest
       - uses: julia-actions/julia-runtest@latest
-        env:
-          # This job installed lavapipe; if the loader is missing anyway, fail
-          # instead of skipping every test that calls the API.
-          VULKANCORE_REQUIRE_LOADER: ${{ runner.os == 'Linux' && '1' || '0' }}
       - uses: julia-actions/julia-processcoverage@v1
       - uses: codecov/codecov-action@v5
         with:
