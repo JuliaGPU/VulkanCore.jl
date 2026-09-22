@@ -53,6 +53,15 @@ jobs:
           echo "DYLD_FALLBACK_LIBRARY_PATH=$(brew --prefix vulkan-loader)/lib:$(brew --prefix vulkan-validationlayers)/lib:$HOME/lib:/usr/local/lib:/lib:/usr/lib" >> $GITHUB_ENV
           # Quiet unless something goes wrong, and then it says what.
           echo "VK_LOADER_DEBUG=error,warn" >> $GITHUB_ENV
+          # Which loader VulkanCore binds to. A preference rather than
+          # JULIA_VULKAN_LIBNAME because only the preference is part of the precompile
+          # hash, and julia-actions/cache restores package caches across runs. Pkg.test
+          # copies it into the test sandbox.
+          cat > LocalPreferences.toml <<EOF
+          [VulkanCore]
+          libvulkan = "$(brew --prefix vulkan-loader)/lib/libvulkan.1.dylib"
+          EOF
+          cat LocalPreferences.toml
 
       - uses: julia-actions/setup-julia@latest
         with:
