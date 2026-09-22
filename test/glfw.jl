@@ -4,8 +4,6 @@ using VulkanCore.LibVulkan
 
 @assert GLFW.VulkanSupported()
 
-include("vkhelper.jl")
-
 const WIDTH = 800
 const HEIGHT = 600
 
@@ -30,7 +28,8 @@ extensions = GLFW.GetRequiredInstanceExtensions()
 layers = ["VK_LAYER_KHRONOS_validation"]
 @test check_layers(layers)
 
-createInfoRef = VkInstanceCreateInfo(appInfoRef, layers, extensions) |> Ref
+extensions, flags = with_portability(extensions)
+createInfoRef = VkInstanceCreateInfo(appInfoRef, layers, extensions, flags) |> Ref
 
 instanceRef = Ref(VkInstance(C_NULL))
 result = GC.@preserve appInfoRef layers extensions vkCreateInstance(createInfoRef, C_NULL, instanceRef)
