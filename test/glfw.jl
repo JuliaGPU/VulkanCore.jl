@@ -27,7 +27,7 @@ appInfoRef = VkApplicationInfo(
 extensions = GLFW.GetRequiredInstanceExtensions()
 @test check_extensions(extensions)
 
-layers = get(ENV, "JULIA_GITHUB_ACTIONS_CI", "OFF") == "ON" ? String[] : ["VK_LAYER_KHRONOS_validation"]
+layers = ["VK_LAYER_KHRONOS_validation"]
 @test check_layers(layers)
 
 createInfoRef = VkInstanceCreateInfo(appInfoRef, layers, extensions) |> Ref
@@ -35,11 +35,7 @@ createInfoRef = VkInstanceCreateInfo(appInfoRef, layers, extensions) |> Ref
 instanceRef = Ref(VkInstance(C_NULL))
 result = GC.@preserve appInfoRef layers extensions vkCreateInstance(createInfoRef, C_NULL, instanceRef)
 
-@static if get(ENV, "JULIA_GITHUB_ACTIONS_CI", "OFF") == "ON"
-    @test_broken result == VK_SUCCESS
-else
-    @test result == VK_SUCCESS
-end
+@test result == VK_SUCCESS
 
 ## cleaning up
 if result == VK_SUCCESS
