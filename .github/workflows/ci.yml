@@ -45,24 +45,14 @@ jobs:
           test -f "$icd"
           echo "VK_DRIVER_FILES=$icd" >> $GITHUB_ENV
           echo "VK_LAYER_PATH=$(brew --prefix vulkan-validationlayers)/share/vulkan/explicit_layer.d" >> $GITHUB_ENV
-          # GLFW looks the loader up by name, and Homebrew's lib directory is not on
-          # dyld's default search path.
-          echo "DYLD_FALLBACK_LIBRARY_PATH=$(brew --prefix vulkan-loader)/lib:$HOME/lib:/usr/local/lib:/lib:/usr/lib" >> $GITHUB_ENV
-          # The loader answers "layer not present" for a manifest it found and a library
-          # it could not load; only it knows which.
-          echo "VK_LOADER_DEBUG=layer,error,warn" >> $GITHUB_ENV
-          ls -l "$(brew --prefix vulkan-validationlayers)/share/vulkan/explicit_layer.d" "$(brew --prefix vulkan-validationlayers)/lib"
-          cat "$(brew --prefix vulkan-validationlayers)/share/vulkan/explicit_layer.d/"*.json
-          # Homebrew's lib directory is not on dyld's default search path, so the
-          # loader has to be named outright. A preference rather than
-          # JULIA_VULKAN_LIBNAME because only the preference is part of the
-          # precompile hash -- an env var loses to a restored package cache. Pkg.test
-          # copies this into the test sandbox.
-          cat > LocalPreferences.toml <<EOF
-          [VulkanCore]
-          libvulkan = "$(brew --prefix vulkan-loader)/lib/libvulkan.1.dylib"
-          EOF
-          cat LocalPreferences.toml
+          # Two lookups happen by bare name and so go through dyld, which does not know
+          # about Homebrew: GLFW resolves the loader itself, and the validation layer
+          # manifest gives `"library_path": "libVkLayer_khronos_validation.dylib"`, which
+          # the loader dlopens as-is. Without this the layer enumerates and then fails to
+          # load, which surfaces as VK_ERROR_LAYER_NOT_PRESENT from vkCreateInstance.
+          echo "DYLD_FALLBACK_LIBRARY_PATH=$(brew --prefix vulkan-loader)/lib:$(brew --prefix vulkan-validationlayers)/lib:$HOME/lib:/usr/local/lib:/lib:/usr/lib" >> $GITHUB_ENV
+          # Quiet unless something goes wrong, and then it says what.
+          echo "VK_LOADER_DEBUG=error,warn" >> $GITHUB_ENV
 
       - uses: julia-actions/setup-julia@latest
         with:
