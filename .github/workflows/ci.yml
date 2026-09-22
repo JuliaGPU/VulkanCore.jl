@@ -40,6 +40,10 @@ jobs:
       - uses: julia-actions/cache@v3
       - uses: julia-actions/julia-buildpkg@latest
       - uses: julia-actions/julia-runtest@latest
+        env:
+          # This job installed lavapipe; if the loader is missing anyway, fail
+          # instead of skipping every test that calls the API.
+          VULKANCORE_REQUIRE_LOADER: ${{ runner.os == 'Linux' && '1' || '0' }}
       - uses: julia-actions/julia-processcoverage@v1
       - uses: codecov/codecov-action@v5
         with:

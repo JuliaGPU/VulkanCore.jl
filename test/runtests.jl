@@ -16,6 +16,14 @@ end
 	@test VulkanCore.HAS_LOADER === LibVulkan.HAS_LOADER
 	@test VulkanCore.HAS_LOADER == isdefined(LibVulkan, :vkCreateInstance)
 
+	# Skipping the API is right on a machine that has no driver, and a silent pass
+	# on a machine that is supposed to have one. A runner that installs a driver
+	# says so, and then a missing loader is a failure rather than two vacuous
+	# tests. Note this makes CI assert MORE than a dev machine, never less.
+	if get(ENV, "VULKANCORE_REQUIRE_LOADER", "0") == "1"
+		@test VulkanCore.HAS_LOADER
+	end
+
 	if VulkanCore.HAS_LOADER
 		@testset "API" begin
 			include("old_tests.jl")
