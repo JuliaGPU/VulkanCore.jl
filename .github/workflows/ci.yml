@@ -37,8 +37,17 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install molten-vk vulkan-loader vulkan-validationlayers
-          echo "VK_DRIVER_FILES=$(brew --prefix molten-vk)/share/vulkan/icd.d/MoltenVK_icd.json" >> $GITHUB_ENV
+          # Homebrew puts the ICD manifest under etc, not the share/vulkan/icd.d the
+          # rest of the world uses. Checked rather than assumed: a wrong path here is
+          # indistinguishable from having no driver at all, which reads as
+          # VK_ERROR_INCOMPATIBLE_DRIVER several minutes later.
+          icd="$(brew --prefix molten-vk)/etc/vulkan/icd.d/MoltenVK_icd.json"
+          test -f "$icd"
+          echo "VK_DRIVER_FILES=$icd" >> $GITHUB_ENV
           echo "VK_LAYER_PATH=$(brew --prefix vulkan-validationlayers)/share/vulkan/explicit_layer.d" >> $GITHUB_ENV
+          # GLFW looks the loader up by name, and Homebrew's lib directory is not on
+          # dyld's default search path.
+          echo "DYLD_FALLBACK_LIBRARY_PATH=$(brew --prefix vulkan-loader)/lib:$HOME/lib:/usr/local/lib:/lib:/usr/lib" >> $GITHUB_ENV
           # Homebrew's lib directory is not on dyld's default search path, so the
           # loader has to be named outright. A preference rather than
           # JULIA_VULKAN_LIBNAME because only the preference is part of the
