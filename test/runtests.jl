@@ -23,4 +23,7 @@ using GLFW
 	@testset "GLFW" begin
 		include("glfw.jl")
 	end
+	@testset "blob constructors" begin
+		include("blob_constructors.jl")
+	end
 end

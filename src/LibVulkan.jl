@@ -116,6 +116,10 @@ else
     error("Unknown platform: $(Base.BUILD_TRIPLET)")
 end
 
+@static if HAS_LOADER
+    include("blob_constructors.jl")
+end
+
 # exports
 const PREFIXES = ["VK_", "Vk", "vk", "StdVideo", "STD_VIDEO"]
 for name in names(@__MODULE__; all = true), prefix in PREFIXES
