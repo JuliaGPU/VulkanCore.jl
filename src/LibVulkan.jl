@@ -5,6 +5,7 @@ using .CEnum
 
 import Libdl
 using Preferences: @load_preference
+import Vulkan_Loader_jll
 
 """
 The name the system gives a Vulkan implementation, when nothing else says otherwise.
@@ -12,6 +13,20 @@ The name the system gives a Vulkan implementation, when nothing else says otherw
 const SYSTEM_LIBVULKAN = Sys.iswindows() ? "vulkan-1.dll" :
                          Sys.isapple()   ? "libvulkan.dylib" :
                          Sys.islinux()   ? "libvulkan.so.1" : "libvulkan"
+
+"""
+    default_libvulkan() -> String
+
+The system's Vulkan loader when there is one, and `Vulkan_Loader_jll`'s otherwise.
+
+A Mac has no loader of its own. With the jll's, a CPU driver such as
+`Lavapipe_jll` gives it a Vulkan device all the same, the same way it gives one
+to a Linux or Windows box without a GPU driver. The system loader comes first
+because it is the one that knows the GPU drivers the machine has installed.
+"""
+default_libvulkan() =
+    !isempty(Libdl.find_library(SYSTEM_LIBVULKAN)) ? SYSTEM_LIBVULKAN :
+    Vulkan_Loader_jll.is_available() ? Vulkan_Loader_jll.libvulkan_path : SYSTEM_LIBVULKAN
 
 """
 Which Vulkan library this package binds to.
@@ -30,7 +45,7 @@ a cache built without it, and `HAS_LOADER` stayed `false` on a machine that then
 had a perfectly good driver.
 """
 const libvulkan = @load_preference("libvulkan",
-                                   get(ENV, "JULIA_VULKAN_LIBNAME", SYSTEM_LIBVULKAN))
+                                   get(ENV, "JULIA_VULKAN_LIBNAME", default_libvulkan()))
 
 """
 Whether a Vulkan loader was findable when this package was PRECOMPILED.
