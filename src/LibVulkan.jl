@@ -5,7 +5,6 @@ using .CEnum
 
 import Libdl
 using Preferences: @load_preference
-import Vulkan_Loader_jll
 
 """
 The name the system gives a Vulkan implementation, when nothing else says otherwise.
@@ -23,10 +22,23 @@ A Mac has no loader of its own. With the jll's, a CPU driver such as
 `Lavapipe_jll` gives it a Vulkan device all the same, the same way it gives one
 to a Linux or Windows box without a GPU driver. The system loader comes first
 because it is the one that knows the GPU drivers the machine has installed.
+
+The jll is IMPORTED only where there is no system loader, decided when this
+package precompiles. Its `__init__` loads its library, and once a module named
+`vulkan-1.dll` (or with the soname `libvulkan.so.1`) is loaded, a lookup by that
+bare name returns it rather than the system's. Importing it unconditionally made
+every process use the jll's 1.3.243 loader, which predates the extensions the
+drivers expose: `vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR` faulted in it
+on AMD's Windows driver.
 """
-default_libvulkan() =
-    !isempty(Libdl.find_library(SYSTEM_LIBVULKAN)) ? SYSTEM_LIBVULKAN :
-    Vulkan_Loader_jll.is_available() ? Vulkan_Loader_jll.libvulkan_path : SYSTEM_LIBVULKAN
+function default_libvulkan end
+@static if isempty(Libdl.find_library(SYSTEM_LIBVULKAN))
+    import Vulkan_Loader_jll
+    default_libvulkan() =
+        Vulkan_Loader_jll.is_available() ? Vulkan_Loader_jll.libvulkan_path : SYSTEM_LIBVULKAN
+else
+    default_libvulkan() = SYSTEM_LIBVULKAN
+end
 
 """
 Which Vulkan library this package binds to.
