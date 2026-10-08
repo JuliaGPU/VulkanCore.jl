@@ -34,18 +34,17 @@ app_info = Ref(VkApplicationInfo(VK_STRUCTURE_TYPE_APPLICATION_INFO,
 								 1,
 								 convert_vk_back(UInt32, v"1.2")))
 
-inst_info = Ref(VkInstanceCreateInfo(VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
-								     C_NULL,
-									 UInt32(0),
-									 Base.unsafe_convert(Ptr{VkApplicationInfo}, app_info),
-									 0,
-									 C_NULL,
-									 0,
-									 C_NULL))
+extensions, flags = with_portability(String[])
+inst_info = Ref(VkInstanceCreateInfo(app_info, String[], extensions, flags))
 
 instance = Ref{VkInstance}()
 
-@test vkCreateInstance(inst_info, C_NULL, instance) == VK_SUCCESS
+result = GC.@preserve appname app_info extensions vkCreateInstance(inst_info, C_NULL, instance)
+@test result == VK_SUCCESS
+# Everything below dereferences this handle, and the loader segfaults on one that was
+# never written -- `@test` alone only records the failure and carries on. Seen on macOS,
+# where MoltenVK needs the portability enumeration above.
+result == VK_SUCCESS || error("cannot continue without an instance: $result")
 println(instance)
 
 gpu_count = Ref{Cuint}()

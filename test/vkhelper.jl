@@ -111,6 +111,23 @@ function check_layers(required_layers::Vector{<:AbstractString})
     all(in(names), required_layers)
 end
 
+"""
+    with_portability(extensions) -> (extensions, flags)
+
+Add portability enumeration when the loader offers it. A portability driver -- MoltenVK
+being the one that matters -- is not enumerated at all unless the instance asks for it:
+since loader 1.3.216 `vkCreateInstance` answers `VK_ERROR_INCOMPATIBLE_DRIVER` instead.
+Asked of the loader, not of the platform, so there is one code path everywhere.
+
+Returns the extensions to enable; the caller must keep THAT vector alive across the
+`vkCreateInstance`, not the one it passed in.
+"""
+function with_portability(extensions::Vector{<:AbstractString})
+    name = VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME
+    name in getproperty.(get_supported_extensions(), :name) || return (String.(extensions), UInt32(0))
+    return (String.(vcat(extensions, name)), UInt32(VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR))
+end
+
 # instance
 function LibVulkan.VkApplicationInfo(app_name::AbstractString, app_ver::VersionNumber, engine_name::AbstractString, engine_ver::VersionNumber, api_ver::Integer)
     sType = VK_STRUCTURE_TYPE_APPLICATION_INFO
@@ -122,10 +139,9 @@ function LibVulkan.VkApplicationInfo(app_name::AbstractString, app_ver::VersionN
     return VkApplicationInfo(sType, pNext, pApplicationName, vkApplicationVersion, pEngineName, vkEngineVersion, Cuint(api_ver))
 end
 
-function LibVulkan.VkInstanceCreateInfo(app_info_ref::Ref{VkApplicationInfo}, layers::Vector{String}, extensions::Vector{String})
+function LibVulkan.VkInstanceCreateInfo(app_info_ref::Ref{VkApplicationInfo}, layers::Vector{String}, extensions::Vector{String}, flags::Integer = UInt32(0))
     sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     pNext = C_NULL       # reserved for extension-specific structure
-    flags = UInt32(0)    # reserved for future use
     ppEnabledLayerNames = isempty(layers) ? C_NULL : unsafe_strings2pp(layers)
     ppEnabledExtensionNames = isempty(extensions) ? C_NULL : unsafe_strings2pp(extensions)
     pApplicationInfo = Base.unsafe_convert(Ptr{VkApplicationInfo}, app_info_ref)

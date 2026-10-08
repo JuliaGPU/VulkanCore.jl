@@ -1,89 +1,76 @@
-# Based on https://github.com/vsg-dev/VulkanSceneGraph/blob/master/.github/workflows/ci.yml
+# The driver comes from the distribution rather than from LunarG, whose pinned
+# 1.3.239.0 SDK is a 404 now -- every job used to fail on that before Julia was
+# even installed. Linux gets Mesa's lavapipe, a software implementation, so a
+# runner with no GPU still has something to create an instance against; macOS
+# gets MoltenVK, which is how Vulkan is meant to be reached there.
 name: CI
+
 on:
   push:
   pull_request:
-env:
-  JuliaVersion: 1.6
-  VulkanSDKVersion: 1.3.239.0
-  JULIA_GITHUB_ACTIONS_CI: ON
+
 jobs:
-  ubuntu-latest-x64:
-    runs-on: ubuntu-latest
-    env:
-      VULKAN_SDK: $GITHUB_WORKSPACE/../$VulkanSDKVersion/x86_64
+  test:
+    name: Julia ${{ matrix.julia-version }} - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        julia-version: ['lts', '1', 'nightly']
+        os: [ubuntu-latest]
+        include:
+          - julia-version: '1'
+            os: macos-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Download & Extract Vulkan SDK
-      run: |
-        wget --no-cookies -O ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/linux/vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz
-        tar -zxf ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz -C ../
-    - name: Install xvfb for GLFW
-      run: sudo apt-get install xvfb && Xvfb :99 &
-    - uses: julia-actions/setup-julia@v1
-      with:
-        version: ${{env.JuliaVersion}}
-        arch: x64
-    - uses: julia-actions/julia-buildpkg@latest
-    - uses: julia-actions/julia-runtest@latest
-      env:
-        DISPLAY: :99
-    - uses: julia-actions/julia-uploadcodecov@latest
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - uses: actions/checkout@v7
 
-  # windows-latest-x64:
-  #   runs-on: windows-latest
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: Set Environment variables
-  #     run: echo "VULKAN_SDK=C:\VulkanSDK\${{env.VulkanSDKVersion}}" >> $GITHUB_ENV
-  #   - name: Download & Install Vulkan SDK
-  #     run: |
-  #       Invoke-WebRequest -Uri https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/windows/VulkanSDK-${{env.VulkanSDKVersion}}-Installer.exe -OutFile ../vulkan-sdk-${{env.VulkanSDKVersion}}.exe
-  #       $installer = Start-Process -FilePath ../vulkan-sdk-${{env.VulkanSDKVersion}}.exe -Wait -PassThru -ArgumentList @("/S");
-  #       $installer.WaitForExit();
-  #       Invoke-WebRequest -Uri https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-runtime.exe -OutFile ../vulkan-runtime.exe
-  #       $installer = Start-Process -FilePath ../vulkan-runtime.exe -Wait -PassThru -ArgumentList @("/S");
-  #       $installer.WaitForExit();
-  #   - uses: julia-actions/setup-julia@v1
-  #     with:
-  #       version: ${{env.JuliaVersion}}
-  #       arch: x64
-  #   - uses: julia-actions/julia-buildpkg@latest
-  #   - uses: julia-actions/julia-runtest@latest
-  #     env:
-  #       DISPLAY: :99
-  #   - uses: julia-actions/julia-uploadcodecov@latest
-  #     env:
-  #       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - uses: serenity4/julia-lavapipe@v1
+        if: runner.os == 'Linux'
+      - name: Start a virtual display for GLFW
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -y xvfb
+          Xvfb :99 &
+          echo "DISPLAY=:99" >> $GITHUB_ENV
 
-  macos-latest-x64:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set Environment variables
-      run: |
-        VULKAN_SDK=$GITHUB_WORKSPACE/../vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS
-        echo VULKAN_SDK=$VULKAN_SDK >> $GITHUB_ENV
-        echo JULIA_VULKAN_SDK_SEARCH_PATH=$VULKAN_SDK/lib >> $GITHUB_ENV
-        echo VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d >> $GITHUB_ENV
-        echo VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json >> $GITHUB_ENV
-        echo JULIA_VULKAN_LIBNAME=libvulkan.1.dylib >> $GITHUB_ENV
-    - name: Download & Extract Vulkan SDK
-      run: |
-        wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg
-        hdiutil attach ../vulkansdk-macos-${{env.VulkanSDKVersion}}.dmg
-        cp -r /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}} ../
-        hdiutil detach /Volumes/vulkansdk-macos-${{env.VulkanSDKVersion}}
-    - uses: julia-actions/setup-julia@v1
-      with:
-        version: ${{env.JuliaVersion}}
-        arch: x64
-    - uses: julia-actions/julia-buildpkg@latest
-    - uses: julia-actions/julia-runtest@latest
-      env:
-        DISPLAY: :99
-    - uses: julia-actions/julia-uploadcodecov@latest
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Install MoltenVK, the loader and the validation layers
+        if: runner.os == 'macOS'
+        run: |
+          brew install molten-vk vulkan-loader vulkan-validationlayers
+          # Homebrew puts the ICD manifest under etc, not the share/vulkan/icd.d the
+          # rest of the world uses. Checked rather than assumed: a wrong path here is
+          # indistinguishable from having no driver at all, which reads as
+          # VK_ERROR_INCOMPATIBLE_DRIVER several minutes later.
+          icd="$(brew --prefix molten-vk)/etc/vulkan/icd.d/MoltenVK_icd.json"
+          test -f "$icd"
+          echo "VK_DRIVER_FILES=$icd" >> $GITHUB_ENV
+          echo "VK_LAYER_PATH=$(brew --prefix vulkan-validationlayers)/share/vulkan/explicit_layer.d" >> $GITHUB_ENV
+          # Two lookups happen by bare name and so go through dyld, which does not know
+          # about Homebrew: GLFW resolves the loader itself, and the validation layer
+          # manifest gives `"library_path": "libVkLayer_khronos_validation.dylib"`, which
+          # the loader dlopens as-is. Without this the layer enumerates and then fails to
+          # load, which surfaces as VK_ERROR_LAYER_NOT_PRESENT from vkCreateInstance.
+          echo "DYLD_FALLBACK_LIBRARY_PATH=$(brew --prefix vulkan-loader)/lib:$(brew --prefix vulkan-validationlayers)/lib:$HOME/lib:/usr/local/lib:/lib:/usr/lib" >> $GITHUB_ENV
+          # Quiet unless something goes wrong, and then it says what.
+          echo "VK_LOADER_DEBUG=error,warn" >> $GITHUB_ENV
+          # Which loader VulkanCore binds to. A preference rather than
+          # JULIA_VULKAN_LIBNAME because only the preference is part of the precompile
+          # hash, and julia-actions/cache restores package caches across runs. Pkg.test
+          # copies it into the test sandbox.
+          cat > LocalPreferences.toml <<EOF
+          [VulkanCore]
+          libvulkan = "$(brew --prefix vulkan-loader)/lib/libvulkan.1.dylib"
+          EOF
+          cat LocalPreferences.toml
+
+      - uses: julia-actions/setup-julia@latest
+        with:
+          version: ${{ matrix.julia-version }}
+      - uses: julia-actions/cache@v3
+      - uses: julia-actions/julia-buildpkg@latest
+      - uses: julia-actions/julia-runtest@latest
+      - uses: julia-actions/julia-processcoverage@v1
+      - uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: lcov.info
