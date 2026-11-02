@@ -35,11 +35,12 @@ app_info = Ref(VkApplicationInfo(VK_STRUCTURE_TYPE_APPLICATION_INFO,
 								 convert_vk_back(UInt32, v"1.2")))
 
 extensions, flags = with_portability(String[])
-inst_info = Ref(VkInstanceCreateInfo(app_info, String[], extensions, flags))
+layer_names, extension_names = CStrings(String[]), CStrings(extensions)
+inst_info = Ref(VkInstanceCreateInfo(app_info, layer_names, extension_names, flags))
 
 instance = Ref{VkInstance}()
 
-result = GC.@preserve appname app_info extensions vkCreateInstance(inst_info, C_NULL, instance)
+result = GC.@preserve appname app_info layer_names extension_names vkCreateInstance(inst_info, C_NULL, instance)
 @test result == VK_SUCCESS
 # Everything below dereferences this handle, and the loader segfaults on one that was
 # never written -- `@test` alone only records the failure and carries on. Seen on macOS,

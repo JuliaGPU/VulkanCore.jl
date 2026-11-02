@@ -46,18 +46,22 @@ Which Vulkan library this package binds to.
 A PREFERENCE first, because that is the only one of the three that works
 reliably. This is read while the package precompiles, and a preference is part of
 the precompile hash: change it and the bindings are rebuilt against the new
-library on the next load. Set it with `Vulkan.set_driver`, or by hand with
-`Preferences.set_preferences!("VulkanCore", "libvulkan" => path)`.
+library on the next load. Set it with `Vulkan.set_driver` from Vulkan.jl 0.7 on,
+or by hand with `Preferences.set_preferences!("VulkanCore", "libvulkan" => path)`.
+Vulkan.jl 0.6's `set_driver` does not set it: it sets `JULIA_VULKAN_LIBNAME` at
+runtime, after this constant is fixed.
 
 `JULIA_VULKAN_LIBNAME` still works and still comes before the system default, but
 it is the fragile one and only a fallback now: an `ENV` read is NOT part of the
 precompile hash, so setting it takes effect only if something else happens to
 invalidate the cache. Observed directly -- setting it and restarting Julia reused
 a cache built without it, and `HAS_LOADER` stayed `false` on a machine that then
-had a perfectly good driver.
+had a perfectly good driver. Set but empty counts as unset, as it always has.
 """
 const libvulkan = @load_preference("libvulkan",
-                                   get(ENV, "JULIA_VULKAN_LIBNAME", default_libvulkan()))
+                                   let name = get(ENV, "JULIA_VULKAN_LIBNAME", "")
+                                       isempty(name) ? default_libvulkan() : name
+                                   end)
 
 """
 Whether a Vulkan loader was findable when this package was PRECOMPILED.
@@ -67,20 +71,23 @@ The gate on everything below. Without a loader the 34,000 generated lines of
 constant and nothing else, so depending on it from a package that only uses
 Vulkan on some platforms costs nothing on the others.
 
-A precompile-time answer, so installing a driver afterwards needs
-`Pkg.precompile(; force = true)` — Julia does not watch the library path.
+A precompile-time answer, and the library's presence is not part of the cache
+key, so a cache built without a loader stays empty after one is installed.
+`__init__` notices and says how to rebuild it:
+
+    Base.compilecache(Base.identify_package("VulkanCore"))
 """
 const HAS_LOADER = !isempty(Libdl.find_library(libvulkan))
 
 const libvulkan_handle = Ref{Ptr{Cvoid}}(0)
 
-"""Whether a Vulkan loader was found when this module was loaded.
+"""Whether the bindings exist and a Vulkan loader was found when this module was loaded.
 
 `false` is a normal state, not a broken one: a machine with no driver can still
 `using VulkanCore` and everything that does not call the API works. Ask this
 before building an instance — see `__init__` for why it is not an error.
 """
-loaded() = libvulkan_handle[] != C_NULL
+loaded() = HAS_LOADER && libvulkan_handle[] != C_NULL
 
 function __init__()
     libname = Libdl.find_library(libvulkan)
@@ -95,6 +102,14 @@ function __init__()
     # library '$libvulkan'" at the point of use, which says the same thing at
     # the moment it is true.
     isempty(libname) && return nothing
+    # A loader now, none when this was compiled: the stale cache `HAS_LOADER`
+    # describes. Nothing would bind to the library, so it is not opened either.
+    if !HAS_LOADER
+        @warn """VulkanCore was precompiled when '$libvulkan' could not be found, so it has no bindings.
+                 It is found now. Rebuild the cache, then restart Julia:
+                     Base.compilecache(Base.identify_package("VulkanCore"))"""
+        return nothing
+    end
     libvulkan_handle[] = Libdl.dlopen(libname)
     return nothing
 end

@@ -29,10 +29,11 @@ layers = ["VK_LAYER_KHRONOS_validation"]
 @test check_layers(layers)
 
 extensions, flags = with_portability(extensions)
-createInfoRef = VkInstanceCreateInfo(appInfoRef, layers, extensions, flags) |> Ref
+layer_names, extension_names = CStrings(layers), CStrings(extensions)
+createInfoRef = VkInstanceCreateInfo(appInfoRef, layer_names, extension_names, flags) |> Ref
 
 instanceRef = Ref(VkInstance(C_NULL))
-result = GC.@preserve appInfoRef layers extensions vkCreateInstance(createInfoRef, C_NULL, instanceRef)
+result = GC.@preserve appInfoRef layer_names extension_names vkCreateInstance(createInfoRef, C_NULL, instanceRef)
 
 @test result == VK_SUCCESS
 

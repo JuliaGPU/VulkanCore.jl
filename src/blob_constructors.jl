@@ -54,8 +54,10 @@ let seen = Set{DataType}()
         args = [Symbol(:x, i) for i in eachindex(fields)]
         @eval function $sym($(args...))
             ref = Ref{$T}()
-            ptr = Base.unsafe_convert(Ptr{$T}, ref)
-            $((:(setproperty!(ptr, $(QuoteNode(f)), $a)) for (f, a) in zip(fields, args))...)
+            GC.@preserve ref begin
+                ptr = Base.unsafe_convert(Ptr{$T}, ref)
+                $((:(setproperty!(ptr, $(QuoteNode(f)), $a)) for (f, a) in zip(fields, args))...)
+            end
             ref[]
         end
     end

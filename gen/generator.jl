@@ -61,6 +61,22 @@ function extension_flags(target)
     error("no Vulkan platform flags configured for target $target")
 end
 
+lib_file(target) = joinpath(@__DIR__, "..", "lib", "$target.jl")
+
+# Catch platform filename changes before regenerating bindings.
+function check_includes(targets, libvulkan_jl)
+    pattern = r"include\(\"\.\./lib/([^\"]+)\"\)"
+    included = Set(String(m[1]) for m in eachmatch(pattern, read(libvulkan_jl, String)))
+    generated = Set(basename(lib_file(t)) for t in targets)
+    not_included = sort!(collect(setdiff(generated, included)))
+    not_generated = sort!(collect(setdiff(included, generated)))
+    isempty(not_included) && isempty(not_generated) && return nothing
+    error("""the generated files and the includes in $libvulkan_jl disagree, update the includes first.
+             generated but not included: $(join(not_included, ", "))
+             included but not generated: $(join(not_generated, ", "))""")
+end
+check_includes(JLLEnvs.JLL_ENV_TRIPLES, normpath(@__DIR__, "..", "src", "LibVulkan.jl"))
+
 for target in JLLEnvs.JLL_ENV_TRIPLES
     @info "processing $target"
 
@@ -71,7 +87,7 @@ for target in JLLEnvs.JLL_ENV_TRIPLES
         )
     general, codegen = options["general"], options["codegen"]
     general["library_name"] = "libvulkan"
-    general["output_file_path"] = joinpath(@__DIR__, "..", "lib", "$target.jl")
+    general["output_file_path"] = lib_file(target)
     general["use_deterministic_symbol"] = true
     general["print_using_CEnum"] = false
     general["printer_blacklist"] = [
