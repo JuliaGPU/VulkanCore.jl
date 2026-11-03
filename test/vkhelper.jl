@@ -3,10 +3,21 @@ using VulkanCore.LibVulkan
 
 # utils
 """
-    unsafe_strings2pp(names) -> Ptr{String}
-Dump a pointer that is of type `Ptr{String}` from a Julia `String` array.
+    CStrings(names::Vector{String})
+
+`names` as the `char**` a create-info struct points to. The pointer array belongs to
+this object, not to `names`: `GC.@preserve` THIS across the call that reads it.
+Preserving the `Vector{String}` keeps the strings alive but not the array of pointers
+to them.
 """
-unsafe_strings2pp(names::Vector{String}) = Base.unsafe_convert(Ptr{Cstring}, Base.cconvert(Ptr{Cstring}, names))
+struct CStrings{R}
+    length::Int
+    owner::R
+end
+CStrings(names::Vector{String}) = CStrings(length(names), Base.cconvert(Ptr{Cstring}, names))
+Base.length(x::CStrings) = x.length
+Base.unsafe_convert(::Type{Ptr{Cstring}}, x::CStrings) =
+    iszero(length(x)) ? Ptr{Cstring}(C_NULL) : Base.unsafe_convert(Ptr{Cstring}, x.owner)
 
 """
     to_string(x::NTuple{N,UInt8}) -> String
@@ -111,6 +122,23 @@ function check_layers(required_layers::Vector{<:AbstractString})
     all(in(names), required_layers)
 end
 
+"""
+    with_portability(extensions) -> (extensions, flags)
+
+Add portability enumeration when the loader offers it. A portability driver -- MoltenVK
+being the one that matters -- is not enumerated at all unless the instance asks for it:
+since loader 1.3.216 `vkCreateInstance` answers `VK_ERROR_INCOMPATIBLE_DRIVER` instead.
+Asked of the loader, not of the platform, so there is one code path everywhere.
+
+Returns the extensions to enable, as a new vector. What has to stay alive across the
+`vkCreateInstance` is the `CStrings` made from it, not either vector.
+"""
+function with_portability(extensions::Vector{<:AbstractString})
+    name = VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME
+    name in getproperty.(get_supported_extensions(), :name) || return (String.(extensions), UInt32(0))
+    return (String.(vcat(extensions, name)), UInt32(VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR))
+end
+
 # instance
 function LibVulkan.VkApplicationInfo(app_name::AbstractString, app_ver::VersionNumber, engine_name::AbstractString, engine_ver::VersionNumber, api_ver::Integer)
     sType = VK_STRUCTURE_TYPE_APPLICATION_INFO
@@ -122,22 +150,21 @@ function LibVulkan.VkApplicationInfo(app_name::AbstractString, app_ver::VersionN
     return VkApplicationInfo(sType, pNext, pApplicationName, vkApplicationVersion, pEngineName, vkEngineVersion, Cuint(api_ver))
 end
 
-function LibVulkan.VkInstanceCreateInfo(app_info_ref::Ref{VkApplicationInfo}, layers::Vector{String}, extensions::Vector{String})
+function LibVulkan.VkInstanceCreateInfo(app_info_ref::Ref{VkApplicationInfo}, layers::CStrings, extensions::CStrings, flags::Integer = UInt32(0))
     sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     pNext = C_NULL       # reserved for extension-specific structure
-    flags = UInt32(0)    # reserved for future use
-    ppEnabledLayerNames = isempty(layers) ? C_NULL : unsafe_strings2pp(layers)
-    ppEnabledExtensionNames = isempty(extensions) ? C_NULL : unsafe_strings2pp(extensions)
+    ppEnabledLayerNames = Base.unsafe_convert(Ptr{Cstring}, layers)
+    ppEnabledExtensionNames = Base.unsafe_convert(Ptr{Cstring}, extensions)
     pApplicationInfo = Base.unsafe_convert(Ptr{VkApplicationInfo}, app_info_ref)
     return VkInstanceCreateInfo(sType, pNext, flags, pApplicationInfo, length(layers), ppEnabledLayerNames, length(extensions), ppEnabledExtensionNames)
 end
 
-function LibVulkan.VkInstanceCreateInfo(app_info_ref::Ref{VkApplicationInfo}, debug_info_ref::Ref{VkDebugUtilsMessengerCreateInfoEXT}, layers::Vector{String}, extensions::Vector{String})
+function LibVulkan.VkInstanceCreateInfo(app_info_ref::Ref{VkApplicationInfo}, debug_info_ref::Ref{VkDebugUtilsMessengerCreateInfoEXT}, layers::CStrings, extensions::CStrings)
     sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     pNext = Base.unsafe_convert(Ptr{Cvoid}, debug_info_ref)
     flags = UInt32(0)    # reserved for future use
-    ppEnabledLayerNames = isempty(layers) ? C_NULL : unsafe_strings2pp(layers)
-    ppEnabledExtensionNames = isempty(extensions) ? C_NULL : unsafe_strings2pp(extensions)
+    ppEnabledLayerNames = Base.unsafe_convert(Ptr{Cstring}, layers)
+    ppEnabledExtensionNames = Base.unsafe_convert(Ptr{Cstring}, extensions)
     pApplicationInfo = Base.unsafe_convert(Ptr{VkApplicationInfo}, app_info_ref)
     return VkInstanceCreateInfo(sType, pNext, flags, pApplicationInfo, length(layers), ppEnabledLayerNames, length(extensions), ppEnabledExtensionNames)
 end

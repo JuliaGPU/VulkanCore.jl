@@ -47,6 +47,36 @@ VK_EXTENSIONS_MAP = Dict(
     "x86_64-unknown-freebsd" => ["-DVK_USE_PLATFORM_XCB_KHR", "-DVK_USE_PLATFORM_XLIB_KHR", "-DVK_USE_PLATFORM_XLIB_XRANDR_EXT"],
 )
 
+# JLLEnvs gained version-suffixed triples (e.g. "x86_64-unknown-freebsd13.2",
+# "x86_64-apple-darwin14"), so an exact lookup in VK_EXTENSIONS_MAP misses. Compare
+# with the trailing version stripped from both sides.
+strip_triple_version(t) = replace(t, r"[0-9.]+$" => "")
+
+function extension_flags(target)
+    haskey(VK_EXTENSIONS_MAP, target) && return VK_EXTENSIONS_MAP[target]
+    nt = strip_triple_version(target)
+    for (k, v) in VK_EXTENSIONS_MAP
+        strip_triple_version(k) == nt && return v
+    end
+    error("no Vulkan platform flags configured for target $target")
+end
+
+lib_file(target) = joinpath(@__DIR__, "..", "lib", "$target.jl")
+
+# Catch platform filename changes before regenerating bindings.
+function check_includes(targets, libvulkan_jl)
+    pattern = r"include\(\"\.\./lib/([^\"]+)\"\)"
+    included = Set(String(m[1]) for m in eachmatch(pattern, read(libvulkan_jl, String)))
+    generated = Set(basename(lib_file(t)) for t in targets)
+    not_included = sort!(collect(setdiff(generated, included)))
+    not_generated = sort!(collect(setdiff(included, generated)))
+    isempty(not_included) && isempty(not_generated) && return nothing
+    error("""the generated files and the includes in $libvulkan_jl disagree, update the includes first.
+             generated but not included: $(join(not_included, ", "))
+             included but not generated: $(join(not_generated, ", "))""")
+end
+check_includes(JLLEnvs.JLL_ENV_TRIPLES, normpath(@__DIR__, "..", "src", "LibVulkan.jl"))
+
 for target in JLLEnvs.JLL_ENV_TRIPLES
     @info "processing $target"
 
@@ -57,7 +87,7 @@ for target in JLLEnvs.JLL_ENV_TRIPLES
         )
     general, codegen = options["general"], options["codegen"]
     general["library_name"] = "libvulkan"
-    general["output_file_path"] = joinpath(@__DIR__, "..", "lib", "$target.jl")
+    general["output_file_path"] = lib_file(target)
     general["use_deterministic_symbol"] = true
     general["print_using_CEnum"] = false
     general["printer_blacklist"] = [
@@ -94,7 +124,7 @@ for target in JLLEnvs.JLL_ENV_TRIPLES
     xlibXrender_inc = JLLEnvs.get_pkg_include_dir(Xorg_libXrender_jll, target)
     !isempty(xlibXrender_inc) && push!(args, "-isystem$xlibXrender_inc")
 
-    append!(args, VK_EXTENSIONS_MAP[target])
+    append!(args, extension_flags(target))
 
     # add header directory to detect `vk_video` headers
     push!(args, "-I$VK_INCLUDE_BASE")
